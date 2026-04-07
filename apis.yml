@@ -1,9 +1,9 @@
 aid: apollo-api-documentation
 name: Apollo API Documentation
 description: >-
-  Welcome! Here, youll find comprehensive guides and documentation to help you
-  get started with Apollos API quickly, along with support if you get stuck.
-  Lets jump right in! 
+  Welcome! Here, youll find comprehensive guides and documentation to help you get
+  started with Apollos API quickly, along with support if you get stuck. Lets jump
+  right in!
 type: Index
 position: Consumer
 access: 3rd-Party
@@ -19,9 +19,9 @@ apis:
   - aid: apollo-api-documentation:apollo-api-documentation
     name: Apollo API Documentation
     description: >-
-      Welcome! Here, youll find comprehensive guides and documentation to help
-      you get started with Apollos API quickly, along with support if you get
-      stuck. Lets jump right in! 
+      Welcome! Here, youll find comprehensive guides and documentation to help you
+      get started with Apollos API quickly, along with support if you get stuck. Lets
+      jump right in!
     humanURL: ' https://docs.apollo.io/'
     tags:
       - API
