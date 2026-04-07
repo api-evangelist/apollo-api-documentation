@@ -8,8 +8,7 @@ type: Index
 position: Consumer
 access: 3rd-Party
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-tags:
-  - API
+tags: []
 created: '2025-07-10'
 modified: '2025-07-10'
 url: >-
@@ -23,8 +22,7 @@ apis:
       get started with Apollos API quickly, along with support if you get stuck. Lets
       jump right in!
     humanURL: ' https://docs.apollo.io/'
-    tags:
-      - API
+    tags: []
     properties:
       - type: Documentation
         url: ' https://docs.apollo.io/'
