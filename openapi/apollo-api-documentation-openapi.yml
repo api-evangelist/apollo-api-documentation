@@ -1,0 +1,463 @@
+openapi: 3.1.0
+info:
+  title: Apollo.io API
+  version: 1.0.0
+  description: >-
+    Apollo.io provides sales intelligence and engagement APIs for prospecting,
+    enrichment, sequences, deals, tasks and call records. This minimal
+    OpenAPI was generated from the public reference documentation.
+servers:
+  - url: https://api.apollo.io/v1
+    description: Production
+x-generated-from: https://docs.apollo.io/
+x-generated-by: claude-crawl-2026-05-08
+paths:
+  /people/match:
+    post:
+      summary: People enrichment
+      operationId: peopleEnrichment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /people/bulk_match:
+    post:
+      summary: Bulk people enrichment
+      operationId: bulkPeopleEnrichment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /organizations/enrich:
+    get:
+      summary: Organization enrichment
+      operationId: organizationEnrichment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /mixed_people/search:
+    post:
+      summary: People search
+      operationId: peopleSearch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /mixed_companies/search:
+    post:
+      summary: Organization search
+      operationId: organizationSearch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /organizations/job_postings:
+    get:
+      summary: Organization job postings
+      operationId: organizationJobPostings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /accounts:
+    post:
+      summary: Create an account
+      operationId: createAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+  /accounts/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      summary: Update an account
+      operationId: updateAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /accounts/bulk_create:
+    post:
+      summary: Bulk create accounts
+      operationId: bulkCreateAccounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /contacts:
+    post:
+      summary: Create a contact
+      operationId: createContact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+  /contacts/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      summary: Update a contact
+      operationId: updateContact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /contacts/bulk_create:
+    post:
+      summary: Bulk create contacts
+      operationId: bulkCreateContacts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /opportunities:
+    post:
+      summary: Create deal
+      operationId: createDeal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+  /opportunities/search:
+    get:
+      summary: List all deals
+      operationId: listDeals
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /opportunities/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: View deal
+      operationId: viewDeal
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /emailer_campaigns/search:
+    post:
+      summary: Search for sequences
+      operationId: searchSequences
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /emailer_campaigns/{id}/add_contact_ids:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    post:
+      summary: Add contacts to sequence
+      operationId: addContactsToSequence
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /emailer_campaigns/{id}/update_contact_status:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    post:
+      summary: Update contact status in sequence
+      operationId: updateContactStatusInSequence
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /tasks:
+    post:
+      summary: Create a task
+      operationId: createTask
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+  /tasks/bulk_create:
+    post:
+      summary: Bulk create tasks
+      operationId: bulkCreateTasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /tasks/search:
+    post:
+      summary: Search tasks
+      operationId: searchTasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /usage_stats/api_usage_stats:
+    post:
+      summary: View API usage stats
+      operationId: viewApiUsageStats
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /phone_calls:
+    post:
+      summary: Create call records
+      operationId: createCallRecords
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+  /phone_calls/search:
+    get:
+      summary: Search for calls
+      operationId: searchCalls
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /phone_calls/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    put:
+      summary: Update call records
+      operationId: updateCallRecords
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /users/search:
+    get:
+      summary: Get a list of users
+      operationId: listUsers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /email_accounts:
+    get:
+      summary: Get a list of email accounts
+      operationId: listEmailAccounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /sync_report:
+    post:
+      summary: Sync report
+      operationId: syncReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
