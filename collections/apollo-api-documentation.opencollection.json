@@ -1,0 +1,444 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apollo.io API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "People enrichment",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.apollo.io/v1/people/match",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "People enrichment"
+    },
+    {
+      "info": {
+        "name": "Bulk people enrichment",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.apollo.io/v1/people/bulk_match",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Bulk people enrichment"
+    },
+    {
+      "info": {
+        "name": "Organization enrichment",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.apollo.io/v1/organizations/enrich"
+      },
+      "docs": "Organization enrichment"
+    },
+    {
+      "info": {
+        "name": "People search",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.apollo.io/v1/mixed_people/search",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "People search"
+    },
+    {
+      "info": {
+        "name": "Organization search",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.apollo.io/v1/mixed_companies/search",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Organization search"
+    },
+    {
+      "info": {
+        "name": "Organization job postings",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.apollo.io/v1/organizations/job_postings"
+      },
+      "docs": "Organization job postings"
+    },
+    {
+      "info": {
+        "name": "Create an account",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.apollo.io/v1/accounts",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Create an account"
+    },
+    {
+      "info": {
+        "name": "Update an account",
+        "type": "http"
+      },
+      "http": {
+        "method": "PATCH",
+        "url": "https://api.apollo.io/v1/accounts/:id",
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Update an account"
+    },
+    {
+      "info": {
+        "name": "Bulk create accounts",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.apollo.io/v1/accounts/bulk_create",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Bulk create accounts"
+    },
+    {
+      "info": {
+        "name": "Create a contact",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.apollo.io/v1/contacts",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Create a contact"
+    },
+    {
+      "info": {
+        "name": "Update a contact",
+        "type": "http"
+      },
+      "http": {
+        "method": "PATCH",
+        "url": "https://api.apollo.io/v1/contacts/:id",
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Update a contact"
+    },
+    {
+      "info": {
+        "name": "Bulk create contacts",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.apollo.io/v1/contacts/bulk_create",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Bulk create contacts"
+    },
+    {
+      "info": {
+        "name": "Create deal",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.apollo.io/v1/opportunities",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Create deal"
+    },
+    {
+      "info": {
+        "name": "List all deals",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.apollo.io/v1/opportunities/search"
+      },
+      "docs": "List all deals"
+    },
+    {
+      "info": {
+        "name": "View deal",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.apollo.io/v1/opportunities/:id",
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path"
+          }
+        ]
+      },
+      "docs": "View deal"
+    },
+    {
+      "info": {
+        "name": "Search for sequences",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.apollo.io/v1/emailer_campaigns/search",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Search for sequences"
+    },
+    {
+      "info": {
+        "name": "Add contacts to sequence",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.apollo.io/v1/emailer_campaigns/:id/add_contact_ids",
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Add contacts to sequence"
+    },
+    {
+      "info": {
+        "name": "Update contact status in sequence",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.apollo.io/v1/emailer_campaigns/:id/update_contact_status",
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Update contact status in sequence"
+    },
+    {
+      "info": {
+        "name": "Create a task",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.apollo.io/v1/tasks",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Create a task"
+    },
+    {
+      "info": {
+        "name": "Bulk create tasks",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.apollo.io/v1/tasks/bulk_create",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Bulk create tasks"
+    },
+    {
+      "info": {
+        "name": "Search tasks",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.apollo.io/v1/tasks/search",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Search tasks"
+    },
+    {
+      "info": {
+        "name": "View API usage stats",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.apollo.io/v1/usage_stats/api_usage_stats",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "View API usage stats"
+    },
+    {
+      "info": {
+        "name": "Create call records",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.apollo.io/v1/phone_calls",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Create call records"
+    },
+    {
+      "info": {
+        "name": "Search for calls",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.apollo.io/v1/phone_calls/search"
+      },
+      "docs": "Search for calls"
+    },
+    {
+      "info": {
+        "name": "Update call records",
+        "type": "http"
+      },
+      "http": {
+        "method": "PUT",
+        "url": "https://api.apollo.io/v1/phone_calls/:id",
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Update call records"
+    },
+    {
+      "info": {
+        "name": "Get a list of users",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.apollo.io/v1/users/search"
+      },
+      "docs": "Get a list of users"
+    },
+    {
+      "info": {
+        "name": "Get a list of email accounts",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.apollo.io/v1/email_accounts"
+      },
+      "docs": "Get a list of email accounts"
+    },
+    {
+      "info": {
+        "name": "Sync report",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.apollo.io/v1/sync_report",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Sync report"
+    }
+  ],
+  "bundled": true
+}
