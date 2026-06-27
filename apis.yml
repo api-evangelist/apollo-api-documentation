@@ -101,7 +101,7 @@ common:
         description: Partner integration protocol for accessing Apollo data on behalf of customers.
       - name: API Key Authentication
         description: Direct API key access for customers building internal integrations.
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://docs.apollo.io/llms.txt
 maintainers:
   - FN: Kin Lane
