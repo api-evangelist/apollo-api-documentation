@@ -55,6 +55,12 @@ apis:
       - url: openapi/apollo-api-documentation-openapi.yml
         type: OpenAPI
 common:
+  - type: TrustCenter
+    url: security/apollo-api-documentation-trust-center.yml
+  - type: DomainSecurity
+    url: security/apollo-api-documentation-domain-security.yml
+  - url: https://www.apollo.io/magazine
+    type: Blog
   - type: GitHubOrganization
     url: https://github.com/apolloio
   - type: Documentation
