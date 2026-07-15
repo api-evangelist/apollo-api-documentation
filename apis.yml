@@ -55,6 +55,8 @@ apis:
       - url: openapi/apollo-api-documentation-openapi.yml
         type: OpenAPI
 common:
+  - type: AgenticAccess
+    url: agentic-access/apollo-api-documentation-agentic-access.yml
   - type: TrustCenter
     url: security/apollo-api-documentation-trust-center.yml
   - type: DomainSecurity
