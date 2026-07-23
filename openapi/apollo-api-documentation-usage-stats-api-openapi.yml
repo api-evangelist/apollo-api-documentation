@@ -1,0 +1,31 @@
+openapi: 3.1.0
+info:
+  title: Apollo.io Accounts Usage Stats API
+  version: 1.0.0
+  description: Apollo.io provides sales intelligence and engagement APIs for prospecting, enrichment, sequences, deals, tasks and call records. This minimal OpenAPI was generated from the public reference documentation.
+servers:
+- url: https://api.apollo.io/v1
+  description: Production
+tags:
+- name: Usage Stats
+paths:
+  /usage_stats/api_usage_stats:
+    post:
+      summary: View API usage stats
+      operationId: viewApiUsageStats
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Usage Stats
+x-generated-from: https://docs.apollo.io/
+x-generated-by: claude-crawl-2026-05-08

@@ -1,0 +1,63 @@
+openapi: 3.1.0
+info:
+  title: Apollo.io Accounts Opportunities API
+  version: 1.0.0
+  description: Apollo.io provides sales intelligence and engagement APIs for prospecting, enrichment, sequences, deals, tasks and call records. This minimal OpenAPI was generated from the public reference documentation.
+servers:
+- url: https://api.apollo.io/v1
+  description: Production
+tags:
+- name: Opportunities
+paths:
+  /opportunities:
+    post:
+      summary: Create deal
+      operationId: createDeal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Opportunities
+  /opportunities/search:
+    get:
+      summary: List all deals
+      operationId: listDeals
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Opportunities
+  /opportunities/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: View deal
+      operationId: viewDeal
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Opportunities
+x-generated-from: https://docs.apollo.io/
+x-generated-by: claude-crawl-2026-05-08

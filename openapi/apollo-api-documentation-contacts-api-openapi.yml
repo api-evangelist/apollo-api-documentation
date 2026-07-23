@@ -1,0 +1,73 @@
+openapi: 3.1.0
+info:
+  title: Apollo.io Accounts Contacts API
+  version: 1.0.0
+  description: Apollo.io provides sales intelligence and engagement APIs for prospecting, enrichment, sequences, deals, tasks and call records. This minimal OpenAPI was generated from the public reference documentation.
+servers:
+- url: https://api.apollo.io/v1
+  description: Production
+tags:
+- name: Contacts
+paths:
+  /contacts:
+    post:
+      summary: Create a contact
+      operationId: createContact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Contacts
+  /contacts/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    patch:
+      summary: Update a contact
+      operationId: updateContact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Contacts
+  /contacts/bulk_create:
+    post:
+      summary: Bulk create contacts
+      operationId: bulkCreateContacts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Contacts
+x-generated-from: https://docs.apollo.io/
+x-generated-by: claude-crawl-2026-05-08

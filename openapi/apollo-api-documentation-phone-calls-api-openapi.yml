@@ -1,0 +1,68 @@
+openapi: 3.1.0
+info:
+  title: Apollo.io Accounts Phone Calls API
+  version: 1.0.0
+  description: Apollo.io provides sales intelligence and engagement APIs for prospecting, enrichment, sequences, deals, tasks and call records. This minimal OpenAPI was generated from the public reference documentation.
+servers:
+- url: https://api.apollo.io/v1
+  description: Production
+tags:
+- name: Phone Calls
+paths:
+  /phone_calls:
+    post:
+      summary: Create call records
+      operationId: createCallRecords
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Phone Calls
+  /phone_calls/search:
+    get:
+      summary: Search for calls
+      operationId: searchCalls
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Phone Calls
+  /phone_calls/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    put:
+      summary: Update call records
+      operationId: updateCallRecords
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Phone Calls
+x-generated-from: https://docs.apollo.io/
+x-generated-by: claude-crawl-2026-05-08

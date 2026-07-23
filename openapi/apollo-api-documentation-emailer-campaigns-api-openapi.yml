@@ -1,0 +1,79 @@
+openapi: 3.1.0
+info:
+  title: Apollo.io Accounts Emailer Campaigns API
+  version: 1.0.0
+  description: Apollo.io provides sales intelligence and engagement APIs for prospecting, enrichment, sequences, deals, tasks and call records. This minimal OpenAPI was generated from the public reference documentation.
+servers:
+- url: https://api.apollo.io/v1
+  description: Production
+tags:
+- name: Emailer Campaigns
+paths:
+  /emailer_campaigns/search:
+    post:
+      summary: Search for sequences
+      operationId: searchSequences
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Emailer Campaigns
+  /emailer_campaigns/{id}/add_contact_ids:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      summary: Add contacts to sequence
+      operationId: addContactsToSequence
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Emailer Campaigns
+  /emailer_campaigns/{id}/update_contact_status:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      summary: Update contact status in sequence
+      operationId: updateContactStatusInSequence
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Emailer Campaigns
+x-generated-from: https://docs.apollo.io/
+x-generated-by: claude-crawl-2026-05-08

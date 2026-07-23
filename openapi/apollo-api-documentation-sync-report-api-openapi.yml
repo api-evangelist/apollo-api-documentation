@@ -1,0 +1,31 @@
+openapi: 3.1.0
+info:
+  title: Apollo.io Accounts Sync Report API
+  version: 1.0.0
+  description: Apollo.io provides sales intelligence and engagement APIs for prospecting, enrichment, sequences, deals, tasks and call records. This minimal OpenAPI was generated from the public reference documentation.
+servers:
+- url: https://api.apollo.io/v1
+  description: Production
+tags:
+- name: Sync Report
+paths:
+  /sync_report:
+    post:
+      summary: Sync report
+      operationId: syncReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Sync Report
+x-generated-from: https://docs.apollo.io/
+x-generated-by: claude-crawl-2026-05-08
