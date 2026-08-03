@@ -1,0 +1,40 @@
+{
+  "provider": "apollo-api-documentation",
+  "sources": [
+    "apollo-api-documentation-accounts-api-openapi.yml",
+    "apollo-api-documentation-contacts-api-openapi.yml",
+    "apollo-api-documentation-email-accounts-api-openapi.yml",
+    "apollo-api-documentation-emailer-campaigns-api-openapi.yml",
+    "apollo-api-documentation-mixed-companies-api-openapi.yml",
+    "apollo-api-documentation-mixed-people-api-openapi.yml",
+    "apollo-api-documentation-opportunities-api-openapi.yml",
+    "apollo-api-documentation-organizations-api-openapi.yml",
+    "apollo-api-documentation-people-api-openapi.yml",
+    "apollo-api-documentation-phone-calls-api-openapi.yml",
+    "apollo-api-documentation-sync-report-api-openapi.yml",
+    "apollo-api-documentation-tasks-api-openapi.yml",
+    "apollo-api-documentation-usage-stats-api-openapi.yml",
+    "apollo-api-documentation-users-api-openapi.yml"
+  ],
+  "outputs": [
+    "apollo-api-documentation-accounts-api-openapi.yml",
+    "apollo-api-documentation-contacts-api-openapi.yml",
+    "apollo-api-documentation-email-accounts-api-openapi.yml",
+    "apollo-api-documentation-emailer-campaigns-api-openapi.yml",
+    "apollo-api-documentation-mixed-companies-api-openapi.yml",
+    "apollo-api-documentation-mixed-people-api-openapi.yml",
+    "apollo-api-documentation-opportunities-api-openapi.yml",
+    "apollo-api-documentation-organizations-api-openapi.yml",
+    "apollo-api-documentation-people-api-openapi.yml",
+    "apollo-api-documentation-phone-calls-api-openapi.yml",
+    "apollo-api-documentation-sync-report-api-openapi.yml",
+    "apollo-api-documentation-tasks-api-openapi.yml",
+    "apollo-api-documentation-usage-stats-api-openapi.yml",
+    "apollo-api-documentation-users-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
