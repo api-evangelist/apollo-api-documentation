@@ -1,10 +1,11 @@
 aid: apollo-api-documentation
 name: Apollo API Documentation
-description: >-
-  Apollo.io provides a comprehensive REST API for sales intelligence with over 210 million contacts and 35 million
-  companies. The Apollo API enables data enrichment, people and organization search, CRM management, sequences, deals,
-  analytics, and integrations. Authentication is via API keys or OAuth 2.0 for partner integrations. This repository
-  profiles Apollo.io's API documentation as an example of API documentation best practices.
+description: Apollo.io is a sales intelligence and engagement platform. Its REST API provides programmatic access to a database
+  of over 240 million contacts and 30 million companies, covering people and organization enrichment (single and bulk),
+  people/company/news search, and go-to-market workflow management across accounts, contacts, deals, sequences, emails,
+  tasks, calls, conversations, lists and custom fields. Apollo users authenticate with an API key in the x-api-key header;
+  partners building on behalf of mutual users authenticate with OAuth 2.0. Apollo publishes a complete OpenAPI 3.1 specification,
+  a hosted remote MCP server at mcp.apollo.io, and a first-party CLI.
 type: Index
 accessModel:
   pricing: freemium
@@ -22,398 +23,470 @@ position: Consumer
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/apollo-api-documentation.png
 tags:
-  - API Documentation
-  - Best Practices
-  - Data Enrichment
-  - People Search
-  - Sales Intelligence
+- API Documentation
+- Sales Intelligence
+- Data Enrichment
+- People Search
+- Company Search
+- Sales Engagement
+- CRM
+- MCP
+- Agents
+- Go-To-Market
 created: '2025-07-10'
-modified: '2026-05-19'
+modified: '2026-08-14'
 url: https://raw.githubusercontent.com/api-evangelist/apollo-api-documentation/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
 - aid: apollo-api-documentation:apollo-api-documentation-accounts-api
-  name: Apollo API Documentation Accounts API
-  description: The Accounts API from Apollo API Documentation — 3 operation(s) for accounts.
-  humanURL: https://docs.apollo.io/
+  name: Apollo API Accounts
+  description: Create, update, and search the companies your team tracks in Apollo. Harvested from the Apollo-published
+    OpenAPI 3.1 specification — 8 operation(s).
+  humanURL: https://docs.apollo.io/reference/apollo-api
+  baseURL: https://api.apollo.io/api/v1
   tags:
   - Accounts
   properties:
   - type: OpenAPI
     url: openapi/apollo-api-documentation-accounts-api-openapi.yml
-  - type: Documentation
+  - &id001
+    type: Documentation
     url: https://docs.apollo.io/
-  - type: GettingStarted
-    url: https://docs.apollo.io/docs
-  - type: APIReference
-    url: https://docs.apollo.io/reference
-  - type: Authentication
+  - &id002
+    type: APIReference
+    url: https://docs.apollo.io/reference/apollo-api
+  - &id003
+    type: GettingStarted
+    url: https://docs.apollo.io/docs/build-with-apollo
+  - &id004
+    type: Authentication
     url: https://docs.apollo.io/reference/authentication
-  - type: RateLimits
+  - &id005
+    type: RateLimits
     url: https://docs.apollo.io/reference/rate-limits
-  - type: Tutorials
-    url: https://docs.apollo.io/docs/overview-apollo-api-tutorials
-  - type: FAQ
-    url: https://docs.apollo.io/docs/apollo-api-faqs
+  - &id006
+    type: Tutorials
+    url: https://docs.apollo.io/docs/capabilities
+  - &id007
+    type: FAQ
+    url: https://docs.apollo.io/docs/developer-faqs
+  - type: Overlay
+    url: overlays/apollo-api-documentation-accounts-overlay.yaml
+  - type: PostmanCollection
+    url: collections/apollo-api-documentation-accounts-api.postman_collection.json
+- aid: apollo-api-documentation:apollo-api-documentation-analytics-api
+  name: Apollo API Analytics
+  description: Query saved analytics reports. Harvested from the Apollo-published OpenAPI 3.1 specification — 1 operation(s).
+  humanURL: https://docs.apollo.io/reference/apollo-api
+  baseURL: https://api.apollo.io/api/v1
+  tags:
+  - Analytics
+  properties:
+  - type: OpenAPI
+    url: openapi/apollo-api-documentation-analytics-api-openapi.yml
+  - *id001
+  - *id002
+  - *id003
+  - *id004
+  - *id005
+  - *id006
+  - *id007
+  - type: Overlay
+    url: overlays/apollo-api-documentation-analytics-overlay.yaml
+  - type: PostmanCollection
+    url: collections/apollo-api-documentation-analytics-api.postman_collection.json
+- aid: apollo-api-documentation:apollo-api-documentation-calls-api
+  name: Apollo API Calls
+  description: Log and update call records made inside or outside Apollo. Harvested from the Apollo-published OpenAPI 3.1
+    specification — 3 operation(s).
+  humanURL: https://docs.apollo.io/reference/apollo-api
+  baseURL: https://api.apollo.io/api/v1
+  tags:
+  - Calls
+  properties:
+  - type: OpenAPI
+    url: openapi/apollo-api-documentation-calls-api-openapi.yml
+  - *id001
+  - *id002
+  - *id003
+  - *id004
+  - *id005
+  - *id006
+  - *id007
+  - type: Overlay
+    url: overlays/apollo-api-documentation-calls-overlay.yaml
+  - type: PostmanCollection
+    url: collections/apollo-api-documentation-calls-api.postman_collection.json
 - aid: apollo-api-documentation:apollo-api-documentation-contacts-api
-  name: Apollo API Documentation Contacts API
-  description: The Contacts API from Apollo API Documentation — 3 operation(s) for contacts.
-  humanURL: https://docs.apollo.io/
+  name: Apollo API Contacts
+  description: Create, update, and search the people your team saves in Apollo. Harvested from the Apollo-published OpenAPI
+    3.1 specification — 10 operation(s).
+  humanURL: https://docs.apollo.io/reference/apollo-api
+  baseURL: https://api.apollo.io/api/v1
   tags:
   - Contacts
   properties:
   - type: OpenAPI
     url: openapi/apollo-api-documentation-contacts-api-openapi.yml
-  - type: Documentation
-    url: https://docs.apollo.io/
-  - type: GettingStarted
-    url: https://docs.apollo.io/docs
-  - type: APIReference
-    url: https://docs.apollo.io/reference
-  - type: Authentication
-    url: https://docs.apollo.io/reference/authentication
-  - type: RateLimits
-    url: https://docs.apollo.io/reference/rate-limits
-  - type: Tutorials
-    url: https://docs.apollo.io/docs/overview-apollo-api-tutorials
-  - type: FAQ
-    url: https://docs.apollo.io/docs/apollo-api-faqs
-- aid: apollo-api-documentation:apollo-api-documentation-email-accounts-api
-  name: Apollo API Documentation Email Accounts API
-  description: >-
-    The Email Accounts API from Apollo API Documentation — 1 operation(s) for email accounts.
-  humanURL: https://docs.apollo.io/
+  - *id001
+  - *id002
+  - *id003
+  - *id004
+  - *id005
+  - *id006
+  - *id007
+  - type: Overlay
+    url: overlays/apollo-api-documentation-contacts-overlay.yaml
+  - type: PostmanCollection
+    url: collections/apollo-api-documentation-contacts-api.postman_collection.json
+- aid: apollo-api-documentation:apollo-api-documentation-conversations-api
+  name: Apollo API Conversations
+  description: Search, export, and retrieve recorded conversations. Harvested from the Apollo-published OpenAPI 3.1 specification
+    — 4 operation(s).
+  humanURL: https://docs.apollo.io/reference/apollo-api
+  baseURL: https://api.apollo.io/api/v1
   tags:
-  - Email Accounts
+  - Conversations
   properties:
   - type: OpenAPI
-    url: openapi/apollo-api-documentation-email-accounts-api-openapi.yml
-  - type: Documentation
-    url: https://docs.apollo.io/
-  - type: GettingStarted
-    url: https://docs.apollo.io/docs
-  - type: APIReference
-    url: https://docs.apollo.io/reference
-  - type: Authentication
-    url: https://docs.apollo.io/reference/authentication
-  - type: RateLimits
-    url: https://docs.apollo.io/reference/rate-limits
-  - type: Tutorials
-    url: https://docs.apollo.io/docs/overview-apollo-api-tutorials
-  - type: FAQ
-    url: https://docs.apollo.io/docs/apollo-api-faqs
-- aid: apollo-api-documentation:apollo-api-documentation-emailer-campaigns-api
-  name: Apollo API Documentation Emailer Campaigns API
-  description: >-
-    The Emailer Campaigns API from Apollo API Documentation — 3 operation(s) for emailer campaigns.
-  humanURL: https://docs.apollo.io/
+    url: openapi/apollo-api-documentation-conversations-api-openapi.yml
+  - *id001
+  - *id002
+  - *id003
+  - *id004
+  - *id005
+  - *id006
+  - *id007
+  - type: Overlay
+    url: overlays/apollo-api-documentation-conversations-overlay.yaml
+  - type: PostmanCollection
+    url: collections/apollo-api-documentation-conversations-api.postman_collection.json
+- aid: apollo-api-documentation:apollo-api-documentation-deals-api
+  name: Apollo API Deals
+  description: Create, update, and track deals in your pipeline. Harvested from the Apollo-published OpenAPI 3.1 specification
+    — 5 operation(s).
+  humanURL: https://docs.apollo.io/reference/apollo-api
+  baseURL: https://api.apollo.io/api/v1
   tags:
-  - Emailer Campaigns
+  - Deals
   properties:
   - type: OpenAPI
-    url: openapi/apollo-api-documentation-emailer-campaigns-api-openapi.yml
-  - type: Documentation
-    url: https://docs.apollo.io/
-  - type: GettingStarted
-    url: https://docs.apollo.io/docs
-  - type: APIReference
-    url: https://docs.apollo.io/reference
-  - type: Authentication
-    url: https://docs.apollo.io/reference/authentication
-  - type: RateLimits
-    url: https://docs.apollo.io/reference/rate-limits
-  - type: Tutorials
-    url: https://docs.apollo.io/docs/overview-apollo-api-tutorials
-  - type: FAQ
-    url: https://docs.apollo.io/docs/apollo-api-faqs
-- aid: apollo-api-documentation:apollo-api-documentation-mixed-companies-api
-  name: Apollo API Documentation Mixed Companies API
-  description: >-
-    The Mixed Companies API from Apollo API Documentation — 1 operation(s) for mixed companies.
-  humanURL: https://docs.apollo.io/
+    url: openapi/apollo-api-documentation-deals-api-openapi.yml
+  - *id001
+  - *id002
+  - *id003
+  - *id004
+  - *id005
+  - *id006
+  - *id007
+  - type: Overlay
+    url: overlays/apollo-api-documentation-deals-overlay.yaml
+  - type: PostmanCollection
+    url: collections/apollo-api-documentation-deals-api.postman_collection.json
+- aid: apollo-api-documentation:apollo-api-documentation-emailer-messages-api
+  name: Apollo API Emailer Messages
+  description: The Emailer Messages surface of the Apollo API. Harvested from the Apollo-published OpenAPI 3.1 specification
+    — 4 operation(s).
+  humanURL: https://docs.apollo.io/reference/apollo-api
+  baseURL: https://api.apollo.io/api/v1
   tags:
-  - Mixed Companies
+  - Emailer Messages
   properties:
   - type: OpenAPI
-    url: openapi/apollo-api-documentation-mixed-companies-api-openapi.yml
-  - type: Documentation
-    url: https://docs.apollo.io/
-  - type: GettingStarted
-    url: https://docs.apollo.io/docs
-  - type: APIReference
-    url: https://docs.apollo.io/reference
-  - type: Authentication
-    url: https://docs.apollo.io/reference/authentication
-  - type: RateLimits
-    url: https://docs.apollo.io/reference/rate-limits
-  - type: Tutorials
-    url: https://docs.apollo.io/docs/overview-apollo-api-tutorials
-  - type: FAQ
-    url: https://docs.apollo.io/docs/apollo-api-faqs
-- aid: apollo-api-documentation:apollo-api-documentation-mixed-people-api
-  name: Apollo API Documentation Mixed People API
-  description: The Mixed People API from Apollo API Documentation — 1 operation(s) for mixed people.
-  humanURL: https://docs.apollo.io/
+    url: openapi/apollo-api-documentation-emailer-messages-api-openapi.yml
+  - *id001
+  - *id002
+  - *id003
+  - *id004
+  - *id005
+  - *id006
+  - *id007
+  - type: Overlay
+    url: overlays/apollo-api-documentation-emailer-messages-overlay.yaml
+  - type: PostmanCollection
+    url: collections/apollo-api-documentation-emailer-messages-api.postman_collection.json
+- aid: apollo-api-documentation:apollo-api-documentation-enrichment-api
+  name: Apollo API Enrichment
+  description: Enrich people and company records, individually or in bulk. Harvested from the Apollo-published OpenAPI 3.1
+    specification — 4 operation(s).
+  humanURL: https://docs.apollo.io/reference/apollo-api
+  baseURL: https://api.apollo.io/api/v1
   tags:
-  - Mixed People
+  - Enrichment
   properties:
   - type: OpenAPI
-    url: openapi/apollo-api-documentation-mixed-people-api-openapi.yml
-  - type: Documentation
-    url: https://docs.apollo.io/
-  - type: GettingStarted
-    url: https://docs.apollo.io/docs
-  - type: APIReference
-    url: https://docs.apollo.io/reference
-  - type: Authentication
-    url: https://docs.apollo.io/reference/authentication
-  - type: RateLimits
-    url: https://docs.apollo.io/reference/rate-limits
-  - type: Tutorials
-    url: https://docs.apollo.io/docs/overview-apollo-api-tutorials
-  - type: FAQ
-    url: https://docs.apollo.io/docs/apollo-api-faqs
-- aid: apollo-api-documentation:apollo-api-documentation-opportunities-api
-  name: Apollo API Documentation Opportunities API
-  description: The Opportunities API from Apollo API Documentation — 3 operation(s) for opportunities.
-  humanURL: https://docs.apollo.io/
+    url: openapi/apollo-api-documentation-enrichment-api-openapi.yml
+  - *id001
+  - *id002
+  - *id003
+  - *id004
+  - *id005
+  - *id006
+  - *id007
+  - type: Overlay
+    url: overlays/apollo-api-documentation-enrichment-overlay.yaml
+  - type: PostmanCollection
+    url: collections/apollo-api-documentation-enrichment-api.postman_collection.json
+- aid: apollo-api-documentation:apollo-api-documentation-fields-api
+  name: Apollo API Fields
+  description: List, create, and update the fields and custom fields in your Apollo account. Harvested from the Apollo-published
+    OpenAPI 3.1 specification — 4 operation(s).
+  humanURL: https://docs.apollo.io/reference/apollo-api
+  baseURL: https://api.apollo.io/api/v1
   tags:
-  - Opportunities
+  - Fields
   properties:
   - type: OpenAPI
-    url: openapi/apollo-api-documentation-opportunities-api-openapi.yml
-  - type: Documentation
-    url: https://docs.apollo.io/
-  - type: GettingStarted
-    url: https://docs.apollo.io/docs
-  - type: APIReference
-    url: https://docs.apollo.io/reference
-  - type: Authentication
-    url: https://docs.apollo.io/reference/authentication
-  - type: RateLimits
-    url: https://docs.apollo.io/reference/rate-limits
-  - type: Tutorials
-    url: https://docs.apollo.io/docs/overview-apollo-api-tutorials
-  - type: FAQ
-    url: https://docs.apollo.io/docs/apollo-api-faqs
-- aid: apollo-api-documentation:apollo-api-documentation-organizations-api
-  name: Apollo API Documentation Organizations API
-  description: The Organizations API from Apollo API Documentation — 2 operation(s) for organizations.
-  humanURL: https://docs.apollo.io/
+    url: openapi/apollo-api-documentation-fields-api-openapi.yml
+  - *id001
+  - *id002
+  - *id003
+  - *id004
+  - *id005
+  - *id006
+  - *id007
+  - type: Overlay
+    url: overlays/apollo-api-documentation-fields-overlay.yaml
+  - type: PostmanCollection
+    url: collections/apollo-api-documentation-fields-api.postman_collection.json
+- aid: apollo-api-documentation:apollo-api-documentation-miscellaneous-api
+  name: Apollo API Miscellaneous
+  description: Users, email accounts, lists, notes, usage stats, and webhook results. Harvested from the Apollo-published
+    OpenAPI 3.1 specification — 12 operation(s).
+  humanURL: https://docs.apollo.io/reference/apollo-api
+  baseURL: https://api.apollo.io/api/v1
   tags:
-  - Organizations
+  - Miscellaneous
   properties:
   - type: OpenAPI
-    url: openapi/apollo-api-documentation-organizations-api-openapi.yml
-  - type: Documentation
-    url: https://docs.apollo.io/
-  - type: GettingStarted
-    url: https://docs.apollo.io/docs
-  - type: APIReference
-    url: https://docs.apollo.io/reference
-  - type: Authentication
-    url: https://docs.apollo.io/reference/authentication
-  - type: RateLimits
-    url: https://docs.apollo.io/reference/rate-limits
-  - type: Tutorials
-    url: https://docs.apollo.io/docs/overview-apollo-api-tutorials
-  - type: FAQ
-    url: https://docs.apollo.io/docs/apollo-api-faqs
-- aid: apollo-api-documentation:apollo-api-documentation-people-api
-  name: Apollo API Documentation People API
-  description: The People API from Apollo API Documentation — 2 operation(s) for people.
-  humanURL: https://docs.apollo.io/
+    url: openapi/apollo-api-documentation-miscellaneous-api-openapi.yml
+  - *id001
+  - *id002
+  - *id003
+  - *id004
+  - *id005
+  - *id006
+  - *id007
+  - type: Overlay
+    url: overlays/apollo-api-documentation-miscellaneous-overlay.yaml
+  - type: PostmanCollection
+    url: collections/apollo-api-documentation-miscellaneous-api.postman_collection.json
+- aid: apollo-api-documentation:apollo-api-documentation-search-api
+  name: Apollo API Search
+  description: Search Apollo's database of people, companies, news articles, and job postings. Harvested from the Apollo-published
+    OpenAPI 3.1 specification — 6 operation(s).
+  humanURL: https://docs.apollo.io/reference/apollo-api
+  baseURL: https://api.apollo.io/api/v1
   tags:
-  - People
+  - Search
   properties:
   - type: OpenAPI
-    url: openapi/apollo-api-documentation-people-api-openapi.yml
-  - type: Documentation
-    url: https://docs.apollo.io/
-  - type: GettingStarted
-    url: https://docs.apollo.io/docs
-  - type: APIReference
-    url: https://docs.apollo.io/reference
-  - type: Authentication
-    url: https://docs.apollo.io/reference/authentication
-  - type: RateLimits
-    url: https://docs.apollo.io/reference/rate-limits
-  - type: Tutorials
-    url: https://docs.apollo.io/docs/overview-apollo-api-tutorials
-  - type: FAQ
-    url: https://docs.apollo.io/docs/apollo-api-faqs
-- aid: apollo-api-documentation:apollo-api-documentation-phone-calls-api
-  name: Apollo API Documentation Phone Calls API
-  description: The Phone Calls API from Apollo API Documentation — 3 operation(s) for phone calls.
-  humanURL: https://docs.apollo.io/
+    url: openapi/apollo-api-documentation-search-api-openapi.yml
+  - *id001
+  - *id002
+  - *id003
+  - *id004
+  - *id005
+  - *id006
+  - *id007
+  - type: Overlay
+    url: overlays/apollo-api-documentation-search-overlay.yaml
+  - type: PostmanCollection
+    url: collections/apollo-api-documentation-search-api.postman_collection.json
+- aid: apollo-api-documentation:apollo-api-documentation-sequences-api
+  name: Apollo API Sequences
+  description: Manage outreach sequences and the contacts enrolled in them. Harvested from the Apollo-published OpenAPI
+    3.1 specification — 12 operation(s).
+  humanURL: https://docs.apollo.io/reference/apollo-api
+  baseURL: https://api.apollo.io/api/v1
   tags:
-  - Phone Calls
+  - Sequences
   properties:
   - type: OpenAPI
-    url: openapi/apollo-api-documentation-phone-calls-api-openapi.yml
-  - type: Documentation
-    url: https://docs.apollo.io/
-  - type: GettingStarted
-    url: https://docs.apollo.io/docs
-  - type: APIReference
-    url: https://docs.apollo.io/reference
-  - type: Authentication
-    url: https://docs.apollo.io/reference/authentication
-  - type: RateLimits
-    url: https://docs.apollo.io/reference/rate-limits
-  - type: Tutorials
-    url: https://docs.apollo.io/docs/overview-apollo-api-tutorials
-  - type: FAQ
-    url: https://docs.apollo.io/docs/apollo-api-faqs
-- aid: apollo-api-documentation:apollo-api-documentation-sync-report-api
-  name: Apollo API Documentation Sync Report API
-  description: The Sync Report API from Apollo API Documentation — 1 operation(s) for sync report.
-  humanURL: https://docs.apollo.io/
-  tags:
-  - Sync Report
-  properties:
-  - type: OpenAPI
-    url: openapi/apollo-api-documentation-sync-report-api-openapi.yml
-  - type: Documentation
-    url: https://docs.apollo.io/
-  - type: GettingStarted
-    url: https://docs.apollo.io/docs
-  - type: APIReference
-    url: https://docs.apollo.io/reference
-  - type: Authentication
-    url: https://docs.apollo.io/reference/authentication
-  - type: RateLimits
-    url: https://docs.apollo.io/reference/rate-limits
-  - type: Tutorials
-    url: https://docs.apollo.io/docs/overview-apollo-api-tutorials
-  - type: FAQ
-    url: https://docs.apollo.io/docs/apollo-api-faqs
+    url: openapi/apollo-api-documentation-sequences-api-openapi.yml
+  - *id001
+  - *id002
+  - *id003
+  - *id004
+  - *id005
+  - *id006
+  - *id007
+  - type: Overlay
+    url: overlays/apollo-api-documentation-sequences-overlay.yaml
+  - type: PostmanCollection
+    url: collections/apollo-api-documentation-sequences-api.postman_collection.json
 - aid: apollo-api-documentation:apollo-api-documentation-tasks-api
-  name: Apollo API Documentation Tasks API
-  description: The Tasks API from Apollo API Documentation — 3 operation(s) for tasks.
-  humanURL: https://docs.apollo.io/
+  name: Apollo API Tasks
+  description: Create and search tasks for your go-to-market workflows. Harvested from the Apollo-published OpenAPI 3.1
+    specification — 7 operation(s).
+  humanURL: https://docs.apollo.io/reference/apollo-api
+  baseURL: https://api.apollo.io/api/v1
   tags:
   - Tasks
   properties:
   - type: OpenAPI
     url: openapi/apollo-api-documentation-tasks-api-openapi.yml
-  - type: Documentation
-    url: https://docs.apollo.io/
-  - type: GettingStarted
-    url: https://docs.apollo.io/docs
-  - type: APIReference
-    url: https://docs.apollo.io/reference
-  - type: Authentication
-    url: https://docs.apollo.io/reference/authentication
-  - type: RateLimits
-    url: https://docs.apollo.io/reference/rate-limits
-  - type: Tutorials
-    url: https://docs.apollo.io/docs/overview-apollo-api-tutorials
-  - type: FAQ
-    url: https://docs.apollo.io/docs/apollo-api-faqs
-- aid: apollo-api-documentation:apollo-api-documentation-usage-stats-api
-  name: Apollo API Documentation Usage Stats API
-  description: The Usage Stats API from Apollo API Documentation — 1 operation(s) for usage stats.
-  humanURL: https://docs.apollo.io/
+  - *id001
+  - *id002
+  - *id003
+  - *id004
+  - *id005
+  - *id006
+  - *id007
+  - type: Overlay
+    url: overlays/apollo-api-documentation-tasks-overlay.yaml
+  - type: PostmanCollection
+    url: collections/apollo-api-documentation-tasks-api.postman_collection.json
+- aid: apollo-api-documentation:apollo-api-documentation-mcp
+  name: Apollo MCP
+  description: Apollo's hosted remote Model Context Protocol server. Streamable HTTP transport at https://mcp.apollo.io/mcp,
+    OAuth 2.0 authorization with dynamic client registration, exposing Apollo search, enrichment, CRM, sequence, task and
+    analytics actions to AI clients.
+  humanURL: https://docs.apollo.io/docs/apollo-mcp
+  baseURL: https://mcp.apollo.io/mcp
   tags:
-  - Usage Stats
+  - MCP
+  - Agents
+  - AI
   properties:
-  - type: OpenAPI
-    url: openapi/apollo-api-documentation-usage-stats-api-openapi.yml
+  - type: MCPServer
+    url: mcp/apollo-api-documentation-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/apollo-api-documentation-tool-crosswalk.yml
   - type: Documentation
-    url: https://docs.apollo.io/
-  - type: GettingStarted
-    url: https://docs.apollo.io/docs
-  - type: APIReference
-    url: https://docs.apollo.io/reference
+    url: https://docs.apollo.io/docs/apollo-mcp
   - type: Authentication
     url: https://docs.apollo.io/reference/authentication
-  - type: RateLimits
-    url: https://docs.apollo.io/reference/rate-limits
-  - type: Tutorials
-    url: https://docs.apollo.io/docs/overview-apollo-api-tutorials
-  - type: FAQ
-    url: https://docs.apollo.io/docs/apollo-api-faqs
-- aid: apollo-api-documentation:apollo-api-documentation-users-api
-  name: Apollo API Documentation Users API
-  description: The Users API from Apollo API Documentation — 1 operation(s) for users.
-  humanURL: https://docs.apollo.io/
-  tags:
-  - Users
-  properties:
-  - type: OpenAPI
-    url: openapi/apollo-api-documentation-users-api-openapi.yml
-  - type: Documentation
-    url: https://docs.apollo.io/
-  - type: GettingStarted
-    url: https://docs.apollo.io/docs
-  - type: APIReference
-    url: https://docs.apollo.io/reference
-  - type: Authentication
-    url: https://docs.apollo.io/reference/authentication
-  - type: RateLimits
-    url: https://docs.apollo.io/reference/rate-limits
-  - type: Tutorials
-    url: https://docs.apollo.io/docs/overview-apollo-api-tutorials
-  - type: FAQ
-    url: https://docs.apollo.io/docs/apollo-api-faqs
 common:
-  - type: AgenticAccess
-    url: agentic-access/apollo-api-documentation-agentic-access.yml
-  - type: TrustCenter
-    url: security/apollo-api-documentation-trust-center.yml
-  - type: DomainSecurity
-    url: security/apollo-api-documentation-domain-security.yml
-  - url: https://www.apollo.io/magazine
-    type: Blog
-  - type: GitHubOrganization
-    url: https://github.com/apolloio
-  - type: Documentation
-    url: https://docs.apollo.io/
-  - type: GettingStarted
-    url: https://docs.apollo.io/docs
-  - type: APIReference
-    url: https://docs.apollo.io/reference
-  - type: Authentication
-    url: https://docs.apollo.io/reference/authentication
-  - type: RateLimits
-    url: https://docs.apollo.io/reference/rate-limits
-  - type: Features
-    data:
-      - name: People Enrichment
-        description: Enrich contact records with data from Apollo's 210M+ contact database.
-      - name: Organization Enrichment
-        description: Enrich company records with data from Apollo's 35M+ company database.
-      - name: People Search
-        description: Search Apollo's contact database to find and identify sales prospects.
-      - name: Organization Search
-        description: Search Apollo's company database for target accounts and job postings.
-      - name: CRM Integration
-        description: Manage accounts, contacts, deals, and sequences via the REST API.
-      - name: OAuth 2.0 Partner Integration
-        description: Partners use OAuth 2.0 to build integrations accessing Apollo data on behalf of customers.
-      - name: Interactive Try It
-        description: Interactive API testing capability built directly into the documentation.
-      - name: Analytics Reporting
-        description: Query analytics reports for performance metrics via the API.
-  - type: UseCases
-    data:
-      - name: Sales Intelligence
-        description: Access Apollo's contact and company database for prospecting and outreach.
-      - name: Data Enrichment Pipelines
-        description: Enrich CRM records with contact and organization data at scale.
-      - name: Partner Integrations
-        description: Build third-party integrations using OAuth 2.0 to access Apollo data for mutual customers.
-      - name: Workflow Automation
-        description: Automate sales workflows including sequences, tasks, and deal management.
-  - type: Integrations
-    data:
-      - name: OAuth 2.0
-        description: Partner integration protocol for accessing Apollo data on behalf of customers.
-      - name: API Key Authentication
-        description: Direct API key access for customers building internal integrations.
-  - type: LlmsText
-    url: https://docs.apollo.io/llms.txt
+- type: Authentication
+  url: authentication/apollo-api-documentation-authentication.yml
+- type: AgenticAccess
+  url: agentic-access/apollo-api-documentation-agentic-access.yml
+- type: TrustCenter
+  url: security/apollo-api-documentation-trust-center.yml
+- type: DomainSecurity
+  url: security/apollo-api-documentation-domain-security.yml
+- url: https://www.apollo.io/magazine
+  type: Blog
+- type: GitHubOrganization
+  url: https://github.com/apolloio
+- type: Documentation
+  url: https://docs.apollo.io/
+- type: GettingStarted
+  url: https://docs.apollo.io/docs/build-with-apollo
+- type: APIReference
+  url: https://docs.apollo.io/reference/apollo-api
+- type: Authentication
+  url: https://docs.apollo.io/reference/authentication
+- type: RateLimits
+  url: https://docs.apollo.io/reference/rate-limits
+- type: Features
+  data:
+  - name: People Enrichment
+    description: Enrich contact records with data from Apollo's 210M+ contact database.
+  - name: Organization Enrichment
+    description: Enrich company records with data from Apollo's 35M+ company database.
+  - name: People Search
+    description: Search Apollo's contact database to find and identify sales prospects.
+  - name: Organization Search
+    description: Search Apollo's company database for target accounts and job postings.
+  - name: CRM Integration
+    description: Manage accounts, contacts, deals, and sequences via the REST API.
+  - name: OAuth 2.0 Partner Integration
+    description: Partners use OAuth 2.0 to build integrations accessing Apollo data on behalf of customers.
+  - name: Interactive Try It
+    description: Interactive API testing capability built directly into the documentation.
+  - name: Analytics Reporting
+    description: Query analytics reports for performance metrics via the API.
+- type: UseCases
+  data:
+  - name: Sales Intelligence
+    description: Access Apollo's contact and company database for prospecting and outreach.
+  - name: Data Enrichment Pipelines
+    description: Enrich CRM records with contact and organization data at scale.
+  - name: Partner Integrations
+    description: Build third-party integrations using OAuth 2.0 to access Apollo data for mutual customers.
+  - name: Workflow Automation
+    description: Automate sales workflows including sequences, tasks, and deal management.
+- type: Integrations
+  data:
+  - name: OAuth 2.0
+    description: Partner integration protocol for accessing Apollo data on behalf of customers.
+  - name: API Key Authentication
+    description: Direct API key access for customers building internal integrations.
+- type: LlmsText
+  url: https://docs.apollo.io/llms.txt
+- type: OpenAPI
+  url: openapi/_original/apollo-api-documentation-apollo-rest-api-openapi.json
+- type: Packages
+  url: packages/apollo-api-documentation-packages.yml
+- type: WellKnown
+  url: well-known/apollo-api-documentation-well-known.yml
+- type: MCPServer
+  url: mcp/apollo-api-documentation-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/apollo-api-documentation-tool-crosswalk.yml
+- type: LLMsTxt
+  url: llms/apollo-api-documentation-llms.txt
+- type: Overlay
+  url: overlays/apollo-api-documentation-enrichment-overlay.yaml
+- type: Conformance
+  url: conformance/apollo-api-documentation-conformance.yml
+- type: Compliance
+  url: https://trust.apollo.io/
+- type: ErrorCatalog
+  url: errors/apollo-api-documentation-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/apollo-api-documentation-lifecycle.yml
+- type: StatusPage
+  url: https://status.apollo.io
+- type: OAuthScopes
+  url: scopes/apollo-api-documentation-scopes.yml
+- type: Conventions
+  url: conventions/apollo-api-documentation-conventions.yml
+- type: CLI
+  url: cli/apollo-api-documentation-cli.yml
+- type: DataModel
+  url: data-model/apollo-api-documentation-data-model.yml
+- type: Webhooks
+  url: asyncapi/apollo-api-documentation-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Plans
+  url: plans/apollo-api-documentation-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/apollo-api-documentation-rate-limits.yml
+- type: FinOps
+  url: finops/apollo-api-documentation-finops.yml
+- type: PostmanCollection
+  url: collections/apollo-api-documentation.postman_collection.json
+- type: DeveloperPortal
+  url: https://docs.apollo.io/
+- type: Quickstart
+  url: https://docs.apollo.io/docs/create-api-key
+- type: Support
+  url: https://www.apollo.io/contact
+- type: FAQ
+  url: https://docs.apollo.io/docs/developer-faqs
+- type: Tutorials
+  url: https://docs.apollo.io/docs/capabilities
+- type: Pricing
+  url: https://www.apollo.io/pricing
+- type: SignUp
+  url: https://www.apollo.io/sign-up
+- type: Login
+  url: https://app.apollo.io/
+- type: TermsOfService
+  url: https://www.apollo.io/terms/api
+- type: PrivacyPolicy
+  url: https://www.apollo.io/privacy-policy
+- type: TrustCenter
+  url: https://trust.apollo.io/
 maintainers:
-  - FN: Kin Lane
-    email: info@apievangelist.com
+- FN: Kin Lane
+  email: info@apievangelist.com
+x-enrichment:
+  date: '2026-08-14'
+  status: enriched
+  artifacts_added: 29
+  pass: local-v1
