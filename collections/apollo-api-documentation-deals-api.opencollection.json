@@ -1,0 +1,125 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apollo API — Deals",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Deals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Deal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/opportunities",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `deals/api/v1/opportunities/create` or `Master API key`\n\n**OAuth scopes:** `opportunity_write`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4415062467725-Deals-Overview\" target=\"_blank\">Deals</a> on Apollo help you track sales opportunities.<br><br>Use the Create Deal endpoint to create new deals for an Apollo account.<br><br"
+        },
+        {
+          "info": {
+            "name": "List All Deals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/opportunities/search",
+            "params": [
+              {
+                "name": "sort_by_field",
+                "value": "",
+                "type": "query",
+                "description": "Sort the tasks by 1 of the following options:    <ul> <li> `amount`: The largest deal values first. </li> <li> `is_closed`: Deals that have been closed first. </li> <li> `is_won`: Deals that have been won first. </li> </ul>"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint. <br><br>Example: `4`"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of search results that should be returned for each page. Limiting the number of results per page improves the endpoint's performance. <br><br>Use the `page` parameter to search the different pages of data. <br><br>Example: `10`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `deals/api/v1/opportunities/search` or `Master API key`\n\n**OAuth scopes:** `opportunities_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4415062467725-Deals-Overview\" target=\"_blank\">Deals</a> on Apollo help you track sales opportunities.<br><br>Use the List All Deals endpoint to retrieve every deal that has been created "
+        },
+        {
+          "info": {
+            "name": "View Deal",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/opportunities/:opportunity_id",
+            "params": [
+              {
+                "name": "opportunity_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID for the deal you want to view. <br><br>Each deal in the Apollo database is assigned a unique ID. To find deal IDs, call the <a href=\"https://docs.apollo.io/reference/list-all-deals\" target=\"_blank\">List All Deals endpoint</a> and identify the value for `id` for the desired deal. <br><br>Example: `66e09ea8e3cfcf01b2208ec7`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `deals/api/v1/opportunities/show` or `Master API key`\n\n**OAuth scopes:** `opportunity_read`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4415062467725-Deals-Overview\" target=\"_blank\">Deals</a> on Apollo help you track sales opportunities.<br><br>Use the View Deal endpoint to retrieve complete details about a deal within your "
+        },
+        {
+          "info": {
+            "name": "Update Deal",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.apollo.io/api/v1/opportunities/:opportunity_id",
+            "params": [
+              {
+                "name": "opportunity_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID for the deal you want to update. <br><br>Each deal in the Apollo database is assigned a unique ID. To find deal IDs, call the <a href=\"https://docs.apollo.io/reference/list-all-deals\" target=\"_blank\">List All Deals endpoint</a> and identify the value for `id` for the desired deal. <br><br>Example: `66e09ea8e3cfcf01b2208ec7`"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `deals/api/v1/opportunities/update` or `Master API key`\n\n**OAuth scopes:** `opportunity_update`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4415062467725-Deals-Overview\" target=\"_blank\">Deals</a> on Apollo help you track sales opportunities.<br><br>Use the Update Deal endpoint to update the details of existing deals within y"
+        },
+        {
+          "info": {
+            "name": "List Deal Stages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/opportunity_stages"
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `deals/api/v1/opportunity_stages/index` or `Master API key`\n\n**OAuth scopes:** `opportunity_stages_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4415062467725-Deals-Overview\" target=\"_blank\">Deals</a> on Apollo help you track sales opportunities.<br><br>Use the List Deal Stages endpoint to retrieve information about ever"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

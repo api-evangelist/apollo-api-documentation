@@ -1,73 +1,2184 @@
 openapi: 3.1.0
 info:
-  title: Apollo.io Accounts API
-  version: 1.0.0
-  description: Apollo.io provides sales intelligence and engagement APIs for prospecting, enrichment, sequences, deals, tasks and call records. This minimal OpenAPI was generated from the public reference documentation.
+  title: Apollo API — Accounts
+  summary: Programmatic access to Apollo's sales intelligence and engagement platform — data enrichment, prospect and company
+    search, and go-to-market workflow management.
+  description: 'The Apollo API provides programmatic access to [Apollo](https://www.apollo.io/), the all-in-one sales intelligence
+    and engagement platform. Use it to enrich people and company data (individually or in bulk), search Apollo''s database
+    of over 240 million contacts and 30 million companies, and manage accounts, contacts, deals, sequences, tasks, calls,
+    and conversations in your go-to-market workflows.
+
+
+    ## Base URL
+
+
+    All API requests are made to `https://api.apollo.io/api/v1`.
+
+
+    ## Authentication
+
+
+    - **Apollo users** authenticate with an API key passed in the `x-api-key` request header. See [Create API Keys](https://docs.apollo.io/docs/create-api-key).
+
+    - **Apollo partners** building integrations on behalf of mutual users authenticate with the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).
+
+
+    ## Rate limits & credits
+
+
+    Rate limits and credit consumption depend on your [Apollo pricing plan](https://docs.apollo.io/docs/api-pricing). Check
+    your current limits and usage with the [View API Usage Stats and Rate Limits](https://docs.apollo.io/reference/view-api-usage-stats)
+    endpoint. For more details, see [Rate Limits](https://docs.apollo.io/reference/rate-limits) and the [API FAQs](https://docs.apollo.io/docs/apollo-api-faqs).
+
+
+    New to the API? Start with the [Apollo API overview](https://docs.apollo.io/reference/apollo-api).'
+  termsOfService: https://www.apollo.io/terms/api
+  contact:
+    name: Apollo API Support
+    url: https://docs.apollo.io/
+  version: '1.0'
 servers:
-- url: https://api.apollo.io/v1
-  description: Production
+- url: https://api.apollo.io/api/v1
 tags:
 - name: Accounts
+  description: Create, update, and search the companies your team tracks in Apollo.
+security:
+- apiKey: []
+- bearerAuth: []
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: '[Recommended] API key, passed in the `x-api-key` request header.
+
+        See [Create API Keys](https://docs.apollo.io/docs/create-api-key).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'OAuth 2.0 access token, used by Apollo partners building integrations.
+
+        See the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).'
 paths:
   /accounts:
     post:
-      summary: Create an account
-      operationId: createAccount
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                type: object
+      summary: Create an Account
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/accounts/create` or `Master API key`
+
+
+        **OAuth scopes:** `account_write`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        An <a href="https://knowledge.apollo.io/hc/en-us/articles/5995865049229-View-and-Edit-Accounts" target="_blank">account</a>
+        is a company saved in Apollo.<br><br>Use the Create an Account endpoint to add a new account to your team''s Apollo
+        account.<br><br>Apollo doesn''t apply deduplication processes when you create a new account via the API. If your entry
+        has the same name, domain, or other details as an existing account, Apollo creates a new account instead of updating
+        the existing account. To update an existing account, use the <a href="https://docs.apollo.io/reference/update-an-account">Update
+        an Account endpoint</a> instead.'
       tags:
       - Accounts
-  /accounts/{id}:
-    parameters:
-    - name: id
-      in: path
-      required: true
-      schema:
-        type: string
-    patch:
-      summary: Update an account
-      operationId: updateAccount
+      operationId: create-an-account
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Name the account that you are creating. This should be a human-readable name. <br><br>Example:
+                    `The Irish Copywriters`'
+                domain:
+                  type: string
+                  description: 'The domain name for the account. <br><br>Do not include `www.` or similar. <br><br>Example:
+                    `apollo.io` or `microsoft.com`'
+                owner_id:
+                  type: string
+                  description: 'The ID for the account owner within your team''s Apollo account. <br><br>Use the <a href="https://docs.apollo.io/reference/get-a-list-of-users"
+                    target="_blank">Get a List of Users endpoint</a> to retrieve IDs for all of the users within your Apollo
+                    account. <br><br>Example: `66302798d03b9601c7934ebf`'
+                account_stage_id:
+                  type: string
+                  description: 'The Apollo ID for the account stage to which you want to assign the account. Call the <a href="https://docs.apollo.io/reference/list-account-stages"
+                    target="_blank">List Account Stages endpoint</a> to retrieve a list of all the account stage IDs available
+                    in your Apollo account. <br><br>If you do not specify the account stage, Apollo automatically assigns
+                    the account to a stage as determined by your team''s Apollo account. To change the order of account stages,
+                    launch the Apollo product and go to <b>Settings</b> > <b>Objects</b> > <a href="https://app.apollo.io/#/settings/accounts/stages"
+                    target="_blank"><b>Accounts</b></a>. Then, access the <b>Triggers</b> tab and change the stage for when
+                    an account is created.<br><br>Example: `6095a710bd01d100a506d4b9`'
+                phone:
+                  type: string
+                  description: 'The primary phone number for the account. <br><br>This can be the phone number for the corporate
+                    headquarters, a branch location, or a direct dial to the primary point of contact for the account. <br><br>Apollo
+                    sanitizes phone numbers, so you can enter them in any format. The sanitized number can be viewed in the
+                    endpoint response. <br><br>Examples: `555-555-0133`; `+44 7700 900852`'
+                raw_address:
+                  type: string
+                  description: 'The corporate location for the account. This can include a city, US state, and country. <br><br>Apollo
+                    matches the location you provide to the most applicable pre-defined location. <br><br>Examples: `Belfield,
+                    Dublin 4, Ireland`; `Dallas, United States`'
+                typed_custom_fields:
+                  type: object
+                  description: "Add information to <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4412498754445-Create-Custom-Account-Fields\"\
+                    \ target=\"_blank\">custom fields</a> in Apollo. <br><br><b>Your custom fields are unique to your team's\
+                    \ Apollo account. This means that the examples in this documentation may not work for your testing purposes.</b>\
+                    \ <br><br>To utilize this parameter successfully, call the <a href=\"https://docs.apollo.io/reference/get-a-list-of-all-custom-fields\"\
+                    >Get a List of All Custom Fields</a> endpoint and identify the `id` value for the custom field, as well\
+                    \ as the appropriate data type. For example, if a custom field accepts picklist entries, you need to pass\
+                    \ the accompanying `id` value for the picklist entry that you want to use as the input value. <br><br><b>Example</b>:\
+                    \ When the <a href=\"https://docs.apollo.io/reference/get-a-list-of-all-custom-fields\">Get a List of\
+                    \ All Custom Fields</a> endpoint returns an `id` of field: \n * `\"60c39ed82bd02f01154c470a\"` (datetime)\
+                    \ \n \n\n then the value passed should be: \n\n `{\"60c39ed82bd02f01154c470a\": \"2025-08-07\"}`"
+                  additionalProperties:
+                    type: string
+                  example:
+                    60c39ed82bd02f01154c470a: '2025-08-07'
       responses:
         '200':
-          description: OK
+          description: '200'
           content:
             application/json:
+              examples:
+                Result:
+                  value:
+                    account:
+                      id: 66e9abf95ac32901b20d1a0d
+                      domain: irishcopywriters.ie
+                      name: The Irish Copywriters
+                      team_id: 6095a710bd01d100a506d4ac
+                      organization_id: null
+                      account_stage_id: 6095a710bd01d100a506d4b9
+                      source: api
+                      original_source: api
+                      creator_id: null
+                      owner_id: 66302798d03b9601c7934ebf
+                      created_at: '2024-09-17T16:19:05.663Z'
+                      phone: 555-555-0108
+                      phone_status: no_status
+                      hubspot_id: null
+                      salesforce_id: null
+                      crm_owner_id: null
+                      parent_account_id: null
+                      linkedin_url: null
+                      sanitized_phone: '+15555550108'
+                      account_playbook_statuses: []
+                      account_rule_config_statuses: []
+                      existence_level: full
+                      label_ids: []
+                      typed_custom_fields:
+                        60c39ed82bd02f01154c470a: '2025-08-07'
+                      custom_field_errors: {}
+                      modality: account
+                      source_display_name: Created from API
+                      crm_record_url: null
+                      show_intent: false
+                      has_intent_signal_account: false
+                      intent_signal_account: null
               schema:
                 type: object
+                properties:
+                  account:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 66e9abf95ac32901b20d1a0d
+                      domain:
+                        type: string
+                        example: irishcopywriters.ie
+                      name:
+                        type: string
+                        example: The Irish Copywriters
+                      team_id:
+                        type: string
+                        example: 6095a710bd01d100a506d4ac
+                      organization_id: {}
+                      account_stage_id:
+                        type: string
+                        example: 6095a710bd01d100a506d4b9
+                      source:
+                        type: string
+                        example: api
+                      original_source:
+                        type: string
+                        example: api
+                      creator_id: {}
+                      owner_id:
+                        type: string
+                        example: 66302798d03b9601c7934ebf
+                      created_at:
+                        type: string
+                        example: '2024-09-17T16:19:05.663Z'
+                      phone:
+                        type: string
+                        example: 555-555-0108
+                      phone_status:
+                        type: string
+                        example: no_status
+                      hubspot_id: {}
+                      salesforce_id: {}
+                      crm_owner_id: {}
+                      parent_account_id: {}
+                      linkedin_url: {}
+                      sanitized_phone:
+                        type: string
+                        example: '+15555550108'
+                      account_playbook_statuses:
+                        type: array
+                      account_rule_config_statuses:
+                        type: array
+                      existence_level:
+                        type: string
+                        example: full
+                      label_ids:
+                        type: array
+                      typed_custom_fields:
+                        type: object
+                        properties: {}
+                      custom_field_errors:
+                        type: object
+                        properties: {}
+                      modality:
+                        type: string
+                        example: account
+                      source_display_name:
+                        type: string
+                        example: Created from API
+                      crm_record_url: {}
+                      show_intent:
+                        type: boolean
+                        example: false
+                        default: true
+                      has_intent_signal_account:
+                        type: boolean
+                        example: false
+                        default: true
+                      intent_signal_account: {}
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Need master API key:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/accounts/create. Request an API\
+                    \ key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\"\
+                    : \"API_INACCESSIBLE\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: This API key is not authorized to access api/v1/accounts/create. Request an API key from your
+                      administrator that includes this endpoint in its configured scope.
+                  error_code:
+                    type: string
+                    example: API_INACCESSIBLE
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Add name or domain:
+                  value: "{\n  \"error\": \"Please specify at least a name or domain.\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Please specify at least a name or domain.
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/accounts is 600 times per\
+                    \ hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of api calls allowed for api/v1/accounts is 600 times per hour. Please upgrade
+                      your plan from https://app.apollo.io/#/settings/plans/upgrade.
+      deprecated: false
+  /accounts/{account_id}:
+    patch:
+      summary: Update an Account
+      description: "## Endpoint essentials\n\n**API key access:** `api/v1/accounts/update` or `Master API key`\n\n**OAuth\
+        \ scopes:** `account_update`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\
+        \n An <a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995865049229-View-and-Edit-Accounts\" target=\"_blank\"\
+        >account</a> is a company saved in Apollo.<br><br>Use the Update an Account endpoint to update existing accounts in\
+        \ your team's Apollo account.<br><br>To create a new account, use the <a href=\"https://docs.apollo.io/reference/create-an-account\"\
+        >Create an Account endpoint</a> instead. To update the account stage for multiple accounts, use the <a href=\"https://docs.apollo.io/reference/bulk-update-accounts\"\
+        >Bulk Update Accounts endpoint</a>."
       tags:
       - Accounts
+      operationId: update-an-account
+      parameters:
+      - name: account_id
+        in: path
+        description: 'The Apollo ID for the account that you want to update. <br><br>To find account IDs, call the <a href="https://docs.apollo.io/reference/search-for-accounts"
+          target="_blank">Search for Accounts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e9abf95ac32901b20d1a0d`'
+        schema:
+          type: string
+        required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Update the account''s name. This should be a human-readable name. <br><br>Example: `The Fast
+                    Irish Copywriters`'
+                domain:
+                  type: string
+                  description: 'Update the domain name for the account. Do not include `www.` or similar. <br><br>Example:
+                    `apollo.io` or `microsoft.com`'
+                owner_id:
+                  type: string
+                  description: 'The ID for the account owner within your team''s Apollo account. Enter a different ID to update
+                    the owner of the account. <br><br>Use the <a href="https://docs.apollo.io/reference/get-a-list-of-users"
+                    target="_blank">Get a List of Users endpoint</a> to retrieve IDs for all of the users within your Apollo
+                    account. <br><br>Example: `66302798d03b9601c7934ebf`'
+                account_stage_id:
+                  type: string
+                  description: 'The Apollo ID for the account stage to which you want to assign the account. Enter a different
+                    ID to update the account stage. <br><br>Call the <a href="https://docs.apollo.io/reference/list-account-stages"
+                    target="_blank">List Account Stages endpoint</a> to retrieve a list of all the account stage IDs available
+                    in your Apollo account. <br><br>If you do not specify the account stage, Apollo automatically assigns
+                    the account to a stage as determined by your team''s Apollo account. To change the order of account stages,
+                    launch the Apollo product and go to <b>Settings</b> > <b>Objects</b> > <a href="https://app.apollo.io/#/settings/accounts/stages"
+                    target="_blank"><b>Accounts</b></a>. Then, access the <b>Triggers</b> tab and change the stage for when
+                    an account is created. <br><br>Example: `61b8e913e0f4d2012e3af74e`'
+                raw_address:
+                  type: string
+                  description: 'Update the corporate location for the account. This can include a city, US state, and country.
+                    <br><br>Apollo matches the location you provide to the most applicable pre-defined location. <br><br>Examples:
+                    `Belfield, Dublin 4, Ireland`; `Dallas, United States`'
+                phone:
+                  type: string
+                  description: 'Update the primary phone number for the account. <br><br>This can be the phone number for
+                    the corporate headquarters, a branch location, or a direct dial to the primary point of contact for the
+                    account. <br><br>Apollo sanitizes phone numbers, so you can enter them in any format. The sanitized number
+                    can be viewed in the endpoint response. <br><br>Examples: `555-555-0133`; `+44 7700 900852`'
+                typed_custom_fields:
+                  type: object
+                  description: "Add information to <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4412498754445-Create-Custom-Account-Fields\"\
+                    \ target=\"_blank\">custom fields</a> in Apollo. <br><br><b>Your custom fields are unique to your team's\
+                    \ Apollo account. This means that the examples in this documentation may not work for your testing purposes.</b>\
+                    \ <br><br>To utilize this parameter successfully, call the <a href=\"https://docs.apollo.io/reference/get-a-list-of-all-custom-fields\"\
+                    >Get a List of All Custom Fields</a> endpoint and identify the `id` value for the custom field, as well\
+                    \ as the appropriate data type. For example, if a custom field accepts picklist entries, you need to pass\
+                    \ the accompanying `id` value for the picklist entry that you want to use as the input value. <br><br><b>Example</b>:\
+                    \ When the <a href=\"https://docs.apollo.io/reference/get-a-list-of-all-custom-fields\">Get a List of\
+                    \ All Custom Fields</a> endpoint returns an `id` of field: \n * `\"60c39ed82bd02f01154c470a\"` (datetime)\
+                    \ \n \n\n then the value passed should be: \n\n `{\"60c39ed82bd02f01154c470a\": \"2025-08-07\"}`"
+                  additionalProperties:
+                    type: string
+                  example:
+                    60c39ed82bd02f01154c470a: '2025-08-07'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    account:
+                      id: 66e9abf95ac32901b20d1a0d
+                      domain: irishcopywriters.com
+                      name: The Fast Irish Copywriters
+                      team_id: 6095a710bd01d100a506d4ac
+                      organization_id: null
+                      account_stage_id: 61b8e913e0f4d2012e3af74e
+                      source: api
+                      original_source: api
+                      creator_id: null
+                      owner_id: 66302798d03b9601c7934ebf
+                      created_at: '2024-09-17T16:19:05.663Z'
+                      phone: 555-555-0172
+                      phone_status: no_status
+                      hubspot_id: null
+                      salesforce_id: null
+                      crm_owner_id: null
+                      parent_account_id: null
+                      linkedin_url: null
+                      sanitized_phone: '+15555550172'
+                      account_playbook_statuses: []
+                      account_rule_config_statuses: []
+                      existence_level: full
+                      label_ids: []
+                      custom_field_errors: {}
+                      modality: account
+                      source_display_name: Created from API
+                      crm_record_url: null
+                      show_intent: false
+                      has_intent_signal_account: false
+                      intent_signal_account: null
+                      typed_custom_fields:
+                        60c39ed82bd02f01154c470a: '2025-08-07'
+                    labels: []
+              schema:
+                type: object
+                properties:
+                  account:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 66e9abf95ac32901b20d1a0d
+                      domain:
+                        type: string
+                        example: irishcopywriters.com
+                      name:
+                        type: string
+                        example: The Fast Irish Copywriters
+                      team_id:
+                        type: string
+                        example: 6095a710bd01d100a506d4ac
+                      organization_id: {}
+                      account_stage_id:
+                        type: string
+                        example: 61b8e913e0f4d2012e3af74e
+                      source:
+                        type: string
+                        example: api
+                      original_source:
+                        type: string
+                        example: api
+                      creator_id: {}
+                      owner_id:
+                        type: string
+                        example: 66302798d03b9601c7934ebf
+                      created_at:
+                        type: string
+                        example: '2024-09-17T16:19:05.663Z'
+                      phone:
+                        type: string
+                        example: 555-555-0172
+                      phone_status:
+                        type: string
+                        example: no_status
+                      hubspot_id: {}
+                      salesforce_id: {}
+                      crm_owner_id: {}
+                      parent_account_id: {}
+                      linkedin_url: {}
+                      sanitized_phone:
+                        type: string
+                        example: '+15555550172'
+                      account_playbook_statuses:
+                        type: array
+                      account_rule_config_statuses:
+                        type: array
+                      existence_level:
+                        type: string
+                        example: full
+                      label_ids:
+                        type: array
+                      typed_custom_fields:
+                        type: object
+                        properties: {}
+                      custom_field_errors:
+                        type: object
+                        properties: {}
+                      modality:
+                        type: string
+                        example: account
+                      source_display_name:
+                        type: string
+                        example: Created from API
+                      crm_record_url: {}
+                      show_intent:
+                        type: boolean
+                        example: false
+                        default: true
+                      has_intent_signal_account:
+                        type: boolean
+                        example: false
+                        default: true
+                      intent_signal_account: {}
+                  labels:
+                    type: array
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Need master API key:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/accounts/update. Request an API\
+                    \ key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\"\
+                    : \"API_INACCESSIBLE\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: This API key is not authorized to access api/v1/accounts/update. Request an API key from your
+                      administrator that includes this endpoint in its configured scope.
+                  error_code:
+                    type: string
+                    example: API_INACCESSIBLE
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Check account ID:
+                  value: "{\n  \"error\": \"Parameters misconfigured. account_id is not a valid ID\"\n}"
+                Check owner ID:
+                  value: "{\n  \"error\": \"Parameters misconfigured. 23423423 is not a valid ID\"\n}"
+                Check account stage ID:
+                  value: "{\n  \"error\": \"Parameters misconfigured. 78977 is not a valid ID\"\n}"
+              schema:
+                oneOf:
+                - title: Check account ID
+                  type: object
+                  properties:
+                    error:
+                      type: string
+                      example: Parameters misconfigured. account_id is not a valid ID
+                - title: Check owner ID
+                  type: object
+                  properties:
+                    error:
+                      type: string
+                      example: Parameters misconfigured. 23423423 is not a valid ID
+                - title: Check account stage ID
+                  type: object
+                  properties:
+                    error:
+                      type: string
+                      example: Parameters misconfigured. 78977 is not a valid ID
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/accounts/{account_id} is\
+                    \ 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n\
+                    }"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of api calls allowed for api/v1/accounts/{account_id} is 600 times per hour.
+                      Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+      deprecated: false
+  /accounts/search:
+    post:
+      summary: Search for Accounts
+      description: "## Endpoint essentials\n\n**API key access:** `api/v1/accounts/search` or `Master API key`\n\n**OAuth\
+        \ scopes:** `accounts_search`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\
+        \n An <a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995865049229-View-and-Edit-Accounts\" target=\"_blank\"\
+        >account</a> is a company saved in Apollo.<br><br>Use the Search for Accounts endpoint to search for an account that\
+        \ has been saved to Apollo.<br><br>This endpoint only returns accounts in the search results. To search for companies\
+        \ in Apollo, call the <a href=\"https://docs.apollo.io/reference/organization-search\">Organization Search endpoint</a>.<br><br>To\
+        \ protect Apollo's performance for all users, this endpoint has a display limit of 50,000 records (100 records per\
+        \ page, up to 500 pages). Add more filters to narrow your search results as much as possible."
+      tags:
+      - Accounts
+      operationId: search-for-accounts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                q_organization_name:
+                  type: string
+                  description: 'Add keywords to narrow the search of the accounts in your team''s Apollo account. Keywords
+                    should directly match at least part of an account''s name. For example, searching the keyword `marketing`
+                    might return the result `NY Marketing Unlimited`, but not `NY Market Analysts`. This parameter only searches
+                    account names, not other account fields. Examples: `apollo`; `microsoft`; `marketing`'
+                account_stage_ids:
+                  type: array
+                  items:
+                    type: string
+                  description: 'The Apollo IDs for the account stages that you want to include in your search results. If
+                    you add multiple account stages, Apollo will include all accounts that match any of the stages, along
+                    with the other parameters, in the search results. Call the [List Account Stages endpoint](https://docs.apollo.io/reference/list-account-stages)
+                    to retrieve a list of all the account stage IDs available in your Apollo account. Example: `61b8e913e0f4d2012e3af74e`'
+                account_label_ids:
+                  type: array
+                  items:
+                    type: string
+                  description: 'The Apollo IDs for the labels that you want to include in your search results. If you add
+                    multiple labels, Apollo will include all accounts connected to any of the labels, along with the other
+                    parameters, in the search results. Example: `[''6095a710bd01d100a506d4ae'']`'
+                sort_by_field:
+                  type: string
+                  enum:
+                  - account_last_activity_date
+                  - account_created_at
+                  - account_updated_at
+                  description: 'Sort the matching accounts by 1 of the following options:
+
+                    - `account_last_activity_date`: The most recent activity date recorded first.
+
+                    - `account_created_at`: The most recently created first.
+
+                    - `account_updated_at`: The most recently updated first.'
+                sort_ascending:
+                  type: boolean
+                  default: false
+                  description: 'Set to `true` to sort the matching accounts in ascending order. This parameter must be used
+                    with `sort_by_field`. Otherwise, the sorting logic is not applied. Example: `true`'
+                page:
+                  type: integer
+                  format: int32
+                  description: 'The page number of the Apollo data that you want to retrieve. Use this parameter in combination
+                    with the `per_page` parameter to make search results navigable and improve the performance of the endpoint.
+                    Example: `4`'
+                per_page:
+                  type: integer
+                  format: int32
+                  description: 'The number of search results that should be returned for each page. Limiting the number of
+                    results per page improves the endpoint''s performance. Use the `page` parameter to navigate through the
+                    different pages of data. Example: `10`'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    breadcrumbs:
+                    - label: Company Name
+                      signal_field_name: q_organization_name
+                      value: Irish Copywriters
+                      display_name: Irish Copywriters
+                    - label: Account Stage
+                      signal_field_name: account_stage_ids
+                      value: 61b8e913e0f4d2012e3af74e
+                      display_name: Lead
+                    partial_results_only: false
+                    has_join: false
+                    disable_eu_prospecting: false
+                    partial_results_limit: 10000
+                    pagination:
+                      page: 1
+                      per_page: 5
+                      total_entries: 1
+                      total_pages: 1
+                    accounts:
+                    - id: 66e9abf95ac32901b20d1a0d
+                      domain: irishcopywriters.com
+                      name: The Fast Irish Copywriters
+                      team_id: 6095a710bd01d100a506d4ac
+                      organization_id: null
+                      account_stage_id: 61b8e913e0f4d2012e3af74e
+                      label_ids:
+                      - 68eec47ece3b0b000de4751f
+                      source: api
+                      original_source: api
+                      creator_id: null
+                      owner_id: 66302798d03b9601c7934ebf
+                      created_at: '2024-09-17T16:19:05.663Z'
+                      phone: 555-555-0172
+                      phone_status: no_status
+                      hubspot_id: null
+                      salesforce_id: null
+                      crm_owner_id: null
+                      parent_account_id: null
+                      linkedin_url: null
+                      sanitized_phone: '+15555550172'
+                      account_playbook_statuses: []
+                      account_rule_config_statuses: []
+                      existence_level: full
+                      typed_custom_fields: {}
+                      custom_field_errors: {}
+                      modality: account
+                      source_display_name: Created from API
+                      crm_record_url: null
+                      contact_emailer_campaign_ids: []
+                      contact_campaign_status_tally: {}
+                      num_contacts: 0
+                      last_activity_date: null
+                      show_intent: false
+                      has_intent_signal_account: false
+                      intent_signal_account: null
+                    num_fetch_result: null
+              schema:
+                type: object
+                properties:
+                  breadcrumbs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        label:
+                          type: string
+                          example: Company Name
+                        signal_field_name:
+                          type: string
+                          example: q_organization_name
+                        value:
+                          type: string
+                          example: Irish Copywriters
+                        display_name:
+                          type: string
+                          example: Irish Copywriters
+                  partial_results_only:
+                    type: boolean
+                    example: false
+                    default: true
+                  has_join:
+                    type: boolean
+                    example: false
+                    default: true
+                  disable_eu_prospecting:
+                    type: boolean
+                    example: false
+                    default: true
+                  partial_results_limit:
+                    type: integer
+                    example: 10000
+                    default: 0
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                        example: 1
+                        default: 0
+                      per_page:
+                        type: integer
+                        example: 5
+                        default: 0
+                      total_entries:
+                        type: integer
+                        example: 1
+                        default: 0
+                      total_pages:
+                        type: integer
+                        example: 1
+                        default: 0
+                  accounts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 66e9abf95ac32901b20d1a0d
+                        domain:
+                          type: string
+                          example: irishcopywriters.com
+                        name:
+                          type: string
+                          example: The Fast Irish Copywriters
+                        team_id:
+                          type: string
+                          example: 6095a710bd01d100a506d4ac
+                        organization_id: {}
+                        account_stage_id:
+                          type: string
+                          example: 61b8e913e0f4d2012e3af74e
+                        source:
+                          type: string
+                          example: api
+                        original_source:
+                          type: string
+                          example: api
+                        creator_id: {}
+                        owner_id:
+                          type: string
+                          example: 66302798d03b9601c7934ebf
+                        created_at:
+                          type: string
+                          example: '2024-09-17T16:19:05.663Z'
+                        phone:
+                          type: string
+                          example: 555-555-0172
+                        phone_status:
+                          type: string
+                          example: no_status
+                        hubspot_id: {}
+                        salesforce_id: {}
+                        crm_owner_id: {}
+                        parent_account_id: {}
+                        linkedin_url: {}
+                        sanitized_phone:
+                          type: string
+                          example: '+15555550172'
+                        account_playbook_statuses:
+                          type: array
+                        account_rule_config_statuses:
+                          type: array
+                        existence_level:
+                          type: string
+                          example: full
+                        label_ids:
+                          type: array
+                        typed_custom_fields:
+                          type: object
+                          properties: {}
+                        custom_field_errors:
+                          type: object
+                          properties: {}
+                        modality:
+                          type: string
+                          example: account
+                        source_display_name:
+                          type: string
+                          example: Created from API
+                        crm_record_url: {}
+                        contact_emailer_campaign_ids:
+                          type: array
+                        contact_campaign_status_tally:
+                          type: object
+                          properties: {}
+                        num_contacts:
+                          type: integer
+                          example: 0
+                          default: 0
+                        last_activity_date: {}
+                        show_intent:
+                          type: boolean
+                          example: false
+                          default: true
+                        has_intent_signal_account:
+                          type: boolean
+                          example: false
+                          default: true
+                        intent_signal_account: {}
+                  num_fetch_result: {}
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Check Apollo pricing plan:
+                  value: "{\n  \"message\": \"This endpoint is only available to Apollo users on paid plans.\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: This endpoint is only available to Apollo users on paid plans.
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Choose valid sort_by_field option:
+                  value: "{\n  \"error\": \"Invalid sort criteria\",\n  \"skip_alert_dialog\": true\n}"
+                Check account stage IDs:
+                  value: "{\n  \"error\": \"Your search parameters are entered incorrectly. Did you try to edit the URL directly?\"\
+                    \n}"
+              schema:
+                oneOf:
+                - title: Choose valid sort_by_field option
+                  type: object
+                  properties:
+                    error:
+                      type: string
+                      example: Invalid sort criteria
+                    skip_alert_dialog:
+                      type: boolean
+                      example: true
+                      default: true
+                - title: Check account stage IDs
+                  type: object
+                  properties:
+                    error:
+                      type: string
+                      example: Your search parameters are entered incorrectly. Did you try to edit the URL directly?
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/accounts/search is 600\
+                    \ times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of api calls allowed for api/v1/accounts/search is 600 times per hour. Please
+                      upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+      deprecated: false
   /accounts/bulk_create:
     post:
-      summary: Bulk create accounts
-      operationId: bulkCreateAccounts
+      summary: Bulk Create Accounts
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/accounts/bulk_create` or `Master API key`
+
+
+        **OAuth scopes:** `account_bulk_create`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        An <a href="https://knowledge.apollo.io/hc/en-us/articles/5995865049229-View-and-Edit-Accounts" target="_blank">account</a>
+        is a company saved in Apollo.<br><br>Use the bulk create accounts endpoint to create up to one hundred accounts in
+        a single API request. This endpoint supports intelligent deduplication and returns separate arrays for newly created
+        and existing accounts. <br><br>**Important**: This endpoint creates new accounts but doesn''t update existing ones.
+        Existing accounts that match the criteria are returned in the <code>existing_accounts</code> array without modification.
+        <br><br>To update existing accounts, use the <a href="https://docs.apollo.io/reference/bulk-update-accounts">Bulk
+        Update Accounts endpoint</a>.'
+      tags:
+      - Accounts
+      operationId: bulk-create-accounts
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               type: object
+              required:
+              - accounts
+              properties:
+                accounts:
+                  type: array
+                  description: Array of account attribute objects (maximum 100 accounts per request)
+                  maxItems: 100
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: Account name
+                        example: Acme Corporation
+                      domain:
+                        type: string
+                        description: Company domain (e.g., 'example.com')
+                        example: acme.com
+                      owner_id:
+                        type: string
+                        description: Account owner user ID (BSON::ObjectId format). Defaults to current user if not provided
+                        example: 507f1f77bcf86cd799439013
+                      phone:
+                        type: string
+                        description: Company phone number
+                        example: +1-555-0135
+                      phone_status_cd:
+                        type: string
+                        description: Phone validation status
+                      raw_address:
+                        type: string
+                        description: Company address
+                        example: 123 Main St, San Francisco, CA 94105
+                      linkedin_url:
+                        type: string
+                        description: LinkedIn company page URL
+                        example: https://linkedin.com/company/acme
+                      facebook_url:
+                        type: string
+                        description: Facebook page URL
+                        example: https://facebook.com/acme
+                      twitter_url:
+                        type: string
+                        description: Twitter profile URL
+                        example: https://twitter.com/acme
+                      salesforce_id:
+                        type: string
+                        description: Salesforce account ID for CRM integration
+                        example: 001pJNj9pix2idKsfj
+                      hubspot_id:
+                        type: string
+                        description: HubSpot company ID for CRM integration
+                        example: '12345678'
+                      merged_crm_ids:
+                        type: array
+                        description: Additional CRM IDs for deduplication
+                        items:
+                          type: string
+                      organization_id:
+                        type: string
+                        description: Apollo organization ID
+                        example: 507f1f77bcf86cd799439012
+                      parent_account_id:
+                        type: string
+                        description: Parent account ID for account hierarchy (BSON::ObjectId format)
+                        example: 507f1f77bcf86cd799439016
+                      account_stage_id:
+                        type: string
+                        description: Account stage/pipeline stage ID (BSON::ObjectId format)
+                        example: 507f1f77bcf86cd799439014
+                      typed_custom_fields:
+                        type: object
+                        description: Custom field values as key-value pairs where key is the field_id and value is the field_value
+                        additionalProperties:
+                          type: string
+                        example:
+                          507f1f77bcf86cd799439020: High Value
+                          507f1f77bcf86cd799439021: Q4 2025
+                append_label_names:
+                  type: array
+                  description: Array of label names to add to ALL accounts in this request
+                  items:
+                    type: string
+                  example:
+                  - Enterprise
+                  - High Priority
+                run_dedupe:
+                  type: boolean
+                  description: Enable aggressive deduplication by domain, organization_id, and name. When false (default),
+                    only matches by CRM IDs. When true, also matches by domain, organization_id, and name. Existing accounts
+                    are returned without modification in both modes
+                  default: false
+                  example: true
+            examples:
+              Basic Account Creation:
+                value:
+                  accounts:
+                  - name: Acme Corporation
+                    domain: acme.com
+                    phone: +1-555-0135
+                  - name: TechStart Inc
+                    domain: example.com
+                    linkedin_url: https://linkedin.com/company/techstart
+              With Deduplication (Returns Existing Without Updating):
+                value:
+                  accounts:
+                  - domain: existing-company.com
+                    name: New Company Name
+                  run_dedupe: true
+              With CRM IDs (Returns Existing Without Updating):
+                value:
+                  accounts:
+                  - salesforce_id: 001pJNj9pix2idKsfj
+                    name: New Name
+                    phone: +1-555-0159
+                  - hubspot_id: '12345678'
+                    name: Another New Name
+              With Custom Fields and Labels:
+                value:
+                  accounts:
+                  - name: Enterprise Client
+                    domain: example.com
+                    account_stage_id: 507f1f77bcf86cd799439014
+                    typed_custom_fields:
+                      507f1f77bcf86cd799439020: High Value
+                      507f1f77bcf86cd799439021: Q4 2025
+                  append_label_names:
+                  - Enterprise
+                  - Priority
       responses:
         '200':
-          description: OK
+          description: 200 - Successful bulk create operation
           content:
             application/json:
+              examples:
+                Result:
+                  value:
+                    created_accounts:
+                    - id: 507f1f77bcf86cd799439011
+                      name: Acme Corporation
+                      domain: acme.com
+                      team_id: 507f1f77bcf86cd799439012
+                      owner_id: 507f1f77bcf86cd799439013
+                      account_stage_id: 507f1f77bcf86cd799439014
+                      phone: +1-555-0135
+                      created_at: '2025-10-16T18:30:00Z'
+                      updated_at: '2025-10-16T18:30:00Z'
+                    - id: 507f1f77bcf86cd799439017
+                      name: TechStart Inc
+                      domain: example.com
+                      team_id: 507f1f77bcf86cd799439012
+                      owner_id: 507f1f77bcf86cd799439013
+                      linkedin_url: https://linkedin.com/company/techstart
+                      created_at: '2025-10-16T18:30:00Z'
+                      updated_at: '2025-10-16T18:30:00Z'
+                    existing_accounts:
+                    - id: 507f1f77bcf86cd799439015
+                      name: Original Company Name
+                      domain: existing.com
+                      team_id: 507f1f77bcf86cd799439012
+                      owner_id: 507f1f77bcf86cd799439013
+                      created_at: '2025-09-01T10:00:00Z'
+                      updated_at: '2025-09-15T14:30:00Z'
               schema:
                 type: object
+                properties:
+                  created_accounts:
+                    type: array
+                    description: Array of newly created accounts
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Account ID
+                          example: 507f1f77bcf86cd799439011
+                        name:
+                          type: string
+                          description: Account name
+                          example: Acme Corporation
+                        domain:
+                          type: string
+                          description: Company domain
+                          example: acme.com
+                        team_id:
+                          type: string
+                          description: Team ID
+                          example: 507f1f77bcf86cd799439012
+                        owner_id:
+                          type: string
+                          description: Account owner ID
+                          example: 507f1f77bcf86cd799439013
+                        account_stage_id:
+                          type: string
+                          description: Account stage ID
+                          example: 507f1f77bcf86cd799439014
+                        phone:
+                          type: string
+                          description: Company phone number
+                          example: +1-555-0135
+                        created_at:
+                          type: string
+                          format: date-time
+                          description: Account creation timestamp
+                          example: '2025-10-16T18:30:00Z'
+                        updated_at:
+                          type: string
+                          format: date-time
+                          description: Account last update timestamp
+                          example: '2025-10-16T18:30:00Z'
+                  existing_accounts:
+                    type: array
+                    description: Array of existing accounts that matched deduplication criteria (returned without modification)
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Account ID
+                          example: 507f1f77bcf86cd799439015
+                        name:
+                          type: string
+                          description: Account name
+                          example: Original Company Name
+                        domain:
+                          type: string
+                          description: Company domain
+                          example: existing.com
+                        team_id:
+                          type: string
+                          description: Team ID
+                          example: 507f1f77bcf86cd799439012
+                        owner_id:
+                          type: string
+                          description: Account owner ID
+                          example: 507f1f77bcf86cd799439013
+                        created_at:
+                          type: string
+                          format: date-time
+                          description: Account creation timestamp
+                          example: '2025-09-01T10:00:00Z'
+                        updated_at:
+                          type: string
+                          format: date-time
+                          description: Account last update timestamp
+                          example: '2025-09-15T14:30:00Z'
+        '401':
+          description: 401 - Unauthorized
+          content:
+            text/plain:
+              examples:
+                Invalid API Key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '422':
+          description: 422 - Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                Missing accounts parameter:
+                  value: "{\n  \"error\": \"Please provide an array of account attributes in the \\\"accounts\\\" parameter.\"\
+                    \n}"
+                Too many accounts:
+                  value: "{\n  \"error\": \"Please limit your array to 100 accounts or fewer.\"\n}"
+                Invalid accounts parameter:
+                  value: "{\n  \"error\": \"Please provide an array of account attributes in the \\\"accounts\\\" parameter.\"\
+                    \n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Please provide an array of account attributes in the "accounts" parameter.
+        '429':
+          description: 429 - Too Many Requests
+          content:
+            application/json:
+              examples:
+                Rate limit exceeded:
+                  value: "{\n  \"message\": \"The maximum number of api calls allowed for api/v1/accounts/bulk_create is 600\
+                    \ times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of api calls allowed for api/v1/accounts/bulk_create is 600 times per hour.
+                      Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+        '500':
+          description: 500 - Internal Server Error
+          content:
+            application/json:
+              examples:
+                Server error:
+                  value: "{\n  \"error\": \"An error occurred while creating accounts. Please try again.\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: An error occurred while creating accounts. Please try again.
+      deprecated: false
+  /accounts/bulk_update:
+    post:
+      summary: Bulk Update Accounts
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/accounts/bulk_update` or `Master API key`
+
+
+        **OAuth scopes:** `account_stages_update`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        An <a href="https://knowledge.apollo.io/hc/en-us/articles/5995865049229-View-and-Edit-Accounts" target="_blank">account</a>
+        is a company saved in Apollo.<br><br>Use the Bulk Update Accounts endpoint to simultaneously update multiple accounts
+        in your team''s Apollo account. <br><br>This endpoint allows you to update common fields across multiple accounts
+        efficiently, such as account stages, owners, names, and custom fields. <br><br>You can update up to 1,000 accounts
+        per request.<br><br><b>Important:</b> Asynchronous processing (async parameter) is only supported when using <code>account_ids</code>
+        to apply the same updates to all accounts. If you use async with <code>account_attributes</code> (individual updates
+        per account), the request fails with a 422 error.'
       tags:
       - Accounts
-x-generated-from: https://docs.apollo.io/
-x-generated-by: claude-crawl-2026-05-08
+      operationId: bulk-update-accounts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account_ids:
+                  type: array
+                  description: Array of account IDs to update with the same values. Use this for applying the same updates
+                    to multiple accounts.
+                  items:
+                    type: string
+                  example:
+                  - 66e9abf95ac32901b20d1a0d
+                  - 66e9a4db056fe802d331fb8a
+                account_attributes:
+                  type: array
+                  description: Array of account objects with individual updates. Use this for applying different updates to
+                    each account.
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: The account ID to update
+                        example: 66e9abf95ac32901b20d1a0d
+                      name:
+                        type: string
+                        description: The account name
+                        example: Acme Corporation
+                      owner_id:
+                        type: string
+                        description: The Apollo user ID to assign as owner
+                        example: 66302798d03b9601c7934ebf
+                      account_stage_id:
+                        type: string
+                        description: The Apollo account stage ID
+                        example: 6095a710bd01d100a506d4b7
+                      typed_custom_fields:
+                        type: object
+                        description: Custom field values as key-value pairs
+                        additionalProperties:
+                          type: string
+                        example:
+                          60c39ed82bd02f01154c470a: '2025-08-07'
+                    required:
+                    - id
+                name:
+                  type: string
+                  description: When using account_ids, apply this name to all accounts
+                  example: Updated Account Name
+                owner_id:
+                  type: string
+                  description: When using account_ids, apply this owner to all accounts
+                  example: 66302798d03b9601c7934ebf
+                account_stage_id:
+                  type: string
+                  description: When using account_ids, apply this account stage to all accounts
+                  example: 6095a710bd01d100a506d4b7
+                async:
+                  type: boolean
+                  description: Set to true to process updates asynchronously. Only available when using account_ids. Not supported
+                    with account_attributes.
+                  example: false
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"accounts\": [\n    {\n      \"id\": \"66e9abf95ac32901b20d1a0d\",\n      \"account_stage_id\"\
+                    : \"6095a710bd01d100a506d4b7\"\n    },\n    {\n      \"id\": \"66e9a4db056fe802d331fb8a\",\n      \"account_stage_id\"\
+                    : \"6095a710bd01d100a506d4b7\"\n    },\n    {\n      \"id\": \"66e9a7866e440201b42ac31d\",\n      \"account_stage_id\"\
+                    : \"6095a710bd01d100a506d4b7\"\n    }\n  ]\n}"
+              schema:
+                type: object
+                properties:
+                  accounts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 66e9abf95ac32901b20d1a0d
+                        account_stage_id:
+                          type: string
+                          example: 6095a710bd01d100a506d4b7
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Need master API key:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/accounts/bulk_update. Request\
+                    \ an API key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\"\
+                    : \"API_INACCESSIBLE\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: This API key is not authorized to access api/v1/accounts/bulk_update. Request an API key from
+                      your administrator that includes this endpoint in its configured scope.
+                  error_code:
+                    type: string
+                    example: API_INACCESSIBLE
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Async not permitted with account_attributes:
+                  value: "{\n  \"error\": \"Async processing is not permitted.\"\n}"
+                Too many accounts:
+                  value: "{\n  \"error\": \"Please limit your array to fewer than 1000.\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Async processing is not permitted.
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/accounts/bulk_update is\
+                    \ 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n\
+                    }"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of api calls allowed for api/v1/accounts/bulk_update is 600 times per hour.
+                      Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+      deprecated: false
+  /accounts/update_owners:
+    post:
+      summary: Update Account Owner for Multiple Accounts
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/accounts/update_owners` or `Master API key`
+
+
+        **OAuth scopes:** `account_owners_update`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        <a href="https://knowledge.apollo.io/hc/en-us/articles/5631686093069-Edit-a-Contact-or-Account-Owner" target="_blank">Account
+        owners</a> manage saved accounts in Apollo.<br><br>Use the Update Account Owner for Multiple Accounts endpoint to
+        assign multiple accounts to a different user in your team''s Apollo account.<br><br>To update more than the account
+        owner, such as domains or phone numbers, use the <a href="https://docs.apollo.io/reference/update-an-account">Update
+        an Account endpoint</a> instead.'
+      tags:
+      - Accounts
+      operationId: update-account-ownership
+      parameters:
+      - name: account_ids[]
+        in: query
+        description: 'The Apollo IDs for the account that you want to assign to an owner. <br><br>To find account IDs, call
+          the <a href="https://docs.apollo.io/reference/search-for-accounts" target="_blank">Search for Accounts endpoint</a>
+          and identify the `id` value for the account. <br><br>Example: `66e9abf95ac32901b20d1a0d`'
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: owner_id
+        in: query
+        description: 'The ID for the account owner within your team''s Apollo account. This user will be assigned ownership
+          of the accounts. <br><br>Use the <a href="https://docs.apollo.io/reference/get-a-list-of-users" target="_blank">Get
+          a List of Users endpoint</a> to retrieve IDs for all of the users within your Apollo account. <br><br>Example: `66302798d03b9601c7934ebf`'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    accounts:
+                    - id: 66e9a4db056fe802d331fb8a
+                      owner_id: 66302798d03b9601c7934ebf
+                      crm_owner_id: null
+                    - id: 66e9abf95ac32901b20d1a0d
+                      owner_id: 66302798d03b9601c7934ebf
+                      crm_owner_id: null
+                    - id: 66e9a7866e440201b42ac31d
+                      owner_id: 66302798d03b9601c7934ebf
+                      crm_owner_id: null
+              schema:
+                type: object
+                properties:
+                  accounts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 66e9a4db056fe802d331fb8a
+                        owner_id:
+                          type: string
+                          example: 66302798d03b9601c7934ebf
+                        crm_owner_id: {}
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Need master API key:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/users/search. Request an API key\
+                    \ from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\": \"\
+                    API_INACCESSIBLE\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: This API key is not authorized to access api/v1/users/search. Request an API key from your administrator
+                      that includes this endpoint in its configured scope.
+                  error_code:
+                    type: string
+                    example: API_INACCESSIBLE
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Add account IDs:
+                  value: "{\n  \"error\": \"Required parameter 'account_ids' missing\"\n}"
+                Add owner ID:
+                  value: "{\n  \"error\": \"Required parameter 'owner_id' missing\"\n}"
+              schema:
+                oneOf:
+                - title: Add account IDs
+                  type: object
+                  properties:
+                    error:
+                      type: string
+                      example: Required parameter 'account_ids' missing
+                - title: Add owner ID
+                  type: object
+                  properties:
+                    error:
+                      type: string
+                      example: Required parameter 'owner_id' missing
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/accounts/update_owners\
+                    \ is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\
+                    \n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of api calls allowed for api/v1/accounts/update_owners is 600 times per hour.
+                      Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+      deprecated: false
+  /account_stages:
+    get:
+      summary: List Account Stages
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/account_stages/index` or `Master API key`
+
+
+        **OAuth scopes:** `account_stages_list`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        <a href="https://knowledge.apollo.io/hc/en-us/articles/4410623601165-Contact-and-Account-Stages-Overview" target="_blank">Account
+        stages</a> help you track progress on sales and marketing pipelines.<br><br>Use the List Accounts Stages endpoint
+        to retrieve the IDs for the available account stages in your team''s Apollo account. This endpoint doesn''t require
+        parameters. <br><br>Account stage IDs can be used to <a href="https://docs.apollo.io/reference/update-an-account">update
+        individual accounts</a> and <a href="https://docs.apollo.io/reference/bulk-update-accounts">update the account stages
+        for multiple accounts</a> via Apollo API.'
+      tags:
+      - Accounts
+      operationId: list-account-stages
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"account_stages\": [\n    {\n      \"id\": \"6095a710bd01d100a506d4b7\",\n      \"team_id\"\
+                    : \"6095a710bd01d100a506d4ac\",\n      \"display_name\": \"Review\",\n      \"name\": \"Review\",\n  \
+                    \    \"display_order\": 1,\n      \"default_exclude_for_leadgen\": false,\n      \"category\": null,\n\
+                    \      \"is_meeting_set\": null\n    },\n    {\n      \"id\": \"6095a710bd01d100a506d4b8\",\n      \"\
+                    team_id\": \"6095a710bd01d100a506d4ac\",\n      \"display_name\": \"Current Client\",\n      \"name\"\
+                    : \"Current Client\",\n      \"display_order\": 2,\n      \"default_exclude_for_leadgen\": true,\n   \
+                    \   \"category\": \"succeeded\",\n      \"is_meeting_set\": null\n    },\n    {\n      \"id\": \"6095a710bd01d100a506d4b9\"\
+                    ,\n      \"team_id\": \"6095a710bd01d100a506d4ac\",\n      \"display_name\": \"Active Opportunity\",\n\
+                    \      \"name\": \"Active Opportunity\",\n      \"display_order\": 3,\n      \"default_exclude_for_leadgen\"\
+                    : true,\n      \"category\": \"succeeded\",\n      \"is_meeting_set\": null\n    },\n    {\n      \"id\"\
+                    : \"6095a710bd01d100a506d4ba\",\n      \"team_id\": \"6095a710bd01d100a506d4ac\",\n      \"display_name\"\
+                    : \"Dead Opportunity\",\n      \"name\": \"Dead Opportunity\",\n      \"display_order\": 4,\n      \"\
+                    default_exclude_for_leadgen\": false,\n      \"category\": \"failed\",\n      \"is_meeting_set\": null\n\
+                    \    },\n    {\n      \"id\": \"6095a710bd01d100a506d4bb\",\n      \"team_id\": \"6095a710bd01d100a506d4ac\"\
+                    ,\n      \"display_name\": \"Do Not Prospect\",\n      \"name\": \"Do Not Prospect\",\n      \"display_order\"\
+                    : 5,\n      \"default_exclude_for_leadgen\": true,\n      \"category\": \"failed\",\n      \"is_meeting_set\"\
+                    : null\n    },\n    {\n      \"id\": \"61b8e913e0f4d2012e3af74c\",\n      \"team_id\": \"6095a710bd01d100a506d4ac\"\
+                    ,\n      \"display_name\": \"Subscriber\",\n      \"name\": \"Subscriber\",\n      \"display_order\":\
+                    \ 6,\n      \"default_exclude_for_leadgen\": false,\n      \"category\": \"in_progress\",\n      \"is_meeting_set\"\
+                    : null\n    },\n    {\n      \"id\": \"61b8e913e0f4d2012e3af74e\",\n      \"team_id\": \"6095a710bd01d100a506d4ac\"\
+                    ,\n      \"display_name\": \"Lead\",\n      \"name\": \"Lead\",\n      \"display_order\": 7,\n      \"\
+                    default_exclude_for_leadgen\": false,\n      \"category\": \"in_progress\",\n      \"is_meeting_set\"\
+                    : null\n    },\n    {\n      \"id\": \"61b8e913e0f4d2012e3af750\",\n      \"team_id\": \"6095a710bd01d100a506d4ac\"\
+                    ,\n      \"display_name\": \"Marketing Qualified Lead\",\n      \"name\": \"Marketing Qualified Lead\"\
+                    ,\n      \"display_order\": 8,\n      \"default_exclude_for_leadgen\": false,\n      \"category\": \"\
+                    in_progress\",\n      \"is_meeting_set\": null\n    },\n    {\n      \"id\": \"61b8e913e0f4d2012e3af752\"\
+                    ,\n      \"team_id\": \"6095a710bd01d100a506d4ac\",\n      \"display_name\": \"Sales Qualified Lead\"\
+                    ,\n      \"name\": \"Sales Qualified Lead\",\n      \"display_order\": 9,\n      \"default_exclude_for_leadgen\"\
+                    : false,\n      \"category\": \"in_progress\",\n      \"is_meeting_set\": null\n    },\n    {\n      \"\
+                    id\": \"61b8e913e0f4d2012e3af754\",\n      \"team_id\": \"6095a710bd01d100a506d4ac\",\n      \"display_name\"\
+                    : \"Evangelist\",\n      \"name\": \"Evangelist\",\n      \"display_order\": 10,\n      \"default_exclude_for_leadgen\"\
+                    : false,\n      \"category\": null,\n      \"is_meeting_set\": null\n    },\n    {\n      \"id\": \"61b8e913e0f4d2012e3af756\"\
+                    ,\n      \"team_id\": \"6095a710bd01d100a506d4ac\",\n      \"display_name\": \"Other\",\n      \"name\"\
+                    : \"Other\",\n      \"display_order\": 11,\n      \"default_exclude_for_leadgen\": false,\n      \"category\"\
+                    : null,\n      \"is_meeting_set\": null\n    }\n  ]\n}"
+              schema:
+                type: object
+                properties:
+                  account_stages:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 6095a710bd01d100a506d4b7
+                        team_id:
+                          type: string
+                          example: 6095a710bd01d100a506d4ac
+                        display_name:
+                          type: string
+                          example: Review
+                        name:
+                          type: string
+                          example: Review
+                        display_order:
+                          type: integer
+                          example: 1
+                          default: 0
+                        default_exclude_for_leadgen:
+                          type: boolean
+                          example: false
+                          default: true
+                        category: {}
+                        is_meeting_set: {}
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Need master API key:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/account_stages/index. Request\
+                    \ an API key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\"\
+                    : \"API_INACCESSIBLE\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: This API key is not authorized to access api/v1/account_stages/index. Request an API key from
+                      your administrator that includes this endpoint in its configured scope.
+                  error_code:
+                    type: string
+                    example: API_INACCESSIBLE
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/account_stages is 600 times\
+                    \ per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of api calls allowed for api/v1/account_stages is 600 times per hour. Please
+                      upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+      deprecated: false
+  /accounts/{id}:
+    get:
+      summary: View an Account
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/accounts/show` or `Master API key`
+
+
+        **OAuth scopes:** `account_read`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        An <a href="https://knowledge.apollo.io/hc/en-us/articles/5995865049229-View-and-Edit-Accounts" target="_blank">account</a>
+        is a company saved in Apollo.<br><br>Use the View an Account endpoint to retrieve details for an existing account.'
+      tags:
+      - Accounts
+      operationId: get_accounts{id}
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              examples:
+                OK:
+                  summary: OK
+                  value:
+                    account:
+                      id: 6518c6184f20350001a0b9c0
+                      name: Apollo.io
+                      website_url: http://www.apollo.io
+                      linkedin_url: http://www.linkedin.com/company/apolloio
+                      twitter_url: https://twitter.com/MeetApollo/
+                      facebook_url: https://facebook.com/MeetApollo/
+                      alexa_ranking: 3514
+                      linkedin_uid: '18511550'
+                      founded_year: 2015
+                      logo_url: https://zenprospect-production.s3.amazonaws.com/uploads/pictures/b1bdd6009b1611149b56f0bc/picture
+                      primary_domain: apollo.io
+                      industry: information technology & services
+                      estimated_num_employees: 910
+                      keywords:
+                      - sales engagement
+                      - lead generation
+                      - predictive analytics
+                      - lead scoring
+                      - sales strategy
+                      - conversation intelligence
+                      - sales enablement
+                      - lead routing
+                      - sales development
+                      - email engagement
+                      - revenue intelligence
+                      - sales operations
+                      - sales intelligence
+                      - lead intelligence
+                      - prospecting
+                      - b2b data
+                      - software development
+                      - crm integration
+                      - data enrichment
+                      - deal management
+                      - pipeline management
+                      - automated workflows
+                      - analytics & reporting
+                      - coaching & feedback
+                      - signal-based prospecting
+                      - inbound optimization
+                      - contact & account search
+                      - email outreach automation
+                      - meeting scheduling
+                      - ai sales assistant
+                      - multi-channel outreach
+                      - lead qualification
+                      - form optimization
+                      - sales performance improvement
+                      - live data network
+                      - ai sales automation
+                      - revops tools
+                      - account-based prospecting
+                      - sales pipeline
+                      - meeting preparedness
+                      - ai recommendations
+                      - webinar integration
+                      - sales coaching
+                      - team collaboration
+                      - sales insights
+                      - buyer's journey tracking
+                      - market intelligence
+                      - lead prioritization
+                      - customer journey mapping
+                      - sales funnel tracking
+                      - data-driven sales
+                      - email deliverability management
+                      - automated lead follow-up
+                      - predictive analytics for sales
+                      - sales campaign management
+                      - sales productivity tools
+                      - sales performance management
+                      - b2b sales intelligence
+                      - ai-driven automation
+                      - prospecting tools
+                      - contact database
+                      - sales automation
+                      - email tracking
+                      - intent data
+                      - sales workflow management
+                      - advanced search filters
+                      - customer success
+                      - scalable solutions
+                      - sales analytics
+                      - outreach optimization
+                      - data-driven strategies
+                      - customer acquisition
+                      - sales productivity
+                      - marketing automation
+                      - user-friendly interface
+                      - comprehensive features
+                      - business growth
+                      - sales optimization
+                      - competitive advantage
+                      - market potential
+                      - sales teams
+                      - enterprise solutions
+                      - small business support
+                      - mid-market focus
+                      - diverse industries
+                      - customer demographics
+                      - sales intelligence platform
+                      - marketing & advertising
+                      - sales
+                      - information technology & services
+                      - enterprise software
+                      - enterprises
+                      - computer software
+                      - b2b
+                      - saas
+                      industries:
+                      - information technology & services
+                      secondary_industries: []
+                      snippets_loaded: true
+                      industry_tag_id: 5567cd4773696439b10b0000
+                      industry_tag_hash:
+                        information technology & services: 5567cd4773696439b10b0000
+                      retail_location_count: 0
+                      raw_address: 535 mission st, san francisco, california, united states, 94105
+                      street_address: 535 Mission Street
+                      city: San Francisco
+                      state: California
+                      country: United States
+                      postal_code: '94105'
+                      owned_by_organization_id: null
+                      short_description: 'Apollo.io is an AI sales platform that provides businesses with tools to enhance
+                        their go-to-market strategies. Founded in 2015 by Tim and Ray, the company was created to address
+                        the limitations of existing sales tools they encountered in their previous startup. Apollo.io offers
+                        an all-in-one platform that integrates lead intelligence and sales engagement capabilities, helping
+                        businesses find leads, engage prospects, and close deals more effectively.
+
+
+                        The platform features detailed insights into potential customers, tools for managing leads from initial
+                        contact to deal closure, and a community-based approach to data accuracy. Apollo.io serves nearly
+                        9,000 paying customers, including startups and large enterprises, and supports over 500,000 sales
+                        professionals globally. The company has experienced rapid growth, surpassing $100 million in annual
+                        recurring revenue and achieving a valuation of $1.6 billion. Apollo.io has also received funding from
+                        notable investors like Y Combinator and Nexus Venture Partners.'
+                      suborganizations: []
+                      num_suborganizations: 0
+                      annual_revenue_printed: 100M
+                      annual_revenue: 100000000
+                      total_funding: 251200000
+                      total_funding_printed: 251.2M
+                      latest_funding_round_date: '2023-08-01T00:00:00.000+00:00'
+                      latest_funding_stage: Series D
+                      funding_events:
+                      - id: 6574c1ff9b797d0001fdab1b
+                        date: '2023-08-01T00:00:00.000+00:00'
+                        news_url: null
+                        type: Series D
+                        investors: Bain Capital Ventures, Sequoia Capital, Tribe Capital, Nexus Venture Partners
+                        amount: 100M
+                        currency: $
+                      - id: 624f4dfec786590001768016
+                        date: '2022-03-01T00:00:00.000+00:00'
+                        news_url: null
+                        type: Series C
+                        investors: Sequoia Capital, Tribe Capital, Nexus Venture Partners, NewView Capital
+                        amount: 110M
+                        currency: $
+                      - id: 61b13677623110000186a478
+                        date: '2021-10-01T00:00:00.000+00:00'
+                        news_url: null
+                        type: Series B
+                        investors: Tribe Capital, NewView Capital, Nexus Venture Partners
+                        amount: 32M
+                        currency: $
+                      - id: 5ffe93caa54d75077c59acef
+                        date: '2018-06-26T00:00:00.000+00:00'
+                        news_url: https://techcrunch.com/2018/06/26/yc-grad-zenprospect-rebrands-as-apollo-lands-7-m-series-a/
+                        type: Series A
+                        investors: Nexus Venture Partners, Social Capital, Y Combinator
+                        amount: 7M
+                        currency: $
+                      - id: 6574c1ff9b797d0001fdab20
+                        date: '2016-10-01T00:00:00.000+00:00'
+                        news_url: null
+                        type: Other
+                        investors: Y Combinator, SV Angel, Social Capital, Nexus Venture Partners
+                        amount: 2.2M
+                        currency: $
+                      technology_names:
+                      - AI
+                      - Android
+                      - Basis
+                      - Canva
+                      - Circle
+                      - CloudFlare Hosting
+                      - Cloudflare DNS
+                      - Drift
+                      - Gmail
+                      - Google Apps
+                      - Google Tag Manager
+                      - Google Workspace
+                      - Hubspot
+                      - Microsoft Office 365
+                      - Mobile Friendly
+                      - Python
+                      - Rackspace MailGun
+                      - Remote
+                      - Render
+                      - Reviews
+                      - Salesforce
+                      - SharePoint
+                      - Stripe
+                      - WP Engine
+                      - Webmail
+                      - Zendesk
+                      current_technologies:
+                      - uid: ai
+                        name: AI
+                        category: Other
+                      - uid: android
+                        name: Android
+                        category: Frameworks and Programming Languages
+                      - uid: basis
+                        name: Basis
+                        category: Advertising Networks
+                      - uid: canva
+                        name: Canva
+                        category: Content Management Platform
+                      - uid: circle
+                        name: Circle
+                        category: Financial Software
+                      - uid: cloudflare_hosting
+                        name: CloudFlare Hosting
+                        category: Hosting
+                      - uid: cloudflare_dns
+                        name: Cloudflare DNS
+                        category: Domain Name Services
+                      - uid: drift
+                        name: Drift
+                        category: Widgets
+                      - uid: gmail
+                        name: Gmail
+                        category: Email Providers
+                      - uid: google_apps
+                        name: Google Apps
+                        category: Other
+                      - uid: google_tag_manager
+                        name: Google Tag Manager
+                        category: Tag Management
+                      - uid: google workspace
+                        name: Google Workspace
+                        category: Cloud Services
+                      - uid: hubspot
+                        name: Hubspot
+                        category: Marketing Automation
+                      - uid: office_365
+                        name: Microsoft Office 365
+                        category: Other
+                      - uid: mobile_friendly
+                        name: Mobile Friendly
+                        category: Other
+                      - uid: python
+                        name: Python
+                        category: Frameworks and Programming Languages
+                      - uid: rackspace_mailgun
+                        name: Rackspace MailGun
+                        category: Email Delivery
+                      - uid: remote
+                        name: Remote
+                        category: Other
+                      - uid: render
+                        name: Render
+                        category: Other
+                      - uid: reviews
+                        name: Reviews
+                        category: Customer Reviews
+                      - uid: salesforce
+                        name: Salesforce
+                        category: Customer Relationship Management
+                      - uid: sharepoint
+                        name: SharePoint
+                        category: CMS
+                      - uid: stripe
+                        name: Stripe
+                        category: Payments
+                      - uid: wp_engine
+                        name: WP Engine
+                        category: CMS
+                      - uid: webmail
+                        name: Webmail
+                        category: Email Providers
+                      - uid: zendesk
+                        name: Zendesk
+                        category: Support and Feedback
+                      org_chart_root_people_ids:
+                      - 66f6de0d74c57a00015d2b39
+                      org_chart_sector: OrgChart::SectorHierarchy::Rules::IT
+                      org_chart_removed: false
+                      org_chart_show_department_filter: true
+                      organization_raw_address: 535 mission street, san francisco, california, united states, 94105
+                      organization_postal_code: '94105'
+                      organization_street_address: 535 Mission Street
+                      organization_city: San Francisco
+                      organization_state: California
+                      organization_country: United States
+                      suggest_location_enrichment: false
+                      domain: apollo.io
+                      team_id: 6095a710bd01d100a506d4ac
+                      organization_id: 5e66b6381e05b4008c8331b8
+                      account_stage_id: 6095a710bd01d100a506d4b9
+                      source: job_change
+                      original_source: job_change
+                      creator_id: 60affe7d6e270a00f5db6fe4
+                      owner_id: 66302798d03b9601c7934ec2
+                      created_at: '2023-10-01T01:06:32.057Z'
+                      phone: +1 415-555-0181
+                      phone_status: no_status
+                      salesforce_id: 0017ntaJPTvuIbOUVM
+                      crm_owner_id: 005dK4PthD6owdyIkD
+                      engagement_graph:
+                      - year: 2024
+                        month: 7
+                        inbound: 0
+                        outbound: 2
+                      - year: 2025
+                        month: 1
+                        inbound: 0
+                        outbound: 2
+                      - year: 2025
+                        month: 2
+                        inbound: 0
+                        outbound: 1
+                      - year: 2025
+                        month: 3
+                        inbound: 0
+                        outbound: 4
+                      - year: 2025
+                        month: 4
+                        inbound: 0
+                        outbound: 3
+                      sanitized_phone: '+14155550181'
+                      account_playbook_statuses: []
+                      existence_level: full
+                      label_ids:
+                      - 6504905b21ba8e00a334eb0f
+                      typed_custom_fields:
+                        671932d76c03c402d0528199:
+                        - 671932d76c03c402d0528195
+                      custom_field_errors: {}
+                      modality: account
+                      source_display_name: Job Change
+                      salesforce_record_url: https://orgfarm-1a2b3c4d5e-dev-ed.develop.my.salesforce.com/0017ntaJPTvuIbOUVM
+                      crm_record_url: null
+                      contact_emailer_campaign_ids:
+                      - 61964b4f2f2b4801128bdccf
+                      - 617006aa01d9c3008c563b80
+                      - 6137561c78029300a4442f2c
+                      - 61df24be4ed86000a4f05dab
+                      - 624dbc81790dd000a518a8f7
+                      - 626975c09d940c00a5e0685d
+                      - 624b4d82f6a95501165cafcc
+                      - 626a709fa58d1c008d9a9deb
+                      - 626a8ed480fa5f00ddebaae3
+                      - 657c8b7bc0ee7301c689fbbe
+                      - 65820320ea75fb06b0921560
+                      - 66425e61b56bc503009c8c15
+                      - 66a97236a8759801b5417678
+                      - 66e9e215ece19801b219997f
+                      - 6462b4b66ec01300a3388865
+                      - 665755d24404d001d65dd7ea
+                      - 672131a9213b0403ebbfcf20
+                      - 6480faa352529300f1501086
+                      - 66186b69391e0901c7dc89b0
+                      - 6789e720c2277502d07c33ee
+                      - 681a8f70182476001d4115f1
+                      - 67bde6d5b5eeec0021ad09c2
+                      - 67be333b81ca47000d1cfb9f
+                      - 680011ea812b54001dcd28c6
+                      - 60c0ec0be9da2200a425bfd1
+                      - 65ea4082b0815b01ae2f248b
+                      - 662a75fe1d925201c7a8c26d
+                      - 6567758e12b81a0264ab0bb1
+                      contact_campaign_status_tally:
+                        active: 29
+                        finished: 27
+                        not_sent: 25
+                        paused: 10
+                        bounced: 1
+                      num_contacts: 100
+                      last_activity_date: '2025-04-25T18:46:35.000+00:00'
+                      show_intent: false
+                      intent_signal_account: null
+                      organization_headcount_six_month_growth: null
+                      organization_headcount_twelve_month_growth: null
+                      organization_headcount_twenty_four_month_growth: null
+                      account_queues: []
+                      disable_flag: false
+                    salesforce_users: []
+                    hubspot_owners: []
+        '401':
+          description: Unauthorized
+          content:
+            text/plain:
+              examples:
+                Check API Key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+                  summary: Check API Key
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                Need Master API Key:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/accounts/show. Request an API\
+                    \ key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\"\
+                    : \"API_INACCESSIBLE\"\n}"
+                  summary: Need Master API Key
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                Check Account ID:
+                  value:
+                    error: Parameters misconfigured. id is not a valid ID
+                  summary: Check Account ID
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: 'The Apollo ID for the account that you want to retrieve. <br><br>To find account IDs, call the <a href="https://docs.apollo.io/reference/search-for-accounts#/"
+          target="_blank">Search for Accounts endpoint</a> and identify the `id` value for the account. <br><br>Example: `6518c6184f20350001a0b9c0`'
+        schema:
+          type: string
+          default: ''

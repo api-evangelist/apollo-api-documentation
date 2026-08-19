@@ -1,0 +1,144 @@
+generated: '2026-08-14'
+method: derived
+source: >-
+  openapi/_original/apollo-api-documentation-apollo-rest-api-openapi.json,
+  well-known/apollo-api-documentation-well-known.yml, scopes/apollo-api-documentation-scopes.yml,
+  security/apollo-api-documentation-trust-center.yml, https://docs.apollo.io/reference/rate-limits
+provider: Apollo API Documentation
+providerId: apollo-api-documentation
+description: >-
+  Cross-cutting standards conformance for Apollo. Each entry states whether Apollo conforms and cites the
+  evidence that decided it. Apollo's strongest conformance is on the identity and discovery side — OpenAPI
+  3.1, RFC 8414/9728 OAuth metadata, RFC 9727 api-catalog, PKCE, dynamic client registration, and the MCP
+  Streamable HTTP transport. Its weakest is on the HTTP semantics side: no RFC 9457 problem details, no
+  RFC 8594 sunset, no RFC 9331 RateLimit headers (Apollo uses its own x-* names), and no idempotency key.
+standards:
+  - id: openapi-3.1
+    name: OpenAPI Specification 3.1
+    conforms: true
+    evidence: >-
+      Apollo publishes openapi 3.1.0 at https://docs.apollo.io/openapi/apollo-rest-api.json — 74 paths,
+      80 operations, unique operationIds, tags declared and applied, securitySchemes defined and applied at
+      the document level, 2xx and 4xx responses on every operation, and thousands of inline examples.
+  - id: rfc9727-api-catalog
+    name: 'RFC 9727: API Catalog (/.well-known/api-catalog)'
+    conforms: true
+    evidence: >-
+      https://docs.apollo.io/.well-known/api-catalog returns 200 with a linkset whose service-desc points at
+      the OpenAPI (application/vnd.oai.openapi+json) and whose service-doc points at the HTML reference.
+  - id: oauth2
+    name: OAuth 2.0 Authorization Code
+    conforms: true
+    evidence: >-
+      Authorization code + refresh token + client credentials grants published in
+      /.well-known/oauth-authorization-server; partner flow documented at
+      https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners.
+  - id: rfc8414
+    name: 'RFC 8414: OAuth 2.0 Authorization Server Metadata'
+    conforms: true
+    evidence: 'https://mcp.apollo.io/.well-known/oauth-authorization-server returns 200 with issuer, endpoints and 67 scopes_supported.'
+  - id: rfc9728
+    name: 'RFC 9728: OAuth 2.0 Protected Resource Metadata'
+    conforms: true
+    evidence: 'https://mcp.apollo.io/.well-known/oauth-protected-resource returns 200 naming resource https://mcp.apollo.io/mcp and its authorization server.'
+  - id: rfc7636-pkce
+    name: 'RFC 7636: PKCE'
+    conforms: true
+    evidence: 'code_challenge_methods_supported: ["S256"].'
+  - id: rfc7591-dcr
+    name: 'RFC 7591: Dynamic Client Registration'
+    conforms: true
+    evidence: 'registration_endpoint: https://mcp.apollo.io/api/v1/oauth/applications/register_oauth_client.'
+  - id: rfc7009-revocation
+    name: 'RFC 7009: Token Revocation'
+    conforms: true
+    evidence: 'revocation_endpoint: https://mcp.apollo.io/api/v1/oauth/revoke.'
+  - id: oidc
+    name: OpenID Connect Discovery
+    conforms: partial
+    evidence: >-
+      /.well-known/openid-configuration returns 200 with jwks_uri, subject_types_supported [public] and
+      id_token_signing_alg_values_supported [RS256], but declares no userinfo_endpoint and does not list
+      `openid` among its 67 scopes. It is OAuth metadata wearing an OIDC document name.
+  - id: mcp
+    name: Model Context Protocol
+    conforms: true
+    evidence: >-
+      Hosted remote server at https://mcp.apollo.io/mcp, Streamable HTTP transport, OAuth 2.0 with the
+      RFC 9728 protected-resource metadata MCP requires. Probed 2026-08-14 — 401 on anonymous tools/list.
+  - id: rfc9457
+    name: 'RFC 9457: Problem Details for HTTP APIs'
+    conforms: false
+    evidence: >-
+      Zero operations declare application/problem+json. Apollo's status-codes page states the error body
+      shape "varies by endpoint".
+  - id: rfc8594-sunset
+    name: 'RFC 8594: The Sunset HTTP Header'
+    conforms: false
+    evidence: No Sunset or Deprecation header documented; the one deprecated operation carries no removal date.
+  - id: ratelimit-headers
+    name: IETF RateLimit header fields (draft)
+    conforms: false
+    evidence: >-
+      Apollo returns x-rate-limit-minute / x-rate-limit-hourly / x-rate-limit-24-hour / x-minute-usage /
+      x-minute-requests-left and retry-after — its own vocabulary, not the RateLimit / RateLimit-Policy
+      fields. retry-after (RFC 9110) is the one standard header used.
+  - id: idempotency-key
+    name: Idempotency-Key header (draft-ietf-httpapi-idempotency-key-header)
+    conforms: false
+    evidence: >-
+      No client idempotency key exists. The only idempotency requirement Apollo publishes is on the
+      consumer's own webhook receiver.
+  - id: json-api
+    name: 'JSON:API'
+    conforms: false
+    evidence: Plain JSON resource bodies; no JSON:API media type, document structure or relationship envelope.
+  - id: odata
+    name: OData
+    conforms: false
+    evidence: No $metadata, $filter or OData media types.
+  - id: scim
+    name: SCIM
+    conforms: false
+    evidence: No /scim/v2 surface. Workspace users are read-only through get-a-list-of-users.
+  - id: asyncapi
+    name: AsyncAPI
+    conforms: false
+    evidence: >-
+      No AsyncAPI document. The only event surface is the request-scoped waterfall-enrichment callback —
+      see asyncapi/apollo-api-documentation-webhooks.yml.
+  - id: pagination
+    name: Documented pagination
+    conforms: true
+    evidence: >-
+      page / per_page query parameters on search and list operations with a pagination object in the
+      response. Page-number style, no cursor.
+  - id: soc2
+    name: SOC 2
+    conforms: true
+    evidence: 'Named on Apollo''s trust center at https://trust.apollo.io/ — see security/apollo-api-documentation-trust-center.yml.'
+  - id: iso27001
+    name: 'ISO/IEC 27001'
+    conforms: true
+    evidence: Named on https://trust.apollo.io/.
+  - id: gdpr
+    name: GDPR
+    conforms: true
+    evidence: >-
+      Named on https://trust.apollo.io/ and asserted on the pricing page ("GDPR Compliant"). Material for a
+      contact-data provider.
+  - id: fhir
+    name: FHIR
+    conforms: false
+    evidence: Not a healthcare API.
+  - id: fapi
+    name: FAPI
+    conforms: false
+    evidence: Not a financial-grade API.
+  - id: psd2
+    name: PSD2
+    conforms: false
+    evidence: Not a payments API.
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com

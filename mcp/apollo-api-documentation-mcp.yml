@@ -1,0 +1,141 @@
+generated: '2026-08-14'
+method: searched
+source: https://docs.apollo.io/docs/apollo-mcp
+provider: Apollo API Documentation
+providerId: apollo-api-documentation
+name: Apollo MCP
+description: >-
+  Apollo ships a first-party hosted remote MCP server that exposes its 240M+ contact database, real-time
+  enrichment engine, CRM records, sequences, tasks, conversations and analytics to AI clients. Streamable HTTP
+  transport, OAuth 2.0 only — no API key, no local install. Also distributed as a built-in connector on ChatGPT,
+  Claude, Perplexity, Replit and Cursor.
+status: published
+deployment:
+  mode: remote
+  endpoint: https://mcp.apollo.io/mcp
+  auth: oauth
+  verified: probed
+  transport: streamable-http
+  note: >-
+    Endpoint published verbatim by Apollo at https://docs.apollo.io/docs/apollo-mcp ("Endpoint |
+    https://mcp.apollo.io/mcp | Transport | Streamable HTTP | Authentication | OAuth 2.0 | Local install
+    required | No | API key required | No"). Probed 2026-08-14: POST tools/list and POST initialize both
+    return HTTP 401 {"error":"Unauthorized: Missing or invalid Authorization header"}, confirming a live
+    server that gates the schema behind OAuth. The three /.well-known/ OAuth documents on the same host
+    return 200 anonymously and are saved under well-known/.
+  no_stdio_package: true
+  stdio_note: >-
+    Apollo ships NO stdio/npx MCP package. apolloio/apollo-mcp-plugin is a Claude Code + Cowork plugin that
+    wires the same remote endpoint; it is not a local server. Every documented client configuration
+    (Claude Code, Codex, VS Code Copilot, Claude Desktop, Antigravity) registers the https URL.
+authorization:
+  type: oauth2
+  issuer: https://mcp.apollo.io
+  authorization_endpoint: https://mcp.apollo.io/mcp/oauth_metadata/redirect_to_authorize
+  token_endpoint: https://mcp.apollo.io/api/v1/oauth/token
+  revocation_endpoint: https://mcp.apollo.io/api/v1/oauth/revoke
+  registration_endpoint: https://mcp.apollo.io/api/v1/oauth/applications/register_oauth_client
+  dynamic_client_registration: true
+  pkce: [S256]
+  grant_types: [authorization_code, refresh_token, client_credentials]
+  scopes_count: 67
+  scopes_artifact: scopes/apollo-api-documentation-scopes.yml
+  metadata:
+    - {path: /.well-known/oauth-authorization-server, status: 200, file: well-known/apollo-api-documentation-oauth-authorization-server.json}
+    - {path: /.well-known/oauth-protected-resource, status: 200, file: well-known/apollo-api-documentation-oauth-protected-resource.json}
+    - {path: /.well-known/openid-configuration, status: 200, file: well-known/apollo-api-documentation-openid-configuration.json}
+distribution:
+  - channel: standalone
+    surface: https://mcp.apollo.io/mcp
+  - channel: ChatGPT
+    surface: https://chatgpt.com/apps/apollo-io/asdk_app_69bd664f2a908191a3a0a47eca8559d1
+  - channel: Claude
+    surface: https://claude.ai/directory/connectors/apollo
+  - channel: Perplexity
+    surface: https://www.perplexity.ai/computer/connectors?connector=apollo
+  - channel: Replit
+    surface: https://replit.com/t/apollo-team-workspace
+  - channel: Cursor
+    surface: https://cursor.com/marketplace/apollo-io
+  - channel: Claude Code / Cowork plugin
+    surface: https://github.com/apolloio/apollo-mcp-plugin
+install_examples:
+  claude_code: claude mcp add --transport http apollo https://mcp.apollo.io/mcp
+  codex: |
+    [mcp_servers.apollo]
+    url = "https://mcp.apollo.io/mcp"
+  vscode: '{"servers":{"apollo":{"type":"http","url":"https://mcp.apollo.io/mcp"}}}'
+tools_source:
+  method: searched
+  url: https://docs.apollo.io/docs/apollo-mcp#available-actions
+  schema_note: >-
+    Apollo documents 52 actions by name, description and credit cost, but does not publish inputSchema. The
+    live tools/list is OAuth-gated (401 anonymous), so the real schemas require an authenticated
+    introspection against a connected Apollo workspace. The names below are Apollo's own action labels,
+    verbatim; parameter shapes are NOT recorded because they were not published.
+  action_count: 52
+tools:
+  - {name: Search for companies, category: search, credits: true}
+  - {name: Bulk company enrichment, category: enrichment, credits: true}
+  - {name: Company enrichment, category: enrichment, credits: true}
+  - {name: Company job postings, category: search, credits: true}
+  - {name: Bulk people enrichment, category: enrichment, credits: true}
+  - {name: People enrichment, category: enrichment, credits: true}
+  - {name: Search for people, category: search, credits: false}
+  - {name: Search for contacts, category: contacts, credits: false}
+  - {name: Create a contact, category: contacts, credits: false}
+  - {name: Bulk create contacts, category: contacts, credits: false}
+  - {name: Update a contact, category: contacts, credits: false}
+  - {name: Create an account, category: accounts, credits: false}
+  - {name: Bulk create accounts, category: accounts, credits: false}
+  - {name: Update an account, category: accounts, credits: false}
+  - {name: Search for deals, category: deals, credits: false}
+  - {name: Create a deal, category: deals, credits: false}
+  - {name: View deal details, category: deals, credits: false}
+  - {name: Search custom object records, category: custom-objects, credits: false}
+  - {name: Create a custom object, category: custom-objects, credits: false}
+  - {name: View a custom object, category: custom-objects, credits: false}
+  - {name: Search conversations, category: conversations, credits: false}
+  - {name: Get conversation insights, category: conversations, credits: conditional}
+  - {name: Get conversation transcript, category: conversations, credits: false}
+  - {name: Get conversation recording link, category: conversations, credits: false}
+  - {name: Search for lists, category: lists, credits: false}
+  - {name: Create a list, category: lists, credits: false}
+  - {name: Update a list, category: lists, credits: false}
+  - {name: Add records to lists, category: lists, credits: false}
+  - {name: Remove records from lists, category: lists, credits: false}
+  - {name: Create or update a sequence, category: sequences, credits: false}
+  - {name: Add contacts to a sequence, category: sequences, credits: false}
+  - {name: Remove contacts from sequences, category: sequences, credits: false}
+  - {name: Search for sequences, category: sequences, credits: false}
+  - {name: Get a list of email accounts, category: email, credits: false}
+  - {name: Send one-off emails, category: email, credits: false}
+  - {name: Search email campaigns, category: email, credits: false}
+  - {name: Connect a data source, category: data-sources, credits: false}
+  - {name: Import data from a data source, category: data-sources, credits: false}
+  - {name: Purchase or browse sending domains, category: deliverability, credits: false}
+  - {name: Purchase or browse email accounts, category: deliverability, credits: false}
+  - {name: Check email domain authentication, category: deliverability, credits: false}
+  - {name: Create or manage labels, category: lists, credits: false}
+  - {name: Search tasks, category: tasks, credits: false}
+  - {name: Show task details, category: tasks, credits: false}
+  - {name: Create tasks, category: tasks, credits: false}
+  - {name: Complete or skip tasks, category: tasks, credits: false}
+  - {name: Query analytics data, category: analytics, credits: false}
+  - {name: Get API usage and credit stats, category: operations, credits: false}
+  - {name: Get user profile, category: operations, credits: false}
+  - {name: Poll webhook result, category: operations, credits: false}
+  - {name: Track website visitors, category: intent, credits: false}
+  - {name: Send feedback, category: operations, credits: false}
+constraints:
+  - Destructive actions such as bulk delete are not supported.
+  - Apollo prohibits AI model training with Apollo MCP integrations; model training must be off in the client.
+  - Access is scoped to the authorizing Apollo user's own permissions.
+  - >-
+    Free Apollo accounts registered with a personal email address cannot use people/company search and
+    enrichment actions, retrieve complete records, match contacts, or add people to prospects.
+  - Apollo MCP uses separate rate limits from the REST API and does not return the x-rate-limit-* headers.
+  - No additional cost to connect; the workspace's plan, permissions and credit balance still apply.
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com

@@ -1,0 +1,439 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apollo API — Sequences",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sequences",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Email Schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/emailer_schedules"
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/emailer_schedules/index` or `Master API key`\n\n**OAuth scopes:** `emailer_schedules_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409477927309-Configure-a-Sequence-Sending-Schedule\" target=\"_blank\">Sending schedules</a> control the days and times that Apollo sends emails for your sequences. You can configure mult"
+        },
+        {
+          "info": {
+            "name": "Search for Sequences",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/emailer_campaigns/search",
+            "params": [
+              {
+                "name": "q_name",
+                "value": "",
+                "type": "query",
+                "description": "Add keywords to narrow the search of the sequences in your team's Apollo account. <br><br>Keywords should directly match at least part of a sequence's name. For example, searching the keyword `marketing` might return the result `NY Marketing Sequence`, but not `NY Marketer Conference 2025 attendees`. <br><br>This parameter only searches sequence names, not other sequence fields. <br><br>Example: `marketing conference attendees`"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint. <br><br>Example: `4`"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of search results that should be returned for each page. Limiting the number of results per page improves the endpoint's performance. <br><br>Use the `page` parameter to search the different pages of data. <br><br>Example: `10`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/emailer_campaigns/search` or `Master API key`\n\n**OAuth scopes:** `emailer_campaigns_search`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409237165837-Sequences-Overview\" target=\"_blank\">Sequences</a> are outreach campaigns that sales teams use to reach out to contacts over a planned period of time.<br><br>Use the Sea"
+        },
+        {
+          "info": {
+            "name": "Add Contacts to a Sequence",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/emailer_campaigns/:sequence_id/add_contact_ids",
+            "params": [
+              {
+                "name": "sequence_id",
+                "value": "",
+                "type": "path",
+                "description": "The Apollo ID for the sequence to which you want to add contacts. <br><br>To find sequence IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-sequences\" target=\"_blank\">Search for Sequences endpoint</a> and identify the `id` value for the sequence. <br><br>Example: `66e9e215ece19801b219997f`"
+              },
+              {
+                "name": "emailer_campaign_id",
+                "value": "",
+                "type": "query",
+                "description": "The same ID as the `sequence_id`. <br><br>Example: `66e9e215ece19801b219997f`"
+              },
+              {
+                "name": "contact_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "The Apollo IDs for the contacts that you want to add to the sequence. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`<br><br>Note: Either `contact_ids[]` or `label_names[]` must be provided."
+              },
+              {
+                "name": "label_names[]",
+                "value": "",
+                "type": "query",
+                "description": "Alternative to `contact_ids[]`. Array of label names to identify contacts to add to the sequence. Contacts with these labels will be added to the sequence. <br><br>Note: Either `contact_ids[]` or `label_names[]` must be provided."
+              },
+              {
+                "name": "send_email_from_email_account_id",
+                "value": "",
+                "type": "query",
+                "description": "The Apollo ID(s) for the email account(s) used to send to contacts you add to the sequence. Accepts either one id as a string, or multiple ids as an array of strings (multi-mailbox / rotation). To find email account IDs, call the <a href=\"https://docs.apollo.io/reference/get-a-list-of-email-accounts\" target=\"_blank\">Get a List of Email Accounts endpoint</a> and identify the `id` value for each email account. <br><br>Examples: `6633baaece5fbd01c791d7ca` (string) or `[\"6633baaece5fbd01c791d7ca\", \"6633baaece5fbd01c791d7cb\"]` (array)."
+              },
+              {
+                "name": "send_email_from_email_address",
+                "value": "",
+                "type": "query",
+                "description": "Optional specific email address to send from within the email account."
+              },
+              {
+                "name": "sequence_no_email",
+                "value": "",
+                "type": "query",
+                "description": "Set to `true` if you want to add contacts to the sequence even if they do not have an email address."
+              },
+              {
+                "name": "sequence_unverified_email",
+                "value": "",
+                "type": "query",
+                "description": "Set to `true` if you want to add contacts to the sequence if they have an unverified email address."
+              },
+              {
+                "name": "sequence_job_change",
+                "value": "",
+                "type": "query",
+                "description": "Set to `true` if you want to add contacts to the sequence even if they have recently changed jobs."
+              },
+              {
+                "name": "sequence_active_in_other_campaigns",
+                "value": "",
+                "type": "query",
+                "description": "Set to `true` if you want to add contacts to the sequence even if they have been added to other sequences. This parameter does not differentiate between active and paused sequences."
+              },
+              {
+                "name": "sequence_finished_in_other_campaigns",
+                "value": "",
+                "type": "query",
+                "description": "Set to `true` if you want to add contacts to the sequence if they have been marked as `finished` in another sequence."
+              },
+              {
+                "name": "sequence_same_company_in_same_campaign",
+                "value": "",
+                "type": "query",
+                "description": "Set to `true` if you want to add contacts to the sequence even if other contacts from the same company are already in the sequence."
+              },
+              {
+                "name": "contacts_without_ownership_permission",
+                "value": "",
+                "type": "query",
+                "description": "Set to `true` if you want to add contacts even if you don't have ownership permission for them."
+              },
+              {
+                "name": "add_if_in_queue",
+                "value": "",
+                "type": "query",
+                "description": "Set to `true` if you want to add contacts even if they are currently in the queue for processing."
+              },
+              {
+                "name": "contact_verification_skipped",
+                "value": "",
+                "type": "query",
+                "description": "Set to `true` if you want to skip contact verification during the addition process."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID for the user in your team's Apollo account. <br><br>This is the user taking the action to add contacts to a sequence. When the sequence is updated, the activity log shows the user that added the contacts. <br><br>Use the <a href=\"https://docs.apollo.io/reference/get-a-list-of-users\" target=\"_blank\">Get a List of Users endpoint</a> to retrieve IDs for all of the users within your Apollo account. <br><br>Example: `66302798d03b9601c7934ebf`"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Initial status for added contacts. When set to `paused` along with `auto_unpause_at`, enables scheduled addition of contacts."
+              },
+              {
+                "name": "auto_unpause_at",
+                "value": "",
+                "type": "query",
+                "description": "DateTime when paused contacts should be automatically unpaused. Must be used with `status=paused`. Format: ISO 8601 datetime string."
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/emailer_campaigns/add_contact_ids` or `Master API key`\n\n**OAuth scopes:** `emailer_campaigns_add_contact_ids`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409237165837-Sequences-Overview\" target=\"_blank\">Sequences</a> are outreach campaigns that sales teams use to reach out to contacts over a planned period of time.<"
+        },
+        {
+          "info": {
+            "name": "Update Contact Status in a Sequence",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/emailer_campaigns/remove_or_stop_contact_ids",
+            "params": [
+              {
+                "name": "emailer_campaign_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "The Apollo IDs for the sequences that you want to update. If you add multiple sequences, you will update the status of the contacts across the chosen sequences. <br><br>To find sequence IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-sequences\" target=\"_blank\">Search for Sequences endpoint</a> and identify the `id` value for the sequence. <br><br>Example: `66e9e215ece19801b219997f`"
+              },
+              {
+                "name": "contact_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "The Apollo IDs for the contacts in the sequences. These are the contacts whose sequence status you want to update. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "query",
+                "description": "Choose 1 of the following options to update the sequence status of the contacts:   <ul> <li> `mark_as_finished`: Mark the contacts as having finished the sequence. </li> <li> `remove`: Remove the contacts from the sequence. </li> <li> `stop`: Indicate that the contacts progress in the sequence has halted.  </li> </ul>"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/emailer_campaigns/remove_or_stop_contact_ids` or `Master API key`\n\n**OAuth scopes:** `emailer_campaigns_remove_or_stop_contact_ids`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409237165837-Sequences-Overview\" target=\"_blank\">Sequences</a> are outreach campaigns that sales teams use to reach out to contacts over a pl"
+        },
+        {
+          "info": {
+            "name": "Create a Sequence",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/sequences",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/sequences/create` or `Master API key`\n\n**OAuth scopes:** `emailer_campaigns_create`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409237165837-Sequences-Overview\" target=\"_blank\">Sequences</a> are outreach campaigns that sales teams use to reach out to contacts over a planned period of time.<br><br>Use the Create a Se"
+        },
+        {
+          "info": {
+            "name": "Update a Sequence",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.apollo.io/api/v1/sequences/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Apollo ID for the sequence that you want to update. <br><br>To find sequence IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-sequences\" target=\"_blank\">Search for Sequences endpoint</a> and identify the `id` value for the sequence. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/sequences/update` or `Master API key`\n\n**OAuth scopes:** `emailer_campaigns_update`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409237165837-Sequences-Overview\" target=\"_blank\">Sequences</a> are outreach campaigns that sales teams use to reach out to contacts over a planned period of time.<br><br>Use the Update a Se"
+        },
+        {
+          "info": {
+            "name": "Check Email Stats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/emailer_messages/:id/activities",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID for the email you want to view. <br><br>Each outreach email in Apollo is assigned a unique ID. To find email IDs, call the <a  href=\"https://docs.apollo.io/reference/search-for-outreach-emails\" target=\"_blank\">Search for Outreach Emails endpoint</a> and identify the `id` value for the email. <br><br>Example: `684b2203a2ce950021cbf730`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `Master API key`\n\n**OAuth scopes:** `Not supported`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409237165837-Sequences-Overview\" target=\"_blank\">Sequences</a> are outreach campaigns that sales teams use to reach out to contacts over a planned period of time.<br><br>Use the Check Email Stats endpoint to review the complete d"
+        },
+        {
+          "info": {
+            "name": "Search for Outreach Emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/emailer_messages/search",
+            "params": [
+              {
+                "name": "emailer_message_stats[]",
+                "value": "",
+                "type": "query",
+                "description": "Find emails based on their current status, such as whether they were delivered or opened. You can add multiple statuses. <br><br>Possible values include: <ul> <li> `delivered` </li> <li> `scheduled` </li> <li> `drafted` </li> <li> `not_opened` </li> <li> `opened` </li> <li> `clicked` </li> <li> `unsubscribed` </li> <li> `demoed` </li> <li> `bounced` </li> <li> `spam_blocked` </li> <li> `failed_other` </li> </ul>"
+              },
+              {
+                "name": "emailer_message_reply_classes[]",
+                "value": "",
+                "type": "query",
+                "description": "Find emails based on the response sentiment of the recipient. This can include the recipient expressing interest in meeting or having a follow-up question. You can add multiple values.<br><br>Possible values include: <ul> <li> `willing_to_meet` </li> <li> `follow_up_question` </li> <li> `person_referral` </li> <li> `out_of_office` </li> <li> `already_left_company_or_not_right_person` </li> <li> `not_interested` </li> <li> `unsubscribe` </li> <li> `none_of_the_above` </li> </ul>"
+              },
+              {
+                "name": "user_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "Find emails sent by specific users in your team's Apollo account. You can add multiple users. <br><br>Use the <a href=\"https://docs.apollo.io/reference/get-a-list-of-users\" target=\"_blank\">Get a List of Users endpoint</a> to retrieve IDs for all of the users within your Apollo account. <br><br>Example: `66302798d03b9601c7934ebf`"
+              },
+              {
+                "name": "email_account_id_and_aliases",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "emailer_campaign_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "Search for emails that are included in specific sequences in your Apollo account. You can search multiple sequences. Any sequence not included in this parameter will be exclude from search results.<br><br>To find sequence IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-sequences\" target=\"_blank\">Search for Sequences endpoint</a> and identify the `id` value for the sequence. <br><br>Example: `66e9e215ece19801b219997f`"
+              },
+              {
+                "name": "not_emailer_campaign_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "Exclude emails from specific sequences in your Apollo account. You can exclude multiple sequences. Any sequence not excluded using this parameter will be included in search results.<br><br>To find sequence IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-sequences\" target=\"_blank\">Search for Sequences endpoint</a> and identify the `id` value for the sequence. <br><br>Example: `66e9e215ece19801b219997f`"
+              },
+              {
+                "name": "emailer_message_date_range_mode",
+                "value": "",
+                "type": "query",
+                "description": "Use this parameter in combination with the `emailer_message_date_range[max]` and `emailer_message_date_range[min]` parameters. Find emails based on 1 of the following options: <ul> <li> `due_at`: When emails are scheduled to be delivered. </li> <li> `completed_at`: When emails were delivered. </li> </ul>"
+              },
+              {
+                "name": "emailer_message_date_range[max]",
+                "value": "",
+                "type": "query",
+                "description": "Set the upper bound of the date range you want to search. <br><br>Use this parameter in combination with the `emailer_message_date_range[min]` and `emailer_message_date_range_mode` parameters. This date should fall after the `emailer_message_date_range[min]` date. <br><br>The date should be formatted as `YYYY-MM-DD`. <br><br>Example: `2025-10-30`"
+              },
+              {
+                "name": "emailer_message_date_range[min]",
+                "value": "",
+                "type": "query",
+                "description": "Set the lower bound of the date range you want to search. <br><br>Use this parameter in combination with the `emailer_message_date_range[max]` and `emailer_message_date_range_mode` parameters. This date should fall before the `emailer_message_date_range[max]` date. <br><br>The date should be formatted as `YYYY-MM-DD`. <br><br>Example: `2025-10-30`"
+              },
+              {
+                "name": "not_sent_reason_cds[]",
+                "value": "",
+                "type": "query",
+                "description": "Find emails based on the reason they were not sent. You can add multiple values.<br><br>Possible values include: <ul> <li> `contact_stage_safeguard` </li> <li> `same_account_reply` </li> <li> `account_stage_safeguard` </li> <li> `email_unverified` </li> <li> `snippets_missing` </li> <li> `personalized_opener_missing` </li> <li> `thread_reply_original_email_missing` </li> <li> `no_active_email_account` </li> <li> `email_format_invalid` </li> <li> `ownership_permission` </li> <li> `email_service_provider_delivery_failure` </li> <li> `sendgrid_dropped_email` </li> <li> `mailgun_dropped_email` </li> <li> `gdpr_compliance` </li> <li> `not_valid_hard_bounce_detected` <li> `other_safeguard` </li> <li> `new_job_change_detected` </li> <li> `email_on_global_bounce_list` </li> </ul>"
+              },
+              {
+                "name": "q_keywords",
+                "value": "",
+                "type": "query",
+                "description": "Add keywords to narrow the search of the emails in your team's Apollo account. <br><br>Keywords should directly match at least part of an email's content. For example, searching the keyword `James` might return emails that were sent by `James Smith`. <br><br>Example: `Jane`"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint. <br><br>Example: `4`"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of search results that should be returned for each page. Limiting the number of results per page improves the endpoint's performance. <br><br>Use the `page` parameter to search the different pages of data. <br><br>Example: `10`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/emailer_messages/search` or `Master API key`\n\n**OAuth scopes:** `emailer_messages_search`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409237165837-Sequences-Overview\" target=\"_blank\">Sequences</a> are outreach campaigns that sales teams use to reach out to contacts over a planned period of time.<br><br>Use the Searc"
+        },
+        {
+          "info": {
+            "name": "Get Contact Sequence Activity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/emailer_campaigns/activity_feed",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/emailer_campaigns/activity_feed` or `Master API key`\n\n**OAuth scopes:** `emailer_campaigns_activity_feed`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409237165837-Sequences-Overview\" target=\"_blank\">Sequences</a> are outreach campaigns that sales teams use to reach out to contacts over a planned period of time.<br><"
+        },
+        {
+          "info": {
+            "name": "Activate a Sequence",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/emailer_campaigns/:sequence_id/approve",
+            "params": [
+              {
+                "name": "sequence_id",
+                "value": "",
+                "type": "path",
+                "description": "The Apollo ID for the sequence that you want to activate. <br><br>To find sequence IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-sequences\" target=\"_blank\">Search for Sequences endpoint</a> and identify the <code>id</code> value for the sequence. <br><br>Example: <code>66e9e215ece19801b219997f</code>"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/emailer_campaigns/approve` or `Master API key`\n\n**OAuth scopes:** `emailer_campaigns_approve`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409237165837-Sequences-Overview\" target=\"_blank\">Sequences</a> are outreach campaigns that sales teams use to reach out to contacts over a planned period of time.<br><br>Use the A"
+        },
+        {
+          "info": {
+            "name": "Deactivate a Sequence",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/emailer_campaigns/:sequence_id/abort",
+            "params": [
+              {
+                "name": "sequence_id",
+                "value": "",
+                "type": "path",
+                "description": "The Apollo ID for the sequence that you want to deactivate. <br><br>To find sequence IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-sequences\" target=\"_blank\">Search for Sequences endpoint</a> and identify the <code>id</code> value for the sequence. <br><br>Example: <code>66e9e215ece19801b219997f</code>"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/emailer_campaigns/abort` or `Master API key`\n\n**OAuth scopes:** `emailer_campaigns_abort`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409237165837-Sequences-Overview\" target=\"_blank\">Sequences</a> are outreach campaigns that sales teams use to reach out to contacts over a planned period of time.<br><br>Use the Deact"
+        },
+        {
+          "info": {
+            "name": "Archive a Sequence",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/emailer_campaigns/:sequence_id/archive",
+            "params": [
+              {
+                "name": "sequence_id",
+                "value": "",
+                "type": "path",
+                "description": "The Apollo ID for the sequence that you want to archive. <br><br>To find sequence IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-sequences\" target=\"_blank\">Search for Sequences endpoint</a> and identify the <code>id</code> value for the sequence. <br><br>Example: <code>66e9e215ece19801b219997f</code>"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/emailer_campaigns/archive` or `Master API key`\n\n**OAuth scopes:** `emailer_campaigns_archive`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409237165837-Sequences-Overview\" target=\"_blank\">Sequences</a> are outreach campaigns that sales teams use to reach out to contacts over a planned period of time.<br><br>Use the A"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

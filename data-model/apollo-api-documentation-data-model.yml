@@ -1,0 +1,161 @@
+generated: '2026-08-14'
+method: derived
+source: >-
+  openapi/_original/apollo-api-documentation-apollo-rest-api-openapi.json — entities from the 74 paths and
+  their tags, relationships from the *_id / *_ids reference fields in parameters and request bodies
+provider: Apollo API Documentation
+providerId: apollo-api-documentation
+description: >-
+  The entity-relationship graph of the Apollo API, derived from the published OpenAPI. Apollo's spec declares
+  no components.schemas — every request and response body is inlined — so relationships were read from the
+  id-reference fields (owner_id, account_id, contact_id, sequence_id, ...) rather than from $ref links.
+  Field names are Apollo's own; nothing is inferred beyond what a reference field states.
+schema_reuse:
+  components_schemas: 0
+  note: >-
+    A real gap. With no named schemas, no two operations share a definition, so a generated client produces a
+    distinct anonymous type per operation and consumers cannot bind to a stable Contact or Account shape.
+entities:
+  - name: Person
+    kind: apollo-database-record
+    description: A person in Apollo's 240M+ contact database. Not owned by the workspace — read via search and enrichment.
+    operations: [people-api-search, people-enrichment, bulk-people-enrichment, 'get_people{id}']
+    tag: [Search, Enrichment]
+  - name: Organization
+    kind: apollo-database-record
+    description: A company in Apollo's 30M+ company database.
+    operations: [organization-search, organization-enrichment, bulk-organization-enrichment, 'get_organizations{id}', organization-jobs-postings]
+    tag: [Search, Enrichment]
+  - name: NewsArticle
+    kind: apollo-database-record
+    description: News coverage attached to companies.
+    operations: [news_articles_search]
+  - name: JobPosting
+    kind: apollo-database-record
+    description: Open roles at a company, used as a hiring signal.
+    operations: [organization-jobs-postings]
+  - name: Contact
+    kind: workspace-record
+    description: A person the workspace has saved into Apollo. The saved counterpart of a Person.
+    operations: [search-for-contacts, view-a-contact, create-a-contact, bulk-create-contacts, update-a-contact, bulk-update-contacts, update-contact-stage, update-contact-ownership]
+    tag: [Contacts]
+  - name: Account
+    kind: workspace-record
+    description: A company the workspace tracks. The saved counterpart of an Organization.
+    operations: [search-for-accounts, 'get_accounts{id}', create-an-account, bulk-create-accounts, update-an-account, bulk-update-accounts, update-account-ownership]
+    tag: [Accounts]
+  - name: Deal
+    kind: workspace-record
+    api_resource: opportunity
+    description: A pipeline opportunity. Exposed at /opportunities but named Deals in the docs and tags.
+    operations: [list-all-deals, view-deal, create-deal, update-deal, view-associated-deals]
+    tag: [Deals]
+  - name: Sequence
+    kind: workspace-record
+    api_resource: emailer_campaign
+    description: A multi-step outreach cadence. Exposed at both /sequences and /emailer_campaigns.
+    operations: [create-sequence, update-sequence, search-for-sequences, approve-sequence, abort-sequence, archive-sequence, add-contacts-to-sequence, update-contact-status-sequence, get-contact-sequence-activity]
+    tag: [Sequences]
+  - name: EmailerMessage
+    kind: workspace-record
+    description: An individual outreach email — draft, send, status, content and stats.
+    operations: [create-an-email-draft, send-email-now, check-email-send-status, get-email-content, 'emailer_messages/search', get_emailstats]
+    tag: [Emailer Messages, Sequences]
+  - name: EmailerSchedule
+    kind: workspace-record
+    description: Sending schedule attached to a sequence.
+    operations: [list-email-schedules]
+  - name: EmailAccount
+    kind: workspace-record
+    description: A connected sending mailbox.
+    operations: [get-a-list-of-email-accounts]
+  - name: Task
+    kind: workspace-record
+    description: A call, email or LinkedIn action queued for a user against a contact, account or deal.
+    operations: [search-tasks, get-a-task, create-a-task, bulk-create-tasks, update-a-task, complete-a-task, skip-a-task]
+    tag: [Tasks]
+  - name: PhoneCall
+    kind: workspace-record
+    description: A logged call record, dialed inside or outside Apollo.
+    operations: [phonecalls_create, get_phone_callssearch, put_phone_callsupdate]
+    tag: [Calls]
+  - name: Conversation
+    kind: workspace-record
+    description: A recorded call with transcript and optional AI insights.
+    operations: [search-conversations, get-conversations-info, export-conversations, get-conversations-export]
+    tag: [Conversations]
+  - name: Label
+    kind: workspace-record
+    display_name: List
+    description: Named grouping of contacts or accounts. Called a "list" in the product, /labels in the API.
+    operations: [get-a-list-of-all-lists, create-a-list, update-a-list, add-records-to-a-list, remove-records-from-a-list]
+  - name: Note
+    kind: workspace-record
+    operations: [get-a-list-of-notes]
+  - name: Field
+    kind: configuration
+    description: Workspace field definitions, including custom fields.
+    operations: [get-a-list-of-fields, create-a-custom-field, update-a-custom-field, get-a-list-of-all-custom-fields]
+    tag: [Fields]
+  - name: AccountStage
+    kind: reference-data
+    operations: [list-account-stages]
+  - name: ContactStage
+    kind: reference-data
+    operations: [list-contact-stages]
+  - name: DealStage
+    kind: reference-data
+    api_resource: opportunity_stage
+    operations: [list-deal-stages]
+  - name: User
+    kind: identity
+    description: A member of the Apollo workspace. Owns records and is the actor behind API-key requests.
+    operations: [get-a-list-of-users, get-current-user-profile]
+  - name: UsageStats
+    kind: operational
+    operations: [post_apiusage, view-credit-usage-stats]
+  - name: WebhookResult
+    kind: operational
+    description: The asynchronous result of a waterfall enrichment request, retrieved by request_id.
+    operations: [poll-webhook-result]
+relationships:
+  - {from: Contact, to: Account, type: belongs_to, via: account_id}
+  - {from: Contact, to: User, type: belongs_to, via: owner_id, note: Ownership drives visibility and permissions in the app.}
+  - {from: Contact, to: ContactStage, type: belongs_to, via: contact_stage_id}
+  - {from: Contact, to: Label, type: has_many, via: 'contact_label_ids[]'}
+  - {from: Contact, to: Deal, type: has_many, via: view-associated-deals}
+  - {from: Account, to: User, type: belongs_to, via: owner_id}
+  - {from: Account, to: AccountStage, type: belongs_to, via: account_stage_id}
+  - {from: Account, to: Account, type: belongs_to, via: parent_account_id, note: Self-referential account hierarchy.}
+  - {from: Account, to: Label, type: has_many, via: account_label_ids}
+  - {from: Account, to: Contact, type: has_many, via: account_id}
+  - {from: Deal, to: Account, type: belongs_to, via: account_id}
+  - {from: Deal, to: User, type: belongs_to, via: owner_id}
+  - {from: Deal, to: DealStage, type: belongs_to, via: opportunity_stage_id}
+  - {from: Deal, to: Contact, type: has_many, via: 'contact_ids[]'}
+  - {from: Sequence, to: Contact, type: has_many, via: 'contact_ids[]', note: Enrollment via add-contacts-to-sequence.}
+  - {from: Sequence, to: User, type: belongs_to, via: user_id}
+  - {from: Sequence, to: EmailerSchedule, type: belongs_to, via: emailer_schedule_id}
+  - {from: Sequence, to: EmailAccount, type: belongs_to, via: send_email_from_email_account_id}
+  - {from: EmailerMessage, to: Sequence, type: belongs_to, via: emailer_campaign_id}
+  - {from: EmailerMessage, to: Contact, type: belongs_to, via: contact_id}
+  - {from: Task, to: Contact, type: belongs_to, via: contact_id}
+  - {from: Task, to: User, type: belongs_to, via: user_id}
+  - {from: PhoneCall, to: Contact, type: belongs_to, via: contact_id}
+  - {from: PhoneCall, to: User, type: belongs_to, via: user_id}
+  - {from: Conversation, to: Contact, type: belongs_to, via: contact_id}
+  - {from: Label, to: Contact, type: has_many, via: entity_ids}
+  - {from: Label, to: Account, type: has_many, via: entity_ids}
+  - {from: Person, to: Contact, type: converts_to, via: create-a-contact, note: 'Enriched people are converted to contacts to stop re-spending credits — see docs/convert-enriched-people-to-contacts.'}
+  - {from: Organization, to: Account, type: converts_to, via: create-an-account}
+  - {from: Person, to: Organization, type: belongs_to, via: organization_id}
+external_ids:
+  description: Apollo records carry CRM cross-reference ids for sync.
+  fields: [salesforce_id, salesforce_lead_id, salesforce_contact_id, salesforce_account_id, hubspot_id, outreach_id, salesloft_id, merged_crm_ids]
+id_format:
+  style: opaque-string
+  prefixed: false
+  note: Apollo ids are opaque 24-character hex-style strings with no type prefix — an id alone does not say what it points at.
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com

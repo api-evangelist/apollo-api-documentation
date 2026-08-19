@@ -1,0 +1,452 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apollo API — Search",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "People API Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/mixed_people/api_search",
+            "params": [
+              {
+                "name": "person_titles[]",
+                "value": "",
+                "type": "query",
+                "description": "Job titles held by the people you want to find. For a person to be included in search results, they only need to match 1 of the job titles you add. Adding more job titles expands your search results. <br><br>Results also include job titles with the same terms, even if they are not exact matches. For example, searching for `marketing manager` might return people with the job title `content marketing manager`. <br><br>Use this parameter in combination with the `person_seniorities[]` parameter to find people based on specific job functions and seniority levels. <br><br>Examples: `sales development representative`; `marketing manager`; `research analyst`"
+              },
+              {
+                "name": "include_similar_titles",
+                "value": "",
+                "type": "query",
+                "description": "This parameter determines whether people with job titles similar to the titles you define in the `person_titles[]` parameter are returned in the response. <br><br>Set this parameter to `false` when using `person_titles[]` to return only strict matches for job titles."
+              },
+              {
+                "name": "q_keywords",
+                "value": "",
+                "type": "query",
+                "description": "A string of words over which we want to filter the results."
+              },
+              {
+                "name": "person_locations[]",
+                "value": "",
+                "type": "query",
+                "description": "The location where people live. You can search across cities, US states, and countries. <br><br>To find people based on the headquarters locations of their current employer, use the `organization_locations` parameter. <br><br>Examples: `california`; `ireland`; `chicago`"
+              },
+              {
+                "name": "person_seniorities[]",
+                "value": "",
+                "type": "query",
+                "description": "The job seniority that people hold within their current employer. This enables you to find people that currently hold positions at certain reporting levels, such as Director level or senior IC level. <br><br>For a person to be included in search results, they only need to match 1 of the seniorities you add. Adding more seniorities expands your search results. <br><br> Searches only return results based on their current job title, so searching for Director-level employees only returns people that currently hold a Director-level title. If someone was previously a Director, but is currently a VP, they would not be included in your search results. <br><br>Use this parameter in combination with the `person_titles[]` parameter to find people based on specific job functions and seniority levels. <br><br>The following options can be used for this parameter: <br><ul><li><code>owner</code></li><li><code>founder</code></li><li><code>c_suite</code></li><li><code>partner</code></li><li><code>vp</code></li><li><code>head</code></li><li><code>director</code></li><li><code>manager</code></li><li><code>senior</code></li><li><code>entry</code></li><li><code>intern</code></li></ul>"
+              },
+              {
+                "name": "organization_locations[]",
+                "value": "",
+                "type": "query",
+                "description": "The location of the company headquarters for a person's current employer. You can search across cities, US states, and countries. <br><br>If a company has several office locations, results are still based on the headquarters location. For example, if you search `chicago` but a company's HQ location is in `boston`, people that work for the Boston-based company will not appear in your results, even if they match other \\parameters. <br><br>To find people based on their personal location, use the `person_locations` parameter. <br><br>Examples: `texas`; `tokyo`; `spain`"
+              },
+              {
+                "name": "q_organization_domains_list[]",
+                "value": "",
+                "type": "query",
+                "description": "The domain name for the person's employer. This can be the current employer or a previous employer. Do not include `www.`, the `@` symbol, or similar. <br><br>This parameter accepts up to 1,000 domains in a single request. <br><br>Examples: `apollo.io`; `microsoft.com`"
+              },
+              {
+                "name": "contact_email_status[]",
+                "value": "",
+                "type": "query",
+                "description": "The email statuses for the people you want to find. You can add multiple statuses to expand your search. <br><br>The statuses you can search include:  <ul> <li> <code>verified</code> </li> <li> <code>unverified</code> </li> <li> <code>likely to engage</code> </li> <li> <code>unavailable</code> </li>  </ul>"
+              },
+              {
+                "name": "organization_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "The Apollo IDs for the companies (employers) you want to include in your search results. Each company in the Apollo database is assigned a unique ID. <br><br>To find IDs, call the <a href=\"https://docs.apollo.io/reference/organization-search\" target=\"_blank\">Organization Search endpoint</a> and identify the values for `organization_id`.  <br><br>Example: `5e66b6381e05b4008c8331b8`"
+              },
+              {
+                "name": "organization_num_employees_ranges[]",
+                "value": "",
+                "type": "query",
+                "description": "The number range of employees working for the person's current company. This enables you to find people based on the headcount of their employer. You can add multiple ranges to expand your search results. <br><br>Each range you add needs to be a string, with the upper and lower numbers of the range separated only by a comma. <br><br>Examples: `1,10`; `250,500`; `10000,20000`"
+              },
+              {
+                "name": "revenue_range[min]",
+                "value": "",
+                "type": "query",
+                "description": "The minimum revenue the person's current employer generates. Use this parameter in combination with `revenue_range[max]` to set a revenue range. <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `500000`; `1500000`"
+              },
+              {
+                "name": "revenue_range[max]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum revenue the person's current employer generates. Use this parameter in combination with `revenue_range[min]` to set a revenue range. <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `500000`; `1500000`"
+              },
+              {
+                "name": "currently_using_all_of_technology_uids[]",
+                "value": "",
+                "type": "query",
+                "description": "Find people based on all of the technologies their current employer uses. Apollo supports filtering by 1,500+ technologies. <br><br>Apollo calculates technologies data from multiple sources. This data is updated regularly. Check out the full list of supported technologies by <a href=\"https://api.apollo.io/v1/auth/supported_technologies_csv\" target=\"_blank\">downloading this CSV file</a>. <br><br>Use underscores (`_`) to replace spaces and periods for the technologies listed in the CSV file. <br><br>Examples: `salesforce`; `google_analytics`; `wordpress_org`"
+              },
+              {
+                "name": "currently_using_any_of_technology_uids[]",
+                "value": "",
+                "type": "query",
+                "description": "Find people based on any of the technologies their current employer uses. Apollo supports filtering by 1,500+ technologies. <br><br>Apollo calculates technologies data from multiple sources. This data is updated regularly. Check out the full list of supported technologies by <a href=\"https://api.apollo.io/v1/auth/supported_technologies_csv\" target=\"_blank\">downloading this CSV file</a>. <br><br>Use underscores (`_`) to replace spaces and periods for the technologies listed in the CSV file. <br><br>Examples: `salesforce`; `google_analytics`; `wordpress_org`"
+              },
+              {
+                "name": "currently_not_using_any_of_technology_uids[]",
+                "value": "",
+                "type": "query",
+                "description": "Exclude people from your search based on any of the technologies their current employer uses. Apollo supports filtering by 1,500+ technologies. <br><br>Apollo calculates technologies data from multiple sources. This data is updated regularly. Check out the full list of supported technologies by <a href=\"https://api.apollo.io/v1/auth/supported_technologies_csv\" target=\"_blank\">downloading this CSV file</a>. <br><br>Use underscores (`_`) to replace spaces and periods for the technologies listed in the CSV file. <br><br>Examples: `salesforce`; `google_analytics`; `wordpress_org`"
+              },
+              {
+                "name": "q_organization_job_titles[]",
+                "value": "",
+                "type": "query",
+                "description": "The job titles that are listed in active job postings at the person's current employer. <br><br>Examples: `sales manager`; `research analyst`"
+              },
+              {
+                "name": "organization_job_locations[]",
+                "value": "",
+                "type": "query",
+                "description": "The locations of the jobs being actively recruited by the person's employer. <br><br>Examples: `atlanta`; `japan`"
+              },
+              {
+                "name": "organization_num_jobs_range[min]",
+                "value": "",
+                "type": "query",
+                "description": "The minimum number of job postings active at the person's current empployer. Use this parameter in combination with `organization_num_jobs_range[max]` to set a job postings range. <br><br>Examples: `50`; `500`"
+              },
+              {
+                "name": "organization_num_jobs_range[max]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of job postings active at the person's current empployer. Use this parameter in combination with `organization_num_jobs_range[min]` to set a job postings range. <br><br>Examples: `50`; `500`"
+              },
+              {
+                "name": "organization_job_posted_at_range[min]",
+                "value": "",
+                "type": "query",
+                "description": "The earliest date when jobs were posted by the person's current employer. Use this parameter in combination with `organization_job_posted_at_range[max]` to set a date range for when jobs posted. <br><br>Example: `2025-07-25`"
+              },
+              {
+                "name": "organization_job_posted_at_range[max]",
+                "value": "",
+                "type": "query",
+                "description": "The latest date when jobs were posted by the person's current employer. Use this parameter in combination with `organization_job_posted_at_range[min]` to set a date range for when jobs posted. <br><br>Example: `2025-09-25`"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint. <br><br>Example: `4`"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of search results that should be returned for each page. Limiting the number of results per page improves the endpoint's performance. <br><br>Use the `page` parameter to search the different pages of data. <br><br>Example: `10`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/mixed_people/api_search` or `Master API key`\n\n**OAuth scopes:** `mixed_people_api_search`\n\n**Free account access:** Requires an Apollo account registered with a work email address. Paid accounts aren't affected.\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4412658716941-Search-for-People\" target=\"_blank\">People</a> ar"
+        },
+        {
+          "info": {
+            "name": "Organization Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/mixed_companies/search",
+            "params": [
+              {
+                "name": "q_organization_domains_list[]",
+                "value": "",
+                "type": "query",
+                "description": "The domain name for the person's employer. This can be the current employer or a previous employer. Do not include `www.`, the `@` symbol, or similar. <br><br>This parameter accepts up to 1,000 domains in a single request. <br><br>Examples: `apollo.io`; `microsoft.com`"
+              },
+              {
+                "name": "organization_num_employees_ranges[]",
+                "value": "",
+                "type": "query",
+                "description": "The number range of employees working for the company. This enables you to find companies based on headcount. You can add multiple ranges to expand your search results. <br><br>Each range you add needs to be a string, with the upper and lower numbers of the range separated only by a comma. <br><br>Examples: `1,10`; `250,500`; `10000,20000`"
+              },
+              {
+                "name": "organization_locations[]",
+                "value": "",
+                "type": "query",
+                "description": "The location of the company headquarters. You can search across cities, US states, and countries. <br><br>If a company has several office locations, results are still based on the headquarters location. For example, if you search `chicago` but a company's HQ location is in `boston`, any Boston-based companies will not appearch in your search results, even if they match other parameters.. <br><br>To exclude companies based on location, use the `organization_not_locations` parameter. <br><br>Examples: `texas`; `tokyo`; `spain`"
+              },
+              {
+                "name": "organization_not_locations[]",
+                "value": "",
+                "type": "query",
+                "description": "Exclude companies from search results based on the location of the company headquarters. You can use cities, US states, and countries as locations to exclude. <br><br>This parameter is useful for ensuring you do not prospect in an undesirable territory. For example, if you use `ireland` as a value, no Ireland-based companies will appear in your search results. <br><br>Examples: `minnesota`; `ireland`; `seoul`"
+              },
+              {
+                "name": "revenue_range[min]",
+                "value": "",
+                "type": "query",
+                "description": "Search for organizations based on their revenue. <br><br>Use this parameter to set the lower range of organization revenue. Use the `revenue_range[max]` parameter to set the upper range of revenue. <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Example: `300000`"
+              },
+              {
+                "name": "revenue_range[max]",
+                "value": "",
+                "type": "query",
+                "description": "Search for organizations based on their revenue. <br><br>Use this parameter to set the upper range of organization revenue. Use the `revenue_range[min]` parameter to set the lower range of revenue. <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Example: `50000000`"
+              },
+              {
+                "name": "currently_using_any_of_technology_uids[]",
+                "value": "",
+                "type": "query",
+                "description": "Find organizations based on the technologies they currently use. Apollo supports filtering by 1,500+ technologies. <br><br>Apollo calculates technologies data from multiple sources. This data is updated regularly. Check out the full list of supported technologies by <a href=\"https://api.apollo.io/v1/auth/supported_technologies_csv\" target=\"_blank\">downloading this CSV file</a>. <br><br>Use underscores (`_`) to replace spaces and periods for the technologies listed in the CSV file. <br><br>Examples: `salesforce`; `google_analytics`; `wordpress_org`"
+              },
+              {
+                "name": "q_organization_keyword_tags[]",
+                "value": "",
+                "type": "query",
+                "description": "Filter search results based on keywords associated with companies. For example, you can enter `mining` as a value to return only companies that have an association with the mining industry. <br><br>Examples: `mining`; `sales strategy`; `consulting`"
+              },
+              {
+                "name": "q_organization_name",
+                "value": "",
+                "type": "query",
+                "description": "Filter search results to include a specific company name. <br><br>If the value you enter for this parameter does not match with a company's name, the company will not appear in search results, even if it matches other parameters. Partial matches are accepted. For example, if you filter by the value `marketing`, a company called `NY Marketing Unlimited` would still be eligible as a search result, but `NY Market Analysis` would not be eligible. <br><br>Example: `apollo` or `mining`"
+              },
+              {
+                "name": "organization_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "The Apollo IDs for the companies you want to include in your search results. Each company in the Apollo database is assigned a unique ID. <br><br>To find IDs, identify the values for `organization_id` when you call this endpoint. <br><br>Example: `5e66b6381e05b4008c8331b8`"
+              },
+              {
+                "name": "latest_funding_amount_range[min]",
+                "value": "",
+                "type": "query",
+                "description": "The minimum amount the company received with its most recent funding round. Use this parameter in combination with `latest_funding_amount_range[max]` to set a monetary range for the company's most recent funding round. <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `5000000`; `15000000`"
+              },
+              {
+                "name": "latest_funding_amount_range[max]",
+                "value": "",
+                "type": "query",
+                "description": "The maximium amount the company received with its most recent funding round. Use this parameter in combination with `latest_funding_amount_range[min]` to set a monetary range for the company's most recent funding round. <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `5000000`; `15000000`"
+              },
+              {
+                "name": "total_funding_range[min]",
+                "value": "",
+                "type": "query",
+                "description": "The minimum amount the company received during all of its funding rounds combined. Use this parameter in combination with `total_funding_range[max]` to set a monetary range for all of the company's funding rounds. <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `50000000`; `350000000`"
+              },
+              {
+                "name": "total_funding_range[max]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum amount the company received during all of its funding rounds combined. Use this parameter in combination with `total_funding_range[min]` to set a monetary range for all of the company's funding rounds. <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `50000000`; `350000000`"
+              },
+              {
+                "name": "latest_funding_date_range[min]",
+                "value": "",
+                "type": "query",
+                "description": "The earliest date when the company received its most recent funding round. Use this parameter in combination with `latest_funding_date_range[max]` to set a date range for when the company received its most recent funding round. <br><br>Example: `2025-07-25`"
+              },
+              {
+                "name": "latest_funding_date_range[max]",
+                "value": "",
+                "type": "query",
+                "description": "The latest date when the company received its most recent funding round. Use this parameter in combination with `latest_funding_date_range[min]` to set a date range for when the company received its most recent funding round. <br><br>Example: `2025-09-25`"
+              },
+              {
+                "name": "q_organization_job_titles[]",
+                "value": "",
+                "type": "query",
+                "description": "The job titles that are listed in active job postings at the company. <br><br>Examples: `sales manager`; `research analyst`"
+              },
+              {
+                "name": "organization_job_locations[]",
+                "value": "",
+                "type": "query",
+                "description": "The locations of the jobs being actively recruited by the company. <br><br>Examples: `atlanta`; `japan`"
+              },
+              {
+                "name": "organization_num_jobs_range[min]",
+                "value": "",
+                "type": "query",
+                "description": "The minimum number of job postings active at the company. Use this parameter in combination with `organization_num_jobs_range[max]` to set a job postings range. <br><br>Examples: `50`; `500`"
+              },
+              {
+                "name": "organization_num_jobs_range[max]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of job postings active at the company. Use this parameter in combination with `organization_num_jobs_range[min]` to set a job postings range. <br><br>Examples: `50`; `500`"
+              },
+              {
+                "name": "organization_job_posted_at_range[min]",
+                "value": "",
+                "type": "query",
+                "description": "The earliest date when jobs were posted by the company. Use this parameter in combination with `organization_job_posted_at_range[max]` to set a date range for when jobs posted. <br><br>Example: `2025-07-25`"
+              },
+              {
+                "name": "organization_job_posted_at_range[max]",
+                "value": "",
+                "type": "query",
+                "description": "The latest date when jobs were posted by the company. Use this parameter in combination with `organization_job_posted_at_range[min]` to set a date range for when jobs posted. <br><br>Example: `2025-09-25`"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint. <br><br>Example: `4`"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of search results that should be returned for each page. Limiting the number of results per page improves the endpoint's performance. <br><br>Use the `page` parameter to search the different pages of data. <br><br>Example: `10`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/mixed_companies/search` or `Master API key`\n\n**OAuth scopes:** `mixed_companies_search`\n\n**Free account access:** Requires an Apollo account registered with a work email address. Paid accounts aren't affected.\n\n**Credit usage:** `1 credit per page`\n\nThis endpoint consumes 1 Apollo credit per page, with up to 100 results per page. Learn more about [API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apo"
+        },
+        {
+          "info": {
+            "name": "Organization Job Postings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/organizations/:organization_id/job_postings",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID of the company for which you want to find job postings.<br><br>Each company in the Apollo database is assigned a unique ID. To find IDs, call the <a href=\"https://docs.apollo.io/reference/organization-search\" target=\"_blank\">Organization Search endpoint</a> and identify the values for `organization_id`. <br><br>Example: `5e66b6381e05b4008c8331b8`"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint. <br><br>Example: `4`"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of search results that should be returned for each page. Limiting the number of results per page improves the endpoint's performance. <br><br>Use the `page` parameter to search the different pages of data. <br><br>Example: `10`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/organizations/job_postings` or `Master API key`\n\n**OAuth scopes:** `organizations_job_posting`\n\n**Credit usage:** `1 credit per page`\n\nThis endpoint consumes 1 Apollo credit per page, with up to 10,000 results per page. Learn more about [API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4412658766477-Search-for-Companies\" target=\"_blank\">Organizations</a> are companies you"
+        },
+        {
+          "info": {
+            "name": "Get Complete Organization Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/organizations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Apollo ID for the organization that you want to research. <br><br>To find organization IDs, call the <a href=\"https://docs.apollo.io/reference/organization-search#/\" target=\"_blank\">Organization Search endpoint</a> and identify the `organizaton_id` value for the organization. <br><br>Example: `5e66b6381e05b4008c8331b8`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/organizations/show` or `Master API key`\n\n**OAuth scopes:** `organization_read`\n\n**Free account access:** Requires an Apollo account registered with a work email address. Paid accounts aren't affected.\n\n**Credit usage:** `1 credit per company` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4412658766477-Search-for-Companies\" target=\"_blank\">Organizati"
+        },
+        {
+          "info": {
+            "name": "Get Complete Person Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/people/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Apollo ID for the person that you want to research. <br><br>To find person IDs, call the <a href=\"https://docs.apollo.io/reference/people-api-search\" target=\"_blank\">People Search endpoint</a> and identify the `id` value for the person. <br><br>Example: `65f0a1b2c3d4e5f600012345`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/people/show` or `Master API key`\n\n**OAuth scopes:** `person_read`\n\n**Free account access:** Requires an Apollo account registered with a work email address. Paid accounts aren't affected.\n\n**Credit usage:** `1 credit per person` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the Get Complete Person Info endpoint to retrieve complete details about a person in the Apollo database, including employment "
+        },
+        {
+          "info": {
+            "name": "News Articles Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/news_articles/search",
+            "params": [
+              {
+                "name": "organization_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "The Apollo IDs for the companies you want to include in your search results. Each company in the Apollo database is assigned a unique ID. <br><br>To find IDs, call the <a href=\"https://docs.apollo.io/reference/organization-search\" target=\"_blank\">Organization Search endpoint</a> and identify the values for `organization_id`.  <br><br>Example: `5e66b6381e05b4008c8331b8`"
+              },
+              {
+                "name": "categories[]",
+                "value": "",
+                "type": "query",
+                "description": "Filter your search to include only certain categories or sub-categories of news. Use the <b>News</b> search filter for companies within Apollo to uncover all possible categories and sub-categories. <br><br>Examples: `hires`; `investment`; `contract`"
+              },
+              {
+                "name": "published_at[min]",
+                "value": "",
+                "type": "query",
+                "description": "Set the lower bound of the date range you want to search. <br><br>Use this parameter in combination with the `published_at[max]` parameter. This date should fall before the `published_at[max]` date. <br><br>The date should be formatted as `YYYY-MM-DD`. <br><br>Example: `2025-02-15`"
+              },
+              {
+                "name": "published_at[max]",
+                "value": "",
+                "type": "query",
+                "description": "Set the upper bound of the date range you want to search. <br><br>Use this parameter in combination with the `published_at[min]` parameter. This date should fall after the `published_at[min]` date. <br><br>The date should be formatted as `YYYY-MM-DD`. <br><br>Example: `2025-05-15`"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint. <br><br>Example: `4`"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of search results that should be returned for each page. Limiting the number of results per page improves the endpoint's performance. <br><br>Use the `page` parameter to search the different pages of data. <br><br>Example: `10`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/news_articles/search` or `Master API key`\n\n**OAuth scopes:** `organizations_news_articles`\n\n**Credit usage:** `1 credit per page`\n\nThis endpoint consumes 1 Apollo credit per page, with up to 25 results per page. Learn more about [API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4412665755661-Search-Filters-Overview#news\" target=\"_blank\">News</a> includes articles related "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,86 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://github.com/apolloio (org repo listing), https://docs.apollo.io/docs/apollo-cli-overview,
+  https://registry.npmjs.org/, https://api.github.com/repos/apolloio/apollo-io-cli/releases/latest
+provider: Apollo API Documentation
+providerId: apollo-api-documentation
+description: >-
+  First-party client distribution for Apollo. Apollo does NOT publish a language SDK for the REST API — the
+  OpenAPI Specification page tells developers to generate their own client with OpenAPI Generator. What Apollo
+  does ship first-party is a CLI (TypeScript, distributed via a Homebrew tap and GitHub release binaries, not
+  npm), an official n8n community node on npm, and a Claude Code / Cowork plugin for its MCP server.
+packages:
+  - name: apollo-io-cli
+    official: true
+    registry: homebrew
+    language: TypeScript
+    kind: cli
+    version: 2.1.0
+    published: '2026-08-07'
+    install: brew install apolloio/apollo-io-cli/apollo-io-cli
+    repository: https://github.com/apolloio/apollo-io-cli
+    docs: https://docs.apollo.io/docs/apollo-cli-overview
+    releases: https://github.com/apolloio/apollo-io-cli/releases
+    note: >-
+      "The Official Apollo.io CLI". Version and date read from the GitHub release tag v2.1.0 (published
+      2026-08-07) and package.json on main. NOT published to npm — registry.npmjs.org returns 404 for both
+      `apollo-io-cli` and `@apollo-io/cli`, so there is no npm metadata endpoint to query. Distribution is a
+      Homebrew tap (apolloio/homebrew-apollo-io-cli), prebuilt binaries on the GitHub releases page for
+      macOS/Linux/Windows, or a build from source with Node.js 18+. Authenticates with OAuth 2.0; no API key.
+  - name: '@apolloio/n8n-nodes-apollo'
+    official: true
+    registry: npm
+    language: TypeScript
+    kind: integration-node
+    version: 0.3.1
+    published: '2026-07-17'
+    install: npm install @apolloio/n8n-nodes-apollo
+    registry_url: https://www.npmjs.com/package/@apolloio/n8n-nodes-apollo
+    repository: https://github.com/apolloio/n8n-nodes-apollo
+    note: >-
+      "Official Apollo.io n8n community node for lead enrichment and organization search." Version and date read
+      from registry.npmjs.org dist-tags.latest + time. Published under the apolloio npm scope from the apolloio
+      GitHub org, so first-party. Note the unscoped `n8n-nodes-apollo` on npm (0.2.0, 2026-05-13) is a
+      third-party package from github.com/arturl95 and is NOT Apollo's — it is excluded from this artifact.
+  - name: apollo-mcp-plugin
+    official: true
+    registry: github
+    language: null
+    kind: plugin
+    version: null
+    published: null
+    repository: https://github.com/apolloio/apollo-mcp-plugin
+    note: >-
+      "Connect Claude Code + Cowork to Apollo MCP via this plugin." First-party (apolloio org). No registry
+      entry and no tagged release, so there is no version metadata endpoint to read — version and published are
+      null by measurement, not by omission. Consumers install it from the repository at whatever HEAD is.
+absent:
+  - registry: npm
+    note: No first-party Apollo REST API SDK on npm.
+  - registry: PyPI
+    note: No first-party Apollo package found.
+  - registry: Maven Central
+    note: No first-party Apollo package found.
+  - registry: NuGet
+    note: No first-party Apollo package found.
+  - registry: pkg.go.dev
+    note: No first-party Apollo package found.
+  - registry: RubyGems
+    note: >-
+      apolloio publishes forks (sidekiq-apolloio, chewy, solargraph) but no Apollo API client gem.
+  - registry: Packagist
+    note: No first-party Apollo package found.
+  - registry: crates.io
+    note: No first-party Apollo package found.
+sdk_policy:
+  published_sdks: 0
+  stance: generate-your-own
+  evidence: https://docs.apollo.io/reference/openapi-specification
+  note: >-
+    Apollo's own guidance is to feed https://docs.apollo.io/openapi/apollo-rest-api.json to OpenAPI Generator
+    (the docs walk through `openapi-generator generate -g typescript-fetch`). A complete, current OpenAPI is
+    the substitute Apollo offers for a maintained SDK.
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com

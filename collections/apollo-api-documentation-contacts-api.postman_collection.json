@@ -1,0 +1,2739 @@
+{
+  "item": [
+    {
+      "id": "7ff69c68-8eee-4dd2-9625-2b12b8ba0b61",
+      "name": "Contacts",
+      "description": {
+        "content": "Create, update, and search the people your team saves in Apollo.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "515441db-58b2-44e1-b7c1-ecbb298a1fea",
+          "name": "Create a Contact",
+          "request": {
+            "name": "Create a Contact",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/contacts/create` or `Master API key`\n\n**OAuth scopes:** `contact_write`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995459280525-View-and-Edit-Contacts\" target=\"_blank\">Contacts</a> are people saved in Apollo.<br><br>Use the Create a Contact endpoint to add a new contact to your team's Apollo  account.<br><br>By default, Apollo doesn't apply deduplication processes when you create a new contact via API. If your entry has the same name, email address, or other details as an existing contact, Apollo creates a new contact instead of updating the existing contact. To enable deduplication and prevent duplicate contacts, set the <code>run_dedupe</code> parameter to <code>true</code>. <br><br>To update an existing contact, use the <a href=\"https://docs.apollo.io/reference/update-a-contact\">Update a Contact endpoint</a> instead.\n\n### What `run_dedupe` actually does\n\nSetting `run_dedupe` to `true` does more than suppress a duplicate. On a match, Apollo **updates that existing contact in place** with your request's values and returns it. The response looks like a creation, but the `id` belongs to the pre-existing contact — so treating every `200` as \"a new contact was created\" doesn't hold once `run_dedupe` is on.\n\n**How Apollo picks the match.** It checks these in order and stops at the first hit, so a match isn't necessarily on email:\n\n1. `id`, if you send one.\n2. CRM identifiers: `salesforce_lead_id`, `salesforce_contact_id`, `hubspot_vid`, or a previously merged CRM ID.\n3. `person_id`.\n4. `email` — compared against the contact's primary email **and** any additional emails stored on it.\n5. `first_name` plus `last_name` (or a full name) with a matching company, where the company matches on email domain, `organization_id`, or `organization_name`.\n\nBecause of step 5, a contact can be matched and updated even when the email you send differs from the stored one.\n\n**What the update writes.** It's a field-level overwrite of the values you send, not a merge that prefers existing data:\n\n* Fields you **send** overwrite the stored values, with no warning and no record of the previous value.\n* Fields you **omit** are left untouched, so you don't need to resend the whole record.\n* An **empty value clears the field** rather than being ignored.\n* The contact's `email` can itself be overwritten when the match came from a CRM ID, `person_id`, or name-plus-company. `email_status` isn't re-verified, so it can keep reading `verified` while describing the previous address.\n* Protected once set: `person_id`, `salesforce_lead_id`, and `salesforce_contact_id`. LinkedIn-sourced photos won't replace an existing `photo_url`.\n\n**Recommended handling.** To add records without changing existing ones, leave `run_dedupe` off (the default) and reconcile duplicates yourself. To upsert, set it to `true` and send the complete set of fields you want the contact to end up with, since omitted fields keep their old values. To edit a known contact, prefer [Update a Contact](https://docs.apollo.io/reference/update-a-contact) with its `id` — explicit, with no matching involved.\n\n[Bulk Create Contacts](https://docs.apollo.io/reference/bulk-create-contacts) differs: matched contacts are returned in `existing_contacts` **without** being modified.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"organization_name\": \"<string>\",\n  \"title\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"email\": \"<string>\",\n  \"website_url\": \"<string>\",\n  \"label_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"contact_stage_id\": \"<string>\",\n  \"present_raw_address\": \"<string>\",\n  \"direct_phone\": \"<string>\",\n  \"corporate_phone\": \"<string>\",\n  \"mobile_phone\": \"<string>\",\n  \"home_phone\": \"<string>\",\n  \"other_phone\": \"<string>\",\n  \"typed_custom_fields\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"run_dedupe\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "75dbb22d-f5e6-4260-b6db-99dff985bb06",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Smith\",\n  \"email\": \"john.smith@example.com\",\n  \"organization_name\": \"Example Corp\",\n  \"title\": \"Software Engineer\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"contact\": {\n    \"contact_roles\": [],\n    \"id\": \"66e34b81740c50074e3d1bd4\",\n    \"first_name\": \"Fyodor\",\n    \"last_name\": \"Dostoevsky\",\n    \"name\": \"Fyodor Dostoevsky\",\n    \"linkedin_url\": null,\n    \"title\": \"Chief Fiction Writer\",\n    \"contact_stage_id\": \"6095a710bd01d100a506d4ae\",\n    \"owner_id\": \"60affe7d6e270a00f5db6fe4\",\n    \"creator_id\": \"60affe7d6e270a00f5db6fe4\",\n    \"person_id\": null,\n    \"email_needs_tickling\": null,\n    \"organization_name\": \"Apollo.io\",\n    \"source\": \"api\",\n    \"original_source\": \"api\",\n    \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n    \"headline\": null,\n    \"photo_url\": null,\n    \"present_raw_address\": \"St. Petersburg, Russia\",\n    \"linkedin_uid\": null,\n    \"extrapolated_email_confidence\": null,\n    \"salesforce_id\": null,\n    \"salesforce_lead_id\": null,\n    \"salesforce_contact_id\": null,\n    \"salesforce_account_id\": null,\n    \"crm_owner_id\": null,\n    \"created_at\": \"2024-09-12T20:13:53.207Z\",\n    \"emailer_campaign_ids\": [],\n    \"direct_dial_status\": null,\n    \"direct_dial_enrichment_failed_at\": null,\n    \"email_status\": \"verified\",\n    \"email_source\": null,\n    \"account_id\": \"63f53afe4ceeca00016bdd2f\",\n    \"last_activity_date\": null,\n    \"hubspot_vid\": null,\n    \"hubspot_company_id\": null,\n    \"crm_id\": null,\n    \"sanitized_phone\": \"+15555550149\",\n    \"merged_crm_ids\": null,\n    \"updated_at\": \"2024-09-12T20:13:53.331Z\",\n    \"queued_for_crm_push\": true,\n    \"suggested_from_rule_engine_config_id\": null,\n    \"email_unsubscribed\": null,\n    \"label_ids\": [\n      \"66e34b81740c50074e3d1bd0\",\n      \"66e34b81740c50074e3d1bd1\",\n      \"66e34b81740c50074e3d1bd2\",\n      \"66e34b81740c50074e3d1bd3\"\n    ],\n    \"has_pending_email_arcgate_request\": false,\n    \"has_email_arcgate_request\": false,\n    \"existence_level\": \"full\",\n    \"email\": \"fyodo@apollo.io\",\n    \"email_from_customer\": true,\n    \"custom_field_errors\": {},\n    \"crm_record_url\": null,\n    \"email_status_unavailable_reason\": null,\n    \"email_true_status\": \"User Managed\",\n    \"updated_email_true_status\": true,\n    \"contact_rule_config_statuses\": [],\n    \"source_display_name\": \"Created from API\",\n    \"twitter_url\": null,\n    \"contact_campaign_statuses\": [],\n    \"contact_emails\": [],\n    \"next_contact_id\": null,\n    \"time_zone\": \"Asia/Krasnoyarsk\",\n    \"city\": \"Saint Petersburg\",\n    \"state\": \"Saint Petersburg\",\n    \"country\": \"Russia\",\n    \"show_intent\": false,\n    \"phone_numbers\": [\n      {\n        \"raw_number\": \"555-555-0149\",\n        \"sanitized_number\": \"+15555550149\",\n        \"type\": \"work_direct\",\n        \"position\": 0,\n        \"status\": \"no_status\",\n        \"dnc_status\": null,\n        \"dnc_other_info\": null,\n        \"dialer_flags\": null\n      }\n    ],\n    \"account_phone_note\": null,\n    \"free_domain\": false,\n    \"is_likely_to_engage\": false,\n    \"email_domain_catchall\": false,\n    \"typed_custom_fields\": {\n      \"5b75f1c11dc2727d43ae3bb9\": \"test\",\n      \"5c4296857f799409361890ea\": \"test2\"\n    }\n  },\n  \"labels\": [\n    {\n      \"id\": \"66e34b81740c50074e3d1bd2\",\n      \"modality\": \"contacts\",\n      \"cached_count\": 0,\n      \"name\": \"typewriter\",\n      \"created_at\": \"2024-09-12T20:13:53.119Z\",\n      \"updated_at\": \"2024-09-12T20:13:53.279Z\",\n      \"user_id\": \"60affe7d6e270a00f5db6fe4\"\n    },\n    {\n      \"id\": \"66e34b81740c50074e3d1bd1\",\n      \"modality\": \"contacts\",\n      \"cached_count\": 0,\n      \"name\": \"fiction\",\n      \"created_at\": \"2024-09-12T20:13:53.107Z\",\n      \"updated_at\": \"2024-09-12T20:13:53.258Z\",\n      \"user_id\": \"60affe7d6e270a00f5db6fe4\"\n    },\n    {\n      \"id\": \"66e34b81740c50074e3d1bd0\",\n      \"modality\": \"contacts\",\n      \"cached_count\": 0,\n      \"name\": \"writer\",\n      \"created_at\": \"2024-09-12T20:13:53.093Z\",\n      \"updated_at\": \"2024-09-12T20:13:53.308Z\",\n      \"user_id\": \"60affe7d6e270a00f5db6fe4\"\n    },\n    {\n      \"id\": \"66e34b81740c50074e3d1bd3\",\n      \"modality\": \"contacts\",\n      \"cached_count\": 0,\n      \"name\": \"microsoft word\",\n      \"created_at\": \"2024-09-12T20:13:53.132Z\",\n      \"updated_at\": \"2024-09-12T20:13:53.313Z\",\n      \"user_id\": \"60affe7d6e270a00f5db6fe4\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c0d5de30-7eaa-4843-86e7-0015b0257c26",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Smith\",\n  \"email\": \"john.smith@example.com\",\n  \"organization_name\": \"Example Corp\",\n  \"title\": \"Software Engineer\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "62e9754d-6cec-4202-9b4b-26cfab06dda6",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Smith\",\n  \"email\": \"john.smith@example.com\",\n  \"organization_name\": \"Example Corp\",\n  \"title\": \"Software Engineer\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"Parameters misconfigured. 63f53afe4ceeca00016bdd2fsfsdf is not a valid ID\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "687cfd0f-164d-41b8-9ff2-9dcd72091724",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Smith\",\n  \"email\": \"john.smith@example.com\",\n  \"organization_name\": \"Example Corp\",\n  \"title\": \"Software Engineer\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/contacts is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "03427ebf-ea2d-4aa0-8556-f27bdc8a702e",
+          "name": "Update a Contact",
+          "request": {
+            "name": "Update a Contact",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/contacts/update` or `Master API key`\n\n**OAuth scopes:** `contact_update`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995459280525-View-and-Edit-Contacts\" target=\"_blank\">Contacts</a> are people saved in Apollo.<br><br>Use the Update a Contact endpoint to update existing contacts in your team's Apollo account.<br><br>To create a new contact, use the <a href=\"https://docs.apollo.io/reference/create-a-contact\">Create a Contact endpoint</a> instead. To update the contact stage for multiple contacts, use the <a href=\"https://docs.apollo.io/reference/update-contact-stage\">Update Contact Stage for Multiple Contacts</a> endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                ":contact_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "contact_id",
+                  "description": "(Required) The Apollo ID for the contact that you want to update. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"organization_name\": \"<string>\",\n  \"title\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"email\": \"<string>\",\n  \"website_url\": \"<string>\",\n  \"label_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"contact_stage_id\": \"<string>\",\n  \"present_raw_address\": \"<string>\",\n  \"direct_phone\": \"<string>\",\n  \"corporate_phone\": \"<string>\",\n  \"mobile_phone\": \"<string>\",\n  \"home_phone\": \"<string>\",\n  \"other_phone\": \"<string>\",\n  \"typed_custom_fields\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "40a380e0-3bce-42da-a3c0-cabdda5244b8",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contact_id",
+                      "description": "(Required) The Apollo ID for the contact that you want to update. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"organization_name\": \"<string>\",\n  \"title\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"email\": \"<string>\",\n  \"website_url\": \"<string>\",\n  \"label_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"contact_stage_id\": \"<string>\",\n  \"present_raw_address\": \"<string>\",\n  \"direct_phone\": \"<string>\",\n  \"corporate_phone\": \"<string>\",\n  \"mobile_phone\": \"<string>\",\n  \"home_phone\": \"<string>\",\n  \"other_phone\": \"<string>\",\n  \"typed_custom_fields\": {\n    \"60c39ed82bd02f01154c470a\": \"2025-08-07\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"contact\": {\n    \"contact_roles\": [],\n    \"id\": \"66e34b81740c50074e3d1bd4\",\n    \"first_name\": \"Fyodor\",\n    \"last_name\": \"Dostoevsky\",\n    \"name\": \"Fyodor Dostoevsky\",\n    \"linkedin_url\": null,\n    \"title\": \"Chief Writer\",\n    \"contact_stage_id\": \"6095a710bd01d100a506d4ae\",\n    \"owner_id\": \"60affe7d6e270a00f5db6fe4\",\n    \"creator_id\": \"60affe7d6e270a00f5db6fe4\",\n    \"person_id\": null,\n    \"email_needs_tickling\": null,\n    \"organization_name\": \"Apollo.io\",\n    \"source\": \"api\",\n    \"original_source\": \"api\",\n    \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n    \"headline\": null,\n    \"photo_url\": null,\n    \"present_raw_address\": \"St. Petersburg, Russia\",\n    \"linkedin_uid\": null,\n    \"extrapolated_email_confidence\": null,\n    \"salesforce_id\": null,\n    \"salesforce_lead_id\": null,\n    \"salesforce_contact_id\": null,\n    \"salesforce_account_id\": null,\n    \"crm_owner_id\": null,\n    \"created_at\": \"2024-09-12T20:13:53.207Z\",\n    \"emailer_campaign_ids\": [],\n    \"direct_dial_status\": null,\n    \"direct_dial_enrichment_failed_at\": null,\n    \"email_status\": \"verified\",\n    \"email_source\": null,\n    \"account_id\": \"63f53afe4ceeca00016bdd2f\",\n    \"last_activity_date\": null,\n    \"hubspot_vid\": null,\n    \"hubspot_company_id\": null,\n    \"crm_id\": null,\n    \"sanitized_phone\": \"+15555550117\",\n    \"merged_crm_ids\": null,\n    \"updated_at\": \"2024-09-12T20:14:53.134Z\",\n    \"queued_for_crm_push\": false,\n    \"suggested_from_rule_engine_config_id\": null,\n    \"email_unsubscribed\": null,\n    \"label_ids\": [\n      \"66e361494acd1307386d4073\"\n    ],\n    \"typed_custom_fields\": {\n      \"5b75f1c11dc2727d43ae3bb9\": \"test\",\n      \"5c4296857f799409361890ea\": \"test2\"\n    },\n    \"has_pending_email_arcgate_request\": false,\n    \"has_email_arcgate_request\": false,\n    \"existence_level\": \"full\",\n    \"email\": \"fyodor.dostoevsky@apollo.io\",\n    \"email_from_customer\": true,\n    \"custom_field_errors\": {},\n    \"crm_record_url\": null,\n    \"email_status_unavailable_reason\": null,\n    \"email_true_status\": \"User Managed\",\n    \"updated_email_true_status\": true,\n    \"contact_rule_config_statuses\": [],\n    \"source_display_name\": \"Created from API\",\n    \"twitter_url\": null,\n    \"contact_emails\": [],\n    \"next_contact_id\": null,\n    \"time_zone\": \"Asia/Krasnoyarsk\",\n    \"city\": \"Saint Petersburg\",\n    \"state\": \"Saint Petersburg\",\n    \"country\": \"Russia\",\n    \"show_intent\": false,\n    \"phone_numbers\": [\n      {\n        \"raw_number\": \"555-555-0117\",\n        \"sanitized_number\": \"+15555550117\",\n        \"type\": \"work_direct\",\n        \"position\": 0,\n        \"status\": \"no_status\",\n        \"dnc_status\": null,\n        \"dnc_other_info\": null,\n        \"dialer_flags\": null\n      }\n    ],\n    \"account_phone_note\": null,\n    \"free_domain\": false,\n    \"is_likely_to_engage\": false,\n    \"email_domain_catchall\": false\n  },\n  \"labels\": [\n    {\n      \"id\": \"66e361494acd1307386d4073\",\n      \"modality\": \"contacts\",\n      \"cached_count\": 0,\n      \"name\": \"2024 fiction writers of america attendees\",\n      \"created_at\": \"2024-09-12T21:46:49.464Z\",\n      \"updated_at\": \"2024-09-12T21:46:49.544Z\",\n      \"user_id\": \"60affe7d6e270a00f5db6fe4\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e46fd065-afa7-417f-b8bc-de776b555fec",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contact_id",
+                      "description": "(Required) The Apollo ID for the contact that you want to update. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"organization_name\": \"<string>\",\n  \"title\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"email\": \"<string>\",\n  \"website_url\": \"<string>\",\n  \"label_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"contact_stage_id\": \"<string>\",\n  \"present_raw_address\": \"<string>\",\n  \"direct_phone\": \"<string>\",\n  \"corporate_phone\": \"<string>\",\n  \"mobile_phone\": \"<string>\",\n  \"home_phone\": \"<string>\",\n  \"other_phone\": \"<string>\",\n  \"typed_custom_fields\": {\n    \"60c39ed82bd02f01154c470a\": \"2025-08-07\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fe704fbb-5a85-41f3-9744-f7701ba59724",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contact_id",
+                      "description": "(Required) The Apollo ID for the contact that you want to update. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"organization_name\": \"<string>\",\n  \"title\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"email\": \"<string>\",\n  \"website_url\": \"<string>\",\n  \"label_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"contact_stage_id\": \"<string>\",\n  \"present_raw_address\": \"<string>\",\n  \"direct_phone\": \"<string>\",\n  \"corporate_phone\": \"<string>\",\n  \"mobile_phone\": \"<string>\",\n  \"home_phone\": \"<string>\",\n  \"other_phone\": \"<string>\",\n  \"typed_custom_fields\": {\n    \"60c39ed82bd02f01154c470a\": \"2025-08-07\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"Parameters misconfigured. 5234234 is not a valid ID\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92757a49-c68a-4f64-8830-f3ea8854c007",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contact_id",
+                      "description": "(Required) The Apollo ID for the contact that you want to update. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"organization_name\": \"<string>\",\n  \"title\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"email\": \"<string>\",\n  \"website_url\": \"<string>\",\n  \"label_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"contact_stage_id\": \"<string>\",\n  \"present_raw_address\": \"<string>\",\n  \"direct_phone\": \"<string>\",\n  \"corporate_phone\": \"<string>\",\n  \"mobile_phone\": \"<string>\",\n  \"home_phone\": \"<string>\",\n  \"other_phone\": \"<string>\",\n  \"typed_custom_fields\": {\n    \"60c39ed82bd02f01154c470a\": \"2025-08-07\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/contacts/{contact_id} is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "39d720fe-2e1f-4d90-b59a-627815ec8c75",
+          "name": "View a Contact",
+          "request": {
+            "name": "View a Contact",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/contacts/show` or `Master API key`\n\n**OAuth scopes:** `contact_read`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995459280525-View-and-Edit-Contacts\" target=\"_blank\">Contacts</a> are people saved in Apollo.<br><br>Use the View a Contact endpoint to retrieve details for an existing contact in your team's Apollo database.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                ":contact_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "contact_id",
+                  "description": "(Required) The Apollo ID for the contact that you want to view. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4f2c1fcb-02bd-46f5-b49b-e521944e6a49",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contact_id",
+                      "description": "(Required) The Apollo ID for the contact that you want to view. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"contact\": {\n    \"contact_roles\": [],\n    \"id\": \"66e34b81740c50074e3d1bd4\",\n    \"first_name\": \"Fyodor\",\n    \"last_name\": \"Dostoevsky\",\n    \"name\": \"Fyodor Dostoevsky\",\n    \"linkedin_url\": null,\n    \"title\": \"Chief Writer\",\n    \"contact_stage_id\": \"6095a710bd01d100a506d4ae\",\n    \"owner_id\": \"60affe7d6e270a00f5db6fe4\",\n    \"creator_id\": \"60affe7d6e270a00f5db6fe4\",\n    \"person_id\": null,\n    \"email_needs_tickling\": null,\n    \"organization_name\": \"Apollo.io\",\n    \"source\": \"api\",\n    \"original_source\": \"api\",\n    \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n    \"headline\": null,\n    \"photo_url\": null,\n    \"present_raw_address\": \"St. Petersburg, Russia\",\n    \"linkedin_uid\": null,\n    \"extrapolated_email_confidence\": null,\n    \"salesforce_id\": null,\n    \"salesforce_lead_id\": null,\n    \"salesforce_contact_id\": null,\n    \"salesforce_account_id\": null,\n    \"crm_owner_id\": null,\n    \"created_at\": \"2024-09-12T20:13:53.207Z\",\n    \"emailer_campaign_ids\": [],\n    \"direct_dial_status\": null,\n    \"direct_dial_enrichment_failed_at\": null,\n    \"email_status\": \"verified\",\n    \"email_source\": null,\n    \"account_id\": \"63f53afe4ceeca00016bdd2f\",\n    \"last_activity_date\": null,\n    \"hubspot_vid\": null,\n    \"hubspot_company_id\": null,\n    \"crm_id\": null,\n    \"sanitized_phone\": \"+15555550117\",\n    \"merged_crm_ids\": null,\n    \"updated_at\": \"2024-09-12T20:14:53.134Z\",\n    \"queued_for_crm_push\": false,\n    \"suggested_from_rule_engine_config_id\": null,\n    \"email_unsubscribed\": null,\n    \"label_ids\": [\n      \"66e361494acd1307386d4073\"\n    ],\n    \"typed_custom_fields\": {\n      \"5b75f1c11dc2727d43ae3bb9\": \"test\",\n      \"5c4296857f799409361890ea\": \"test2\"\n    },\n    \"has_pending_email_arcgate_request\": false,\n    \"has_email_arcgate_request\": false,\n    \"existence_level\": \"full\",\n    \"email\": \"fyodor.dostoevsky@apollo.io\",\n    \"email_from_customer\": true,\n    \"custom_field_errors\": {},\n    \"crm_record_url\": null,\n    \"email_status_unavailable_reason\": null,\n    \"email_true_status\": \"User Managed\",\n    \"updated_email_true_status\": true,\n    \"contact_rule_config_statuses\": [],\n    \"source_display_name\": \"Created from API\",\n    \"twitter_url\": null,\n    \"contact_emails\": [],\n    \"next_contact_id\": null,\n    \"time_zone\": \"Asia/Krasnoyarsk\",\n    \"city\": \"Saint Petersburg\",\n    \"state\": \"Saint Petersburg\",\n    \"country\": \"Russia\",\n    \"show_intent\": false,\n    \"phone_numbers\": [\n      {\n        \"raw_number\": \"555-555-0117\",\n        \"sanitized_number\": \"+15555550117\",\n        \"type\": \"work_direct\",\n        \"position\": 0,\n        \"status\": \"no_status\",\n        \"dnc_status\": null,\n        \"dnc_other_info\": null,\n        \"dialer_flags\": null\n      }\n    ],\n    \"account_phone_note\": null,\n    \"free_domain\": false,\n    \"is_likely_to_engage\": false,\n    \"email_domain_catchall\": false\n  },\n  \"labels\": [\n    {\n      \"id\": \"66e361494acd1307386d4073\",\n      \"modality\": \"contacts\",\n      \"cached_count\": 0,\n      \"name\": \"2024 fiction writers of america attendees\",\n      \"created_at\": \"2024-09-12T21:46:49.464Z\",\n      \"updated_at\": \"2024-09-12T21:46:49.544Z\",\n      \"user_id\": \"60affe7d6e270a00f5db6fe4\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45a47f54-8a3d-40db-9557-dd17dcfe65c1",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contact_id",
+                      "description": "(Required) The Apollo ID for the contact that you want to view. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e944984-fcce-4a3a-b759-e40c3ca72742",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contact_id",
+                      "description": "(Required) The Apollo ID for the contact that you want to view. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"This API key is not authorized to access api/v1/contacts/{contact_id}. Request an API key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\": \"API_INACCESSIBLE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "406f86c1-65fe-48e2-91d5-1311e40bfd23",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contact_id",
+                      "description": "(Required) The Apollo ID for the contact that you want to view. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Oops! This contact does not exist in Apollo.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e303f9d9-7fb8-421b-9be9-31e51940af24",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contact_id",
+                      "description": "(Required) The Apollo ID for the contact that you want to view. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The maximum number of api calls allowed for api/v1/contacts/{contact_id} is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "39552da9-691f-4081-b325-c0ee247e9802",
+          "name": "View Associated Deals",
+          "request": {
+            "name": "View Associated Deals",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `deals/api/v1/opportunities/search` or `Master API key`\n\n**OAuth scopes:** `opportunities_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4415062467725-Deals-Overview\" target=\"_blank\">Deals</a> on Apollo help you track sales opportunities.<br><br>Use the View Associated Deals endpoint to retrieve the deals associated with a contact.<br><br>This endpoint doesn't require a request body. If you include one, Apollo doesn't read its fields. An empty JSON <code>{}</code> is sufficient.<br><br>Each result returns the same deal details as <a href=\"https://docs.apollo.io/reference/view-deal\">View Deal</a> endpoint. If the contact has no associated deals or the contact ID isn't recognized, Apollo returns a <code>200</code> response with an empty array rather than a <code>404</code> error.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                ":contact_id",
+                "opportunities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "contact_id",
+                  "description": "(Required) The ID for the contact whose associated deals you want to retrieve. <br><br>Example: <code>64a7ff0cc4dfae00013df1a5</code>"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e40b7e7f-d964-49dd-8cab-a1caa7526b05",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id",
+                    "opportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contact_id",
+                      "description": "(Required) The ID for the contact whose associated deals you want to retrieve. <br><br>Example: <code>64a7ff0cc4dfae00013df1a5</code>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"opportunities\": [\n    {\n      \"id\": \"66e09ea8e3cfcf01b2208ec7\",\n      \"team_id\": \"6095a710bd01d100a506d4ac\",\n      \"owner_id\": \"66302798d03b9601c7934ebf\",\n      \"salesforce_owner_id\": null,\n      \"amount\": 99999999,\n      \"closed_date\": null,\n      \"account_id\": \"60afffecbff6de00a4b82be7\",\n      \"description\": null,\n      \"is_closed\": false,\n      \"is_won\": false,\n      \"name\": \"Massive Space Deal\",\n      \"stage_name\": null,\n      \"opportunity_stage_id\": \"6095a710bd01d100a506d4bd\",\n      \"source\": \"api\",\n      \"salesforce_id\": null,\n      \"created_at\": \"2024-09-10T19:31:52.436Z\",\n      \"actual_close_date\": null,\n      \"next_step\": null,\n      \"next_step_date\": null,\n      \"closed_lost_reason\": null,\n      \"closed_won_reason\": null,\n      \"forecast_category\": \"pipeline\",\n      \"deal_probability\": 10,\n      \"created_by_id\": \"60affe7d6e270a00f5db6fe4\",\n      \"current_solutions\": null,\n      \"deal_source\": null,\n      \"manually_updated_probability\": null,\n      \"manually_updated_forecast\": null,\n      \"crm_id\": null,\n      \"crm_record_url\": null,\n      \"crm_owner_id\": null,\n      \"probability\": null,\n      \"opportunity_pipeline_id\": \"654b989fcb2a5200010a90db\",\n      \"stage_updated_at\": \"2024-09-10T19:33:40.529+00:00\",\n      \"next_step_last_updated_at\": null,\n      \"exchange_rate_code\": \"USD\",\n      \"exchange_rate_value\": 1,\n      \"amount_in_team_currency\": 99999999,\n      \"forecasted_revenue\": 9999999.9,\n      \"last_activity_date\": \"2024-09-10T19:33:40.529Z\",\n      \"existence_level\": \"full\",\n      \"typed_custom_fields\": {},\n      \"opportunity_rule_config_statuses\": [],\n      \"opportunity_contact_roles\": [\n        {\n          \"id\": \"64a7ff0cc4dfae00013df1a5\",\n          \"role\": \"Decision Maker\",\n          \"contact\": {\n            \"id\": \"64a7ff0cc4dfae00013df1a5\",\n            \"name\": \"Tim Zheng\",\n            \"first_name\": \"Tim\",\n            \"last_name\": \"Zheng\"\n          }\n        }\n      ],\n      \"currency\": {\n        \"name\": \"US Dollar\",\n        \"iso_code\": \"USD\",\n        \"symbol\": \"$\"\n      },\n      \"num_contacts\": 1,\n      \"account\": {\n        \"id\": \"60afffecbff6de00a4b82be7\",\n        \"domain\": \"nasa.gov\",\n        \"name\": \"NASA - National Aeronautics and Space Administration\",\n        \"team_id\": \"6095a710bd01d100a506d4ac\",\n        \"organization_id\": \"55e16cfbf3e5bb66cf0026f3\",\n        \"account_stage_id\": \"6095a710bd01d100a506d4b9\",\n        \"source\": \"deployment\",\n        \"original_source\": \"deployment\",\n        \"creator_id\": null,\n        \"owner_id\": null,\n        \"created_at\": \"2021-05-27T20:24:12.644Z\",\n        \"phone\": \"+1 202-555-0117\",\n        \"phone_status\": \"no_status\",\n        \"hubspot_id\": null,\n        \"salesforce_id\": null,\n        \"crm_owner_id\": null,\n        \"parent_account_id\": null,\n        \"linkedin_url\": null,\n        \"sanitized_phone\": \"+12025550117\",\n        \"account_playbook_statuses\": [],\n        \"account_rule_config_statuses\": [],\n        \"existence_level\": \"full\",\n        \"label_ids\": [],\n        \"typed_custom_fields\": {},\n        \"custom_field_errors\": null,\n        \"modality\": \"account\",\n        \"source_display_name\": \"Requested from Apollo\",\n        \"crm_record_url\": null,\n        \"contact_emailer_campaign_ids\": [],\n        \"contact_campaign_status_tally\": {},\n        \"num_contacts\": 1,\n        \"last_activity_date\": null\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7276d122-d79b-4afc-911d-8038595f8d6d",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id",
+                    "opportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contact_id",
+                      "description": "(Required) The ID for the contact whose associated deals you want to retrieve. <br><br>Example: <code>64a7ff0cc4dfae00013df1a5</code>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c92e231e-f365-4019-8ce3-50dfc0bdd021",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id",
+                    "opportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contact_id",
+                      "description": "(Required) The ID for the contact whose associated deals you want to retrieve. <br><br>Example: <code>64a7ff0cc4dfae00013df1a5</code>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The maximum number of api calls allowed for api/v1/contacts/{contact_id}/opportunities is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "85048f54-5c17-4dd4-8fc6-a0c20e6112d3",
+          "name": "Search for Contacts",
+          "request": {
+            "name": "Search for Contacts",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/contacts/search` or `Master API key`\n\n**OAuth scopes:** `contacts_search`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995459280525-View-and-Edit-Contacts\" target=\"_blank\">Contacts</a> are people saved in Apollo.<br><br>Use the Search for Contacts endpoint to search for the contacts that have been added to your team's Apollo account.<br><br>This endpoint only returns contacts in the search results. To search for people in the Apollo database, call the <a href=\"https://docs.apollo.io/reference/people-api-search\">People API Search endpoint</a>.<br><br>To protect Apollo's performance for all users, this endpoint has a display limit of 50,000 records (100 records per page, up to 500 pages). Add more filters to narrow your search results as much as possible.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"q_keywords\": \"<string>\",\n  \"contact_stage_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"contact_label_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_by_field\": \"<string>\",\n  \"sort_ascending\": false,\n  \"per_page\": \"<integer>\",\n  \"page\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3e532adb-e53c-4f43-bcd0-501e37d47307",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q_keywords\": \"<string>\",\n  \"contact_stage_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"contact_label_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_by_field\": \"<string>\",\n  \"sort_ascending\": false,\n  \"per_page\": \"<integer>\",\n  \"page\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"contacts\": [\n    {\n      \"contact_roles\": [],\n      \"id\": \"66e3726977d36c03f2c30afc\",\n      \"first_name\": \"Walt\",\n      \"last_name\": \"Whitman\",\n      \"name\": \"Walt Whitman\",\n      \"linkedin_url\": null,\n      \"title\": \"Associate Writer\",\n      \"contact_stage_id\": \"6095a710bd01d100a506d4ae\",\n      \"owner_id\": \"60affe7d6e270a00f5db6fe4\",\n      \"creator_id\": \"60affe7d6e270a00f5db6fe4\",\n      \"person_id\": null,\n      \"email_needs_tickling\": null,\n      \"organization_name\": \"Apollo.io\",\n      \"source\": \"api\",\n      \"original_source\": \"api\",\n      \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n      \"headline\": null,\n      \"photo_url\": null,\n      \"present_raw_address\": null,\n      \"linkedin_uid\": null,\n      \"extrapolated_email_confidence\": null,\n      \"salesforce_id\": null,\n      \"salesforce_lead_id\": null,\n      \"salesforce_contact_id\": null,\n      \"salesforce_account_id\": null,\n      \"crm_owner_id\": null,\n      \"created_at\": \"2024-09-12T22:59:53.423Z\",\n      \"emailer_campaign_ids\": [],\n      \"direct_dial_status\": null,\n      \"direct_dial_enrichment_failed_at\": null,\n      \"email_status\": \"verified\",\n      \"email_source\": null,\n      \"account_id\": \"63f53afe4ceeca00016bdd2f\",\n      \"last_activity_date\": null,\n      \"hubspot_vid\": null,\n      \"hubspot_company_id\": null,\n      \"crm_id\": null,\n      \"sanitized_phone\": null,\n      \"merged_crm_ids\": null,\n      \"updated_at\": \"2024-09-12T23:00:41.194Z\",\n      \"queued_for_crm_push\": false,\n      \"suggested_from_rule_engine_config_id\": null,\n      \"email_unsubscribed\": null,\n      \"label_ids\": [\n        \"68eec47ece3b0b000de4751f\"\n      ],\n      \"has_pending_email_arcgate_request\": false,\n      \"has_email_arcgate_request\": false,\n      \"existence_level\": \"full\",\n      \"email\": \"wwhitman@apollo.io\",\n      \"email_from_customer\": true,\n      \"typed_custom_fields\": {},\n      \"custom_field_errors\": {},\n      \"crm_record_url\": null,\n      \"email_status_unavailable_reason\": null,\n      \"email_true_status\": \"User Managed\",\n      \"updated_email_true_status\": true,\n      \"contact_rule_config_statuses\": [],\n      \"source_display_name\": \"Created from API\",\n      \"twitter_url\": null,\n      \"contact_campaign_statuses\": [],\n      \"account\": {\n        \"id\": \"63f53afe4ceeca00016bdd2f\",\n        \"name\": \"Apollo.io\",\n        \"website_url\": \"http://www.apollo.io\",\n        \"blog_url\": null,\n        \"angellist_url\": null,\n        \"linkedin_url\": \"http://www.linkedin.com/company/apolloio\",\n        \"twitter_url\": \"https://twitter.com/meetapollo/\",\n        \"facebook_url\": \"https://www.facebook.com/MeetApollo\",\n        \"primary_phone\": {},\n        \"languages\": [],\n        \"alexa_ranking\": 3514,\n        \"phone\": \"+1(202) 555-0114\",\n        \"linkedin_uid\": \"18511550\",\n        \"founded_year\": 2015,\n        \"publicly_traded_symbol\": null,\n        \"publicly_traded_exchange\": null,\n        \"logo_url\": \"https://zenprospect-production.s3.amazonaws.com/uploads/pictures/79049be00ff8e398b5935de8/picture\",\n        \"crunchbase_url\": null,\n        \"primary_domain\": \"apollo.io\",\n        \"domain\": \"apollo.io\",\n        \"team_id\": \"6095a710bd01d100a506d4ac\",\n        \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n        \"account_stage_id\": null,\n        \"source\": \"csv_import\",\n        \"original_source\": \"salesforce\",\n        \"creator_id\": null,\n        \"owner_id\": \"66302798d03b9601c7934ec2\",\n        \"created_at\": \"2023-02-21T21:43:26.351Z\",\n        \"phone_status\": \"no_status\",\n        \"hubspot_id\": \"7\",\n        \"salesforce_id\": null,\n        \"crm_owner_id\": \"11750983\",\n        \"parent_account_id\": null,\n        \"sanitized_phone\": \"+12025550114\",\n        \"account_playbook_statuses\": [],\n        \"account_rule_config_statuses\": [\n          {\n            \"_id\": \"664f9eef1fded70001e4983e\",\n            \"created_at\": null,\n            \"rule_action_config_id\": \"65735e0ea63d2700faba5c6e\",\n            \"rule_config_id\": \"65735e0ea63d2700faba5c6f\",\n            \"status_cd\": \"completed\",\n            \"updated_at\": null,\n            \"id\": \"664f9eef1fded70001e4983e\",\n            \"key\": \"664f9eef1fded70001e4983e\"\n          }\n        ],\n        \"existence_level\": \"full\",\n        \"label_ids\": [\n          \"6504905b21ba8e00a334eb0f\"\n        ],\n        \"typed_custom_fields\": {},\n        \"custom_field_errors\": {},\n        \"modality\": \"account\",\n        \"source_display_name\": \"Uploaded from CSV\",\n        \"crm_record_url\": \"https://samplecrm.pipedrive.com/organization/7\"\n      },\n      \"contact_emails\": [],\n      \"organization\": {\n        \"id\": \"5e66b6381e05b4008c8331b8\",\n        \"name\": \"Apollo.io\",\n        \"website_url\": \"http://www.apollo.io\",\n        \"blog_url\": null,\n        \"angellist_url\": null,\n        \"linkedin_url\": \"http://www.linkedin.com/company/apolloio\",\n        \"twitter_url\": \"https://twitter.com/meetapollo/\",\n        \"facebook_url\": \"https://www.facebook.com/MeetApollo\",\n        \"primary_phone\": {},\n        \"languages\": [],\n        \"alexa_ranking\": 3514,\n        \"phone\": null,\n        \"linkedin_uid\": \"18511550\",\n        \"founded_year\": 2015,\n        \"publicly_traded_symbol\": null,\n        \"publicly_traded_exchange\": null,\n        \"logo_url\": \"https://zenprospect-production.s3.amazonaws.com/uploads/pictures/79049be00ff8e398b5935de8/picture\",\n        \"crunchbase_url\": null,\n        \"primary_domain\": \"apollo.io\"\n      },\n      \"show_intent\": false,\n      \"phone_numbers\": [],\n      \"account_phone_note\": null,\n      \"free_domain\": false,\n      \"is_likely_to_engage\": false,\n      \"email_domain_catchall\": false,\n      \"contact_job_change_event\": null\n    }\n  ],\n  \"breadcrumbs\": [\n    {\n      \"label\": \"Contains Keywords\",\n      \"signal_field_name\": \"q_keywords\",\n      \"value\": \"Apollo.io\",\n      \"display_name\": \"Apollo.io\"\n    },\n    {\n      \"label\": \"Contact Stage\",\n      \"signal_field_name\": \"contact_stage_ids\",\n      \"value\": \"6095a710bd01d100a506d4ae\",\n      \"display_name\": \"New\"\n    },\n    {\n      \"label\": \"Contact Stage\",\n      \"signal_field_name\": \"contact_stage_ids\",\n      \"value\": \"66e34b81740c50074e3d1bd4\",\n      \"display_name\": \"[Deleted Stage]\"\n    }\n  ],\n  \"partial_results_only\": false,\n  \"has_join\": false,\n  \"disable_eu_prospecting\": false,\n  \"partial_results_limit\": 10000,\n  \"pagination\": {\n    \"page\": 1,\n    \"per_page\": 2,\n    \"total_entries\": 178,\n    \"total_pages\": 89\n  },\n  \"num_fetch_result\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64a724a3-76c0-4984-a851-e44acb0cfdd9",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q_keywords\": \"<string>\",\n  \"contact_stage_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"contact_label_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_by_field\": \"<string>\",\n  \"sort_ascending\": false,\n  \"per_page\": \"<integer>\",\n  \"page\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f5dd2910-2479-4291-ae59-86a6b30e624a",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q_keywords\": \"<string>\",\n  \"contact_stage_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"contact_label_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_by_field\": \"<string>\",\n  \"sort_ascending\": false,\n  \"per_page\": \"<integer>\",\n  \"page\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"message\\\": \\\"This endpoint is only available to Apollo users on paid plans.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa2c4283-a53e-4ae2-9a6f-f0df887cc761",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q_keywords\": \"<string>\",\n  \"contact_stage_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"contact_label_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_by_field\": \"<string>\",\n  \"sort_ascending\": false,\n  \"per_page\": \"<integer>\",\n  \"page\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/contacts/search is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d0be7410-4a42-4069-bbf1-33fa16beea44",
+          "name": "Update Contact Stage for Multiple Contacts",
+          "request": {
+            "name": "Update Contact Stage for Multiple Contacts",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/contacts/update_stages` or `Master API key`\n\n**OAuth scopes:** `contact_stages_update`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4410623601165-Contact-and-Account-Stages-Overview\" target=\"_blank\">Contact stages</a> help you track progress on sales and marketing pipelines.<br><br>Use the Update Contact Stage for Multiple Contacts endpoint to update the contact stage for several contacts in your team's Apollo account.<br><br>To update more than the contact stage, such as job titles or contact details, use the <a href=\"https://docs.apollo.io/reference/update-a-contact\">Update a Contact endpoint</a> instead.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                "update_stages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "contact_ids[]",
+                  "value": "<string>",
+                  "description": "(Required) The Apollo IDs for the contacts that you want to update. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+                },
+                {
+                  "disabled": false,
+                  "key": "contact_ids[]",
+                  "value": "<string>",
+                  "description": "(Required) The Apollo IDs for the contacts that you want to update. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+                },
+                {
+                  "disabled": false,
+                  "key": "contact_stage_id",
+                  "value": "<string>",
+                  "description": "(Required) The Apollo ID for the contact stage to which you want to assign the contacts. Call the <a href=\"https://docs.apollo.io/reference/list-contact-stages\" target=\"_blank\">List Contact Stages endpoint</a> to retrieve a list of all the contact stage IDs available in your Apollo account. <br><br>Example: `6095a710bd01d100a506d4af`"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ca58ed13-bd73-4170-9429-d9cae8995e36",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "update_stages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contact_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_stage_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"contacts\\\": [\\n    {\\n      \\\"contact_roles\\\": [],\\n      \\\"id\\\": \\\"66e3726977d36c03f2c30afc\\\",\\n      \\\"first_name\\\": \\\"Gabriel\\\",\\n      \\\"last_name\\\": \\\"Stone\\\",\\n      \\\"name\\\": \\\"Gabriel Stone\\\",\\n      \\\"linkedin_url\\\": null,\\n      \\\"title\\\": \\\"Associate Writer\\\",\\n      \\\"contact_stage_id\\\": \\\"6095a710bd01d100a506d4b2\\\",\\n      \\\"owner_id\\\": \\\"60affe7d6e270a00f5db6fe4\\\",\\n      \\\"creator_id\\\": \\\"60affe7d6e270a00f5db6fe4\\\",\\n      \\\"person_id\\\": null,\\n      \\\"email_needs_tickling\\\": null,\\n      \\\"organization_name\\\": \\\"Apollo.io\\\",\\n      \\\"source\\\": \\\"api\\\",\\n      \\\"original_source\\\": \\\"api\\\",\\n      \\\"organization_id\\\": \\\"5e66b6381e05b4008c8331b8\\\",\\n      \\\"headline\\\": null,\\n      \\\"photo_url\\\": null,\\n      \\\"present_raw_address\\\": null,\\n      \\\"linkedin_uid\\\": null,\\n      \\\"extrapolated_email_confidence\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"salesforce_lead_id\\\": null,\\n      \\\"salesforce_contact_id\\\": null,\\n      \\\"salesforce_account_id\\\": null,\\n      \\\"crm_owner_id\\\": null,\\n      \\\"created_at\\\": \\\"2024-09-12T22:59:53.423Z\\\",\\n      \\\"emailer_campaign_ids\\\": [],\\n      \\\"direct_dial_status\\\": null,\\n      \\\"direct_dial_enrichment_failed_at\\\": null,\\n      \\\"email_status\\\": \\\"verified\\\",\\n      \\\"email_source\\\": null,\\n      \\\"account_id\\\": \\\"63f53afe4ceeca00016bdd2f\\\",\\n      \\\"last_activity_date\\\": null,\\n      \\\"hubspot_vid\\\": null,\\n      \\\"hubspot_company_id\\\": null,\\n      \\\"crm_id\\\": null,\\n      \\\"sanitized_phone\\\": null,\\n      \\\"merged_crm_ids\\\": null,\\n      \\\"updated_at\\\": \\\"2024-09-13T00:12:09.547Z\\\",\\n      \\\"queued_for_crm_push\\\": false,\\n      \\\"suggested_from_rule_engine_config_id\\\": null,\\n      \\\"email_unsubscribed\\\": null,\\n      \\\"label_ids\\\": [],\\n      \\\"has_pending_email_arcgate_request\\\": false,\\n      \\\"has_email_arcgate_request\\\": false,\\n      \\\"existence_level\\\": \\\"full\\\",\\n      \\\"email\\\": \\\"gstone@apollo.io\\\",\\n      \\\"email_from_customer\\\": true,\\n      \\\"typed_custom_fields\\\": {},\\n      \\\"custom_field_errors\\\": null,\\n      \\\"crm_record_url\\\": null,\\n      \\\"email_status_unavailable_reason\\\": null,\\n      \\\"email_true_status\\\": \\\"User Managed\\\",\\n      \\\"updated_email_true_status\\\": true,\\n      \\\"contact_rule_config_statuses\\\": [],\\n      \\\"source_display_name\\\": \\\"Created from API\\\",\\n      \\\"twitter_url\\\": null,\\n      \\\"contact_campaign_statuses\\\": [],\\n      \\\"contact_emails\\\": [],\\n      \\\"show_intent\\\": false,\\n      \\\"phone_numbers\\\": [],\\n      \\\"account_phone_note\\\": null,\\n      \\\"free_domain\\\": false,\\n      \\\"is_likely_to_engage\\\": false,\\n      \\\"email_domain_catchall\\\": false\\n    },\\n    {\\n      \\\"contact_roles\\\": [],\\n      \\\"id\\\": \\\"66e370fbf5f5c003f0e1d0cf\\\",\\n      \\\"first_name\\\": \\\"Diana\\\",\\n      \\\"last_name\\\": \\\"Holloway\\\",\\n      \\\"name\\\": \\\"Diana Holloway\\\",\\n      \\\"linkedin_url\\\": null,\\n      \\\"title\\\": null,\\n      \\\"contact_stage_id\\\": \\\"6095a710bd01d100a506d4b2\\\",\\n      \\\"owner_id\\\": \\\"60affe7d6e270a00f5db6fe4\\\",\\n      \\\"creator_id\\\": \\\"60affe7d6e270a00f5db6fe4\\\",\\n      \\\"person_id\\\": null,\\n      \\\"email_needs_tickling\\\": null,\\n      \\\"organization_name\\\": \\\"Apollo.io\\\",\\n      \\\"source\\\": \\\"api\\\",\\n      \\\"original_source\\\": \\\"api\\\",\\n      \\\"organization_id\\\": \\\"5e66b6381e05b4008c8331b8\\\",\\n      \\\"headline\\\": null,\\n      \\\"photo_url\\\": null,\\n      \\\"present_raw_address\\\": null,\\n      \\\"linkedin_uid\\\": null,\\n      \\\"extrapolated_email_confidence\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"salesforce_lead_id\\\": null,\\n      \\\"salesforce_contact_id\\\": null,\\n      \\\"salesforce_account_id\\\": null,\\n      \\\"crm_owner_id\\\": null,\\n      \\\"created_at\\\": \\\"2024-09-12T22:53:47.125Z\\\",\\n      \\\"emailer_campaign_ids\\\": [],\\n      \\\"direct_dial_status\\\": null,\\n      \\\"direct_dial_enrichment_failed_at\\\": null,\\n      \\\"email_status\\\": \\\"verified\\\",\\n      \\\"email_source\\\": null,\\n      \\\"account_id\\\": \\\"63f53afe4ceeca00016bdd2f\\\",\\n      \\\"last_activity_date\\\": null,\\n      \\\"hubspot_vid\\\": null,\\n      \\\"hubspot_company_id\\\": null,\\n      \\\"crm_id\\\": null,\\n      \\\"sanitized_phone\\\": null,\\n      \\\"merged_crm_ids\\\": null,\\n      \\\"updated_at\\\": \\\"2024-09-13T00:12:09.547Z\\\",\\n      \\\"queued_for_crm_push\\\": false,\\n      \\\"suggested_from_rule_engine_config_id\\\": null,\\n      \\\"email_unsubscribed\\\": null,\\n      \\\"label_ids\\\": [],\\n      \\\"has_pending_email_arcgate_request\\\": false,\\n      \\\"has_email_arcgate_request\\\": false,\\n      \\\"existence_level\\\": \\\"full\\\",\\n      \\\"email\\\": \\\"dholloway@apollo.io\\\",\\n      \\\"email_from_customer\\\": true,\\n      \\\"typed_custom_fields\\\": {},\\n      \\\"custom_field_errors\\\": null,\\n      \\\"crm_record_url\\\": null,\\n      \\\"email_status_unavailable_reason\\\": null,\\n      \\\"email_true_status\\\": \\\"User Managed\\\",\\n      \\\"updated_email_true_status\\\": true,\\n      \\\"contact_rule_config_statuses\\\": [],\\n      \\\"source_display_name\\\": \\\"Created from API\\\",\\n      \\\"twitter_url\\\": null,\\n      \\\"contact_campaign_statuses\\\": [],\\n      \\\"contact_emails\\\": [],\\n      \\\"show_intent\\\": false,\\n      \\\"phone_numbers\\\": [],\\n      \\\"account_phone_note\\\": null,\\n      \\\"free_domain\\\": false,\\n      \\\"is_likely_to_engage\\\": false,\\n      \\\"email_domain_catchall\\\": false\\n    },\\n    {\\n      \\\"contact_roles\\\": [],\\n      \\\"id\\\": \\\"66e379b5a385c703da3d729f\\\",\\n      \\\"first_name\\\": \\\"Carl\\\",\\n      \\\"last_name\\\": \\\"Whitfield\\\",\\n      \\\"name\\\": \\\"Carl Whitfield\\\",\\n      \\\"linkedin_url\\\": null,\\n      \\\"title\\\": \\\"Associate Writer\\\",\\n      \\\"contact_stage_id\\\": \\\"6095a710bd01d100a506d4b2\\\",\\n      \\\"owner_id\\\": \\\"60affe7d6e270a00f5db6fe4\\\",\\n      \\\"creator_id\\\": \\\"60affe7d6e270a00f5db6fe4\\\",\\n      \\\"person_id\\\": null,\\n      \\\"email_needs_tickling\\\": null,\\n      \\\"organization_name\\\": \\\"Apollo.io\\\",\\n      \\\"source\\\": \\\"api\\\",\\n      \\\"original_source\\\": \\\"api\\\",\\n      \\\"organization_id\\\": \\\"5e66b6381e05b4008c8331b8\\\",\\n      \\\"headline\\\": null,\\n      \\\"photo_url\\\": null,\\n      \\\"present_raw_address\\\": null,\\n      \\\"linkedin_uid\\\": null,\\n      \\\"extrapolated_email_confidence\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"salesforce_lead_id\\\": null,\\n      \\\"salesforce_contact_id\\\": null,\\n      \\\"salesforce_account_id\\\": null,\\n      \\\"crm_owner_id\\\": null,\\n      \\\"created_at\\\": \\\"2024-09-12T23:31:01.293Z\\\",\\n      \\\"emailer_campaign_ids\\\": [],\\n      \\\"direct_dial_status\\\": null,\\n      \\\"direct_dial_enrichment_failed_at\\\": null,\\n      \\\"email_status\\\": \\\"verified\\\",\\n      \\\"email_source\\\": null,\\n      \\\"account_id\\\": \\\"63f53afe4ceeca00016bdd2f\\\",\\n      \\\"last_activity_date\\\": null,\\n      \\\"hubspot_vid\\\": null,\\n      \\\"hubspot_company_id\\\": null,\\n      \\\"crm_id\\\": null,\\n      \\\"sanitized_phone\\\": null,\\n      \\\"merged_crm_ids\\\": null,\\n      \\\"updated_at\\\": \\\"2024-09-13T00:12:09.547Z\\\",\\n      \\\"queued_for_crm_push\\\": false,\\n      \\\"suggested_from_rule_engine_config_id\\\": null,\\n      \\\"email_unsubscribed\\\": null,\\n      \\\"label_ids\\\": [],\\n      \\\"has_pending_email_arcgate_request\\\": false,\\n      \\\"has_email_arcgate_request\\\": false,\\n      \\\"existence_level\\\": \\\"full\\\",\\n      \\\"email\\\": \\\"cwhitfield@apollo.io\\\",\\n      \\\"email_from_customer\\\": true,\\n      \\\"typed_custom_fields\\\": {},\\n      \\\"custom_field_errors\\\": null,\\n      \\\"crm_record_url\\\": null,\\n      \\\"email_status_unavailable_reason\\\": null,\\n      \\\"email_true_status\\\": \\\"User Managed\\\",\\n      \\\"updated_email_true_status\\\": true,\\n      \\\"contact_rule_config_statuses\\\": [],\\n      \\\"source_display_name\\\": \\\"Created from API\\\",\\n      \\\"twitter_url\\\": null,\\n      \\\"contact_campaign_statuses\\\": [],\\n      \\\"contact_emails\\\": [],\\n      \\\"show_intent\\\": false,\\n      \\\"phone_numbers\\\": [],\\n      \\\"account_phone_note\\\": null,\\n      \\\"free_domain\\\": false,\\n      \\\"is_likely_to_engage\\\": false,\\n      \\\"email_domain_catchall\\\": false\\n    }\\n  ]\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8af3091-1e25-4d38-a174-3c931849286f",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "update_stages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contact_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_stage_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d7e6a9fb-cfcd-4351-a7eb-75681f53c268",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "update_stages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contact_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_stage_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"Required parameter 'contact_ids' missing\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4eeca9ae-bb08-4adc-8de1-a2b47c0208ff",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "update_stages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contact_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_stage_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/contacts/update_stages is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ea03b604-bf9b-440d-b64d-728fc88a0b6e",
+          "name": "Update Contact Owner for Multiple Contacts",
+          "request": {
+            "name": "Update Contact Owner for Multiple Contacts",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/contacts/update_owners` or `Master API key`\n\n**OAuth scopes:** `contact_owners_update`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/5631686093069-Edit-a-Contact-or-Account-Owner\" target=\"_blank\">Contact owners</a> manage specific contacts in Apollo.<br><br>Use the Update Contact Owner for Multiple Contacts endpoint to assign multiple contacts to a different user in your team's Apollo account. <br><br>To update more than the contact's owner, such as job titles or contact details, use the <a href=\"https://docs.apollo.io/reference/update-a-contact\">Update a Contact endpoint</a> instead.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                "update_owners"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "contact_ids[]",
+                  "value": "<string>",
+                  "description": "(Required) The Apollo IDs for the contacts that you want assign to an owner. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+                },
+                {
+                  "disabled": false,
+                  "key": "contact_ids[]",
+                  "value": "<string>",
+                  "description": "(Required) The Apollo IDs for the contacts that you want assign to an owner. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+                },
+                {
+                  "disabled": false,
+                  "key": "owner_id",
+                  "value": "<string>",
+                  "description": "(Required) The ID for the contact owner within your team's Apollo account. This user will be assigned ownership of the contacts. <br><br>Use the <a href=\"https://docs.apollo.io/reference/get-a-list-of-users\" target=\"_blank\">Get a List of Users endpoint</a> endpoint to retrieve IDs for all of the users within your Apollo account. <br><br>Example: `66302798d03b9601c7934ebf`"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5f0f6d26-6b68-47fc-9df2-98025ac64d6a",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "update_owners"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contact_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"contacts\\\": [\\n    {\\n      \\\"id\\\": \\\"66e379b5a385c703da3d729f\\\",\\n      \\\"owner_id\\\": \\\"66302798d03b9601c7934ebf\\\",\\n      \\\"crm_owner_id\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"66e370fbf5f5c003f0e1d0cf\\\",\\n      \\\"owner_id\\\": \\\"66302798d03b9601c7934ebf\\\",\\n      \\\"crm_owner_id\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"66e3491845dae20d5a2015ff\\\",\\n      \\\"owner_id\\\": \\\"66302798d03b9601c7934ebf\\\",\\n      \\\"crm_owner_id\\\": null\\n    }\\n  ]\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "896eb493-ac09-425a-839a-98c66b1382e0",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "update_owners"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contact_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4a00e8ec-20dd-4abf-a8b8-4ca054e8451f",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "update_owners"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contact_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"Required parameter 'contact_ids' missing\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "08879d40-f060-4675-9f19-1e66adc07afb",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "update_owners"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contact_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/contacts/update_owners is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8b876297-0d83-496a-ae53-c3a4418546ba",
+          "name": "Bulk Create Contacts",
+          "request": {
+            "name": "Bulk Create Contacts",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/contacts/bulk_create` or `Master API key`\n\n**OAuth scopes:** `contacts_bulk_create`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995459280525-View-and-Edit-Contacts\" target=\"_blank\">Contacts</a> are people saved in Apollo.<br><br>Use the Bulk Create Contacts endpoint to create up to 100 contacts in a single API request. This endpoint supports intelligent deduplication and returns separated arrays for newly created and existing contacts. <br><br>Important: This endpoint creates new contacts but doesn't update existing ones (except for placeholder contacts from email imports). Existing contacts that match the criteria are returned in the <code>existing_contacts</code> array without modification.<br><br>To update existing contacts, use the <a href=\"https://docs.apollo.io/reference/bulk-update-contacts\">Bulk Update Contacts endpoint</a>.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                "bulk_create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contacts\": [\n    {\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"title\": \"<string>\",\n      \"primary_title\": \"<string>\",\n      \"organization_name\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"present_raw_address\": \"<string>\",\n      \"linkedin_url\": \"<string>\",\n      \"facebook_url\": \"<string>\",\n      \"twitter_url\": \"<string>\",\n      \"photo_url\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"organization_id\": \"<string>\",\n      \"contact_stage_id\": \"<string>\",\n      \"salesforce_id\": \"<string>\",\n      \"hubspot_id\": \"<string>\",\n      \"salesforce_lead_id\": \"<string>\",\n      \"salesforce_contact_id\": \"<string>\",\n      \"salesforce_account_id\": \"<string>\",\n      \"outreach_id\": \"<string>\",\n      \"salesloft_id\": \"<string>\",\n      \"phone_status_cd\": \"<string>\",\n      \"typed_custom_fields\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"contact_emails\": [\n        {\n          \"email\": \"<string>\",\n          \"position\": \"<integer>\"\n        },\n        {\n          \"email\": \"<string>\",\n          \"position\": \"<integer>\"\n        }\n      ],\n      \"phone_numbers\": [\n        {\n          \"raw_number\": \"<string>\",\n          \"position\": \"<integer>\"\n        },\n        {\n          \"raw_number\": \"<string>\",\n          \"position\": \"<integer>\"\n        }\n      ],\n      \"contact_role_type_ids\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"title\": \"<string>\",\n      \"primary_title\": \"<string>\",\n      \"organization_name\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"present_raw_address\": \"<string>\",\n      \"linkedin_url\": \"<string>\",\n      \"facebook_url\": \"<string>\",\n      \"twitter_url\": \"<string>\",\n      \"photo_url\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"organization_id\": \"<string>\",\n      \"contact_stage_id\": \"<string>\",\n      \"salesforce_id\": \"<string>\",\n      \"hubspot_id\": \"<string>\",\n      \"salesforce_lead_id\": \"<string>\",\n      \"salesforce_contact_id\": \"<string>\",\n      \"salesforce_account_id\": \"<string>\",\n      \"outreach_id\": \"<string>\",\n      \"salesloft_id\": \"<string>\",\n      \"phone_status_cd\": \"<string>\",\n      \"typed_custom_fields\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"contact_emails\": [\n        {\n          \"email\": \"<string>\",\n          \"position\": \"<integer>\"\n        },\n        {\n          \"email\": \"<string>\",\n          \"position\": \"<integer>\"\n        }\n      ],\n      \"phone_numbers\": [\n        {\n          \"raw_number\": \"<string>\",\n          \"position\": \"<integer>\"\n        },\n        {\n          \"raw_number\": \"<string>\",\n          \"position\": \"<integer>\"\n        }\n      ],\n      \"contact_role_type_ids\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"append_label_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"owner_id\": \"<string>\",\n  \"run_dedupe\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d76e05c6-81b2-4705-8998-f88c48ca72e8",
+              "name": "200 - Successful bulk create operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "bulk_create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contacts\": [\n    {\n      \"first_name\": \"John\",\n      \"last_name\": \"Doe\",\n      \"email\": \"john.doe@example.com\",\n      \"title\": \"Senior Manager\",\n      \"organization_name\": \"Acme Corporation\"\n    },\n    {\n      \"first_name\": \"Jane\",\n      \"last_name\": \"Smith\",\n      \"email\": \"jane.smith@example.com\",\n      \"title\": \"VP of Sales\",\n      \"organization_name\": \"TechStart Inc\",\n      \"linkedin_url\": \"https://www.linkedin.com/in/jane-smith-4c8e21a9\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_contacts\": [\n    {\n      \"id\": \"507f1f77bcf86cd799439011\",\n      \"first_name\": \"John\",\n      \"last_name\": \"Doe\",\n      \"email\": \"john.doe@example.com\",\n      \"title\": \"Senior Manager\",\n      \"organization_name\": \"Acme Corporation\",\n      \"team_id\": \"507f1f77bcf86cd799439012\",\n      \"owner_id\": \"507f1f77bcf86cd799439013\",\n      \"contact_stage_id\": \"507f1f77bcf86cd799439014\",\n      \"created_at\": \"2025-10-16T18:30:00Z\",\n      \"updated_at\": \"2025-10-16T18:30:00Z\"\n    },\n    {\n      \"id\": \"507f1f77bcf86cd799439017\",\n      \"first_name\": \"Jane\",\n      \"last_name\": \"Smith\",\n      \"email\": \"jane.smith@example.com\",\n      \"title\": \"VP of Sales\",\n      \"organization_name\": \"TechStart Inc\",\n      \"linkedin_url\": \"https://www.linkedin.com/in/jane-smith-4c8e21a9\",\n      \"team_id\": \"507f1f77bcf86cd799439012\",\n      \"owner_id\": \"507f1f77bcf86cd799439013\",\n      \"created_at\": \"2025-10-16T18:30:00Z\",\n      \"updated_at\": \"2025-10-16T18:30:00Z\"\n    }\n  ],\n  \"existing_contacts\": [\n    {\n      \"id\": \"507f1f77bcf86cd799439015\",\n      \"first_name\": \"Original\",\n      \"last_name\": \"Name\",\n      \"email\": \"existing@example.com\",\n      \"title\": \"Original Title\",\n      \"team_id\": \"507f1f77bcf86cd799439012\",\n      \"owner_id\": \"507f1f77bcf86cd799439013\",\n      \"created_at\": \"2025-09-01T10:00:00Z\",\n      \"updated_at\": \"2025-09-15T14:30:00Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b1d19fe-8f76-4c39-b555-0ac0b3b3e850",
+              "name": "401 - Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "bulk_create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contacts\": [\n    {\n      \"first_name\": \"John\",\n      \"last_name\": \"Doe\",\n      \"email\": \"john.doe@example.com\",\n      \"title\": \"Senior Manager\",\n      \"organization_name\": \"Acme Corporation\"\n    },\n    {\n      \"first_name\": \"Jane\",\n      \"last_name\": \"Smith\",\n      \"email\": \"jane.smith@example.com\",\n      \"title\": \"VP of Sales\",\n      \"organization_name\": \"TechStart Inc\",\n      \"linkedin_url\": \"https://www.linkedin.com/in/jane-smith-4c8e21a9\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6f8322cb-04da-43d0-9f63-48351b832c6f",
+              "name": "422 - Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "bulk_create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contacts\": [\n    {\n      \"first_name\": \"John\",\n      \"last_name\": \"Doe\",\n      \"email\": \"john.doe@example.com\",\n      \"title\": \"Senior Manager\",\n      \"organization_name\": \"Acme Corporation\"\n    },\n    {\n      \"first_name\": \"Jane\",\n      \"last_name\": \"Smith\",\n      \"email\": \"jane.smith@example.com\",\n      \"title\": \"VP of Sales\",\n      \"organization_name\": \"TechStart Inc\",\n      \"linkedin_url\": \"https://www.linkedin.com/in/jane-smith-4c8e21a9\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"Please provide an array of contact attributes in the \\\\\\\"contact_attributes\\\\\\\" parameter.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bbbbacf1-4a7f-4990-9fc4-e720a70fe460",
+              "name": "429 - Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "bulk_create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contacts\": [\n    {\n      \"first_name\": \"John\",\n      \"last_name\": \"Doe\",\n      \"email\": \"john.doe@example.com\",\n      \"title\": \"Senior Manager\",\n      \"organization_name\": \"Acme Corporation\"\n    },\n    {\n      \"first_name\": \"Jane\",\n      \"last_name\": \"Smith\",\n      \"email\": \"jane.smith@example.com\",\n      \"title\": \"VP of Sales\",\n      \"organization_name\": \"TechStart Inc\",\n      \"linkedin_url\": \"https://www.linkedin.com/in/jane-smith-4c8e21a9\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/contacts/bulk_create is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37871f2c-8880-41e2-84b5-733c4e75310f",
+              "name": "500 - Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "bulk_create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contacts\": [\n    {\n      \"first_name\": \"John\",\n      \"last_name\": \"Doe\",\n      \"email\": \"john.doe@example.com\",\n      \"title\": \"Senior Manager\",\n      \"organization_name\": \"Acme Corporation\"\n    },\n    {\n      \"first_name\": \"Jane\",\n      \"last_name\": \"Smith\",\n      \"email\": \"jane.smith@example.com\",\n      \"title\": \"VP of Sales\",\n      \"organization_name\": \"TechStart Inc\",\n      \"linkedin_url\": \"https://www.linkedin.com/in/jane-smith-4c8e21a9\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"An error occurred while creating contacts. Please try again.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5d4bfdaf-3542-485d-b88b-11a58d271b65",
+          "name": "Bulk Update Contacts",
+          "request": {
+            "name": "Bulk Update Contacts",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/contacts/bulk_update` or `Master API key`\n\n**OAuth scopes:** `contacts_bulk_update`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995459280525-View-and-Edit-Contacts\" target=\"_blank\">Contacts</a> are people saved in Apollo.<br><br>Use the Bulk Update Contacts endpoint to update multiple contacts in your team's Apollo account simultaneously.<br><br>This endpoint allows you to update common fields across multiple contacts efficiently, such as contact stages, owners, custom fields, and other contact attributes.<br><br>You can update up to 1000 contacts per request; requests with more than 1000 contacts are rejected with a <code>422</code> error. Requests of 100 or fewer contacts are processed synchronously and return the updated contacts immediately. Requests of 101 to 1000 contacts are processed asynchronously. You can also force asynchronous processing at any batch size by setting the <code>async</code> parameter to <code>true</code>.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                "bulk_update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7a51b6c7-1e68-4d98-93c9-7bb7ca4fea86",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "bulk_update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"contacts\\\": [\\n    {\\n      \\\"id\\\": \\\"66e34b81740c50074e3d1bd4\\\",\\n      \\\"first_name\\\": \\\"John\\\",\\n      \\\"last_name\\\": \\\"Doe\\\",\\n      \\\"email\\\": \\\"john.doe@example.com\\\",\\n      \\\"title\\\": \\\"Senior Manager\\\",\\n      \\\"organization_name\\\": \\\"Example Corp\\\",\\n      \\\"owner_id\\\": \\\"66302798d03b9601c7934ebf\\\",\\n      \\\"account_id\\\": \\\"63f53afe4ceeca00016bdd2f\\\",\\n      \\\"present_raw_address\\\": \\\"San Francisco, CA\\\",\\n      \\\"linkedin_url\\\": \\\"https://www.linkedin.com/in/john-doe-3f9a7c21\\\",\\n      \\\"updated_at\\\": \\\"2024-09-12T10:30:00.000Z\\\"\\n    }\\n  ]\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b30dca2b-5e48-4885-a64a-fce013a3ae27",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "bulk_update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ee86052e-ea17-4b02-8326-a225fff6caf5",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "bulk_update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"Please provide either contact_ids or contact_attributes\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6a65ef9-f155-4d45-ac47-b4fde6131fba",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "bulk_update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/contacts/bulk_update is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce46fe91-f67e-43d0-9b39-4a3da2b09dc0",
+          "name": "List Contact Stages",
+          "request": {
+            "name": "List Contact Stages",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/contact_stages/index` or `Master API key`\n\n**OAuth scopes:** `contact_stages_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4410623601165-Contact-and-Account-Stages-Overview\" target=\"_blank\">Contact stages</a> help you track progress on sales and marketing pipelines.<br><br>Use the List Contact Stages endpoint to retrieve the IDs for the available contact stages in your team's Apollo account. <br><br>Contact stage IDs can be used to <a href=\"https://docs.apollo.io/reference/update-a-contact\">update individual contacts</a> and <a href=\"https://docs.apollo.io/reference/update-contact-stage\">update the contact stages for multiple contacts</a> via Apollo API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contact_stages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d63c13ac-7a3d-4c0c-806c-a98a1fa6dde5",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contact_stages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"contact_stages\\\": [\\n    {\\n      \\\"id\\\": \\\"6095a710bd01d100a506d4ae\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"New\\\",\\n      \\\"name\\\": \\\"New\\\",\\n      \\\"display_order\\\": 0,\\n      \\\"ignore_trigger_override\\\": null,\\n      \\\"category\\\": \\\"in_progress\\\",\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"6095a710bd01d100a506d4af\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Approaching\\\",\\n      \\\"name\\\": \\\"Approaching\\\",\\n      \\\"display_order\\\": 1,\\n      \\\"ignore_trigger_override\\\": null,\\n      \\\"category\\\": \\\"in_progress\\\",\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"6095a710bd01d100a506d4b0\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Replied\\\",\\n      \\\"name\\\": \\\"Replied\\\",\\n      \\\"display_order\\\": 2,\\n      \\\"ignore_trigger_override\\\": null,\\n      \\\"category\\\": \\\"in_progress\\\",\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"6095a710bd01d100a506d4b1\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Interested\\\",\\n      \\\"name\\\": \\\"Interested\\\",\\n      \\\"display_order\\\": 3,\\n      \\\"ignore_trigger_override\\\": true,\\n      \\\"category\\\": \\\"succeeded\\\",\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"6095a710bd01d100a506d4b2\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Not Interested\\\",\\n      \\\"name\\\": \\\"Not Interested\\\",\\n      \\\"display_order\\\": 4,\\n      \\\"ignore_trigger_override\\\": true,\\n      \\\"category\\\": \\\"failed\\\",\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"6095a710bd01d100a506d4b3\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Unresponsive\\\",\\n      \\\"name\\\": \\\"Unresponsive\\\",\\n      \\\"display_order\\\": 5,\\n      \\\"ignore_trigger_override\\\": null,\\n      \\\"category\\\": \\\"failed\\\",\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"6095a710bd01d100a506d4b4\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Do Not Contact\\\",\\n      \\\"name\\\": \\\"Do Not Contact\\\",\\n      \\\"display_order\\\": 6,\\n      \\\"ignore_trigger_override\\\": true,\\n      \\\"category\\\": \\\"failed\\\",\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"6095a710bd01d100a506d4b5\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Bad Data\\\",\\n      \\\"name\\\": \\\"Bad Data\\\",\\n      \\\"display_order\\\": 7,\\n      \\\"ignore_trigger_override\\\": null,\\n      \\\"category\\\": null,\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"6095a710bd01d100a506d4b6\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Changed Job\\\",\\n      \\\"name\\\": \\\"Changed Job\\\",\\n      \\\"display_order\\\": 8,\\n      \\\"ignore_trigger_override\\\": true,\\n      \\\"category\\\": null,\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"61b8e913e0f4d2012e3af746\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Open\\\",\\n      \\\"name\\\": \\\"Open\\\",\\n      \\\"display_order\\\": 9,\\n      \\\"ignore_trigger_override\\\": false,\\n      \\\"category\\\": \\\"in_progress\\\",\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"61b8e913e0f4d2012e3af748\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Open Deal\\\",\\n      \\\"name\\\": \\\"Open Deal\\\",\\n      \\\"display_order\\\": 10,\\n      \\\"ignore_trigger_override\\\": false,\\n      \\\"category\\\": \\\"succeeded\\\",\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"61b8e913e0f4d2012e3af74a\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Unqualified\\\",\\n      \\\"name\\\": \\\"Unqualified\\\",\\n      \\\"display_order\\\": 11,\\n      \\\"ignore_trigger_override\\\": false,\\n      \\\"category\\\": \\\"failed\\\",\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"64a2fa8d825e3900c389c2ff\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Follow up in 3 months\\\",\\n      \\\"name\\\": \\\"Follow up in 3 months\\\",\\n      \\\"display_order\\\": 12,\\n      \\\"ignore_trigger_override\\\": false,\\n      \\\"category\\\": null,\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"6579f9fca341aa02d09968ba\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"no showed meeting\\\",\\n      \\\"name\\\": \\\"no showed meeting\\\",\\n      \\\"display_order\\\": 13,\\n      \\\"ignore_trigger_override\\\": false,\\n      \\\"category\\\": \\\"in_progress\\\",\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"659641e195a361043972c9cb\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Meeting No Show\\\",\\n      \\\"name\\\": \\\"Meeting No Show\\\",\\n      \\\"display_order\\\": 14,\\n      \\\"ignore_trigger_override\\\": false,\\n      \\\"category\\\": \\\"in_progress\\\",\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"663e90de1763de0572f53c3e\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Cold Call\\\",\\n      \\\"name\\\": \\\"Cold Call\\\",\\n      \\\"display_order\\\": 15,\\n      \\\"ignore_trigger_override\\\": false,\\n      \\\"category\\\": \\\"in_progress\\\",\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"664fa2e6ebf116034859a1fb\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Customer\\\",\\n      \\\"name\\\": \\\"Customer\\\",\\n      \\\"display_order\\\": 16,\\n      \\\"ignore_trigger_override\\\": false,\\n      \\\"category\\\": null,\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"664fa2e6ebf116034859a1fc\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Hot lead\\\",\\n      \\\"name\\\": \\\"Hot lead\\\",\\n      \\\"display_order\\\": 17,\\n      \\\"ignore_trigger_override\\\": false,\\n      \\\"category\\\": null,\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"664fa2e6ebf116034859a1fd\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Warm lead\\\",\\n      \\\"name\\\": \\\"Warm lead\\\",\\n      \\\"display_order\\\": 18,\\n      \\\"ignore_trigger_override\\\": false,\\n      \\\"category\\\": null,\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"664fa2e6ebf116034859a1fe\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Cold lead\\\",\\n      \\\"name\\\": \\\"Cold lead\\\",\\n      \\\"display_order\\\": 19,\\n      \\\"ignore_trigger_override\\\": false,\\n      \\\"category\\\": null,\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"666080be9e3eb606ad37f40e\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"In Progress\\\",\\n      \\\"name\\\": \\\"In Progress\\\",\\n      \\\"display_order\\\": 20,\\n      \\\"ignore_trigger_override\\\": false,\\n      \\\"category\\\": \\\"in_progress\\\",\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"666080be9e3eb606ad37f40f\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Attempted to Contact\\\",\\n      \\\"name\\\": \\\"Attempted to Contact\\\",\\n      \\\"display_order\\\": 21,\\n      \\\"ignore_trigger_override\\\": false,\\n      \\\"category\\\": \\\"failed\\\",\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"666080be9e3eb606ad37f410\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Connected\\\",\\n      \\\"name\\\": \\\"Connected\\\",\\n      \\\"display_order\\\": 22,\\n      \\\"ignore_trigger_override\\\": false,\\n      \\\"category\\\": \\\"in_progress\\\",\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"666080be9e3eb606ad37f411\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Bad Timing\\\",\\n      \\\"name\\\": \\\"Bad Timing\\\",\\n      \\\"display_order\\\": 23,\\n      \\\"ignore_trigger_override\\\": false,\\n      \\\"category\\\": \\\"failed\\\",\\n      \\\"is_meeting_set\\\": null\\n    },\\n    {\\n      \\\"id\\\": \\\"66ac07bf353f3a01b2e5f674\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"display_name\\\": \\\"Doesn't want to talk to me\\\",\\n      \\\"name\\\": \\\"Doesn't want to talk to me\\\",\\n      \\\"display_order\\\": 24,\\n      \\\"ignore_trigger_override\\\": false,\\n      \\\"category\\\": \\\"failed\\\",\\n      \\\"is_meeting_set\\\": null\\n    },\\n  ]\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83eea669-e2db-49b0-8b75-b03b15759853",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contact_stages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1f6676b6-9a04-46d4-b23a-3f6594c02afe",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contact_stages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"This API key is not authorized to access api/v1/contact_stages/index. Request an API key from your administrator that includes this endpoint in its configured scope.\\\",\\n  \\\"error_code\\\": \\\"API_INACCESSIBLE\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e990b3c-bb2e-4540-ab92-3be62a6ad803",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contact_stages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/contact_stages is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.apollo.io/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a3ed98c5-b6e7-4873-aae2-69cffae795ab",
+    "name": "Apollo API — Contacts",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Apollo API provides programmatic access to [Apollo](https://www.apollo.io/), the all-in-one sales intelligence and engagement platform. Use it to enrich people and company data (individually or in bulk), search Apollo's database of over 240 million contacts and 30 million companies, and manage accounts, contacts, deals, sequences, tasks, calls, and conversations in your go-to-market workflows.\n\n## Base URL\n\nAll API requests are made to `https://api.apollo.io/api/v1`.\n\n## Authentication\n\n- **Apollo users** authenticate with an API key passed in the `x-api-key` request header. See [Create API Keys](https://docs.apollo.io/docs/create-api-key).\n- **Apollo partners** building integrations on behalf of mutual users authenticate with the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).\n\n## Rate limits & credits\n\nRate limits and credit consumption depend on your [Apollo pricing plan](https://docs.apollo.io/docs/api-pricing). Check your current limits and usage with the [View API Usage Stats and Rate Limits](https://docs.apollo.io/reference/view-api-usage-stats) endpoint. For more details, see [Rate Limits](https://docs.apollo.io/reference/rate-limits) and the [API FAQs](https://docs.apollo.io/docs/apollo-api-faqs).\n\nNew to the API? Start with the [Apollo API overview](https://docs.apollo.io/reference/apollo-api).\n\nContact Support:\n Name: Apollo API Support",
+      "type": "text/plain"
+    }
+  }
+}

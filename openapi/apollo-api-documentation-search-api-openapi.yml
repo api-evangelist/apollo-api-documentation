@@ -1,0 +1,4130 @@
+openapi: 3.1.0
+info:
+  title: Apollo API — Search
+  summary: Programmatic access to Apollo's sales intelligence and engagement platform — data enrichment, prospect and company
+    search, and go-to-market workflow management.
+  description: 'The Apollo API provides programmatic access to [Apollo](https://www.apollo.io/), the all-in-one sales intelligence
+    and engagement platform. Use it to enrich people and company data (individually or in bulk), search Apollo''s database
+    of over 240 million contacts and 30 million companies, and manage accounts, contacts, deals, sequences, tasks, calls,
+    and conversations in your go-to-market workflows.
+
+
+    ## Base URL
+
+
+    All API requests are made to `https://api.apollo.io/api/v1`.
+
+
+    ## Authentication
+
+
+    - **Apollo users** authenticate with an API key passed in the `x-api-key` request header. See [Create API Keys](https://docs.apollo.io/docs/create-api-key).
+
+    - **Apollo partners** building integrations on behalf of mutual users authenticate with the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).
+
+
+    ## Rate limits & credits
+
+
+    Rate limits and credit consumption depend on your [Apollo pricing plan](https://docs.apollo.io/docs/api-pricing). Check
+    your current limits and usage with the [View API Usage Stats and Rate Limits](https://docs.apollo.io/reference/view-api-usage-stats)
+    endpoint. For more details, see [Rate Limits](https://docs.apollo.io/reference/rate-limits) and the [API FAQs](https://docs.apollo.io/docs/apollo-api-faqs).
+
+
+    New to the API? Start with the [Apollo API overview](https://docs.apollo.io/reference/apollo-api).'
+  termsOfService: https://www.apollo.io/terms/api
+  contact:
+    name: Apollo API Support
+    url: https://docs.apollo.io/
+  version: '1.0'
+servers:
+- url: https://api.apollo.io/api/v1
+tags:
+- name: Search
+  description: Search Apollo's database of people, companies, news articles, and job postings.
+security:
+- apiKey: []
+- bearerAuth: []
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: '[Recommended] API key, passed in the `x-api-key` request header.
+
+        See [Create API Keys](https://docs.apollo.io/docs/create-api-key).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'OAuth 2.0 access token, used by Apollo partners building integrations.
+
+        See the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).'
+paths:
+  /mixed_people/api_search:
+    post:
+      summary: People API Search
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/mixed_people/api_search` or `Master API key`
+
+
+        **OAuth scopes:** `mixed_people_api_search`
+
+
+        **Free account access:** Requires an Apollo account registered with a work email address. Paid accounts aren''t affected.
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        <a href="https://knowledge.apollo.io/hc/en-us/articles/4412658716941-Search-for-People" target="_blank">People</a>
+        are net-new prospects you haven''t yet saved as contacts on Apollo.<br><br>Use the People API Search endpoint to find
+        new prospects. Several filters are available to help narrow your search. This endpoint doesn''t return email addresses
+        or phone numbers. Use the <a href="https://docs.apollo.io/reference/people-enrichment">People Enrichment</a> or <a
+        href="https://docs.apollo.io/reference/bulk-people-enrichment">Bulk People Enrichment</a> endpoints to enrich data.<br><br>To
+        protect Apollo''s performance for all users, this endpoint has a display limit of 50,000 records (100 records per
+        page, up to 500 pages). Add more filters to narrow your search results as much as possible.'
+      tags:
+      - Search
+      operationId: people-api-search
+      parameters:
+      - name: person_titles[]
+        in: query
+        description: 'Job titles held by the people you want to find. For a person to be included in search results, they
+          only need to match 1 of the job titles you add. Adding more job titles expands your search results. <br><br>Results
+          also include job titles with the same terms, even if they are not exact matches. For example, searching for `marketing
+          manager` might return people with the job title `content marketing manager`. <br><br>Use this parameter in combination
+          with the `person_seniorities[]` parameter to find people based on specific job functions and seniority levels. <br><br>Examples:
+          `sales development representative`; `marketing manager`; `research analyst`'
+        schema:
+          type: array
+          items:
+            type: string
+      - name: include_similar_titles
+        in: query
+        required: false
+        description: This parameter determines whether people with job titles similar to the titles you define in the `person_titles[]`
+          parameter are returned in the response. <br><br>Set this parameter to `false` when using `person_titles[]` to return
+          only strict matches for job titles.
+        schema:
+          type: boolean
+          example: 'true'
+          default: ''
+      - name: q_keywords
+        in: query
+        required: false
+        description: A string of words over which we want to filter the results.
+        schema:
+          type: string
+          default: ''
+      - name: person_locations[]
+        in: query
+        description: 'The location where people live. You can search across cities, US states, and countries. <br><br>To find
+          people based on the headquarters locations of their current employer, use the `organization_locations` parameter.
+          <br><br>Examples: `california`; `ireland`; `chicago`'
+        schema:
+          type: array
+          items:
+            type: string
+      - name: person_seniorities[]
+        in: query
+        required: false
+        description: 'The job seniority that people hold within their current employer. This enables you to find people that
+          currently hold positions at certain reporting levels, such as Director level or senior IC level. <br><br>For a person
+          to be included in search results, they only need to match 1 of the seniorities you add. Adding more seniorities
+          expands your search results. <br><br> Searches only return results based on their current job title, so searching
+          for Director-level employees only returns people that currently hold a Director-level title. If someone was previously
+          a Director, but is currently a VP, they would not be included in your search results. <br><br>Use this parameter
+          in combination with the `person_titles[]` parameter to find people based on specific job functions and seniority
+          levels. <br><br>The following options can be used for this parameter: <br><ul><li><code>owner</code></li><li><code>founder</code></li><li><code>c_suite</code></li><li><code>partner</code></li><li><code>vp</code></li><li><code>head</code></li><li><code>director</code></li><li><code>manager</code></li><li><code>senior</code></li><li><code>entry</code></li><li><code>intern</code></li></ul>'
+        schema:
+          type: array
+          default: ''
+          items:
+            type: string
+      - name: organization_locations[]
+        in: query
+        description: 'The location of the company headquarters for a person''s current employer. You can search across cities,
+          US states, and countries. <br><br>If a company has several office locations, results are still based on the headquarters
+          location. For example, if you search `chicago` but a company''s HQ location is in `boston`, people that work for
+          the Boston-based company will not appear in your results, even if they match other \parameters. <br><br>To find
+          people based on their personal location, use the `person_locations` parameter. <br><br>Examples: `texas`; `tokyo`;
+          `spain`'
+        schema:
+          type: array
+          items:
+            type: string
+      - name: q_organization_domains_list[]
+        in: query
+        required: false
+        description: 'The domain name for the person''s employer. This can be the current employer or a previous employer.
+          Do not include `www.`, the `@` symbol, or similar. <br><br>This parameter accepts up to 1,000 domains in a single
+          request. <br><br>Examples: `apollo.io`; `microsoft.com`'
+        schema:
+          type: array
+          default: ''
+          items:
+            type: string
+      - name: contact_email_status[]
+        in: query
+        description: 'The email statuses for the people you want to find. You can add multiple statuses to expand your search.
+          <br><br>The statuses you can search include:  <ul> <li> <code>verified</code> </li> <li> <code>unverified</code>
+          </li> <li> <code>likely to engage</code> </li> <li> <code>unavailable</code> </li>  </ul>'
+        schema:
+          type: array
+          items:
+            type: string
+      - name: organization_ids[]
+        in: query
+        description: 'The Apollo IDs for the companies (employers) you want to include in your search results. Each company
+          in the Apollo database is assigned a unique ID. <br><br>To find IDs, call the <a href="https://docs.apollo.io/reference/organization-search"
+          target="_blank">Organization Search endpoint</a> and identify the values for `organization_id`.  <br><br>Example:
+          `5e66b6381e05b4008c8331b8`'
+        schema:
+          type: array
+          items:
+            type: string
+      - name: organization_num_employees_ranges[]
+        in: query
+        description: 'The number range of employees working for the person''s current company. This enables you to find people
+          based on the headcount of their employer. You can add multiple ranges to expand your search results. <br><br>Each
+          range you add needs to be a string, with the upper and lower numbers of the range separated only by a comma. <br><br>Examples:
+          `1,10`; `250,500`; `10000,20000`'
+        schema:
+          type: array
+          items:
+            type: string
+      - name: revenue_range[min]
+        in: query
+        required: false
+        description: 'The minimum revenue the person''s current employer generates. Use this parameter in combination with
+          `revenue_range[max]` to set a revenue range. <br><br>Do not enter currency symbols, commas, or decimal points in
+          the figure. <br><br>Examples: `500000`; `1500000`'
+        schema:
+          type: integer
+          default: ''
+      - name: revenue_range[max]
+        in: query
+        required: false
+        description: 'The maximum revenue the person''s current employer generates. Use this parameter in combination with
+          `revenue_range[min]` to set a revenue range. <br><br>Do not enter currency symbols, commas, or decimal points in
+          the figure. <br><br>Examples: `500000`; `1500000`'
+        schema:
+          type: integer
+          default: ''
+      - name: currently_using_all_of_technology_uids[]
+        in: query
+        required: false
+        description: 'Find people based on all of the technologies their current employer uses. Apollo supports filtering
+          by 1,500+ technologies. <br><br>Apollo calculates technologies data from multiple sources. This data is updated
+          regularly. Check out the full list of supported technologies by <a href="https://api.apollo.io/v1/auth/supported_technologies_csv"
+          target="_blank">downloading this CSV file</a>. <br><br>Use underscores (`_`) to replace spaces and periods for the
+          technologies listed in the CSV file. <br><br>Examples: `salesforce`; `google_analytics`; `wordpress_org`'
+        schema:
+          type: array
+          default: ''
+          items:
+            type: string
+      - name: currently_using_any_of_technology_uids[]
+        in: query
+        required: false
+        description: 'Find people based on any of the technologies their current employer uses. Apollo supports filtering
+          by 1,500+ technologies. <br><br>Apollo calculates technologies data from multiple sources. This data is updated
+          regularly. Check out the full list of supported technologies by <a href="https://api.apollo.io/v1/auth/supported_technologies_csv"
+          target="_blank">downloading this CSV file</a>. <br><br>Use underscores (`_`) to replace spaces and periods for the
+          technologies listed in the CSV file. <br><br>Examples: `salesforce`; `google_analytics`; `wordpress_org`'
+        schema:
+          type: array
+          default: ''
+          items:
+            type: string
+      - name: currently_not_using_any_of_technology_uids[]
+        in: query
+        required: false
+        description: 'Exclude people from your search based on any of the technologies their current employer uses. Apollo
+          supports filtering by 1,500+ technologies. <br><br>Apollo calculates technologies data from multiple sources. This
+          data is updated regularly. Check out the full list of supported technologies by <a href="https://api.apollo.io/v1/auth/supported_technologies_csv"
+          target="_blank">downloading this CSV file</a>. <br><br>Use underscores (`_`) to replace spaces and periods for the
+          technologies listed in the CSV file. <br><br>Examples: `salesforce`; `google_analytics`; `wordpress_org`'
+        schema:
+          type: array
+          default: ''
+          items:
+            type: string
+      - name: q_organization_job_titles[]
+        in: query
+        required: false
+        description: 'The job titles that are listed in active job postings at the person''s current employer. <br><br>Examples:
+          `sales manager`; `research analyst`'
+        schema:
+          type: array
+          default: ''
+          items:
+            type: string
+      - name: organization_job_locations[]
+        in: query
+        required: false
+        description: 'The locations of the jobs being actively recruited by the person''s employer. <br><br>Examples: `atlanta`;
+          `japan`'
+        schema:
+          type: array
+          default: ''
+          items:
+            type: string
+      - name: organization_num_jobs_range[min]
+        in: query
+        required: false
+        description: 'The minimum number of job postings active at the person''s current empployer. Use this parameter in
+          combination with `organization_num_jobs_range[max]` to set a job postings range. <br><br>Examples: `50`; `500`'
+        schema:
+          type: integer
+          default: ''
+      - name: organization_num_jobs_range[max]
+        in: query
+        required: false
+        description: 'The maximum number of job postings active at the person''s current empployer. Use this parameter in
+          combination with `organization_num_jobs_range[min]` to set a job postings range. <br><br>Examples: `50`; `500`'
+        schema:
+          type: integer
+          default: ''
+      - name: organization_job_posted_at_range[min]
+        in: query
+        required: false
+        description: 'The earliest date when jobs were posted by the person''s current employer. Use this parameter in combination
+          with `organization_job_posted_at_range[max]` to set a date range for when jobs posted. <br><br>Example: `2025-07-25`'
+        schema:
+          type: string
+          format: date
+          default: ''
+      - name: organization_job_posted_at_range[max]
+        in: query
+        required: false
+        description: 'The latest date when jobs were posted by the person''s current employer. Use this parameter in combination
+          with `organization_job_posted_at_range[min]` to set a date range for when jobs posted. <br><br>Example: `2025-09-25`'
+        schema:
+          type: string
+          format: date
+          default: ''
+      - name: page
+        in: query
+        description: 'The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination
+          with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint.
+          <br><br>Example: `4`'
+        schema:
+          type: integer
+          format: int32
+      - name: per_page
+        in: query
+        required: false
+        description: 'The number of search results that should be returned for each page. Limiting the number of results per
+          page improves the endpoint''s performance. <br><br>Use the `page` parameter to search the different pages of data.
+          <br><br>Example: `10`'
+        schema:
+          type: integer
+          format: int32
+          default: ''
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    total_entries: 232764882
+                    people:
+                    - id: 67bdafd0c3a4c50001bbd7c2
+                      first_name: Andrew
+                      last_name_obfuscated: Hu***n
+                      title: Professor and Neuroscientist at Stanford & Host
+                      last_refreshed_at: '2025-11-04T23:20:32.690+00:00'
+                      has_email: true
+                      has_city: true
+                      has_state: true
+                      has_country: true
+                      has_direct_phone: 'Yes'
+                      organization:
+                        name: Scicomm Media
+                        has_industry: true
+                        has_phone: false
+                        has_city: true
+                        has_state: true
+                        has_country: true
+                        has_zip_code: false
+                        has_revenue: false
+                        has_employee_count: true
+                    - id: 6775057df8360a0001a6852c
+                      first_name: Jon
+                      last_name_obfuscated: St***g
+                      title: Managing Director
+                      last_refreshed_at: '2025-11-05T15:56:08.901+00:00'
+                      has_email: true
+                      has_city: true
+                      has_state: true
+                      has_country: true
+                      has_direct_phone: 'Yes'
+                      organization:
+                        name: Lazard
+                        has_industry: true
+                        has_phone: true
+                        has_city: true
+                        has_state: true
+                        has_country: true
+                        has_zip_code: true
+                        has_revenue: true
+                        has_employee_count: true
+                    - id: 637dd5071c576c0001ccbff4
+                      first_name: Lorena
+                      last_name_obfuscated: Ac***a
+                      title: Director of Operations
+                      last_refreshed_at: '2025-11-03T10:01:50.493+00:00'
+                      has_email: true
+                      has_city: true
+                      has_state: true
+                      has_country: true
+                      has_direct_phone: 'Yes'
+                      organization:
+                        name: Be Busy Being Awesome
+                        has_industry: true
+                        has_phone: false
+                        has_city: true
+                        has_state: true
+                        has_country: true
+                        has_zip_code: false
+                        has_revenue: false
+                        has_employee_count: true
+                    - id: 6282fecea784280001553642
+                      first_name: Linda
+                      last_name_obfuscated: Ch***n
+                      title: Sales Manager
+                      last_refreshed_at: '2025-09-29T11:53:35.791+00:00'
+                      has_email: true
+                      has_city: true
+                      has_state: true
+                      has_country: true
+                      has_direct_phone: 'Yes'
+                      organization:
+                        name: MCU Technology Co., Ltd
+                        has_industry: true
+                        has_phone: true
+                        has_city: false
+                        has_state: false
+                        has_country: false
+                        has_zip_code: false
+                        has_revenue: false
+                        has_employee_count: true
+                    - id: 66ed23831ae8c9000186c75b
+                      first_name: Nicholas
+                      last_name_obfuscated: Th***n
+                      title: Chief Executive Officer
+                      last_refreshed_at: '2025-11-07T17:08:51.086+00:00'
+                      has_email: true
+                      has_city: true
+                      has_state: true
+                      has_country: true
+                      has_direct_phone: 'Yes'
+                      organization:
+                        name: The Atlantic
+                        has_industry: true
+                        has_phone: true
+                        has_city: true
+                        has_state: true
+                        has_country: true
+                        has_zip_code: true
+                        has_revenue: true
+                        has_employee_count: true
+                    - id: 6728af09afa3de00011a722e
+                      first_name: Ron
+                      last_name_obfuscated: Kr***i
+                      title: null
+                      last_refreshed_at: '2025-11-05T23:23:13.047+00:00'
+                      has_email: true
+                      has_city: true
+                      has_state: true
+                      has_country: true
+                      has_direct_phone: 'Yes'
+                      organization:
+                        name: Stifel Financial Corp.
+                        has_industry: true
+                        has_phone: true
+                        has_city: true
+                        has_state: true
+                        has_country: true
+                        has_zip_code: true
+                        has_revenue: true
+                        has_employee_count: true
+                    - id: 54a2b92a74686935beffa837
+                      first_name: Rita
+                      last_name_obfuscated: Ki***g
+                      title: Founder
+                      last_refreshed_at: '2025-11-07T07:13:05.197+00:00'
+                      has_email: true
+                      has_city: false
+                      has_state: false
+                      has_country: true
+                      has_direct_phone: 'Yes'
+                      organization:
+                        name: Power Pairs
+                        has_industry: true
+                        has_phone: false
+                        has_city: true
+                        has_state: true
+                        has_country: true
+                        has_zip_code: false
+                        has_revenue: false
+                        has_employee_count: true
+                    - id: 63be196afa109b000139ace7
+                      first_name: Austin
+                      last_name_obfuscated: Be***k
+                      title: Founder
+                      last_refreshed_at: '2025-11-02T05:22:18.569+00:00'
+                      has_email: true
+                      has_city: true
+                      has_state: true
+                      has_country: true
+                      has_direct_phone: 'Yes'
+                      organization:
+                        name: Cultivated Culture
+                        has_industry: true
+                        has_phone: true
+                        has_city: true
+                        has_state: true
+                        has_country: true
+                        has_zip_code: false
+                        has_revenue: false
+                        has_employee_count: true
+                    - id: 5e8a7a4dfd23700001a64dfb
+                      first_name: Elina
+                      last_name_obfuscated: Ga***a
+                      title: SVP, Head of Global Operations
+                      last_refreshed_at: '2025-11-05T13:50:24.941+00:00'
+                      has_email: true
+                      has_city: true
+                      has_state: true
+                      has_country: true
+                      has_direct_phone: 'Yes'
+                      organization:
+                        name: Twelve
+                        has_industry: true
+                        has_phone: true
+                        has_city: true
+                        has_state: true
+                        has_country: true
+                        has_zip_code: true
+                        has_revenue: true
+                        has_employee_count: true
+                    - id: 66ec0684cd386c0001b15096
+                      first_name: Matt
+                      last_name_obfuscated: Gr***y
+                      title: Founder & CEO
+                      last_refreshed_at: '2025-11-06T15:08:56.795+00:00'
+                      has_email: true
+                      has_city: true
+                      has_state: true
+                      has_country: true
+                      has_direct_phone: 'Yes'
+                      organization:
+                        name: Founder OS
+                        has_industry: true
+                        has_phone: true
+                        has_city: true
+                        has_state: true
+                        has_country: true
+                        has_zip_code: true
+                        has_revenue: false
+                        has_employee_count: true
+              schema:
+                type: object
+                properties:
+                  total_entries:
+                    type: integer
+                    description: The total number of people that match your search criteria.
+                    example: 2
+                  people:
+                    type: array
+                    description: An array of people that match your search criteria.
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The Apollo ID for the person.
+                          example: 587cf802f65125cad923a266
+                        first_name:
+                          type: string
+                          description: The first name of the person.
+                          example: John
+                        last_name_obfuscated:
+                          type: string
+                          description: The last name of the person with the middle characters obfuscated for privacy. The
+                            format shows the first 2 characters, followed by asterisks, and then the last character.
+                          example: Do***e
+                        title:
+                          type:
+                          - string
+                          - 'null'
+                          description: The job title of the person. This field may be null if the person's title is not available.
+                          example: VP of Sales
+                        last_refreshed_at:
+                          type: string
+                          format: date-time
+                          description: The date and time when the person's data was last refreshed in Apollo's database.
+                          example: '2024-01-15T10:30:00.000Z'
+                        has_email:
+                          type: boolean
+                          description: Indicates whether Apollo has a verified email address for this person.
+                          example: true
+                        has_city:
+                          type: boolean
+                          description: Indicates whether Apollo has city location data for this person.
+                          example: true
+                        has_state:
+                          type: boolean
+                          description: Indicates whether Apollo has state location data for this person.
+                          example: true
+                        has_country:
+                          type: boolean
+                          description: Indicates whether Apollo has country location data for this person.
+                          example: true
+                        has_direct_phone:
+                          type: string
+                          description: 'Indicates whether Apollo has direct phone number data for this person. Returns `Yes`
+                            if available, or `Maybe: please request direct dial via people/bulk_match` if uncertain.'
+                          example: 'Yes'
+                        organization:
+                          type: object
+                          description: Information about the person's current employer organization.
+                          properties:
+                            name:
+                              type: string
+                              description: The name of the organization.
+                              example: Apollo.io
+                            has_industry:
+                              type: boolean
+                              description: Indicates whether Apollo has industry classification data for this organization.
+                              example: true
+                            has_phone:
+                              type: boolean
+                              description: Indicates whether Apollo has phone number data for this organization.
+                              example: true
+                            has_city:
+                              type: boolean
+                              description: Indicates whether Apollo has city location data for the organization's headquarters.
+                              example: true
+                            has_state:
+                              type: boolean
+                              description: Indicates whether Apollo has state location data for the organization's headquarters.
+                              example: true
+                            has_country:
+                              type: boolean
+                              description: Indicates whether Apollo has country location data for the organization's headquarters.
+                              example: true
+                            has_zip_code:
+                              type: boolean
+                              description: Indicates whether Apollo has postal/zip code data for the organization's headquarters.
+                              example: true
+                            has_revenue:
+                              type: boolean
+                              description: Indicates whether Apollo has revenue data for this organization.
+                              example: true
+                            has_employee_count:
+                              type: boolean
+                              description: Indicates whether Apollo has employee count data for this organization.
+                              example: true
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Need master API key:
+                  value:
+                    error: This API key is not authorized to access api/v1/mixed_people/api_search. Request an API key from
+                      your administrator that includes this endpoint in its configured scope.
+                    error_code: API_INACCESSIBLE
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: This API key is not authorized to access api/v1/mixed_people/api_search. Request an API key from
+                      your administrator that includes this endpoint in its configured scope.
+                  error_code:
+                    type: string
+                    example: API_INACCESSIBLE
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Validation error:
+                  value:
+                    error: Invalid parameters
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Invalid search parameters provided.
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value:
+                    message: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/mixed_people/api_search\
+                      \ is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\
+                      \n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of api calls allowed for api/v1/mixed_people/api_search is 600 times per hour.
+                      Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+      deprecated: false
+  /mixed_companies/search:
+    post:
+      summary: Organization Search
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/mixed_companies/search` or `Master API key`
+
+
+        **OAuth scopes:** `mixed_companies_search`
+
+
+        **Free account access:** Requires an Apollo account registered with a work email address. Paid accounts aren''t affected.
+
+
+        **Credit usage:** `1 credit per page`
+
+
+        This endpoint consumes 1 Apollo credit per page, with up to 100 results per page. Learn more about [API pricing and
+        credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        <a href="https://knowledge.apollo.io/hc/en-us/articles/4412658766477-Search-for-Companies" target="_blank">Organizations</a>
+        are companies you haven''t yet saved as accounts on Apollo.<br><br>Use the Organization Search endpoint to find companies
+        in the Apollo database. Several filters are available to help narrow your search.<br><br>To protect Apollo''s performance
+        for all users, this endpoint has a display limit of 50,000 records (100 records per page, up to 500 pages). Add more
+        filters to narrow your search results as much as possible.'
+      tags:
+      - Search
+      operationId: organization-search
+      parameters:
+      - name: q_organization_domains_list[]
+        in: query
+        required: false
+        description: 'The domain name for the person''s employer. This can be the current employer or a previous employer.
+          Do not include `www.`, the `@` symbol, or similar. <br><br>This parameter accepts up to 1,000 domains in a single
+          request. <br><br>Examples: `apollo.io`; `microsoft.com`'
+        schema:
+          type: array
+          default: ''
+          items:
+            type: string
+      - name: organization_num_employees_ranges[]
+        in: query
+        description: 'The number range of employees working for the company. This enables you to find companies based on headcount.
+          You can add multiple ranges to expand your search results. <br><br>Each range you add needs to be a string, with
+          the upper and lower numbers of the range separated only by a comma. <br><br>Examples: `1,10`; `250,500`; `10000,20000`'
+        schema:
+          type: array
+          items:
+            type: string
+      - name: organization_locations[]
+        in: query
+        description: 'The location of the company headquarters. You can search across cities, US states, and countries. <br><br>If
+          a company has several office locations, results are still based on the headquarters location. For example, if you
+          search `chicago` but a company''s HQ location is in `boston`, any Boston-based companies will not appearch in your
+          search results, even if they match other parameters.. <br><br>To exclude companies based on location, use the `organization_not_locations`
+          parameter. <br><br>Examples: `texas`; `tokyo`; `spain`'
+        schema:
+          type: array
+          items:
+            type: string
+      - name: organization_not_locations[]
+        in: query
+        description: 'Exclude companies from search results based on the location of the company headquarters. You can use
+          cities, US states, and countries as locations to exclude. <br><br>This parameter is useful for ensuring you do not
+          prospect in an undesirable territory. For example, if you use `ireland` as a value, no Ireland-based companies will
+          appear in your search results. <br><br>Examples: `minnesota`; `ireland`; `seoul`'
+        schema:
+          type: array
+          items:
+            type: string
+      - name: revenue_range[min]
+        in: query
+        description: 'Search for organizations based on their revenue. <br><br>Use this parameter to set the lower range of
+          organization revenue. Use the `revenue_range[max]` parameter to set the upper range of revenue. <br><br>Do not enter
+          currency symbols, commas, or decimal points in the figure. <br><br>Example: `300000`'
+        schema:
+          type: integer
+      - name: revenue_range[max]
+        in: query
+        description: 'Search for organizations based on their revenue. <br><br>Use this parameter to set the upper range of
+          organization revenue. Use the `revenue_range[min]` parameter to set the lower range of revenue. <br><br>Do not enter
+          currency symbols, commas, or decimal points in the figure. <br><br>Example: `50000000`'
+        schema:
+          type: integer
+      - name: currently_using_any_of_technology_uids[]
+        in: query
+        description: 'Find organizations based on the technologies they currently use. Apollo supports filtering by 1,500+
+          technologies. <br><br>Apollo calculates technologies data from multiple sources. This data is updated regularly.
+          Check out the full list of supported technologies by <a href="https://api.apollo.io/v1/auth/supported_technologies_csv"
+          target="_blank">downloading this CSV file</a>. <br><br>Use underscores (`_`) to replace spaces and periods for the
+          technologies listed in the CSV file. <br><br>Examples: `salesforce`; `google_analytics`; `wordpress_org`'
+        schema:
+          type: array
+          items:
+            type: string
+      - name: q_organization_keyword_tags[]
+        in: query
+        description: 'Filter search results based on keywords associated with companies. For example, you can enter `mining`
+          as a value to return only companies that have an association with the mining industry. <br><br>Examples: `mining`;
+          `sales strategy`; `consulting`'
+        schema:
+          type: array
+          items:
+            type: string
+      - name: q_organization_name
+        in: query
+        description: 'Filter search results to include a specific company name. <br><br>If the value you enter for this parameter
+          does not match with a company''s name, the company will not appear in search results, even if it matches other parameters.
+          Partial matches are accepted. For example, if you filter by the value `marketing`, a company called `NY Marketing
+          Unlimited` would still be eligible as a search result, but `NY Market Analysis` would not be eligible. <br><br>Example:
+          `apollo` or `mining`'
+        schema:
+          type: string
+      - name: organization_ids[]
+        in: query
+        description: 'The Apollo IDs for the companies you want to include in your search results. Each company in the Apollo
+          database is assigned a unique ID. <br><br>To find IDs, identify the values for `organization_id` when you call this
+          endpoint. <br><br>Example: `5e66b6381e05b4008c8331b8`'
+        schema:
+          type: array
+          items:
+            type: string
+      - name: latest_funding_amount_range[min]
+        in: query
+        required: false
+        description: 'The minimum amount the company received with its most recent funding round. Use this parameter in combination
+          with `latest_funding_amount_range[max]` to set a monetary range for the company''s most recent funding round. <br><br>Do
+          not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `5000000`; `15000000`'
+        schema:
+          type: integer
+          default: ''
+      - name: latest_funding_amount_range[max]
+        in: query
+        required: false
+        description: 'The maximium amount the company received with its most recent funding round. Use this parameter in combination
+          with `latest_funding_amount_range[min]` to set a monetary range for the company''s most recent funding round. <br><br>Do
+          not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `5000000`; `15000000`'
+        schema:
+          type: integer
+          default: ''
+      - name: total_funding_range[min]
+        in: query
+        required: false
+        description: 'The minimum amount the company received during all of its funding rounds combined. Use this parameter
+          in combination with `total_funding_range[max]` to set a monetary range for all of the company''s funding rounds.
+          <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `50000000`; `350000000`'
+        schema:
+          type: integer
+          default: ''
+      - name: total_funding_range[max]
+        in: query
+        required: false
+        description: 'The maximum amount the company received during all of its funding rounds combined. Use this parameter
+          in combination with `total_funding_range[min]` to set a monetary range for all of the company''s funding rounds.
+          <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `50000000`; `350000000`'
+        schema:
+          type: integer
+          default: ''
+      - name: latest_funding_date_range[min]
+        in: query
+        required: false
+        description: 'The earliest date when the company received its most recent funding round. Use this parameter in combination
+          with `latest_funding_date_range[max]` to set a date range for when the company received its most recent funding
+          round. <br><br>Example: `2025-07-25`'
+        schema:
+          type: string
+          format: date
+          default: ''
+      - name: latest_funding_date_range[max]
+        in: query
+        required: false
+        description: 'The latest date when the company received its most recent funding round. Use this parameter in combination
+          with `latest_funding_date_range[min]` to set a date range for when the company received its most recent funding
+          round. <br><br>Example: `2025-09-25`'
+        schema:
+          type: string
+          format: date
+          default: ''
+      - name: q_organization_job_titles[]
+        in: query
+        required: false
+        description: 'The job titles that are listed in active job postings at the company. <br><br>Examples: `sales manager`;
+          `research analyst`'
+        schema:
+          type: array
+          default: ''
+          items:
+            type: string
+      - name: organization_job_locations[]
+        in: query
+        required: false
+        description: 'The locations of the jobs being actively recruited by the company. <br><br>Examples: `atlanta`; `japan`'
+        schema:
+          type: array
+          default: ''
+          items:
+            type: string
+      - name: organization_num_jobs_range[min]
+        in: query
+        required: false
+        description: 'The minimum number of job postings active at the company. Use this parameter in combination with `organization_num_jobs_range[max]`
+          to set a job postings range. <br><br>Examples: `50`; `500`'
+        schema:
+          type: integer
+          default: ''
+      - name: organization_num_jobs_range[max]
+        in: query
+        required: false
+        description: 'The maximum number of job postings active at the company. Use this parameter in combination with `organization_num_jobs_range[min]`
+          to set a job postings range. <br><br>Examples: `50`; `500`'
+        schema:
+          type: integer
+          default: ''
+      - name: organization_job_posted_at_range[min]
+        in: query
+        required: false
+        description: 'The earliest date when jobs were posted by the company. Use this parameter in combination with `organization_job_posted_at_range[max]`
+          to set a date range for when jobs posted. <br><br>Example: `2025-07-25`'
+        schema:
+          type: string
+          format: date
+          default: ''
+      - name: organization_job_posted_at_range[max]
+        in: query
+        required: false
+        description: 'The latest date when jobs were posted by the company. Use this parameter in combination with `organization_job_posted_at_range[min]`
+          to set a date range for when jobs posted. <br><br>Example: `2025-09-25`'
+        schema:
+          type: string
+          format: date
+          default: ''
+      - name: page
+        in: query
+        description: 'The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination
+          with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint.
+          <br><br>Example: `4`'
+        schema:
+          type: integer
+          format: int32
+      - name: per_page
+        in: query
+        description: 'The number of search results that should be returned for each page. Limiting the number of results per
+          page improves the endpoint''s performance. <br><br>Use the `page` parameter to search the different pages of data.
+          <br><br>Example: `10`'
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    breadcrumbs:
+                    - label: '# Employees'
+                      signal_field_name: organization_num_employees_ranges
+                      value: 250,1000
+                      display_name: 250-1000
+                    - label: '# Employees'
+                      signal_field_name: organization_num_employees_ranges
+                      value: 5000,10000
+                      display_name: 5000-10000
+                    - label: Company Locations
+                      signal_field_name: organization_locations
+                      value: japan
+                      display_name: japan
+                    - label: Company Locations
+                      signal_field_name: organization_locations
+                      value: ireland
+                      display_name: ireland
+                    partial_results_only: false
+                    has_join: false
+                    disable_eu_prospecting: false
+                    partial_results_limit: 10000
+                    pagination:
+                      page: 1
+                      per_page: 2
+                      total_entries: 1184
+                      total_pages: 592
+                    accounts: []
+                    organizations:
+                    - id: 615d029256de500001bdb460
+                      name: Nikkei Asia
+                      website_url: http://www.nikkei.com
+                      blog_url: null
+                      angellist_url: null
+                      linkedin_url: http://www.linkedin.com/company/nikkeiasia
+                      twitter_url: https://twitter.com/nikkei
+                      facebook_url: https://facebook.com/nikkei
+                      primary_phone:
+                        number: +81 576-95-0781
+                        source: Scraped
+                        sanitized_number: '+81576950781'
+                      languages:
+                      - Japanese
+                      - Chinese
+                      alexa_ranking: 1583
+                      phone: +81 576-95-0781
+                      linkedin_uid: '3335963'
+                      founded_year: 1876
+                      publicly_traded_symbol: null
+                      publicly_traded_exchange: null
+                      logo_url: https://zenprospect-production.s3.amazonaws.com/uploads/pictures/ff63c201695aca418dd88bd9/picture
+                      crunchbase_url: null
+                      primary_domain: nikkei.com
+                      sanitized_phone: '+81576950781'
+                      owned_by_organization_id: null
+                      show_intent: true
+                      has_intent_signal_account: false
+                      intent_signal_account: null
+                    - id: 55f1fcddf3e5bb0be2000a92
+                      name: Mitsui & Co., Ltd.
+                      website_url: http://www.mitsui.com
+                      blog_url: null
+                      angellist_url: null
+                      linkedin_url: http://www.linkedin.com/company/mitsui-co-ltd-
+                      twitter_url: https://twitter.com/citra_citrasa
+                      facebook_url: https://facebook.com/mitsuiandco/
+                      primary_phone:
+                        number: +81 4658-8-1655
+                        source: Owler
+                        sanitized_number: '+81465881655'
+                      languages: []
+                      alexa_ranking: 265731
+                      phone: +81 4658-8-1655
+                      linkedin_uid: '6675'
+                      founded_year: 1947
+                      publicly_traded_symbol: '8031'
+                      publicly_traded_exchange: tyo
+                      logo_url: https://zenprospect-production.s3.amazonaws.com/uploads/pictures/4c0885d217ca85624ac6b821/picture
+                      crunchbase_url: null
+                      primary_domain: mitsui.com
+                      sanitized_phone: '+81465881655'
+                      owned_by_organization_id: null
+                      show_intent: true
+                      has_intent_signal_account: false
+                      intent_signal_account: null
+                    model_ids:
+                    - 615d029256de500001bdb460
+                    - 55f1fcddf3e5bb0be2000a92
+                    num_fetch_result: null
+                    derived_params: null
+              schema:
+                type: object
+                properties:
+                  breadcrumbs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        label:
+                          type: string
+                          example: '# Employees'
+                        signal_field_name:
+                          type: string
+                          example: organization_num_employees_ranges
+                        value:
+                          type: string
+                          example: 250,1000
+                        display_name:
+                          type: string
+                          example: 250-1000
+                  partial_results_only:
+                    type: boolean
+                    example: false
+                    default: true
+                  has_join:
+                    type: boolean
+                    example: false
+                    default: true
+                  disable_eu_prospecting:
+                    type: boolean
+                    example: false
+                    default: true
+                  partial_results_limit:
+                    type: integer
+                    example: 10000
+                    default: 0
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                        example: 1
+                        default: 0
+                      per_page:
+                        type: integer
+                        example: 2
+                        default: 0
+                      total_entries:
+                        type: integer
+                        example: 1184
+                        default: 0
+                      total_pages:
+                        type: integer
+                        example: 592
+                        default: 0
+                  accounts:
+                    type: array
+                  organizations:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 615d029256de500001bdb460
+                        name:
+                          type: string
+                          example: Nikkei Asia
+                        website_url:
+                          type: string
+                          example: http://www.nikkei.com
+                        blog_url: {}
+                        angellist_url: {}
+                        linkedin_url:
+                          type: string
+                          example: http://www.linkedin.com/company/nikkeiasia
+                        twitter_url:
+                          type: string
+                          example: https://twitter.com/nikkei
+                        facebook_url:
+                          type: string
+                          example: https://facebook.com/nikkei
+                        primary_phone:
+                          type: object
+                          properties:
+                            number:
+                              type: string
+                              example: +81 576-95-0781
+                            source:
+                              type: string
+                              example: Scraped
+                            sanitized_number:
+                              type: string
+                              example: '+81576950781'
+                        languages:
+                          type: array
+                          items:
+                            type: string
+                            example: Japanese
+                        alexa_ranking:
+                          type: integer
+                          example: 1583
+                          default: 0
+                        phone:
+                          type: string
+                          example: +81 576-95-0781
+                        linkedin_uid:
+                          type: string
+                          example: '3335963'
+                        founded_year:
+                          type: integer
+                          example: 1876
+                          default: 0
+                        publicly_traded_symbol: {}
+                        publicly_traded_exchange: {}
+                        logo_url:
+                          type: string
+                          example: https://zenprospect-production.s3.amazonaws.com/uploads/pictures/ff63c201695aca418dd88bd9/picture
+                        crunchbase_url: {}
+                        primary_domain:
+                          type: string
+                          example: nikkei.com
+                        sanitized_phone:
+                          type: string
+                          example: '+81576950781'
+                        owned_by_organization_id: {}
+                        show_intent:
+                          type: boolean
+                          example: true
+                          default: true
+                        has_intent_signal_account:
+                          type: boolean
+                          example: false
+                          default: true
+                        intent_signal_account: {}
+                  model_ids:
+                    type: array
+                    items:
+                      type: string
+                      example: 615d029256de500001bdb460
+                  num_fetch_result: {}
+                  derived_params: {}
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Check Apollo pricing plan:
+                  value: "{\n  \"message\": \"This endpoint is only available to Apollo users on paid plans.\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: This endpoint is only available to Apollo users on paid plans.
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/mixed_companies/search\
+                    \ is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\
+                    \n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of api calls allowed for api/v1/mixed_companies/search is 600 times per hour.
+                      Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+      deprecated: false
+  /organizations/{organization_id}/job_postings:
+    get:
+      summary: Organization Job Postings
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/organizations/job_postings` or `Master API key`
+
+
+        **OAuth scopes:** `organizations_job_posting`
+
+
+        **Credit usage:** `1 credit per page`
+
+
+        This endpoint consumes 1 Apollo credit per page, with up to 10,000 results per page. Learn more about [API pricing
+        and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        <a href="https://knowledge.apollo.io/hc/en-us/articles/4412658766477-Search-for-Companies" target="_blank">Organizations</a>
+        are companies you haven''t yet saved as accounts on Apollo.<br><br>Use the Organization Job Postings endpoint to retrieve
+        the current job postings for companies. This can help you identify companies that are growing headcount in areas that
+        are strategically important for you.<br><br>To protect Apollo''s performance for all users, this endpoint has a display
+        limit of 10,000 records.'
+      tags:
+      - Search
+      operationId: organization-jobs-postings
+      parameters:
+      - name: organization_id
+        in: path
+        description: 'The organization ID of the company for which you want to find job postings.<br><br>Each company in the
+          Apollo database is assigned a unique ID. To find IDs, call the <a href="https://docs.apollo.io/reference/organization-search"
+          target="_blank">Organization Search endpoint</a> and identify the values for `organization_id`. <br><br>Example:
+          `5e66b6381e05b4008c8331b8`'
+        schema:
+          type: string
+        required: true
+      - name: page
+        in: query
+        description: 'The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination
+          with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint.
+          <br><br>Example: `4`'
+        schema:
+          type: integer
+          format: int32
+      - name: per_page
+        in: query
+        description: 'The number of search results that should be returned for each page. Limiting the number of results per
+          page improves the endpoint''s performance. <br><br>Use the `page` parameter to search the different pages of data.
+          <br><br>Example: `10`'
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    organization_job_postings:
+                    - id: 66d1d4de8a2af7000192f5ec
+                      title: IT Support Analyst - L2
+                      url: https://ca.linkedin.com/jobs/view/it-support-analyst-l2-at-apollo-io-4011156187?position=7&pageNum=37&refId=tsq2hhSGkQqjDhp%2BYvKs1g%3D%3D&trackingId=WX5iTs9UYaOlo4NpHFuXZw%3D%3D&trk=public_jobs_jserp-result_search-card
+                      city: null
+                      state: null
+                      country: Canada
+                      last_seen_at: '2024-08-30T14:19:10.200+00:00'
+                      posted_at: '2024-08-29T19:19:10.200+00:00'
+                    - id: 66e02f44a4577d0001edaaa4
+                      title: Vice President of Customer Support
+                      url: https://www.linkedin.com/jobs/view/vice-president-of-customer-support-at-apollo-io-4003918877?position=10&pageNum=0&refId=%2F6tCIAG%2BQcE8X0Sg5X9WZg%3D%3D&trackingId=gDhVPelP5eNCS79i4t6rew%3D%3D&trk=public_jobs_jserp-result_search-card
+                      city: null
+                      state: null
+                      country: United States
+                      last_seen_at: '2024-09-10T11:36:36.635+00:00'
+                      posted_at: '2024-09-10T05:36:36.635+00:00'
+                    - id: 66a28b0764c42e0001cfd6f3
+                      title: VP, Data
+                      url: https://www.linkedin.com/jobs/view/vp-data-at-apollo-io-3984634031?position=8&pageNum=20&refId=vodGDy7KpnHiqAYxGtWA7w%3D%3D&trackingId=LIwXOp3hU8JDG2MReniLsQ%3D%3D&trk=public_jobs_jserp-result_search-card
+                      city: null
+                      state: null
+                      country: United States
+                      last_seen_at: '2024-07-25T17:27:35.583+00:00'
+                      posted_at: '2024-07-25T16:51:35.582+00:00'
+                    - id: 66c7744c79457200017c451e
+                      title: Vice President, Customer Support
+                      url: https://www.linkedin.com/jobs/view/vice-president-customer-support-at-apollo-io-4004726038?position=7&pageNum=5&refId=UA3cDmi4LhysaeQVjpP5%2Bw%3D%3D&trackingId=HmEhmlJvSTdVkynujcntVg%3D%3D&trk=public_jobs_jserp-result_search-card
+                      city: null
+                      state: null
+                      country: United States
+                      last_seen_at: '2024-08-22T17:24:28.536+00:00'
+                      posted_at: '2024-08-22T00:24:28.536+00:00'
+                    - id: 66d845e6e308ad0001326d71
+                      title: Director, Product - Data
+                      url: https://www.linkedin.com/jobs/view/director-product-data-at-apollo-io-4015745864?position=7&pageNum=92&refId=ni6xc%2BalODyO6Vw1QtjOQQ%3D%3D&trackingId=77P8dEeOnMTVWYDYOx5Qcg%3D%3D&trk=public_jobs_jserp-result_search-card
+                      city: null
+                      state: null
+                      country: United States
+                      last_seen_at: '2024-09-04T11:35:02.382+00:00'
+                      posted_at: '2024-09-04T11:35:02.382+00:00'
+                    - id: 66d0723698240a00013100b3
+                      title: IT Operations Project Lead/IT Business Analyst
+                      url: https://ca.linkedin.com/jobs/view/it-operations-project-lead-it-business-analyst-at-apollo-io-4009782788?position=2&pageNum=70&refId=q9bjxXDiO9PNQ5yvQ3teig%3D%3D&trackingId=JkvKtlWxbOEKfaKKa%2FyaIA%3D%3D&trk=public_jobs_jserp-result_search-card
+                      city: null
+                      state: null
+                      country: Canada
+                      last_seen_at: '2024-08-29T13:05:57.932+00:00'
+                      posted_at: '2024-08-28T18:05:57.932+00:00'
+                    - id: 66c5cbb028d84c0001f74b9b
+                      title: Social Media Manager (Contract)
+                      url: https://www.linkedin.com/jobs/view/social-media-manager-contract-at-apollo-io-4003602892?position=7&pageNum=7&refId=M%2Bq21dX1lE3JzDnEzPC72Q%3D%3D&trackingId=bKhIuXmd2PJWlhJ9m2PEEg%3D%3D&trk=public_jobs_jserp-result_search-card
+                      city: null
+                      state: null
+                      country: United States
+                      last_seen_at: '2024-08-21T11:12:47.964+00:00'
+                      posted_at: '2024-08-21T01:12:47.964+00:00'
+                    - id: 66c6328347daa90001c5f189
+                      title: Prompt Writer - Contract
+                      url: https://www.linkedin.com/jobs/view/prompt-writer-contract-at-apollo-io-4004367531?position=8&pageNum=45&refId=%2FrQ6GY1Gv9DZ1fmX%2F75Bfw%3D%3D&trackingId=SGpayNSVHzAl8Vdtp%2B8mfg%3D%3D&trk=public_jobs_jserp-result_search-card
+                      city: null
+                      state: null
+                      country: United States
+                      last_seen_at: '2024-08-21T18:31:31.572+00:00'
+                      posted_at: '2024-08-21T17:55:31.572+00:00'
+                    - id: 66d89fa8a268120001c83b11
+                      title: Customer Success Manager, SMB
+                      url: https://www.linkedin.com/jobs/view/customer-success-manager-smb-at-apollo-io-4016189459?position=1&pageNum=12&refId=zFeMmz2ca3HvhAoq6gNYYQ%3D%3D&trackingId=jbk1AW24SjSqUfzkMpUNkA%3D%3D&trk=public_jobs_jserp-result_search-card
+                      city: null
+                      state: null
+                      country: United States
+                      last_seen_at: '2024-09-04T17:58:00.682+00:00'
+                      posted_at: '2024-09-04T00:58:00.682+00:00'
+              schema:
+                type: object
+                properties:
+                  organization_job_postings:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 66d1d4de8a2af7000192f5ec
+                        title:
+                          type: string
+                          example: IT Support Analyst - L2
+                        url:
+                          type: string
+                          example: https://ca.linkedin.com/jobs/view/it-support-analyst-l2-at-apollo-io-4011156187?position=7&pageNum=37&refId=tsq2hhSGkQqjDhp%2BYvKs1g%3D%3D&trackingId=WX5iTs9UYaOlo4NpHFuXZw%3D%3D&trk=public_jobs_jserp-result_search-card
+                        city: {}
+                        state: {}
+                        country:
+                          type: string
+                          example: Canada
+                        last_seen_at:
+                          type: string
+                          example: '2024-08-30T14:19:10.200+00:00'
+                        posted_at:
+                          type: string
+                          example: '2024-08-29T19:19:10.200+00:00'
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Add an organization ID:
+                  value: "{\n  \"error\": \"Parameters misconfigured. organization_id is not a valid ID\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Parameters misconfigured. organization_id is not a valid ID
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/organizations/{organization_id}/job_postings\
+                    \ is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\
+                    \n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of api calls allowed for api/v1/organizations/{organization_id}/job_postings
+                      is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+      deprecated: false
+  /organizations/{id}:
+    get:
+      summary: Get Complete Organization Info
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/organizations/show` or `Master API key`
+
+
+        **OAuth scopes:** `organization_read`
+
+
+        **Free account access:** Requires an Apollo account registered with a work email address. Paid accounts aren''t affected.
+
+
+        **Credit usage:** `1 credit per company` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        <a href="https://knowledge.apollo.io/hc/en-us/articles/4412658766477-Search-for-Companies" target="_blank">Organizations</a>
+        are companies you haven''t yet saved as accounts on Apollo.<br><br>Use the Get Complete Organization Info endpoint
+        to retrieve complete details about an organization in Apollo.'
+      tags:
+      - Search
+      operationId: get_organizations{id}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                OK:
+                  value:
+                    organization:
+                      id: 5e66b6381e05b4008c8331b8
+                      name: Apollo.io
+                      website_url: http://www.apollo.io
+                      linkedin_url: http://www.linkedin.com/company/apolloio
+                      twitter_url: https://twitter.com/MeetApollo/
+                      facebook_url: https://facebook.com/MeetApollo/
+                      alexa_ranking: 3514
+                      linkedin_uid: '18511550'
+                      founded_year: 2015
+                      logo_url: https://zenprospect-production.s3.amazonaws.com/uploads/pictures/b1bdd6009b1611149b56f0bc/picture
+                      primary_domain: apollo.io
+                      industry: information technology & services
+                      estimated_num_employees: 910
+                      keywords:
+                      - sales engagement
+                      - lead generation
+                      - predictive analytics
+                      - lead scoring
+                      - sales strategy
+                      - conversation intelligence
+                      - sales enablement
+                      - lead routing
+                      - sales development
+                      - email engagement
+                      - revenue intelligence
+                      - sales operations
+                      - sales intelligence
+                      - lead intelligence
+                      - prospecting
+                      - b2b data
+                      - software development
+                      - crm integration
+                      - data enrichment
+                      - deal management
+                      - pipeline management
+                      - automated workflows
+                      - analytics & reporting
+                      - coaching & feedback
+                      - signal-based prospecting
+                      - inbound optimization
+                      - contact & account search
+                      - email outreach automation
+                      - meeting scheduling
+                      - ai sales assistant
+                      - multi-channel outreach
+                      - lead qualification
+                      - form optimization
+                      - sales performance improvement
+                      - live data network
+                      - ai sales automation
+                      - revops tools
+                      - account-based prospecting
+                      - sales pipeline
+                      - meeting preparedness
+                      - ai recommendations
+                      - webinar integration
+                      - sales coaching
+                      - team collaboration
+                      - sales insights
+                      - buyer's journey tracking
+                      - market intelligence
+                      - lead prioritization
+                      - customer journey mapping
+                      - sales funnel tracking
+                      - data-driven sales
+                      - email deliverability management
+                      - automated lead follow-up
+                      - predictive analytics for sales
+                      - sales campaign management
+                      - sales productivity tools
+                      - sales performance management
+                      - b2b sales intelligence
+                      - ai-driven automation
+                      - prospecting tools
+                      - contact database
+                      - sales automation
+                      - email tracking
+                      - intent data
+                      - sales workflow management
+                      - advanced search filters
+                      - customer success
+                      - scalable solutions
+                      - sales analytics
+                      - outreach optimization
+                      - data-driven strategies
+                      - customer acquisition
+                      - sales productivity
+                      - marketing automation
+                      - user-friendly interface
+                      - comprehensive features
+                      - business growth
+                      - sales optimization
+                      - competitive advantage
+                      - market potential
+                      - sales teams
+                      - enterprise solutions
+                      - small business support
+                      - mid-market focus
+                      - diverse industries
+                      - customer demographics
+                      - sales intelligence platform
+                      - marketing & advertising
+                      - sales
+                      - information technology & services
+                      - enterprise software
+                      - enterprises
+                      - computer software
+                      - b2b
+                      - saas
+                      industries:
+                      - information technology & services
+                      secondary_industries: []
+                      snippets_loaded: true
+                      industry_tag_id: 5567cd4773696439b10b0000
+                      industry_tag_hash:
+                        information technology & services: 5567cd4773696439b10b0000
+                      retail_location_count: 0
+                      raw_address: 535 mission street, san francisco, california, united states, 94105
+                      street_address: 535 Mission Street
+                      city: San Francisco
+                      state: California
+                      postal_code: '94105'
+                      country: United States
+                      owned_by_organization_id: null
+                      short_description: 'Apollo.io is an AI sales platform that provides businesses with tools to enhance
+                        their go-to-market strategies. Founded in 2015 by Tim and Ray, the company was created to address
+                        the limitations of existing sales tools they encountered in their previous startup. Apollo.io offers
+                        an all-in-one platform that integrates lead intelligence and sales engagement capabilities, helping
+                        businesses find leads, engage prospects, and close deals more effectively.
+
+
+                        The platform features detailed insights into potential customers, tools for managing leads from initial
+                        contact to deal closure, and a community-based approach to data accuracy. Apollo.io serves nearly
+                        9,000 paying customers, including startups and large enterprises, and supports over 500,000 sales
+                        professionals globally. The company has experienced rapid growth, surpassing $100 million in annual
+                        recurring revenue and achieving a valuation of $1.6 billion. Apollo.io has also received funding from
+                        notable investors like Y Combinator and Nexus Venture Partners.'
+                      suborganizations: []
+                      num_suborganizations: 0
+                      annual_revenue_printed: 100M
+                      annual_revenue: 100000000
+                      total_funding: 251200000
+                      total_funding_printed: 251.2M
+                      latest_funding_round_date: '2023-08-01T00:00:00.000+00:00'
+                      latest_funding_stage: Series D
+                      funding_events:
+                      - id: 6574c1ff9b797d0001fdab1b
+                        date: '2023-08-01T00:00:00.000+00:00'
+                        news_url: null
+                        type: Series D
+                        investors: Bain Capital Ventures, Sequoia Capital, Tribe Capital, Nexus Venture Partners
+                        amount: 100M
+                        currency: $
+                      - id: 624f4dfec786590001768016
+                        date: '2022-03-01T00:00:00.000+00:00'
+                        news_url: null
+                        type: Series C
+                        investors: Sequoia Capital, Tribe Capital, Nexus Venture Partners, NewView Capital
+                        amount: 110M
+                        currency: $
+                      - id: 61b13677623110000186a478
+                        date: '2021-10-01T00:00:00.000+00:00'
+                        news_url: null
+                        type: Series B
+                        investors: Tribe Capital, NewView Capital, Nexus Venture Partners
+                        amount: 32M
+                        currency: $
+                      - id: 5ffe93caa54d75077c59acef
+                        date: '2018-06-26T00:00:00.000+00:00'
+                        news_url: https://techcrunch.com/2018/06/26/yc-grad-zenprospect-rebrands-as-apollo-lands-7-m-series-a/
+                        type: Series A
+                        investors: Nexus Venture Partners, Social Capital, Y Combinator
+                        amount: 7M
+                        currency: $
+                      - id: 6574c1ff9b797d0001fdab20
+                        date: '2016-10-01T00:00:00.000+00:00'
+                        news_url: null
+                        type: Other
+                        investors: Y Combinator, SV Angel, Social Capital, Nexus Venture Partners
+                        amount: 2.2M
+                        currency: $
+                      technology_names:
+                      - AI
+                      - Android
+                      - Basis
+                      - Canva
+                      - Circle
+                      - CloudFlare Hosting
+                      - Cloudflare DNS
+                      - Drift
+                      - Gmail
+                      - Google Apps
+                      - Google Tag Manager
+                      - Google Workspace
+                      - Hubspot
+                      - Microsoft Office 365
+                      - Mobile Friendly
+                      - Python
+                      - Rackspace MailGun
+                      - Remote
+                      - Render
+                      - Reviews
+                      - Salesforce
+                      - SharePoint
+                      - Stripe
+                      - WP Engine
+                      - Webmail
+                      - Zendesk
+                      current_technologies:
+                      - uid: ai
+                        name: AI
+                        category: Other
+                      - uid: android
+                        name: Android
+                        category: Frameworks and Programming Languages
+                      - uid: basis
+                        name: Basis
+                        category: Advertising Networks
+                      - uid: canva
+                        name: Canva
+                        category: Content Management Platform
+                      - uid: circle
+                        name: Circle
+                        category: Financial Software
+                      - uid: cloudflare_hosting
+                        name: CloudFlare Hosting
+                        category: Hosting
+                      - uid: cloudflare_dns
+                        name: Cloudflare DNS
+                        category: Domain Name Services
+                      - uid: drift
+                        name: Drift
+                        category: Widgets
+                      - uid: gmail
+                        name: Gmail
+                        category: Email Providers
+                      - uid: google_apps
+                        name: Google Apps
+                        category: Other
+                      - uid: google_tag_manager
+                        name: Google Tag Manager
+                        category: Tag Management
+                      - uid: google workspace
+                        name: Google Workspace
+                        category: Cloud Services
+                      - uid: hubspot
+                        name: Hubspot
+                        category: Marketing Automation
+                      - uid: office_365
+                        name: Microsoft Office 365
+                        category: Other
+                      - uid: mobile_friendly
+                        name: Mobile Friendly
+                        category: Other
+                      - uid: python
+                        name: Python
+                        category: Frameworks and Programming Languages
+                      - uid: rackspace_mailgun
+                        name: Rackspace MailGun
+                        category: Email Delivery
+                      - uid: remote
+                        name: Remote
+                        category: Other
+                      - uid: render
+                        name: Render
+                        category: Other
+                      - uid: reviews
+                        name: Reviews
+                        category: Customer Reviews
+                      - uid: salesforce
+                        name: Salesforce
+                        category: Customer Relationship Management
+                      - uid: sharepoint
+                        name: SharePoint
+                        category: CMS
+                      - uid: stripe
+                        name: Stripe
+                        category: Payments
+                      - uid: wp_engine
+                        name: WP Engine
+                        category: CMS
+                      - uid: webmail
+                        name: Webmail
+                        category: Email Providers
+                      - uid: zendesk
+                        name: Zendesk
+                        category: Support and Feedback
+                      org_chart_root_people_ids:
+                      - 66f6de0d74c57a00015d2b39
+                      org_chart_sector: OrgChart::SectorHierarchy::Rules::IT
+                      org_chart_removed: false
+                      org_chart_show_department_filter: true
+                      account_id: 63f53afe4ceeca00016bdd47
+                      account:
+                        id: 63f53afe4ceeca00016bdd47
+                        domain: apollo.io
+                        name: Apollo
+                        team_id: 6095a710bd01d100a506d4ac
+                        organization_id: 5e66b6381e05b4008c8331b8
+                        source: chrome_extension_linkedin
+                        original_source: salesforce
+                        owner_id: 60affe7d6e270a00f5db6fe4
+                        created_at: '2023-02-21T21:43:26.352Z'
+                        phone: +1(202) 555-0114
+                        phone_status: no_status
+                        sanitized_phone: '+12025550114'
+                        account_playbook_statuses: []
+                        existence_level: full
+                        label_ids: []
+                        typed_custom_fields: {}
+                        custom_field_errors: {}
+                        modality: account
+                        source_display_name: Added from LinkedIn
+                        crm_record_url: null
+                        show_intent: false
+                        has_intent_signal_account: true
+                        intent_signal_account:
+                          _id: 6663bd946cef250001def02a
+                          account_id: 6658955677a2f20001c647ad
+                          aggregated_at: '2024-09-04T10:02:28.878+00:00'
+                          computed: true
+                          created_at: '2024-06-08T02:10:28.537Z'
+                          domain_aggregates:
+                          - domain: tableofdiscontents.com
+                            total_visits: 15
+                            last_visit: 20240611
+                            first_visit: 20240607
+                            unique_visitors: 6
+                            weekly_aggregates:
+                            - week_start_date: '2024-06-07T00:00:00.000Z'
+                              count: 15
+                            top_5_paths:
+                            - _id: www.tableofdiscontents.com
+                              total_visits: 9
+                            - _id: www.tableofdiscontents.com/pricing
+                              total_visits: 3
+                            - _id: www.tableofdiscontents.com/premium
+                              total_visits: 2
+                            - _id: www.tableofdiscontents.com/features
+                              total_visits: 1
+                            intent: low
+                            intent_score: 0
+                          first_visited_at: 20240607
+                          last_visited_at: 20240611
+                          need_aggregation: false
+                          need_es_update: false
+                          new_reveal: false
+                          organization_id: 5e66b6381e05b4008c8331b8
+                          overall_intent: low
+                          pre_generated_account_id: 6658955677a2f20001c647ad
+                          random: 0.162172829
+                          team_id: 6095a710bd01d100a506d4ac
+                          team_org_id: 6095a710bd01d100a506d4ac_5e66b6381e05b4008c8331b8
+                          total_visits: 15
+                          unique_visitors: 6
+                          updated_at: '2024-09-04T10:02:28.959Z'
+                          website_visitor_metrics:
+                            overall_intent: low
+                            total_visits: 15
+                            unique_visitors: 6
+                            domain_aggregates:
+                            - domain: tableofdiscontents.com
+                              first_intent_signal_received_at: 20240607
+                              last_intent_signal_received_at: 20240611
+                            page_view_aggregates:
+                              one_day_count: 0
+                              seven_day_count: 0
+                              fifteen_day_count: 0
+                              thirty_day_count: 0
+                              sixty_day_count: 0
+                              ninety_day_count: 15
+                            pages:
+                            - www.tableofdiscontents.com
+                            - www.tableofdiscontents.com/pricing
+                            - www.tableofdiscontents.com/premium
+                            - www.tableofdiscontents.com/features
+                            first_intent_signal_received_at: 20240607
+                            last_intent_signal_received_at: 20240611
+                          id: 6663bd946cef250001def02a
+                          key: 6663bd946cef250001def02a
+                        organization_headcount_six_month_growth: null
+                        organization_headcount_twelve_month_growth: null
+                        organization_headcount_twenty_four_month_growth: null
+                        generic_org_insights: null
+                      employee_metrics:
+                      - start_date: '2023-05-01'
+                        departments:
+                        - functions: null
+                          new: 0
+                          retained: 97
+                          churned: 0
+                        - functions: accounting
+                          new: 0
+                          retained: 1
+                          churned: 0
+                        - functions: sales
+                          new: 0
+                          retained: 71
+                          churned: 1
+                        - functions: operations
+                          new: 0
+                          retained: 21
+                          churned: 0
+                        - functions: finance
+                          new: 0
+                          retained: 5
+                          churned: 0
+                        - functions: marketing
+                          new: 0
+                          retained: 11
+                          churned: 1
+                        - functions: human_resources
+                          new: 0
+                          retained: 21
+                          churned: 0
+                        - functions: legal
+                          new: 0
+                          retained: 1
+                          churned: 0
+                        - functions: engineering
+                          new: 0
+                          retained: 100
+                          churned: 0
+                        - functions: business_development
+                          new: 0
+                          retained: 14
+                          churned: 0
+                        - functions: product_management
+                          new: 0
+                          retained: 13
+                          churned: 0
+                        - functions: consulting
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: education
+                          new: 0
+                          retained: 4
+                          churned: 0
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 1
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 0
+                          retained: 7
+                          churned: 1
+                        - functions: support
+                          new: 0
+                          retained: 9
+                          churned: 0
+                        - functions: data_science
+                          new: 0
+                          retained: 4
+                          churned: 0
+                      - start_date: '2023-06-01'
+                        departments:
+                        - functions: null
+                          new: 17
+                          retained: 98
+                          churned: 0
+                        - functions: accounting
+                          new: 0
+                          retained: 1
+                          churned: 0
+                        - functions: sales
+                          new: 9
+                          retained: 70
+                          churned: 1
+                        - functions: operations
+                          new: 1
+                          retained: 21
+                          churned: 0
+                        - functions: finance
+                          new: 0
+                          retained: 5
+                          churned: 0
+                        - functions: marketing
+                          new: 2
+                          retained: 10
+                          churned: 1
+                        - functions: human_resources
+                          new: 3
+                          retained: 21
+                          churned: 0
+                        - functions: information_technology
+                          new: 1
+                          retained: 0
+                          churned: 0
+                        - functions: legal
+                          new: 0
+                          retained: 1
+                          churned: 0
+                        - functions: engineering
+                          new: 16
+                          retained: 100
+                          churned: 0
+                        - functions: business_development
+                          new: 1
+                          retained: 14
+                          churned: 0
+                        - functions: product_management
+                          new: 0
+                          retained: 13
+                          churned: 0
+                        - functions: consulting
+                          new: 1
+                          retained: 2
+                          churned: 0
+                        - functions: education
+                          new: 0
+                          retained: 4
+                          churned: 0
+                        - functions: media_and_commmunication
+                          new: 1
+                          retained: 1
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 1
+                          retained: 7
+                          churned: 0
+                        - functions: support
+                          new: 0
+                          retained: 7
+                          churned: 2
+                        - functions: data_science
+                          new: 1
+                          retained: 4
+                          churned: 0
+                      - start_date: '2023-07-01'
+                        departments:
+                        - functions: null
+                          new: 9
+                          retained: 114
+                          churned: 2
+                        - functions: accounting
+                          new: 0
+                          retained: 1
+                          churned: 0
+                        - functions: sales
+                          new: 15
+                          retained: 79
+                          churned: 0
+                        - functions: operations
+                          new: 1
+                          retained: 23
+                          churned: 0
+                        - functions: finance
+                          new: 0
+                          retained: 5
+                          churned: 0
+                        - functions: marketing
+                          new: 2
+                          retained: 12
+                          churned: 0
+                        - functions: human_resources
+                          new: 1
+                          retained: 24
+                          churned: 0
+                        - functions: information_technology
+                          new: 0
+                          retained: 1
+                          churned: 0
+                        - functions: legal
+                          new: 0
+                          retained: 1
+                          churned: 0
+                        - functions: engineering
+                          new: 9
+                          retained: 116
+                          churned: 0
+                        - functions: business_development
+                          new: 1
+                          retained: 15
+                          churned: 0
+                        - functions: product_management
+                          new: 2
+                          retained: 12
+                          churned: 1
+                        - functions: consulting
+                          new: 2
+                          retained: 3
+                          churned: 0
+                        - functions: education
+                          new: 1
+                          retained: 4
+                          churned: 0
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 2
+                          retained: 8
+                          churned: 0
+                        - functions: support
+                          new: 1
+                          retained: 7
+                          churned: 0
+                        - functions: data_science
+                          new: 0
+                          retained: 5
+                          churned: 0
+                      - start_date: '2023-08-01'
+                        departments:
+                        - functions: null
+                          new: 6
+                          retained: 119
+                          churned: 1
+                        - functions: accounting
+                          new: 0
+                          retained: 1
+                          churned: 0
+                        - functions: sales
+                          new: 9
+                          retained: 92
+                          churned: 3
+                        - functions: operations
+                          new: 0
+                          retained: 24
+                          churned: 0
+                        - functions: finance
+                          new: 2
+                          retained: 4
+                          churned: 1
+                        - functions: marketing
+                          new: 3
+                          retained: 14
+                          churned: 0
+                        - functions: human_resources
+                          new: 0
+                          retained: 26
+                          churned: 0
+                        - functions: information_technology
+                          new: 0
+                          retained: 1
+                          churned: 0
+                        - functions: legal
+                          new: 2
+                          retained: 1
+                          churned: 0
+                        - functions: engineering
+                          new: 10
+                          retained: 124
+                          churned: 1
+                        - functions: business_development
+                          new: 0
+                          retained: 17
+                          churned: 0
+                        - functions: product_management
+                          new: 0
+                          retained: 14
+                          churned: 0
+                        - functions: consulting
+                          new: 0
+                          retained: 4
+                          churned: 1
+                        - functions: education
+                          new: 0
+                          retained: 5
+                          churned: 0
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 0
+                          retained: 10
+                          churned: 0
+                        - functions: support
+                          new: 0
+                          retained: 12
+                          churned: 0
+                        - functions: data_science
+                          new: 1
+                          retained: 5
+                          churned: 0
+                      - start_date: '2023-09-01'
+                        departments:
+                        - functions: null
+                          new: 6
+                          retained: 123
+                          churned: 1
+                        - functions: accounting
+                          new: 1
+                          retained: 1
+                          churned: 0
+                        - functions: sales
+                          new: 7
+                          retained: 99
+                          churned: 1
+                        - functions: operations
+                          new: 0
+                          retained: 22
+                          churned: 0
+                        - functions: finance
+                          new: 1
+                          retained: 6
+                          churned: 0
+                        - functions: marketing
+                          new: 1
+                          retained: 17
+                          churned: 0
+                        - functions: human_resources
+                          new: 1
+                          retained: 26
+                          churned: 0
+                        - functions: information_technology
+                          new: 0
+                          retained: 1
+                          churned: 0
+                        - functions: legal
+                          new: 0
+                          retained: 3
+                          churned: 0
+                        - functions: engineering
+                          new: 9
+                          retained: 134
+                          churned: 0
+                        - functions: business_development
+                          new: 1
+                          retained: 17
+                          churned: 0
+                        - functions: product_management
+                          new: 1
+                          retained: 13
+                          churned: 1
+                        - functions: consulting
+                          new: 0
+                          retained: 4
+                          churned: 0
+                        - functions: education
+                          new: 1
+                          retained: 6
+                          churned: 0
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 2
+                          retained: 10
+                          churned: 0
+                        - functions: support
+                          new: 0
+                          retained: 12
+                          churned: 0
+                        - functions: data_science
+                          new: 0
+                          retained: 6
+                          churned: 0
+                      - start_date: '2023-10-01'
+                        departments:
+                        - functions: null
+                          new: 5
+                          retained: 129
+                          churned: 0
+                        - functions: accounting
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: sales
+                          new: 7
+                          retained: 104
+                          churned: 2
+                        - functions: operations
+                          new: 0
+                          retained: 22
+                          churned: 0
+                        - functions: finance
+                          new: 0
+                          retained: 7
+                          churned: 0
+                        - functions: marketing
+                          new: 1
+                          retained: 18
+                          churned: 0
+                        - functions: human_resources
+                          new: 0
+                          retained: 27
+                          churned: 0
+                        - functions: information_technology
+                          new: 1
+                          retained: 1
+                          churned: 0
+                        - functions: legal
+                          new: 0
+                          retained: 3
+                          churned: 0
+                        - functions: engineering
+                          new: 7
+                          retained: 143
+                          churned: 0
+                        - functions: business_development
+                          new: 0
+                          retained: 18
+                          churned: 0
+                        - functions: product_management
+                          new: 0
+                          retained: 14
+                          churned: 0
+                        - functions: consulting
+                          new: 0
+                          retained: 3
+                          churned: 1
+                        - functions: education
+                          new: 0
+                          retained: 7
+                          churned: 0
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 1
+                          churned: 1
+                        - functions: arts_and_design
+                          new: 1
+                          retained: 12
+                          churned: 0
+                        - functions: support
+                          new: 0
+                          retained: 12
+                          churned: 0
+                        - functions: data_science
+                          new: 0
+                          retained: 6
+                          churned: 0
+                      - start_date: '2023-11-01'
+                        departments:
+                        - functions: null
+                          new: 3
+                          retained: 135
+                          churned: 0
+                        - functions: accounting
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: sales
+                          new: 3
+                          retained: 110
+                          churned: 0
+                        - functions: operations
+                          new: 1
+                          retained: 22
+                          churned: 0
+                        - functions: finance
+                          new: 0
+                          retained: 7
+                          churned: 0
+                        - functions: marketing
+                          new: 0
+                          retained: 19
+                          churned: 0
+                        - functions: human_resources
+                          new: 0
+                          retained: 27
+                          churned: 0
+                        - functions: information_technology
+                          new: 1
+                          retained: 2
+                          churned: 0
+                        - functions: legal
+                          new: 1
+                          retained: 3
+                          churned: 0
+                        - functions: engineering
+                          new: 4
+                          retained: 150
+                          churned: 0
+                        - functions: business_development
+                          new: 0
+                          retained: 18
+                          churned: 0
+                        - functions: product_management
+                          new: 1
+                          retained: 14
+                          churned: 0
+                        - functions: consulting
+                          new: 0
+                          retained: 3
+                          churned: 0
+                        - functions: education
+                          new: 1
+                          retained: 7
+                          churned: 0
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 2
+                          retained: 13
+                          churned: 0
+                        - functions: support
+                          new: 0
+                          retained: 13
+                          churned: 0
+                        - functions: data_science
+                          new: 0
+                          retained: 6
+                          churned: 0
+                      - start_date: '2023-12-01'
+                        departments:
+                        - functions: null
+                          new: 5
+                          retained: 139
+                          churned: 0
+                        - functions: accounting
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: sales
+                          new: 2
+                          retained: 110
+                          churned: 3
+                        - functions: operations
+                          new: 1
+                          retained: 23
+                          churned: 0
+                        - functions: finance
+                          new: 1
+                          retained: 7
+                          churned: 0
+                        - functions: marketing
+                          new: 1
+                          retained: 18
+                          churned: 1
+                        - functions: human_resources
+                          new: 0
+                          retained: 27
+                          churned: 0
+                        - functions: information_technology
+                          new: 0
+                          retained: 3
+                          churned: 0
+                        - functions: legal
+                          new: 0
+                          retained: 4
+                          churned: 0
+                        - functions: engineering
+                          new: 7
+                          retained: 154
+                          churned: 0
+                        - functions: business_development
+                          new: 0
+                          retained: 18
+                          churned: 0
+                        - functions: product_management
+                          new: 0
+                          retained: 15
+                          churned: 0
+                        - functions: consulting
+                          new: 0
+                          retained: 3
+                          churned: 0
+                        - functions: education
+                          new: 0
+                          retained: 8
+                          churned: 0
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 2
+                          retained: 14
+                          churned: 1
+                        - functions: support
+                          new: 2
+                          retained: 14
+                          churned: 0
+                        - functions: data_science
+                          new: 0
+                          retained: 6
+                          churned: 0
+                      - start_date: '2024-01-01'
+                        departments:
+                        - functions: null
+                          new: 9
+                          retained: 145
+                          churned: 4
+                        - functions: accounting
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: sales
+                          new: 3
+                          retained: 106
+                          churned: 5
+                        - functions: operations
+                          new: 0
+                          retained: 23
+                          churned: 0
+                        - functions: finance
+                          new: 0
+                          retained: 8
+                          churned: 0
+                        - functions: marketing
+                          new: 2
+                          retained: 18
+                          churned: 1
+                        - functions: human_resources
+                          new: 2
+                          retained: 26
+                          churned: 0
+                        - functions: information_technology
+                          new: 0
+                          retained: 3
+                          churned: 0
+                        - functions: legal
+                          new: 0
+                          retained: 4
+                          churned: 0
+                        - functions: engineering
+                          new: 8
+                          retained: 159
+                          churned: 2
+                        - functions: business_development
+                          new: 0
+                          retained: 18
+                          churned: 0
+                        - functions: product_management
+                          new: 2
+                          retained: 13
+                          churned: 2
+                        - functions: consulting
+                          new: 1
+                          retained: 2
+                          churned: 0
+                        - functions: education
+                          new: 1
+                          retained: 7
+                          churned: 1
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 1
+                          retained: 14
+                          churned: 2
+                        - functions: support
+                          new: 0
+                          retained: 17
+                          churned: 0
+                        - functions: data_science
+                          new: 1
+                          retained: 7
+                          churned: 0
+                      - start_date: '2024-02-01'
+                        departments:
+                        - functions: null
+                          new: 8
+                          retained: 154
+                          churned: 0
+                        - functions: accounting
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: sales
+                          new: 0
+                          retained: 105
+                          churned: 3
+                        - functions: operations
+                          new: 1
+                          retained: 23
+                          churned: 0
+                        - functions: finance
+                          new: 0
+                          retained: 8
+                          churned: 0
+                        - functions: marketing
+                          new: 0
+                          retained: 20
+                          churned: 0
+                        - functions: human_resources
+                          new: 0
+                          retained: 28
+                          churned: 0
+                        - functions: information_technology
+                          new: 0
+                          retained: 3
+                          churned: 0
+                        - functions: legal
+                          new: 0
+                          retained: 4
+                          churned: 0
+                        - functions: engineering
+                          new: 11
+                          retained: 167
+                          churned: 0
+                        - functions: business_development
+                          new: 2
+                          retained: 18
+                          churned: 0
+                        - functions: product_management
+                          new: 0
+                          retained: 15
+                          churned: 0
+                        - functions: consulting
+                          new: 0
+                          retained: 3
+                          churned: 0
+                        - functions: education
+                          new: 0
+                          retained: 8
+                          churned: 0
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 2
+                          retained: 15
+                          churned: 0
+                        - functions: support
+                          new: 1
+                          retained: 18
+                          churned: 0
+                        - functions: data_science
+                          new: 0
+                          retained: 8
+                          churned: 0
+                      - start_date: '2024-03-01'
+                        departments:
+                        - functions: null
+                          new: 7
+                          retained: 160
+                          churned: 2
+                        - functions: accounting
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: sales
+                          new: 0
+                          retained: 103
+                          churned: 1
+                        - functions: operations
+                          new: 1
+                          retained: 24
+                          churned: 0
+                        - functions: finance
+                          new: 0
+                          retained: 8
+                          churned: 0
+                        - functions: marketing
+                          new: 0
+                          retained: 21
+                          churned: 0
+                        - functions: human_resources
+                          new: 1
+                          retained: 27
+                          churned: 1
+                        - functions: information_technology
+                          new: 0
+                          retained: 3
+                          churned: 0
+                        - functions: legal
+                          new: 0
+                          retained: 4
+                          churned: 0
+                        - functions: engineering
+                          new: 9
+                          retained: 178
+                          churned: 0
+                        - functions: business_development
+                          new: 0
+                          retained: 20
+                          churned: 0
+                        - functions: product_management
+                          new: 1
+                          retained: 14
+                          churned: 1
+                        - functions: consulting
+                          new: 1
+                          retained: 3
+                          churned: 0
+                        - functions: education
+                          new: 0
+                          retained: 7
+                          churned: 1
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 0
+                          retained: 17
+                          churned: 0
+                        - functions: support
+                          new: 1
+                          retained: 19
+                          churned: 0
+                        - functions: data_science
+                          new: 0
+                          retained: 8
+                          churned: 0
+                      - start_date: '2024-04-01'
+                        departments:
+                        - functions: null
+                          new: 5
+                          retained: 162
+                          churned: 5
+                        - functions: accounting
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: sales
+                          new: 1
+                          retained: 101
+                          churned: 2
+                        - functions: operations
+                          new: 0
+                          retained: 26
+                          churned: 0
+                        - functions: finance
+                          new: 0
+                          retained: 8
+                          churned: 0
+                        - functions: marketing
+                          new: 2
+                          retained: 21
+                          churned: 0
+                        - functions: human_resources
+                          new: 0
+                          retained: 28
+                          churned: 0
+                        - functions: information_technology
+                          new: 0
+                          retained: 3
+                          churned: 0
+                        - functions: legal
+                          new: 0
+                          retained: 4
+                          churned: 0
+                        - functions: engineering
+                          new: 4
+                          retained: 187
+                          churned: 0
+                        - functions: business_development
+                          new: 0
+                          retained: 21
+                          churned: 0
+                        - functions: product_management
+                          new: 1
+                          retained: 14
+                          churned: 1
+                        - functions: consulting
+                          new: 1
+                          retained: 4
+                          churned: 0
+                        - functions: education
+                          new: 0
+                          retained: 6
+                          churned: 1
+                        - functions: media_and_commmunication
+                          new: 2
+                          retained: 2
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 0
+                          retained: 17
+                          churned: 0
+                        - functions: support
+                          new: 0
+                          retained: 20
+                          churned: 0
+                        - functions: data_science
+                          new: 0
+                          retained: 8
+                          churned: 0
+                      - start_date: '2024-05-01'
+                        departments:
+                        - functions: null
+                          new: 8
+                          retained: 165
+                          churned: 2
+                        - functions: accounting
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: sales
+                          new: 3
+                          retained: 97
+                          churned: 2
+                        - functions: operations
+                          new: 2
+                          retained: 23
+                          churned: 3
+                        - functions: finance
+                          new: 0
+                          retained: 8
+                          churned: 0
+                        - functions: marketing
+                          new: 1
+                          retained: 23
+                          churned: 0
+                        - functions: human_resources
+                          new: 0
+                          retained: 26
+                          churned: 2
+                        - functions: information_technology
+                          new: 1
+                          retained: 3
+                          churned: 0
+                        - functions: legal
+                          new: 0
+                          retained: 4
+                          churned: 0
+                        - functions: engineering
+                          new: 4
+                          retained: 188
+                          churned: 3
+                        - functions: business_development
+                          new: 0
+                          retained: 18
+                          churned: 3
+                        - functions: product_management
+                          new: 0
+                          retained: 14
+                          churned: 1
+                        - functions: consulting
+                          new: 0
+                          retained: 5
+                          churned: 0
+                        - functions: education
+                          new: 0
+                          retained: 7
+                          churned: 0
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 4
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 3
+                          retained: 16
+                          churned: 1
+                        - functions: support
+                          new: 0
+                          retained: 20
+                          churned: 0
+                        - functions: data_science
+                          new: 0
+                          retained: 8
+                          churned: 0
+                      - start_date: '2024-06-01'
+                        departments:
+                        - functions: null
+                          new: 3
+                          retained: 168
+                          churned: 6
+                        - functions: accounting
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: sales
+                          new: 3
+                          retained: 99
+                          churned: 1
+                        - functions: operations
+                          new: 2
+                          retained: 23
+                          churned: 1
+                        - functions: finance
+                          new: 0
+                          retained: 8
+                          churned: 0
+                        - functions: marketing
+                          new: 1
+                          retained: 22
+                          churned: 2
+                        - functions: human_resources
+                          new: 0
+                          retained: 22
+                          churned: 3
+                        - functions: information_technology
+                          new: 0
+                          retained: 4
+                          churned: 0
+                        - functions: legal
+                          new: 1
+                          retained: 4
+                          churned: 0
+                        - functions: engineering
+                          new: 2
+                          retained: 189
+                          churned: 4
+                        - functions: business_development
+                          new: 0
+                          retained: 17
+                          churned: 0
+                        - functions: product_management
+                          new: 1
+                          retained: 12
+                          churned: 2
+                        - functions: consulting
+                          new: 1
+                          retained: 5
+                          churned: 0
+                        - functions: education
+                          new: 0
+                          retained: 7
+                          churned: 0
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 4
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 0
+                          retained: 19
+                          churned: 0
+                        - functions: support
+                          new: 0
+                          retained: 21
+                          churned: 0
+                        - functions: data_science
+                          new: 1
+                          retained: 8
+                          churned: 0
+                      - start_date: '2024-07-01'
+                        departments:
+                        - functions: null
+                          new: 6
+                          retained: 163
+                          churned: 7
+                        - functions: accounting
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: sales
+                          new: 3
+                          retained: 101
+                          churned: 1
+                        - functions: operations
+                          new: 2
+                          retained: 25
+                          churned: 0
+                        - functions: finance
+                          new: 0
+                          retained: 6
+                          churned: 2
+                        - functions: marketing
+                          new: 3
+                          retained: 23
+                          churned: 0
+                        - functions: human_resources
+                          new: 0
+                          retained: 21
+                          churned: 1
+                        - functions: information_technology
+                          new: 0
+                          retained: 4
+                          churned: 0
+                        - functions: legal
+                          new: 0
+                          retained: 5
+                          churned: 0
+                        - functions: engineering
+                          new: 3
+                          retained: 190
+                          churned: 1
+                        - functions: business_development
+                          new: 0
+                          retained: 17
+                          churned: 0
+                        - functions: product_management
+                          new: 1
+                          retained: 13
+                          churned: 0
+                        - functions: consulting
+                          new: 0
+                          retained: 6
+                          churned: 0
+                        - functions: education
+                          new: 1
+                          retained: 7
+                          churned: 0
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 3
+                          churned: 1
+                        - functions: arts_and_design
+                          new: 1
+                          retained: 19
+                          churned: 0
+                        - functions: support
+                          new: 0
+                          retained: 22
+                          churned: 0
+                        - functions: data_science
+                          new: 0
+                          retained: 8
+                          churned: 1
+                      - start_date: '2024-08-01'
+                        departments:
+                        - functions: null
+                          new: 1
+                          retained: 169
+                          churned: 1
+                        - functions: accounting
+                          new: 1
+                          retained: 2
+                          churned: 0
+                        - functions: sales
+                          new: 1
+                          retained: 101
+                          churned: 3
+                        - functions: operations
+                          new: 0
+                          retained: 26
+                          churned: 1
+                        - functions: finance
+                          new: 0
+                          retained: 6
+                          churned: 0
+                        - functions: marketing
+                          new: 0
+                          retained: 26
+                          churned: 0
+                        - functions: human_resources
+                          new: 0
+                          retained: 20
+                          churned: 1
+                        - functions: information_technology
+                          new: 0
+                          retained: 4
+                          churned: 0
+                        - functions: legal
+                          new: 0
+                          retained: 5
+                          churned: 0
+                        - functions: engineering
+                          new: 4
+                          retained: 192
+                          churned: 1
+                        - functions: business_development
+                          new: 0
+                          retained: 16
+                          churned: 1
+                        - functions: product_management
+                          new: 2
+                          retained: 13
+                          churned: 1
+                        - functions: consulting
+                          new: 1
+                          retained: 6
+                          churned: 0
+                        - functions: education
+                          new: 1
+                          retained: 8
+                          churned: 0
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 1
+                          retained: 20
+                          churned: 0
+                        - functions: support
+                          new: 0
+                          retained: 22
+                          churned: 0
+                        - functions: data_science
+                          new: 0
+                          retained: 8
+                          churned: 0
+                      - start_date: '2024-09-01'
+                        departments:
+                        - functions: null
+                          new: 5
+                          retained: 169
+                          churned: 1
+                        - functions: accounting
+                          new: 0
+                          retained: 3
+                          churned: 0
+                        - functions: sales
+                          new: 2
+                          retained: 99
+                          churned: 3
+                        - functions: operations
+                          new: 3
+                          retained: 26
+                          churned: 0
+                        - functions: finance
+                          new: 0
+                          retained: 5
+                          churned: 1
+                        - functions: marketing
+                          new: 1
+                          retained: 24
+                          churned: 2
+                        - functions: human_resources
+                          new: 1
+                          retained: 20
+                          churned: 0
+                        - functions: information_technology
+                          new: 1
+                          retained: 4
+                          churned: 0
+                        - functions: legal
+                          new: 0
+                          retained: 5
+                          churned: 0
+                        - functions: engineering
+                          new: 1
+                          retained: 193
+                          churned: 3
+                        - functions: business_development
+                          new: 2
+                          retained: 15
+                          churned: 1
+                        - functions: product_management
+                          new: 0
+                          retained: 15
+                          churned: 0
+                        - functions: consulting
+                          new: 1
+                          retained: 7
+                          churned: 0
+                        - functions: education
+                          new: 0
+                          retained: 9
+                          churned: 1
+                        - functions: media_and_commmunication
+                          new: 1
+                          retained: 2
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 0
+                          retained: 20
+                          churned: 1
+                        - functions: support
+                          new: 1
+                          retained: 22
+                          churned: 0
+                        - functions: data_science
+                          new: 1
+                          retained: 8
+                          churned: 0
+                      - start_date: '2024-10-01'
+                        departments:
+                        - functions: null
+                          new: 7
+                          retained: 168
+                          churned: 4
+                        - functions: accounting
+                          new: 0
+                          retained: 3
+                          churned: 0
+                        - functions: sales
+                          new: 0
+                          retained: 101
+                          churned: 3
+                        - functions: operations
+                          new: 0
+                          retained: 27
+                          churned: 2
+                        - functions: finance
+                          new: 0
+                          retained: 5
+                          churned: 0
+                        - functions: marketing
+                          new: 1
+                          retained: 22
+                          churned: 3
+                        - functions: human_resources
+                          new: 1
+                          retained: 21
+                          churned: 0
+                        - functions: information_technology
+                          new: 0
+                          retained: 5
+                          churned: 0
+                        - functions: legal
+                          new: 0
+                          retained: 5
+                          churned: 0
+                        - functions: engineering
+                          new: 3
+                          retained: 189
+                          churned: 4
+                        - functions: business_development
+                          new: 0
+                          retained: 17
+                          churned: 0
+                        - functions: product_management
+                          new: 0
+                          retained: 15
+                          churned: 0
+                        - functions: consulting
+                          new: 1
+                          retained: 8
+                          churned: 0
+                        - functions: education
+                          new: 0
+                          retained: 8
+                          churned: 1
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 3
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 0
+                          retained: 20
+                          churned: 0
+                        - functions: support
+                          new: 0
+                          retained: 23
+                          churned: 0
+                        - functions: data_science
+                          new: 0
+                          retained: 9
+                          churned: 0
+                      - start_date: '2024-11-01'
+                        departments:
+                        - functions: null
+                          new: 6
+                          retained: 171
+                          churned: 6
+                        - functions: accounting
+                          new: 0
+                          retained: 3
+                          churned: 0
+                        - functions: sales
+                          new: 3
+                          retained: 99
+                          churned: 3
+                        - functions: operations
+                          new: 1
+                          retained: 25
+                          churned: 2
+                        - functions: finance
+                          new: 1
+                          retained: 5
+                          churned: 0
+                        - functions: marketing
+                          new: 0
+                          retained: 20
+                          churned: 3
+                        - functions: human_resources
+                          new: 1
+                          retained: 21
+                          churned: 1
+                        - functions: information_technology
+                          new: 1
+                          retained: 5
+                          churned: 0
+                        - functions: legal
+                          new: 1
+                          retained: 5
+                          churned: 0
+                        - functions: engineering
+                          new: 2
+                          retained: 190
+                          churned: 2
+                        - functions: business_development
+                          new: 1
+                          retained: 16
+                          churned: 1
+                        - functions: product_management
+                          new: 0
+                          retained: 15
+                          churned: 0
+                        - functions: consulting
+                          new: 0
+                          retained: 9
+                          churned: 0
+                        - functions: education
+                          new: 0
+                          retained: 8
+                          churned: 0
+                        - functions: administrative
+                          new: 1
+                          retained: 0
+                          churned: 0
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 2
+                          churned: 1
+                        - functions: arts_and_design
+                          new: 0
+                          retained: 19
+                          churned: 1
+                        - functions: support
+                          new: 2
+                          retained: 24
+                          churned: 0
+                        - functions: data_science
+                          new: 1
+                          retained: 9
+                          churned: 0
+                      - start_date: '2024-12-01'
+                        departments:
+                        - functions: null
+                          new: 3
+                          retained: 177
+                          churned: 1
+                        - functions: accounting
+                          new: 0
+                          retained: 3
+                          churned: 0
+                        - functions: sales
+                          new: 4
+                          retained: 96
+                          churned: 5
+                        - functions: operations
+                          new: 3
+                          retained: 26
+                          churned: 0
+                        - functions: finance
+                          new: 0
+                          retained: 6
+                          churned: 0
+                        - functions: marketing
+                          new: 1
+                          retained: 19
+                          churned: 1
+                        - functions: human_resources
+                          new: 0
+                          retained: 22
+                          churned: 0
+                        - functions: information_technology
+                          new: 0
+                          retained: 5
+                          churned: 1
+                        - functions: legal
+                          new: 0
+                          retained: 5
+                          churned: 1
+                        - functions: engineering
+                          new: 5
+                          retained: 191
+                          churned: 1
+                        - functions: business_development
+                          new: 0
+                          retained: 16
+                          churned: 1
+                        - functions: product_management
+                          new: 0
+                          retained: 15
+                          churned: 0
+                        - functions: consulting
+                          new: 0
+                          retained: 8
+                          churned: 1
+                        - functions: education
+                          new: 0
+                          retained: 8
+                          churned: 0
+                        - functions: administrative
+                          new: 0
+                          retained: 1
+                          churned: 0
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 0
+                          retained: 19
+                          churned: 0
+                        - functions: support
+                          new: 0
+                          retained: 25
+                          churned: 1
+                        - functions: data_science
+                          new: 0
+                          retained: 10
+                          churned: 0
+                      - start_date: '2025-01-01'
+                        departments:
+                        - functions: null
+                          new: 8
+                          retained: 178
+                          churned: 2
+                        - functions: accounting
+                          new: 0
+                          retained: 3
+                          churned: 0
+                        - functions: sales
+                          new: 1
+                          retained: 98
+                          churned: 2
+                        - functions: operations
+                          new: 0
+                          retained: 29
+                          churned: 0
+                        - functions: finance
+                          new: 1
+                          retained: 4
+                          churned: 2
+                        - functions: marketing
+                          new: 1
+                          retained: 20
+                          churned: 0
+                        - functions: human_resources
+                          new: 0
+                          retained: 21
+                          churned: 1
+                        - functions: information_technology
+                          new: 0
+                          retained: 5
+                          churned: 0
+                        - functions: legal
+                          new: 0
+                          retained: 5
+                          churned: 0
+                        - functions: engineering
+                          new: 7
+                          retained: 194
+                          churned: 2
+                        - functions: business_development
+                          new: 0
+                          retained: 15
+                          churned: 1
+                        - functions: product_management
+                          new: 0
+                          retained: 15
+                          churned: 0
+                        - functions: consulting
+                          new: 1
+                          retained: 8
+                          churned: 0
+                        - functions: education
+                          new: 0
+                          retained: 8
+                          churned: 0
+                        - functions: administrative
+                          new: 0
+                          retained: 1
+                          churned: 0
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 0
+                          retained: 19
+                          churned: 0
+                        - functions: support
+                          new: 0
+                          retained: 25
+                          churned: 0
+                        - functions: data_science
+                          new: 0
+                          retained: 9
+                          churned: 1
+                      - start_date: '2025-02-01'
+                        departments:
+                        - functions: null
+                          new: 4
+                          retained: 184
+                          churned: 2
+                        - functions: accounting
+                          new: 0
+                          retained: 3
+                          churned: 0
+                        - functions: sales
+                          new: 3
+                          retained: 96
+                          churned: 3
+                        - functions: operations
+                          new: 0
+                          retained: 27
+                          churned: 2
+                        - functions: finance
+                          new: 0
+                          retained: 5
+                          churned: 0
+                        - functions: marketing
+                          new: 1
+                          retained: 20
+                          churned: 0
+                        - functions: human_resources
+                          new: 0
+                          retained: 21
+                          churned: 0
+                        - functions: information_technology
+                          new: 0
+                          retained: 5
+                          churned: 0
+                        - functions: legal
+                          new: 1
+                          retained: 5
+                          churned: 0
+                        - functions: engineering
+                          new: 2
+                          retained: 201
+                          churned: 0
+                        - functions: business_development
+                          new: 0
+                          retained: 15
+                          churned: 0
+                        - functions: product_management
+                          new: 1
+                          retained: 15
+                          churned: 0
+                        - functions: consulting
+                          new: 0
+                          retained: 9
+                          churned: 0
+                        - functions: education
+                          new: 1
+                          retained: 8
+                          churned: 0
+                        - functions: administrative
+                          new: 0
+                          retained: 1
+                          churned: 0
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 0
+                          retained: 19
+                          churned: 0
+                        - functions: support
+                          new: 0
+                          retained: 23
+                          churned: 2
+                        - functions: data_science
+                          new: 1
+                          retained: 9
+                          churned: 0
+                      - start_date: '2025-03-01'
+                        departments:
+                        - functions: null
+                          new: 6
+                          retained: 187
+                          churned: 0
+                        - functions: accounting
+                          new: 0
+                          retained: 3
+                          churned: 0
+                        - functions: sales
+                          new: 5
+                          retained: 96
+                          churned: 3
+                        - functions: operations
+                          new: 0
+                          retained: 27
+                          churned: 0
+                        - functions: finance
+                          new: 1
+                          retained: 5
+                          churned: 0
+                        - functions: marketing
+                          new: 2
+                          retained: 20
+                          churned: 2
+                        - functions: human_resources
+                          new: 1
+                          retained: 20
+                          churned: 0
+                        - functions: information_technology
+                          new: 0
+                          retained: 5
+                          churned: 0
+                        - functions: legal
+                          new: 0
+                          retained: 6
+                          churned: 0
+                        - functions: engineering
+                          new: 0
+                          retained: 203
+                          churned: 0
+                        - functions: business_development
+                          new: 0
+                          retained: 14
+                          churned: 1
+                        - functions: product_management
+                          new: 0
+                          retained: 16
+                          churned: 0
+                        - functions: consulting
+                          new: 0
+                          retained: 9
+                          churned: 1
+                        - functions: education
+                          new: 1
+                          retained: 9
+                          churned: 0
+                        - functions: administrative
+                          new: 0
+                          retained: 1
+                          churned: 0
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 2
+                          churned: 0
+                        - functions: arts_and_design
+                          new: 1
+                          retained: 19
+                          churned: 0
+                        - functions: support
+                          new: 0
+                          retained: 23
+                          churned: 0
+                        - functions: data_science
+                          new: 0
+                          retained: 10
+                          churned: 0
+                      - start_date: '2025-04-01'
+                        departments:
+                        - functions: null
+                          new: 5
+                          retained: 189
+                          churned: 3
+                        - functions: accounting
+                          new: 0
+                          retained: 3
+                          churned: 0
+                        - functions: sales
+                          new: 2
+                          retained: 99
+                          churned: 2
+                        - functions: operations
+                          new: 0
+                          retained: 26
+                          churned: 1
+                        - functions: finance
+                          new: 1
+                          retained: 6
+                          churned: 0
+                        - functions: marketing
+                          new: 0
+                          retained: 20
+                          churned: 2
+                        - functions: human_resources
+                          new: 2
+                          retained: 21
+                          churned: 0
+                        - functions: information_technology
+                          new: 0
+                          retained: 5
+                          churned: 0
+                        - functions: legal
+                          new: 1
+                          retained: 5
+                          churned: 1
+                        - functions: engineering
+                          new: 3
+                          retained: 204
+                          churned: 0
+                        - functions: business_development
+                          new: 2
+                          retained: 14
+                          churned: 0
+                        - functions: product_management
+                          new: 1
+                          retained: 16
+                          churned: 0
+                        - functions: consulting
+                          new: 0
+                          retained: 7
+                          churned: 2
+                        - functions: education
+                          new: 0
+                          retained: 10
+                          churned: 0
+                        - functions: administrative
+                          new: 0
+                          retained: 1
+                          churned: 0
+                        - functions: media_and_commmunication
+                          new: 0
+                          retained: 1
+                          churned: 1
+                        - functions: arts_and_design
+                          new: 1
+                          retained: 20
+                          churned: 0
+                        - functions: support
+                          new: 2
+                          retained: 23
+                          churned: 1
+                        - functions: data_science
+                          new: 0
+                          retained: 9
+                          churned: 1
+                      has_intent_signal_account: true
+                      intent_signal_account:
+                        _id: 6663bd946cef250001def02a
+                        account_id: 6658955677a2f20001c647ad
+                        aggregated_at: '2024-09-04T10:02:28.878+00:00'
+                        computed: true
+                        created_at: '2024-06-08T02:10:28.537Z'
+                        domain_aggregates:
+                        - domain: tableofdiscontents.com
+                          total_visits: 15
+                          last_visit: 20240611
+                          first_visit: 20240607
+                          unique_visitors: 6
+                          weekly_aggregates:
+                          - week_start_date: '2024-06-07T00:00:00.000Z'
+                            count: 15
+                          top_5_paths:
+                          - _id: www.tableofdiscontents.com
+                            total_visits: 9
+                          - _id: www.tableofdiscontents.com/pricing
+                            total_visits: 3
+                          - _id: www.tableofdiscontents.com/premium
+                            total_visits: 2
+                          - _id: www.tableofdiscontents.com/features
+                            total_visits: 1
+                          intent: low
+                          intent_score: 0
+                        first_visited_at: 20240607
+                        last_visited_at: 20240611
+                        need_aggregation: false
+                        need_es_update: false
+                        new_reveal: false
+                        organization_id: 5e66b6381e05b4008c8331b8
+                        overall_intent: low
+                        pre_generated_account_id: 6658955677a2f20001c647ad
+                        random: 0.162172829
+                        team_id: 6095a710bd01d100a506d4ac
+                        team_org_id: 6095a710bd01d100a506d4ac_5e66b6381e05b4008c8331b8
+                        total_visits: 15
+                        unique_visitors: 6
+                        updated_at: '2024-09-04T10:02:28.959Z'
+                        website_visitor_metrics:
+                          overall_intent: low
+                          total_visits: 15
+                          unique_visitors: 6
+                          domain_aggregates:
+                          - domain: tableofdiscontents.com
+                            first_intent_signal_received_at: 20240607
+                            last_intent_signal_received_at: 20240611
+                          page_view_aggregates:
+                            one_day_count: 0
+                            seven_day_count: 0
+                            fifteen_day_count: 0
+                            thirty_day_count: 0
+                            sixty_day_count: 0
+                            ninety_day_count: 15
+                          pages:
+                          - www.tableofdiscontents.com
+                          - www.tableofdiscontents.com/pricing
+                          - www.tableofdiscontents.com/premium
+                          - www.tableofdiscontents.com/features
+                          first_intent_signal_received_at: 20240607
+                          last_intent_signal_received_at: 20240611
+                        id: 6663bd946cef250001def02a
+                        key: 6663bd946cef250001def02a
+                      generic_org_insights: null
+                      show_intent: false
+                      detail_view_loaded: true
+                  summary: OK
+        '401':
+          description: Unauthorized
+          content:
+            text/plain:
+              examples:
+                Check API Key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+                  summary: Check API Key
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                Need Master API Key:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/accounts/show. Request an API\
+                    \ key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\"\
+                    : \"API_INACCESSIBLE\"\n}"
+                  summary: Need Master API Key
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                Need Master API Key:
+                  value: "{\n  \"error\": \"Parameters misconfigured. id is not a valid ID"
+                  summary: Check Organization ID
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: 'The Apollo ID for the organization that you want to research. <br><br>To find organization IDs, call
+          the <a href="https://docs.apollo.io/reference/organization-search#/" target="_blank">Organization Search endpoint</a>
+          and identify the `organizaton_id` value for the organization. <br><br>Example: `5e66b6381e05b4008c8331b8`'
+        schema:
+          type: string
+          default: ''
+  /people/{id}:
+    get:
+      summary: Get Complete Person Info
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/people/show` or `Master API key`
+
+
+        **OAuth scopes:** `person_read`
+
+
+        **Free account access:** Requires an Apollo account registered with a work email address. Paid accounts aren''t affected.
+
+
+        **Credit usage:** `1 credit per person` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        Use the Get Complete Person Info endpoint to retrieve complete details about a person in the Apollo database, including
+        employment history, location, and the full details of the person''s current organization.
+
+
+        ### Reading the `email` field
+
+
+        This endpoint doesn''t reveal verified emails for people you haven''t saved as contacts. Instead of the address —
+        and instead of `null` — `email` contains the fixed placeholder `email_not_unlocked@domain.com`, and every unrevealed
+        person returns that same value.
+
+
+        Because the placeholder is a non-empty string, it passes checks that assume an email is either usable or absent:
+
+
+        * **Truthiness and null checks don''t catch it.** `if (person.email)` succeeds, so code may treat an unrevealed person
+        as though you have their address.
+
+
+        * **`email` breaks as a dedupe or upsert key.** Identical placeholders collapse unrelated people into one record.
+
+
+        `email_status` does **not** distinguish it either: it describes the address Apollo holds internally, so it reads `verified`
+        even when `email` is the placeholder. Use it to judge deliverability once you have a real address, not to decide whether
+        you have one. The field only ever returns one of three values — `verified`, `extrapolated`, or `unavailable`.
+
+
+        **Recommended handling:** compare `email` against the literal placeholder string and treat a match as "no email available
+        yet". The response also omits `contact_id` and `revealed_for_current_team` for people who aren''t your contacts, which
+        is a useful second signal. To get the real address, call [People Enrichment](https://docs.apollo.io/reference/people-enrichment)
+        or [Bulk People Enrichment](https://docs.apollo.io/reference/bulk-people-enrichment), which never substitute the placeholder.
+
+
+        | Person''s situation | `email` | `email_status` |
+
+        | --- | --- | --- |
+
+        | Verified email, not your contact | `email_not_unlocked@domain.com` | `verified` |
+
+        | Verified email, already your contact | The contact''s real address | `verified` |
+
+        | No verified email, but Apollo holds an extrapolated address | The extrapolated address | `extrapolated` |
+
+        | No email available | `null` | `unavailable` |'
+      tags:
+      - Search
+      operationId: get_people{id}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                OK:
+                  value:
+                    person:
+                      id: 65f0a1b2c3d4e5f600012345
+                      first_name: Ava
+                      last_name: Ruiz
+                      name: Ava Ruiz
+                      linkedin_url: http://www.linkedin.com/in/ava-ruiz-123456
+                      title: Founder & CEO
+                      photo_url: https://media.sumware.com/photos/ava-ruiz.jpg
+                      twitter_url: null
+                      github_url: null
+                      facebook_url: null
+                      extrapolated_email_confidence: null
+                      headline: Founder & CEO at Sumware Software
+                      organization_id: 5f1a2b3c4d5e6f0001234567
+                      employment_history:
+                      - _id: 65f0a1b2c3d4e5f600012346
+                        created_at: null
+                        current: true
+                        degree: null
+                        description: null
+                        emails: null
+                        end_date: null
+                        grade_level: null
+                        kind: null
+                        major: null
+                        organization_id: 5f1a2b3c4d5e6f0001234567
+                        organization_name: Sumware Software
+                        raw_address: null
+                        start_date: '2015-01-01'
+                        title: Founder & CEO
+                        updated_at: null
+                        id: 65f0a1b2c3d4e5f600012346
+                        key: 65f0a1b2c3d4e5f600012346
+                      street_address: 172 Bryant Street
+                      city: San Francisco
+                      state: California
+                      country: United States
+                      postal_code: '94105'
+                      formatted_address: 172 Bryant Street, San Francisco, California, United States, 94105
+                      time_zone: America/Los_Angeles
+                      email: email_not_unlocked@domain.com
+                      email_status: verified
+                  summary: OK
+        '401':
+          description: Unauthorized
+          content:
+            text/plain:
+              examples:
+                Check API Key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+                  summary: Check API Key
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                Need Master API Key:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/people/show. Request an API key\
+                    \ from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\": \"\
+                    API_INACCESSIBLE\"\n}"
+                  summary: Need Master API Key
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                Person Does Not Exist:
+                  value: "{\n  \"error\": \"Person does not exist.\"\n}"
+                  summary: Check Person ID
+                Obsolete Data:
+                  value: "{\n  \"error\": \"This is obsolete data.\"\n}"
+                  summary: Person record is no longer available
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: 'The Apollo ID for the person that you want to research. <br><br>To find person IDs, call the <a href="https://docs.apollo.io/reference/people-api-search"
+          target="_blank">People Search endpoint</a> and identify the `id` value for the person. <br><br>Example: `65f0a1b2c3d4e5f600012345`'
+        schema:
+          type: string
+          default: ''
+  /news_articles/search:
+    post:
+      summary: News Articles Search
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/news_articles/search` or `Master API key`
+
+
+        **OAuth scopes:** `organizations_news_articles`
+
+
+        **Credit usage:** `1 credit per page`
+
+
+        This endpoint consumes 1 Apollo credit per page, with up to 25 results per page. Learn more about [API pricing and
+        credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        <a href="https://knowledge.apollo.io/hc/en-us/articles/4412665755661-Search-Filters-Overview#news" target="_blank">News</a>
+        includes articles related to companies in Apollo.<br><br>Use the News Articles Search endpoint to find news articles
+        related to specific companies. Several filters are available to help narrow your search.'
+      tags:
+      - Search
+      operationId: news_articles_search
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              examples:
+                OK:
+                  summary: OK
+                  value:
+                    pagination:
+                      page: 1
+                      per_page: 25
+                      total_entries: 10
+                      total_pages: 1
+                    news_articles:
+                    - id: 6815925ac310740011aba570
+                      url: https://techintelpro.com/news/apolloio-appoints-marcio-arnecke-as-cmo-and-adam-carr-as-cro-to-accelerate-ai-powered-go-to-market-innovation
+                      domain: techintelpro.com
+                      title: Apollo.io Appoints Marcio Arnecke as CMO and Adam Carr as CRO to Accelerate AI-Powered Go-to-Market
+                        Innovation
+                      snippet: Apollo.io, a leading AI-powered go-to-market sales platform, today announced the appointments
+                        of Marcio Arnecke as Chief Marketing Officer (CMO) and Adam Carr as Chief Revenue Officer (CRO).
+                      organization_ids:
+                      - 5e66b6381e05b4008c8331b8
+                      published_at: '2025-05-02T00:00:00.000+00:00'
+                      event_categories:
+                      - hires
+                    - id: 681592d92d7b13001977c6df
+                      url: https://techintelpro.com/news/apolloio-appoints-marcio-arnecke-as-cmo-and-adam-carr-as-cro-to-accelerate-ai-powered-go-to-market-innovation
+                      domain: techintelpro.com
+                      title: Apollo.io Appoints Marcio Arnecke as CMO and Adam Carr as CRO to Accelerate AI-Powered Go-to-Market
+                        Innovation
+                      snippet: Apollo.io, a leading AI-powered go-to-market sales platform, today announced the appointments
+                        of Marcio Arnecke as Chief Marketing Officer (CMO) and Adam Carr as Chief Revenue Officer (CRO).
+                      organization_ids:
+                      - 5e66b6381e05b4008c8331b8
+                      published_at: '2025-05-02T00:00:00.000+00:00'
+                      event_categories:
+                      - hires
+                    - id: 668961e815876f040da3b685
+                      url: https://www.prnewswire.com/news-releases/meet-the-new-faces-driving-apollos-gtm-evolution-matt-curl-as-coo-and-rich-bessel-as-svp-of-design-302187696.html
+                      domain: prnewswire.com
+                      title: 'Meet the New Faces Driving Apollo''s GTM Evolution: Matt Curl as COO and Rich Bessel as SVP
+                        of Design'
+                      snippet: 'SAN FRANCISCO, July 2, 2024 /PRNewswire/ - Apollo.io, a leading go-to-market (GTM) solution
+                        for sales and marketing teams, has appointed two new executives to its leadership team: Matt Curl
+                        as Chief Operating Officer (COO) and Rich Bessel as SVP of Design.'
+                      organization_ids:
+                      - 5e66b6381e05b4008c8331b8
+                      published_at: '2024-07-02T12:00:00.000+00:00'
+                      event_categories:
+                      - hires
+                    - id: 668962016fbe79040e1c0490
+                      url: https://www.prnewswire.com/news-releases/meet-the-new-faces-driving-apollos-gtm-evolution-matt-curl-as-coo-and-rich-bessel-as-svp-of-design-302187696.html
+                      domain: prnewswire.com
+                      title: 'Meet the New Faces Driving Apollo''s GTM Evolution: Matt Curl as COO and Rich Bessel as SVP
+                        of Design'
+                      snippet: 'SAN FRANCISCO, July 2, 2024 /PRNewswire/ - Apollo.io, a leading go-to-market (GTM) solution
+                        for sales and marketing teams, has appointed two new executives to its leadership team: Matt Curl
+                        as Chief Operating Officer (COO) and Rich Bessel as SVP of Design.'
+                      organization_ids:
+                      - 5e66b6381e05b4008c8331b8
+                      published_at: '2024-07-02T12:00:00.000+00:00'
+                      event_categories:
+                      - hires
+                    - id: 64c0037589653e00a34746c7
+                      url: https://www.prnewswire.com/news-releases/leandra-fishman-joins-apolloio-as-chief-revenue-officer-fueling-revenue-growth-and-product-innovation-301884666.html
+                      domain: prnewswire.com
+                      title: Leandra Fishman joins Apollo.io as Chief Revenue officer, fueling Revenue growth and Product
+                        innovation
+                      snippet: Apollo.io, the leading go-to-market sales platform, today announced the appointment of Leandra
+                        Fishman to its executive team as the company's first Chief Revenue Officer (CRO).
+                      organization_ids:
+                      - 5e66b6381e05b4008c8331b8
+                      published_at: '2023-07-25T11:00:00.000+00:00'
+                      event_categories:
+                      - hires
+                    - id: 63e68163e3288200a36b69c8
+                      url: https://finance.yahoo.com/news/apollo-io-announces-shek-viswanathan-152200939.html
+                      domain: yahoo.com
+                      title: Apollo.io Announces Shek Viswanathan as Chief Product Officer Amidst Record January Revenue Numbers
+                        and Expanded Product Vision
+                      snippet: Today, Apollo.io, the world's leading B2B sales intelligence and engagement platform, announces
+                        the appointment of Shek Viswanathan as their Chief Product Officer.
+                      organization_ids:
+                      - 5e66b6381e05b4008c8331b8
+                      published_at: '2023-02-08T15:22:00.000+00:00'
+                      event_categories:
+                      - hires
+                    - id: 61815864ad796300e07c74f7
+                      url: https://www.finsmes.com/2021/11/apollo-io-raises-32m-in-series-b-funding.html
+                      domain: finsmes.com
+                      title: Apollo.io Raises $32M in Series B Funding
+                      snippet: In conjunction with the funding, Sri Pangulur, partner at Tribe Capital, joined Apollo.io’s
+                        board.
+                      organization_ids:
+                      - 5e66b6381e05b4008c8331b8
+                      published_at: '2021-11-01T21:44:42.000+00:00'
+                      event_categories:
+                      - hires
+                    - id: 6151bee43115c900a4ec4e94
+                      url: https://techrseries.com/hrtechnology/apollo-io-appoints-lisa-feher-as-chief-people-officer/
+                      domain: techrseries.com
+                      title: Apollo.IO Appoints Lisa Feher as Chief People Officer
+                      snippet: Apollo.io, a lead intelligence and sales engagement platform, has announced that Lisa Feher
+                        has joined the company as its Chief People Officer.
+                      organization_ids:
+                      - 5e66b6381e05b4008c8331b8
+                      published_at: '2021-09-17T00:00:00.000+00:00'
+                      event_categories:
+                      - hires
+                    - id: 61fdec31979c2300a50b5619
+                      url: https://blog.apollo.io/blog/apollo-announces-appointment-of-santosh-sharan-as-president-and-coo
+                      domain: apollo.io
+                      title: Apollo Announces Appointment of Santosh Sharan as President and COO — Apollo Blog
+                      snippet: SAN FRANCISCO, April 15, 2021 /PRNewswire/ -- Apollo, a leading data intelligence and sales
+                        engagement platform, announces that Santosh Sharan has joined the company as President and Chief Operating
+                        Officer (COO).
+                      organization_ids:
+                      - 5e66b6381e05b4008c8331b8
+                      published_at: '2021-04-15T00:00:00.000+00:00'
+                      event_categories:
+                      - hires
+                    - id: 61413082e89bde40f424c677
+                      url: https://nexusvp.com/press-releases/apollo-io-brings-on-clearslide-co-founder-jim-benton-as-ceo/
+                      domain: nexusvp.com
+                      title: Apollo.io Brings on ClearSlide Co-Founder Jim Benton as CEO – Nexus Venture Partners
+                      snippet: (BUSINESS WIRE)–Apollo.io, the most intelligent data-first engagement platform for sales and
+                        marketing teams, today announced that it has hired Jim Benton as CEO.
+                      organization_ids:
+                      - 5e66b6381e05b4008c8331b8
+                      published_at: '2019-06-06T16:00:44.000+00:00'
+                      event_categories:
+                      - hires
+        '401':
+          description: Unauthorized
+          content:
+            text/plain:
+              examples:
+                Check API Key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+                  summary: Check API Key
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                Add Organization IDs:
+                  value:
+                    error: organization_ids is required
+                  summary: Add Organization IDs
+      parameters:
+      - name: organization_ids[]
+        in: query
+        required: true
+        description: 'The Apollo IDs for the companies you want to include in your search results. Each company in the Apollo
+          database is assigned a unique ID. <br><br>To find IDs, call the <a href="https://docs.apollo.io/reference/organization-search"
+          target="_blank">Organization Search endpoint</a> and identify the values for `organization_id`.  <br><br>Example:
+          `5e66b6381e05b4008c8331b8`'
+        schema:
+          type: array
+          default: ''
+          items:
+            type: string
+      - name: categories[]
+        in: query
+        required: false
+        description: 'Filter your search to include only certain categories or sub-categories of news. Use the <b>News</b>
+          search filter for companies within Apollo to uncover all possible categories and sub-categories. <br><br>Examples:
+          `hires`; `investment`; `contract`'
+        schema:
+          type: array
+          default: ''
+          items:
+            type: string
+      - name: published_at[min]
+        in: query
+        required: false
+        description: 'Set the lower bound of the date range you want to search. <br><br>Use this parameter in combination
+          with the `published_at[max]` parameter. This date should fall before the `published_at[max]` date. <br><br>The date
+          should be formatted as `YYYY-MM-DD`. <br><br>Example: `2025-02-15`'
+        schema:
+          type: string
+          format: date
+          default: ''
+      - name: published_at[max]
+        in: query
+        required: false
+        description: 'Set the upper bound of the date range you want to search. <br><br>Use this parameter in combination
+          with the `published_at[min]` parameter. This date should fall after the `published_at[min]` date. <br><br>The date
+          should be formatted as `YYYY-MM-DD`. <br><br>Example: `2025-05-15`'
+        schema:
+          type: string
+          format: date
+          default: ''
+      - name: page
+        in: query
+        required: false
+        description: 'The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination
+          with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint.
+          <br><br>Example: `4`'
+        schema:
+          type: integer
+          default: ''
+      - name: per_page
+        in: query
+        required: false
+        description: 'The number of search results that should be returned for each page. Limiting the number of results per
+          page improves the endpoint''s performance. <br><br>Use the `page` parameter to search the different pages of data.
+          <br><br>Example: `10`'
+        schema:
+          type: integer
+          default: ''

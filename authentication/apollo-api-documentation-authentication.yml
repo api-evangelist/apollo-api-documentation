@@ -1,0 +1,58 @@
+generated: '2026-08-14'
+method: derived
+source: openapi/apollo-api-documentation-accounts-api-openapi.yml, openapi/apollo-api-documentation-analytics-api-openapi.yml,
+  openapi/apollo-api-documentation-calls-api-openapi.yml, openapi/apollo-api-documentation-contacts-api-openapi.yml,
+  openapi/apollo-api-documentation-conversations-api-openapi.yml, openapi/apollo-api-documentation-deals-api-openapi.yml,
+  openapi/apollo-api-documentation-emailer-messages-api-openapi.yml, openapi/apollo-api-documentation-enrichment-api-openapi.yml,
+  openapi/apollo-api-documentation-fields-api-openapi.yml, openapi/apollo-api-documentation-miscellaneous-api-openapi.yml,
+  openapi/apollo-api-documentation-search-api-openapi.yml, openapi/apollo-api-documentation-sequences-api-openapi.yml
+  ...
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: apiKey
+  type: apiKey
+  in: header
+  parameter: x-api-key
+  description: |-
+    [Recommended] API key, passed in the `x-api-key` request header.
+    See [Create API Keys](https://docs.apollo.io/docs/create-api-key).
+  sources:
+  - openapi/apollo-api-documentation-accounts-api-openapi.yml
+  - openapi/apollo-api-documentation-analytics-api-openapi.yml
+  - openapi/apollo-api-documentation-calls-api-openapi.yml
+  - openapi/apollo-api-documentation-contacts-api-openapi.yml
+  - openapi/apollo-api-documentation-conversations-api-openapi.yml
+  - openapi/apollo-api-documentation-deals-api-openapi.yml
+  - openapi/apollo-api-documentation-emailer-messages-api-openapi.yml
+  - openapi/apollo-api-documentation-enrichment-api-openapi.yml
+  - openapi/apollo-api-documentation-fields-api-openapi.yml
+  - openapi/apollo-api-documentation-miscellaneous-api-openapi.yml
+  - openapi/apollo-api-documentation-search-api-openapi.yml
+  - openapi/apollo-api-documentation-sequences-api-openapi.yml
+  - openapi/apollo-api-documentation-tasks-api-openapi.yml
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: |-
+    OAuth 2.0 access token, used by Apollo partners building integrations.
+    See the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).
+  sources:
+  - openapi/apollo-api-documentation-accounts-api-openapi.yml
+  - openapi/apollo-api-documentation-analytics-api-openapi.yml
+  - openapi/apollo-api-documentation-calls-api-openapi.yml
+  - openapi/apollo-api-documentation-contacts-api-openapi.yml
+  - openapi/apollo-api-documentation-conversations-api-openapi.yml
+  - openapi/apollo-api-documentation-deals-api-openapi.yml
+  - openapi/apollo-api-documentation-emailer-messages-api-openapi.yml
+  - openapi/apollo-api-documentation-enrichment-api-openapi.yml
+  - openapi/apollo-api-documentation-fields-api-openapi.yml
+  - openapi/apollo-api-documentation-miscellaneous-api-openapi.yml
+  - openapi/apollo-api-documentation-search-api-openapi.yml
+  - openapi/apollo-api-documentation-sequences-api-openapi.yml
+  - openapi/apollo-api-documentation-tasks-api-openapi.yml

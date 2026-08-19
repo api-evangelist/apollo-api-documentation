@@ -1,0 +1,3261 @@
+{
+  "item": [
+    {
+      "id": "9cb70e58-5ee5-4486-94d7-6553fc860688",
+      "name": "Miscellaneous",
+      "description": {
+        "content": "Users, email accounts, lists, notes, usage stats, and webhook results.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "954259e9-251b-4dfc-8c19-47486bc2e746",
+          "name": "Get a List of Users",
+          "request": {
+            "name": "Get a List of Users",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/users/search` or `Master API key`\n\n**OAuth scopes:** `users_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409130537101-Add-Manage-and-Deactivate-Users\" target=\"_blank\">Users</a> are the people who use your Apollo workspace.<br><br>Use the Get a List of Users endpoint to retrieve the IDs for all of the users in your Apollo account.<br><br>These IDs can be used for several other endpoints, including the <a href=\"https://docs.apollo.io/reference/create-deal\">Create a Deal</a>, <a href=\"https://docs.apollo.io/reference/create-an-account\">Create an Account</a>, and <a href=\"https://docs.apollo.io/reference/create-a-task\">Create a Task</a> endpoints.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint. <br><br>Example: `4`"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<integer>",
+                  "description": "The number of search results that should be returned for each page. Limiting the number of results per page improves the endpoint's performance. <br><br>Use the `page` parameter to search the different pages of data. <br><br>Example: `10`"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d5ef18f5-1ca4-491a-9a1d-587a4ed3aad2",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"pagination\\\": {\\n    \\\"page\\\": \\\"1\\\",\\n    \\\"per_page\\\": \\\"3\\\",\\n    \\\"total_entries\\\": 23,\\n    \\\"total_pages\\\": 8\\n  },\\n  \\\"users\\\": [\\n    {\\n      \\\"id\\\": \\\"66c8db577ed7f201b25c0eef\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"first_name\\\": null,\\n      \\\"last_name\\\": null,\\n      \\\"title\\\": null,\\n      \\\"email\\\": \\\"anita.rao@apollomail.io\\\",\\n      \\\"created_at\\\": \\\"2024-08-23T18:56:24.067Z\\\",\\n      \\\"credit_limit\\\": null,\\n      \\\"direct_dial_credit_limit\\\": null,\\n      \\\"export_credit_limit\\\": null,\\n      \\\"ai_credit_limit\\\": null,\\n      \\\"salesforce_account\\\": null,\\n      \\\"deleted\\\": false,\\n      \\\"opt_out_html_template\\\": \\\"No longer interested in these messages? <%Unsubscribe%>\\\",\\n      \\\"name\\\": \\\"\\\",\\n      \\\"referral_code\\\": \\\"nzu90RCUSGkFzsavf4Efh3\\\",\\n      \\\"password_needs_reset\\\": false,\\n      \\\"salesforce_id\\\": null,\\n      \\\"default_cockpit_layout\\\": null,\\n      \\\"default_account_overview_layout_id\\\": null,\\n      \\\"default_contact_overview_layout_id\\\": null,\\n      \\\"default_person_overview_layout_id\\\": null,\\n      \\\"default_organization_overview_layout_id\\\": null,\\n      \\\"default_opportunity_overview_layout_id\\\": null,\\n      \\\"default_home_overview_layout_id\\\": null,\\n      \\\"bridge_calls\\\": false,\\n      \\\"bridge_phone_number\\\": null,\\n      \\\"bridge_incoming_calls\\\": false,\\n      \\\"bridge_incoming_phone_number\\\": null,\\n      \\\"current_email_verified\\\": true,\\n      \\\"record_calls\\\": true,\\n      \\\"salesforce_instance_url\\\": null,\\n      \\\"permission_set_id\\\": \\\"6170904d46a82c00c227b744\\\",\\n      \\\"default_use_local_numbers\\\": false,\\n      \\\"disable_email_linking\\\": null,\\n      \\\"sync_salesforce_id\\\": null,\\n      \\\"sync_crm_id\\\": null,\\n      \\\"zp_contact_id\\\": \\\"66ca3f1309358c0001ea7e4d\\\",\\n      \\\"chrome_extension_downloaded\\\": false,\\n      \\\"zp_is_super_analytics_user\\\": null,\\n      \\\"email_oauth_signin_only\\\": false,\\n      \\\"notification_last_created_at\\\": null,\\n      \\\"crm_requested_to_integrate\\\": null,\\n      \\\"has_invited_user\\\": false,\\n      \\\"has_used_enrichment\\\": false,\\n      \\\"has_uploaded_csv\\\": false,\\n      \\\"has_hidden_onboarding\\\": false,\\n      \\\"notification_last_read_at\\\": null,\\n      \\\"daily_data_request_email\\\": false,\\n      \\\"data_request_emails\\\": true,\\n      \\\"daily_task_email\\\": true,\\n      \\\"free_data_credits_email\\\": true,\\n      \\\"dismiss_new_team_suggestion\\\": true,\\n      \\\"request_email_change_to\\\": null,\\n      \\\"self_identified_persona\\\": null,\\n      \\\"territory_is_active\\\": true,\\n      \\\"conversation_is_private\\\": null,\\n      \\\"show_deals_detail_page_updates_modal\\\": true,\\n      \\\"assistant_setting\\\": {\\n        \\\"_id\\\": \\\"66c8db587ed7f201b25c0ef0\\\",\\n        \\\"deal_size_metric\\\": \\\"amount\\\",\\n        \\\"inactive_account_stage_ids\\\": [],\\n        \\\"inactive_contact_stage_ids\\\": [],\\n        \\\"insight_deal_size_signals\\\": {},\\n        \\\"insight_sale_cycle_signals\\\": {},\\n        \\\"insight_win_rate_signals\\\": {},\\n        \\\"is_persona_recommendation_requested\\\": false,\\n        \\\"job_posting_locations\\\": [],\\n        \\\"job_posting_titles\\\": [],\\n        \\\"latest_funding_days\\\": 90,\\n        \\\"max_num_active_accounts\\\": 100,\\n        \\\"max_people_in_sequence_per_account\\\": 5,\\n        \\\"num_inactive_days_to_re_engage\\\": 180,\\n        \\\"persona_ids\\\": [\\n          \\\"65d829661453d30300a0c9e3\\\",\\n          \\\"65e76d7f00d9c601aed49f6c\\\",\\n          \\\"65e8bf1f1132a70579a84d61\\\",\\n          \\\"65eb62d262c9dc01c66b2675\\\",\\n          \\\"66200c046194fa01c707b520\\\",\\n          \\\"662057f7d9db7a01c7ba9960\\\"\\n        ],\\n        \\\"should_show_persona_banner\\\": true,\\n        \\\"success_case_account_stage_ids\\\": [],\\n        \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n        \\\"technology_uids\\\": [],\\n        \\\"territory_company_size_ranges\\\": [],\\n        \\\"territory_location_override\\\": false,\\n        \\\"territory_locations\\\": [\\n          \\\"United States\\\"\\n        ],\\n        \\\"territory_person_locations\\\": [\\n          \\\"United States\\\"\\n        ],\\n        \\\"user_id\\\": \\\"66c8db577ed7f201b25c0eef\\\",\\n        \\\"id\\\": \\\"66c8db587ed7f201b25c0ef0\\\",\\n        \\\"key\\\": \\\"66c8db587ed7f201b25c0ef0\\\"\\n      },\\n      \\\"fields_fully_loaded\\\": true,\\n      \\\"typed_custom_fields\\\": null,\\n      \\\"connected_to_slack\\\": false,\\n      \\\"crm_email\\\": null,\\n      \\\"triggered_referral_campaigns\\\": [],\\n      \\\"enable_click_tracking\\\": false,\\n      \\\"enable_open_tracking\\\": true,\\n      \\\"should_include_unsubscribe_link\\\": false,\\n      \\\"enable_one_click_unsubscribe\\\": null,\\n      \\\"subteam_ids\\\": [],\\n      \\\"prospect_territory_ids\\\": [],\\n      \\\"toggled_on_territory_ids\\\": [],\\n      \\\"linked_salesforce\\\": null,\\n      \\\"linked_zoom_conference_account\\\": false,\\n      \\\"linked_bot_conference_account\\\": true,\\n      \\\"linked_bot_conference_account_platforms\\\": [\\n        \\\"google_meet\\\",\\n        \\\"ms_teams\\\"\\n      ],\\n      \\\"has_conference_account\\\": true,\\n      \\\"linked_hubspot\\\": false,\\n      \\\"linked_salesloft\\\": false,\\n      \\\"linked_crm_name\\\": null,\\n      \\\"chrome_extension_enabled_features\\\": [\\n        \\\"apollo_everywhere\\\",\\n        \\\"gmail\\\",\\n        \\\"linkedin\\\",\\n        \\\"salesforce\\\",\\n        \\\"hubspot\\\",\\n        \\\"google_calendar\\\"\\n      ],\\n      \\\"chrome_extension_exclude_from_websites\\\": [\\n        \\\"facebook.com\\\",\\n        \\\"youtube.com\\\",\\n        \\\"instagram.com\\\",\\n        \\\"google.com\\\",\\n        \\\"live.com\\\",\\n        \\\"yahoo.com\\\",\\n        \\\"notion.so\\\",\\n        \\\"atlassian.net\\\",\\n        \\\"asana.com\\\",\\n        \\\"typeform.com\\\",\\n        \\\"figma.com\\\"\\n      ],\\n      \\\"chrome_extension_everywhere_icon_horizontal_position\\\": \\\"right\\\",\\n      \\\"chrome_extension_everywhere_icon_vertical_position_in_vh\\\": 10,\\n      \\\"default_chrome_extension_log_email_send_to_salesforce\\\": true,\\n      \\\"default_chrome_extension_log_email_send_to_hubspot\\\": true,\\n      \\\"chrome_extension_auto_match_salesforce_opportunity\\\": true,\\n      \\\"chrome_extension_gmail_enable_email_tools\\\": true,\\n      \\\"enable_desktop_notifications\\\": false,\\n      \\\"enable_gmail_desktop_notifications\\\": null,\\n      \\\"default_chrome_extension_enable_reminders\\\": false,\\n      \\\"chrome_extension_gmail_enable_crm_sidebar\\\": true,\\n      \\\"show_chrome_extension_buying_intent_promo\\\": true,\\n      \\\"apollo_everywhere_search_count\\\": 0\\n    },\\n    {\\n      \\\"id\\\": \\\"66aaac5a0e951f01b37012bd\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"first_name\\\": \\\"\\\",\\n      \\\"last_name\\\": null,\\n      \\\"title\\\": \\\"\\\",\\n      \\\"email\\\": \\\"gina.larkin@apollomail.io\\\",\\n      \\\"created_at\\\": \\\"2024-07-31T21:27:54.929Z\\\",\\n      \\\"credit_limit\\\": null,\\n      \\\"direct_dial_credit_limit\\\": null,\\n      \\\"export_credit_limit\\\": null,\\n      \\\"ai_credit_limit\\\": null,\\n      \\\"salesforce_account\\\": null,\\n      \\\"deleted\\\": false,\\n      \\\"opt_out_html_template\\\": \\\"No longer interested in these messages? <%Unsubscribe%>\\\",\\n      \\\"name\\\": \\\"\\\",\\n      \\\"referral_code\\\": \\\"vBNOmoTcZPy5Y0QdxJIAR9\\\",\\n      \\\"password_needs_reset\\\": false,\\n      \\\"salesforce_id\\\": null,\\n      \\\"default_cockpit_layout\\\": null,\\n      \\\"default_account_overview_layout_id\\\": null,\\n      \\\"default_contact_overview_layout_id\\\": null,\\n      \\\"default_person_overview_layout_id\\\": null,\\n      \\\"default_organization_overview_layout_id\\\": null,\\n      \\\"default_opportunity_overview_layout_id\\\": null,\\n      \\\"default_home_overview_layout_id\\\": null,\\n      \\\"bridge_calls\\\": false,\\n      \\\"bridge_phone_number\\\": null,\\n      \\\"bridge_incoming_calls\\\": false,\\n      \\\"bridge_incoming_phone_number\\\": null,\\n      \\\"current_email_verified\\\": true,\\n      \\\"record_calls\\\": true,\\n      \\\"salesforce_instance_url\\\": null,\\n      \\\"permission_set_id\\\": \\\"6095a711bd01d100a506d4d7\\\",\\n      \\\"default_use_local_numbers\\\": false,\\n      \\\"disable_email_linking\\\": null,\\n      \\\"sync_salesforce_id\\\": null,\\n      \\\"sync_crm_id\\\": null,\\n      \\\"zp_contact_id\\\": \\\"66abff979b4ed7000142aa19\\\",\\n      \\\"chrome_extension_downloaded\\\": false,\\n      \\\"zp_is_super_analytics_user\\\": null,\\n      \\\"email_oauth_signin_only\\\": true,\\n      \\\"notification_last_created_at\\\": null,\\n      \\\"crm_requested_to_integrate\\\": null,\\n      \\\"has_invited_user\\\": false,\\n      \\\"has_used_enrichment\\\": false,\\n      \\\"has_uploaded_csv\\\": false,\\n      \\\"has_hidden_onboarding\\\": false,\\n      \\\"notification_last_read_at\\\": null,\\n      \\\"daily_data_request_email\\\": false,\\n      \\\"data_request_emails\\\": true,\\n      \\\"daily_task_email\\\": true,\\n      \\\"free_data_credits_email\\\": true,\\n      \\\"dismiss_new_team_suggestion\\\": true,\\n      \\\"request_email_change_to\\\": null,\\n      \\\"self_identified_persona\\\": null,\\n      \\\"territory_is_active\\\": false,\\n      \\\"conversation_is_private\\\": null,\\n      \\\"show_deals_detail_page_updates_modal\\\": true,\\n      \\\"assistant_setting\\\": {\\n        \\\"_id\\\": \\\"66aaac5a0e951f01b37012be\\\",\\n        \\\"deal_size_metric\\\": \\\"amount\\\",\\n        \\\"inactive_account_stage_ids\\\": [],\\n        \\\"inactive_contact_stage_ids\\\": [],\\n        \\\"insight_deal_size_signals\\\": {},\\n        \\\"insight_sale_cycle_signals\\\": {},\\n        \\\"insight_win_rate_signals\\\": {},\\n        \\\"is_persona_recommendation_requested\\\": false,\\n        \\\"job_posting_locations\\\": [],\\n        \\\"job_posting_titles\\\": [],\\n        \\\"latest_funding_days\\\": 90,\\n        \\\"max_num_active_accounts\\\": 100,\\n        \\\"max_people_in_sequence_per_account\\\": 5,\\n        \\\"num_inactive_days_to_re_engage\\\": 180,\\n        \\\"persona_ids\\\": [\\n          \\\"65d829661453d30300a0c9e3\\\",\\n          \\\"65e76d7f00d9c601aed49f6c\\\",\\n          \\\"65e8bf1f1132a70579a84d61\\\",\\n          \\\"65eb62d262c9dc01c66b2675\\\",\\n          \\\"66200c046194fa01c707b520\\\",\\n          \\\"662057f7d9db7a01c7ba9960\\\"\\n        ],\\n        \\\"should_show_persona_banner\\\": true,\\n        \\\"success_case_account_stage_ids\\\": [],\\n        \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n        \\\"technology_uids\\\": [],\\n        \\\"territory_company_size_ranges\\\": [],\\n        \\\"territory_location_override\\\": false,\\n        \\\"territory_locations\\\": [\\n          \\\"United States\\\"\\n        ],\\n        \\\"territory_person_locations\\\": [\\n          \\\"United States\\\"\\n        ],\\n        \\\"user_id\\\": \\\"66aaac5a0e951f01b37012bd\\\",\\n        \\\"id\\\": \\\"66aaac5a0e951f01b37012be\\\",\\n        \\\"key\\\": \\\"66aaac5a0e951f01b37012be\\\"\\n      },\\n      \\\"fields_fully_loaded\\\": true,\\n      \\\"typed_custom_fields\\\": null,\\n      \\\"connected_to_slack\\\": false,\\n      \\\"crm_email\\\": null,\\n      \\\"triggered_referral_campaigns\\\": [],\\n      \\\"enable_click_tracking\\\": false,\\n      \\\"enable_open_tracking\\\": true,\\n      \\\"should_include_unsubscribe_link\\\": false,\\n      \\\"enable_one_click_unsubscribe\\\": null,\\n      \\\"subteam_ids\\\": [],\\n      \\\"prospect_territory_ids\\\": [],\\n      \\\"toggled_on_territory_ids\\\": [],\\n      \\\"linked_salesforce\\\": null,\\n      \\\"linked_zoom_conference_account\\\": false,\\n      \\\"linked_bot_conference_account\\\": true,\\n      \\\"linked_bot_conference_account_platforms\\\": [\\n        \\\"google_meet\\\",\\n        \\\"ms_teams\\\"\\n      ],\\n      \\\"has_conference_account\\\": true,\\n      \\\"linked_hubspot\\\": false,\\n      \\\"linked_salesloft\\\": false,\\n      \\\"linked_crm_name\\\": null,\\n      \\\"chrome_extension_enabled_features\\\": [\\n        \\\"apollo_everywhere\\\",\\n        \\\"gmail\\\",\\n        \\\"linkedin\\\",\\n        \\\"salesforce\\\",\\n        \\\"hubspot\\\",\\n        \\\"google_calendar\\\"\\n      ],\\n      \\\"chrome_extension_exclude_from_websites\\\": [\\n        \\\"facebook.com\\\",\\n        \\\"youtube.com\\\",\\n        \\\"instagram.com\\\",\\n        \\\"google.com\\\",\\n        \\\"live.com\\\",\\n        \\\"yahoo.com\\\",\\n        \\\"notion.so\\\",\\n        \\\"atlassian.net\\\",\\n        \\\"asana.com\\\",\\n        \\\"typeform.com\\\",\\n        \\\"figma.com\\\"\\n      ],\\n      \\\"chrome_extension_everywhere_icon_horizontal_position\\\": \\\"right\\\",\\n      \\\"chrome_extension_everywhere_icon_vertical_position_in_vh\\\": 10,\\n      \\\"default_chrome_extension_log_email_send_to_salesforce\\\": true,\\n      \\\"default_chrome_extension_log_email_send_to_hubspot\\\": true,\\n      \\\"chrome_extension_auto_match_salesforce_opportunity\\\": true,\\n      \\\"chrome_extension_gmail_enable_email_tools\\\": true,\\n      \\\"enable_desktop_notifications\\\": false,\\n      \\\"enable_gmail_desktop_notifications\\\": null,\\n      \\\"default_chrome_extension_enable_reminders\\\": false,\\n      \\\"chrome_extension_gmail_enable_crm_sidebar\\\": true,\\n      \\\"show_chrome_extension_buying_intent_promo\\\": true,\\n      \\\"apollo_everywhere_search_count\\\": 0\\n    },\\n    {\\n      \\\"id\\\": \\\"66a3d80d4238fe02d2baaaaf\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"first_name\\\": \\\"Priya\\\",\\n      \\\"last_name\\\": \\\"Nadkarni\\\",\\n      \\\"title\\\": null,\\n      \\\"email\\\": \\\"priya.nadkarni@apollomail.io\\\",\\n      \\\"created_at\\\": \\\"2024-07-26T17:08:29.611Z\\\",\\n      \\\"credit_limit\\\": null,\\n      \\\"direct_dial_credit_limit\\\": null,\\n      \\\"export_credit_limit\\\": null,\\n      \\\"ai_credit_limit\\\": null,\\n      \\\"salesforce_account\\\": null,\\n      \\\"deleted\\\": false,\\n      \\\"opt_out_html_template\\\": \\\"If you don't want to hear from me again, please <%let me know%>.\\\",\\n      \\\"name\\\": \\\"Priya Nadkarni\\\",\\n      \\\"referral_code\\\": \\\"5Zjw_UvAwQA-wd-NfSff8b\\\",\\n      \\\"password_needs_reset\\\": false,\\n      \\\"salesforce_id\\\": null,\\n      \\\"default_cockpit_layout\\\": null,\\n      \\\"default_account_overview_layout_id\\\": null,\\n      \\\"default_contact_overview_layout_id\\\": null,\\n      \\\"default_person_overview_layout_id\\\": null,\\n      \\\"default_organization_overview_layout_id\\\": null,\\n      \\\"default_opportunity_overview_layout_id\\\": null,\\n      \\\"default_home_overview_layout_id\\\": null,\\n      \\\"bridge_calls\\\": false,\\n      \\\"bridge_phone_number\\\": null,\\n      \\\"bridge_incoming_calls\\\": false,\\n      \\\"bridge_incoming_phone_number\\\": null,\\n      \\\"current_email_verified\\\": true,\\n      \\\"record_calls\\\": true,\\n      \\\"salesforce_instance_url\\\": null,\\n      \\\"permission_set_id\\\": \\\"6095a711bd01d100a506d4d7\\\",\\n      \\\"default_use_local_numbers\\\": false,\\n      \\\"disable_email_linking\\\": null,\\n      \\\"sync_salesforce_id\\\": null,\\n      \\\"sync_crm_id\\\": null,\\n      \\\"zp_contact_id\\\": \\\"66a4b080cf1ffb000132c7e8\\\",\\n      \\\"chrome_extension_downloaded\\\": true,\\n      \\\"zp_is_super_analytics_user\\\": null,\\n      \\\"email_oauth_signin_only\\\": false,\\n      \\\"notification_last_created_at\\\": \\\"2024-08-02T15:07:37.836+00:00\\\",\\n      \\\"crm_requested_to_integrate\\\": null,\\n      \\\"has_invited_user\\\": false,\\n      \\\"has_used_enrichment\\\": false,\\n      \\\"has_uploaded_csv\\\": false,\\n      \\\"has_hidden_onboarding\\\": false,\\n      \\\"notification_last_read_at\\\": \\\"2024-07-30T23:08:32.175+00:00\\\",\\n      \\\"daily_data_request_email\\\": false,\\n      \\\"data_request_emails\\\": true,\\n      \\\"daily_task_email\\\": true,\\n      \\\"free_data_credits_email\\\": true,\\n      \\\"dismiss_new_team_suggestion\\\": true,\\n      \\\"request_email_change_to\\\": null,\\n      \\\"self_identified_persona\\\": null,\\n      \\\"territory_is_active\\\": false,\\n      \\\"conversation_is_private\\\": null,\\n      \\\"show_deals_detail_page_updates_modal\\\": false,\\n      \\\"assistant_setting\\\": {\\n        \\\"_id\\\": \\\"66a3d80d4238fe02d2baaab0\\\",\\n        \\\"deal_size_metric\\\": \\\"amount\\\",\\n        \\\"inactive_account_stage_ids\\\": [],\\n        \\\"inactive_contact_stage_ids\\\": [],\\n        \\\"insight_deal_size_signals\\\": {},\\n        \\\"insight_sale_cycle_signals\\\": {},\\n        \\\"insight_win_rate_signals\\\": {},\\n        \\\"is_persona_recommendation_requested\\\": false,\\n        \\\"job_posting_locations\\\": [],\\n        \\\"job_posting_titles\\\": [],\\n        \\\"latest_funding_days\\\": 90,\\n        \\\"max_num_active_accounts\\\": 100,\\n        \\\"max_people_in_sequence_per_account\\\": 5,\\n        \\\"num_inactive_days_to_re_engage\\\": 180,\\n        \\\"persona_ids\\\": [\\n          \\\"65d829661453d30300a0c9e3\\\",\\n          \\\"65e76d7f00d9c601aed49f6c\\\",\\n          \\\"65e8bf1f1132a70579a84d61\\\",\\n          \\\"65eb62d262c9dc01c66b2675\\\",\\n          \\\"66200c046194fa01c707b520\\\",\\n          \\\"662057f7d9db7a01c7ba9960\\\"\\n        ],\\n        \\\"should_show_persona_banner\\\": true,\\n        \\\"success_case_account_stage_ids\\\": [],\\n        \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n        \\\"technology_uids\\\": [],\\n        \\\"territory_company_size_ranges\\\": [],\\n        \\\"territory_location_override\\\": false,\\n        \\\"territory_locations\\\": [\\n          \\\"United States\\\"\\n        ],\\n        \\\"territory_person_locations\\\": [\\n          \\\"United States\\\"\\n        ],\\n        \\\"user_id\\\": \\\"66a3d80d4238fe02d2baaaaf\\\",\\n        \\\"id\\\": \\\"66a3d80d4238fe02d2baaab0\\\",\\n        \\\"key\\\": \\\"66a3d80d4238fe02d2baaab0\\\"\\n      },\\n      \\\"fields_fully_loaded\\\": true,\\n      \\\"typed_custom_fields\\\": null,\\n      \\\"connected_to_slack\\\": false,\\n      \\\"crm_email\\\": null,\\n      \\\"triggered_referral_campaigns\\\": [],\\n      \\\"enable_click_tracking\\\": true,\\n      \\\"enable_open_tracking\\\": true,\\n      \\\"should_include_unsubscribe_link\\\": true,\\n      \\\"enable_one_click_unsubscribe\\\": null,\\n      \\\"subteam_ids\\\": [],\\n      \\\"prospect_territory_ids\\\": [],\\n      \\\"toggled_on_territory_ids\\\": [],\\n      \\\"linked_salesforce\\\": null,\\n      \\\"linked_zoom_conference_account\\\": false,\\n      \\\"linked_bot_conference_account\\\": true,\\n      \\\"linked_bot_conference_account_platforms\\\": [\\n        \\\"google_meet\\\",\\n        \\\"ms_teams\\\"\\n      ],\\n      \\\"has_conference_account\\\": true,\\n      \\\"linked_hubspot\\\": false,\\n      \\\"linked_salesloft\\\": false,\\n      \\\"linked_crm_name\\\": null,\\n      \\\"chrome_extension_enabled_features\\\": [\\n        \\\"apollo_everywhere\\\",\\n        \\\"gmail\\\",\\n        \\\"linkedin\\\",\\n        \\\"salesforce\\\",\\n        \\\"hubspot\\\",\\n        \\\"google_calendar\\\"\\n      ],\\n      \\\"chrome_extension_exclude_from_websites\\\": [\\n        \\\"facebook.com\\\",\\n        \\\"youtube.com\\\",\\n        \\\"instagram.com\\\",\\n        \\\"google.com\\\",\\n        \\\"live.com\\\",\\n        \\\"yahoo.com\\\",\\n        \\\"notion.so\\\",\\n        \\\"atlassian.net\\\",\\n        \\\"asana.com\\\",\\n        \\\"typeform.com\\\",\\n        \\\"figma.com\\\"\\n      ],\\n      \\\"chrome_extension_everywhere_icon_horizontal_position\\\": \\\"right\\\",\\n      \\\"chrome_extension_everywhere_icon_vertical_position_in_vh\\\": 10,\\n      \\\"default_chrome_extension_log_email_send_to_salesforce\\\": true,\\n      \\\"default_chrome_extension_log_email_send_to_hubspot\\\": true,\\n      \\\"chrome_extension_auto_match_salesforce_opportunity\\\": true,\\n      \\\"chrome_extension_gmail_enable_email_tools\\\": true,\\n      \\\"enable_desktop_notifications\\\": false,\\n      \\\"enable_gmail_desktop_notifications\\\": null,\\n      \\\"default_chrome_extension_enable_reminders\\\": false,\\n      \\\"chrome_extension_gmail_enable_crm_sidebar\\\": true,\\n      \\\"show_chrome_extension_buying_intent_promo\\\": true,\\n      \\\"apollo_everywhere_search_count\\\": 0\\n    }\\n  ],\\n  \\\"num_fetch_result\\\": null\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3f96d1db-71c4-456b-904a-2899a5473a49",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "222e78f9-f1bb-4e35-9ec9-aa6d3c2d126a",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"This API key is not authorized to access api/v1/users/search. Request an API key from your administrator that includes this endpoint in its configured scope.\\\",\\n  \\\"error_code\\\": \\\"API_INACCESSIBLE\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a509895-e514-4371-bbfd-342107481f67",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/users/search is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e43a9a45-07ad-4d2f-b082-5af2cce03840",
+          "name": "Get Current User Profile",
+          "request": {
+            "name": "Get Current User Profile",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/users/api_profile` or `Master API key`\n\n**OAuth scopes:** `read_user_profile`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n**Authentication note:** Default scope — granted automatically on every OAuth token.\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409130537101-Add-Manage-and-Deactivate-Users\" target=\"_blank\">Users</a> are the people who use your Apollo workspace.<br><br>Use the Get Current User Profile endpoint to retrieve the authenticated profile of the person who owns the API key being used.<br><br>By default, the endpoint returns the user's identity fields. Set the `include_credit_usage` query parameter to `true` to also return the user's and team's credit usage and remaining credit balances.<br><br>If you call this endpoint without valid access credentials, you receive a `401` response.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                "api_profile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_credit_usage",
+                  "value": "false",
+                  "description": "Set to `true` to include credit usage and remaining credit details (lead, direct dial, export, AI, and power-up credits) in the response. Accepts boolean (`true`/`false`) or string (`\"true\"`/`\"false\"`) values. Defaults to `false`. <br><br>Example: `true`"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "894e481a-5d57-4cb7-9f67-939543947bfa",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "api_profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_credit_usage",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"id\\\": \\\"66c8db577ed7f201b25c0eef\\\",\\n  \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n  \\\"first_name\\\": \\\"John\\\",\\n  \\\"last_name\\\": \\\"Doe\\\",\\n  \\\"title\\\": \\\"Developer\\\",\\n  \\\"email\\\": \\\"john.doe@example.com\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e560662-1b42-4276-9ed7-a706fa3d1af2",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "api_profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_credit_usage",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3615480e-7e44-4033-9004-0428440b196d",
+          "name": "Get a List of Email Accounts",
+          "request": {
+            "name": "Get a List of Email Accounts",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/email_accounts/index` or `Master API key`\n\n**OAuth scopes:** `email_accounts_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nYou can <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409127806093-Link-Your-Mailbox-to-Apollo\" target=\"_blank\">link mailboxes to Apollo</a>, and use them for prospect outreach.<br><br>Use the Get a List of Email Accounts endpoint to retrieve information about the linked email inboxes that your teammates use in your Apollo account.<br><br>In particular, this endpoint returns IDs for each of your team's linked email accounts, which can be used with the <a href=\"https://docs.apollo.io/reference/add-contacts-to-sequence\">Add Contacts to a Sequence endpoint</a>.<br><br>This endpoint doesn't require any parameters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "email_accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "167b29af-d167-4667-ada0-013d4a70a12f",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email_accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"email_accounts\\\": [\\n    {\\n      \\\"aliases\\\": [\\n        \\\"test.liam@apollomail.io\\\"\\n      ],\\n      \\\"id\\\": \\\"6630ffa2a7f52601c7578345\\\",\\n      \\\"user_id\\\": \\\"66302798d03b9601c7934ebc\\\",\\n      \\\"email\\\": \\\"test.liam@apollomail.io\\\",\\n      \\\"type\\\": \\\"gmail\\\",\\n      \\\"active\\\": true,\\n      \\\"default\\\": true,\\n      \\\"seconds_delay_between_emails\\\": 600,\\n      \\\"provider_display_name\\\": \\\"Gmail\\\",\\n      \\\"nylas_provider\\\": null,\\n      \\\"last_synced_at\\\": \\\"2024-09-19T18:50:45.088+00:00\\\",\\n      \\\"email_sending_policy_cd\\\": \\\"default\\\",\\n      \\\"sendgrid_api_user\\\": null,\\n      \\\"mailgun_domains\\\": null,\\n      \\\"nylas_api_version\\\": null,\\n      \\\"signature_edit_disabled\\\": false,\\n      \\\"revoked_at\\\": null,\\n      \\\"inactive_reason\\\": null,\\n      \\\"created_at\\\": \\\"2024-04-30T14:26:42.061Z\\\",\\n      \\\"sendgrid_api_key_v3\\\": null,\\n      \\\"email_daily_threshold\\\": 50,\\n      \\\"deliverability_score\\\": {\\n        \\\"_id\\\": \\\"66de4138d8a8a300016b404e\\\",\\n        \\\"avg_click_rate\\\": 0,\\n        \\\"avg_daily_sent\\\": 0,\\n        \\\"avg_delivered_rate\\\": 0,\\n        \\\"avg_hard_bounce_rate\\\": 0,\\n        \\\"avg_open_rate\\\": 0,\\n        \\\"avg_reply_rate\\\": 0,\\n        \\\"avg_spam_block_rate\\\": 0,\\n        \\\"avg_unsubscribe_rate\\\": 0,\\n        \\\"click_rate_score\\\": 0,\\n        \\\"concurrency_locks\\\": null,\\n        \\\"created_at\\\": \\\"2024-09-09T00:28:41.695Z\\\",\\n        \\\"daily_email_sent_score\\\": 0,\\n        \\\"date_from\\\": \\\"2024-09-09\\\",\\n        \\\"date_to\\\": \\\"2024-09-15\\\",\\n        \\\"deliverability_score\\\": 0,\\n        \\\"domain_health_score\\\": 5,\\n        \\\"email_account_domain_age_score\\\": 5,\\n        \\\"email_account_id\\\": \\\"6630ffa2a7f52601c7578345\\\",\\n        \\\"hard_bounce_score\\\": 0,\\n        \\\"open_rate_score\\\": 0,\\n        \\\"random\\\": 0.6074748,\\n        \\\"reply_rate_score\\\": 0,\\n        \\\"spam_block_score\\\": 0,\\n        \\\"sum_clicked_count\\\": 0,\\n        \\\"sum_delivered_count\\\": 0,\\n        \\\"sum_hard_bounced_count\\\": 0,\\n        \\\"sum_opened_count\\\": 0,\\n        \\\"sum_replied_count\\\": 0,\\n        \\\"sum_sent_count\\\": 0,\\n        \\\"sum_spam_blocked_count\\\": 0,\\n        \\\"sum_unsubscribed_count\\\": 0,\\n        \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n        \\\"unsubscribe_rate_score\\\": 0,\\n        \\\"updated_at\\\": \\\"2024-09-09T00:28:41.695Z\\\",\\n        \\\"user_id\\\": \\\"66302798d03b9601c7934ebc\\\",\\n        \\\"id\\\": \\\"66de4138d8a8a300016b404e\\\",\\n        \\\"key\\\": \\\"66de4138d8a8a300016b404e\\\"\\n      },\\n      \\\"max_outbound_emails_per_hour\\\": 6,\\n      \\\"limits_editable\\\": true,\\n      \\\"is_opted_in_mailwarming\\\": null,\\n      \\\"mailwarming_max\\\": 0,\\n      \\\"mailwarming_to_send_daily\\\": 0,\\n      \\\"mailwarming_to_send_incrementor\\\": 0,\\n      \\\"mailwarming_status\\\": \\\"never_started\\\",\\n      \\\"mailwarming_eta\\\": null,\\n      \\\"mailwarming_subject_token\\\": null,\\n      \\\"mailwarming_score\\\": 0,\\n      \\\"mailwarming_score_banner\\\": \\\"start_warm_up_for_score\\\",\\n      \\\"mailwarming_on_weekdays_only\\\": true,\\n      \\\"true_warmup_enabled\\\": false,\\n      \\\"true_warmup_daily_limit\\\": 0,\\n      \\\"true_warmup_progress\\\": 0,\\n      \\\"true_warmup_status\\\": null,\\n      \\\"true_warmup_approximate_end_date\\\": null,\\n      \\\"true_warmup_last_throttled_at\\\": null,\\n      \\\"true_warmup_enable_thresholds\\\": false,\\n      \\\"true_warmup_thresholds\\\": {\\n        \\\"open_rate\\\": 20,\\n        \\\"reply_rate\\\": 1,\\n        \\\"bounce_rate\\\": 1,\\n        \\\"spam_block_rate\\\": 1\\n      },\\n      \\\"active_campaigns_count\\\": 2,\\n      \\\"nudge_user_to_send_mails\\\": true,\\n      \\\"signature_html\\\": \\\"<div>Liam Donovan</div><div>Apollo Academy Sales Instructor</div><div>liam.donovan@apollo.io</div><div><br></div><div><a href=\\\\\\\"http://www.berkley.edu\\\\\\\" rel=\\\\\\\"noopener noreferrer\\\\\\\" target=\\\\\\\"_blank\\\\\\\">Apollo Knowledge Base</a></div><div><br></div><div>Book time to meet with me <a href=\\\\\\\"https://app.apollo.io/#/meet/liam_donovan_a1b2/30-min\\\\\\\" rel=\\\\\\\"noopener noreferrer\\\\\\\" target=\\\\\\\"_blank\\\\\\\">here</a>.</div>\\\",\\n      \\\"fields_fully_loaded\\\": true\\n    },\\n    {\\n      \\\"aliases\\\": [\\n        \\\"test.dana@apollomail.io\\\"\\n      ],\\n      \\\"id\\\": \\\"6631066fab78f601c7b0a8bf\\\",\\n      \\\"user_id\\\": \\\"663027d1d03b9606c1934335\\\",\\n      \\\"email\\\": \\\"test.dana@apollomail.io\\\",\\n      \\\"type\\\": \\\"gmail\\\",\\n      \\\"active\\\": true,\\n      \\\"default\\\": true,\\n      \\\"seconds_delay_between_emails\\\": 500,\\n      \\\"provider_display_name\\\": \\\"Gmail\\\",\\n      \\\"nylas_provider\\\": null,\\n      \\\"last_synced_at\\\": \\\"2024-09-19T18:49:21.990+00:00\\\",\\n      \\\"email_sending_policy_cd\\\": \\\"default\\\",\\n      \\\"sendgrid_api_user\\\": null,\\n      \\\"mailgun_domains\\\": null,\\n      \\\"nylas_api_version\\\": null,\\n      \\\"signature_edit_disabled\\\": false,\\n      \\\"revoked_at\\\": null,\\n      \\\"inactive_reason\\\": null,\\n      \\\"created_at\\\": \\\"2024-04-30T14:55:43.556Z\\\",\\n      \\\"sendgrid_api_key_v3\\\": null,\\n      \\\"email_daily_threshold\\\": 50,\\n      \\\"deliverability_score\\\": {\\n        \\\"_id\\\": \\\"66de40f0d8a8a300016b4014\\\",\\n        \\\"avg_click_rate\\\": 0,\\n        \\\"avg_daily_sent\\\": 0,\\n        \\\"avg_delivered_rate\\\": 0,\\n        \\\"avg_hard_bounce_rate\\\": 0,\\n        \\\"avg_open_rate\\\": 0,\\n        \\\"avg_reply_rate\\\": 0,\\n        \\\"avg_spam_block_rate\\\": 0,\\n        \\\"avg_unsubscribe_rate\\\": 0,\\n        \\\"click_rate_score\\\": 0,\\n        \\\"concurrency_locks\\\": null,\\n        \\\"created_at\\\": \\\"2024-09-09T00:27:28.539Z\\\",\\n        \\\"daily_email_sent_score\\\": 0,\\n        \\\"date_from\\\": \\\"2024-09-09\\\",\\n        \\\"date_to\\\": \\\"2024-09-15\\\",\\n        \\\"deliverability_score\\\": 0,\\n        \\\"domain_health_score\\\": 5,\\n        \\\"email_account_domain_age_score\\\": 5,\\n        \\\"email_account_id\\\": \\\"6631066fab78f601c7b0a8bf\\\",\\n        \\\"hard_bounce_score\\\": 0,\\n        \\\"open_rate_score\\\": 0,\\n        \\\"random\\\": 0.64551977,\\n        \\\"reply_rate_score\\\": 0,\\n        \\\"spam_block_score\\\": 0,\\n        \\\"sum_clicked_count\\\": 0,\\n        \\\"sum_delivered_count\\\": 0,\\n        \\\"sum_hard_bounced_count\\\": 0,\\n        \\\"sum_opened_count\\\": 0,\\n        \\\"sum_replied_count\\\": 0,\\n        \\\"sum_sent_count\\\": 0,\\n        \\\"sum_spam_blocked_count\\\": 0,\\n        \\\"sum_unsubscribed_count\\\": 0,\\n        \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n        \\\"unsubscribe_rate_score\\\": 0,\\n        \\\"updated_at\\\": \\\"2024-09-09T00:27:28.539Z\\\",\\n        \\\"user_id\\\": \\\"663027d1d03b9606c1934335\\\",\\n        \\\"id\\\": \\\"66de40f0d8a8a300016b4014\\\",\\n        \\\"key\\\": \\\"66de40f0d8a8a300016b4014\\\"\\n      },\\n      \\\"max_outbound_emails_per_hour\\\": 6,\\n      \\\"limits_editable\\\": true,\\n      \\\"is_opted_in_mailwarming\\\": null,\\n      \\\"mailwarming_max\\\": 0,\\n      \\\"mailwarming_to_send_daily\\\": 0,\\n      \\\"mailwarming_to_send_incrementor\\\": 0,\\n      \\\"mailwarming_status\\\": \\\"never_started\\\",\\n      \\\"mailwarming_eta\\\": null,\\n      \\\"mailwarming_subject_token\\\": null,\\n      \\\"mailwarming_score\\\": 0,\\n      \\\"mailwarming_score_banner\\\": \\\"start_warm_up_for_score\\\",\\n      \\\"mailwarming_on_weekdays_only\\\": true,\\n      \\\"true_warmup_enabled\\\": false,\\n      \\\"true_warmup_daily_limit\\\": 0,\\n      \\\"true_warmup_progress\\\": 0,\\n      \\\"true_warmup_status\\\": null,\\n      \\\"true_warmup_approximate_end_date\\\": null,\\n      \\\"true_warmup_last_throttled_at\\\": null,\\n      \\\"true_warmup_enable_thresholds\\\": false,\\n      \\\"true_warmup_thresholds\\\": {\\n        \\\"open_rate\\\": 20,\\n        \\\"reply_rate\\\": 1,\\n        \\\"bounce_rate\\\": 1,\\n        \\\"spam_block_rate\\\": 1\\n      },\\n      \\\"active_campaigns_count\\\": 2,\\n      \\\"nudge_user_to_send_mails\\\": true,\\n      \\\"signature_html\\\": \\\"<div>Janet Testing</div><div><a href=\\\\\\\"http://www.berkley.edu\\\\\\\" target=\\\\\\\"_blank\\\\\\\">Apollo Knowledge Base</a></div><div> </div>\\\",\\n      \\\"fields_fully_loaded\\\": true\\n    }\\n  ]\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27727041-3343-4c28-a8b8-e6c9784b4556",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email_accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e310ecab-f7bb-42f2-90d3-6106f55b0631",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email_accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"This API key is not authorized to access api/v1/email_accounts/index. Request an API key from your administrator that includes this endpoint in its configured scope.\\\",\\n  \\\"error_code\\\": \\\"API_INACCESSIBLE\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41ebe102-8ade-4aee-baca-74b7d89fc819",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email_accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/email_accounts is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d14564bc-4636-4fb6-ad97-b96430c78f66",
+          "name": "Get a List of All Lists",
+          "request": {
+            "name": "Get a List of All Lists",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/labels/index` or `Master API key`\n\n**OAuth scopes:** `tags_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the Get a List of All Lists endpoint to retrieve information about every <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409728608525-Create-and-Use-a-List\" target=\"_blank\">list</a> that has been created in your Apollo account. This endpoint can be used to check the available lists before you use the <a href=\"https://docs.apollo.io/reference/create-a-contact\">Create a Contact endpoint</a>. <br><br>This endpoint doesn't require any parameters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "labels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6de8f395-aa13-424d-8500-94d51576116b",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"_id\": \"66e9e215ece19801b2199981\",\n    \"cached_count\": 1,\n    \"concurrency_locks\": {},\n    \"created_at\": \"2024-09-17T20:09:57.863Z\",\n    \"modality\": \"emailer_campaigns\",\n    \"name\": \"Dublin market\",\n    \"need_cached_count_update\": false,\n    \"needs_count_update_at\": \"2024-09-17T20:09:57.885+00:00\",\n    \"rule_config_template_id\": null,\n    \"team_id\": \"6095a710bd01d100a506d4ac\",\n    \"updated_at\": \"2024-09-17T20:09:57.910Z\",\n    \"user_id\": \"66302798d03b9601c7934ebf\",\n    \"id\": \"66e9e215ece19801b2199981\",\n    \"key\": \"66e9e215ece19801b2199981\"\n  },\n  {\n    \"_id\": \"6660862c078cf0038abedb64\",\n    \"cached_count\": 25,\n    \"concurrency_locks\": {},\n    \"created_at\": \"2024-06-05T15:37:16.684Z\",\n    \"modality\": \"contacts\",\n    \"name\": \"Conference 2024 - Maui\",\n    \"need_cached_count_update\": false,\n    \"needs_count_update_at\": \"2024-06-05T15:37:16.708+00:00\",\n    \"rule_config_template_id\": null,\n    \"team_id\": \"6095a710bd01d100a506d4ac\",\n    \"updated_at\": \"2024-06-05T15:37:16.738Z\",\n    \"user_id\": \"66302798d03b9601c7934ec2\",\n    \"id\": \"6660862c078cf0038abedb64\",\n    \"key\": \"6660862c078cf0038abedb64\"\n  },\n  {\n    \"_id\": \"66e361494acd1307386d4073\",\n    \"cached_count\": 0,\n    \"concurrency_locks\": {},\n    \"created_at\": \"2024-09-12T21:46:49.464Z\",\n    \"modality\": \"contacts\",\n    \"name\": \"2024 fiction writers of america attendees\",\n    \"need_cached_count_update\": false,\n    \"needs_count_update_at\": \"2024-09-13T00:43:17.703+00:00\",\n    \"rule_config_template_id\": null,\n    \"team_id\": \"6095a710bd01d100a506d4ac\",\n    \"updated_at\": \"2024-09-13T00:47:35.416Z\",\n    \"user_id\": \"60affe7d6e270a00f5db6fe4\",\n    \"id\": \"66e361494acd1307386d4073\",\n    \"key\": \"66e361494acd1307386d4073\"\n  },\n  {\n    \"_id\": \"66ad0f4bc1a9d50001765e61\",\n    \"cached_count\": 11,\n    \"concurrency_locks\": {},\n    \"created_at\": \"2024-08-02T16:54:35.303Z\",\n    \"modality\": \"contacts\",\n    \"name\": \"Demo Meeting Booked\",\n    \"need_cached_count_update\": false,\n    \"needs_count_update_at\": \"2024-09-17T22:44:30.338+00:00\",\n    \"rule_config_template_id\": null,\n    \"team_id\": \"6095a710bd01d100a506d4ac\",\n    \"updated_at\": \"2024-09-17T22:44:30.370Z\",\n    \"user_id\": \"6578a336d8ecfd03eca315d8\",\n    \"id\": \"66ad0f4bc1a9d50001765e61\",\n    \"key\": \"66ad0f4bc1a9d50001765e61\"\n  },\n  {\n    \"_id\": \"660333cbb93a2102e8f00331\",\n    \"cached_count\": 83,\n    \"concurrency_locks\": {},\n    \"created_at\": \"2024-03-26T20:44:59.053Z\",\n    \"modality\": \"contacts\",\n    \"name\": \"Trade Show Leads\",\n    \"need_cached_count_update\": false,\n    \"needs_count_update_at\": \"2024-03-26T20:45:03.106+00:00\",\n    \"rule_config_template_id\": null,\n    \"team_id\": \"6095a710bd01d100a506d4ac\",\n    \"updated_at\": \"2024-03-26T20:45:03.139Z\",\n    \"user_id\": \"60affe7d6e270a00f5db6fe4\",\n    \"id\": \"660333cbb93a2102e8f00331\",\n    \"key\": \"660333cbb93a2102e8f00331\"\n  },\n  {\n    \"_id\": \"6614710916c22b01c7dd5e9b\",\n    \"cached_count\": 8,\n    \"concurrency_locks\": {},\n    \"created_at\": \"2024-04-08T22:34:49.454Z\",\n    \"modality\": \"accounts\",\n    \"name\": \"CSV Import\",\n    \"need_cached_count_update\": false,\n    \"needs_count_update_at\": \"2024-04-08T22:34:49.489+00:00\",\n    \"rule_config_template_id\": null,\n    \"team_id\": \"6095a710bd01d100a506d4ac\",\n    \"updated_at\": \"2024-04-08T22:37:23.037Z\",\n    \"user_id\": \"60affe7d6e270a00f5db6fe4\",\n    \"id\": \"6614710916c22b01c7dd5e9b\",\n    \"key\": \"6614710916c22b01c7dd5e9b\"\n  },\n  {\n    \"_id\": \"6625244b0909d600078ad116\",\n    \"cached_count\": 229,\n    \"concurrency_locks\": {},\n    \"created_at\": \"2024-04-21T14:35:55.672Z\",\n    \"modality\": \"contacts\",\n    \"name\": \"Cold Call Leads\",\n    \"need_cached_count_update\": false,\n    \"needs_count_update_at\": \"2024-05-21T21:11:06.074+00:00\",\n    \"rule_config_template_id\": null,\n    \"team_id\": \"6095a710bd01d100a506d4ac\",\n    \"updated_at\": \"2024-05-21T21:11:06.106Z\",\n    \"user_id\": \"60affe7d6e270a00f5db6fe4\",\n    \"id\": \"6625244b0909d600078ad116\",\n    \"key\": \"6625244b0909d600078ad116\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7787e952-0998-44a8-9411-64f34e5f10a5",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f2e62eff-9c91-47ac-b091-815439d9e11e",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"This API key is not authorized to access api/v1/labels/index. Request an API key from your administrator that includes this endpoint in its configured scope.\\\",\\n  \\\"error_code\\\": \\\"API_INACCESSIBLE\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "69119b19-0d06-4a1d-8cd7-dcc64f44baa6",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/labels is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0e673d03-b529-496c-85f7-78e99a6321a6",
+          "name": "Create a List",
+          "request": {
+            "name": "Create a List",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/labels/create` or `Master API key`\n\n**OAuth scopes:** `lists_create`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nA <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409728608525-Create-and-Use-a-List\" target=\"_blank\">list</a> is a saved group of contacts or accounts in Apollo that you can organize, action, and track together.<br><br>Use the Create a List endpoint to create a new, empty contact or account list in your team's Apollo account. After you create a list, add records to it with the <a href=\"https://docs.apollo.io/reference/add-records-to-a-list\">Add Records to a List endpoint</a>.<br><br>List names must be unique for each modality within your team. If you try to create a list with a name that already exists for the same modality, Apollo returns a `422` response.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "labels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"modality\": \"<string>\",\n  \"book_of_business\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "285e1857-cedf-4ef6-910f-383bad38bc08",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"modality\": \"<string>\",\n  \"book_of_business\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"label\": {\n    \"id\": \"6612a4b7c8d9e0f123456789\",\n    \"modality\": \"contacts\",\n    \"cached_count\": 0,\n    \"name\": \"Conference 2024 - Maui\",\n    \"created_at\": \"2024-09-17T20:09:57.863Z\",\n    \"updated_at\": \"2024-09-17T20:09:57.863Z\",\n    \"user_id\": \"66302798d03b9601c7934ebf\",\n    \"book_of_business\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07d320a6-7f24-4f45-be5e-322f3c666eae",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"modality\": \"<string>\",\n  \"book_of_business\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b7d2fcd1-9cae-4dfe-a0ce-6c79917d440c",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"modality\": \"<string>\",\n  \"book_of_business\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"This API key is not authorized to access api/v1/labels/create. Request an API key from your administrator that includes this endpoint in its configured scope.\\\",\\n  \\\"error_code\\\": \\\"API_INACCESSIBLE\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64564183-00d1-4feb-8c65-7868bb222171",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"modality\": \"<string>\",\n  \"book_of_business\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"Please enter a non-empty name!\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "835f5381-f533-4e28-b318-ca629aad8f59",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"modality\": \"<string>\",\n  \"book_of_business\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/labels/create is 200 times per minute. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "09fb57e5-e0a9-4dc8-924e-4c48d2c44da9",
+          "name": "Update a List",
+          "request": {
+            "name": "Update a List",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/labels/update` or `Master API key`\n\n**OAuth scopes:** `lists_update`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nA <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409728608525-Create-and-Use-a-List\" target=\"_blank\">list</a> is a saved group of contacts or accounts in Apollo that you can organize, action, and track together.<br><br>Use the Update a List endpoint to rename an existing list or to toggle its Book of Business status. You can't change a list's modality after it's created.<br><br>To find list IDs, call the <a href=\"https://docs.apollo.io/reference/get-a-list-of-all-lists\">Get a List of All Lists endpoint</a> and identify the `id` value for the list you want to update.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "labels",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The Apollo ID for the list you want to update.<br><br>To find list IDs, call the <a href=\"https://docs.apollo.io/reference/get-a-list-of-all-lists\">Get a List of All Lists endpoint</a> and identify the `id` value.<br><br>Example: `6612a4b7c8d9e0f123456789`"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"book_of_business\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "94bbb507-5a90-4bd0-badd-b784350d9ad9",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Apollo ID for the list you want to update.<br><br>To find list IDs, call the <a href=\"https://docs.apollo.io/reference/get-a-list-of-all-lists\">Get a List of All Lists endpoint</a> and identify the `id` value.<br><br>Example: `6612a4b7c8d9e0f123456789`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"book_of_business\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"label\": {\n    \"id\": \"6612a4b7c8d9e0f123456789\",\n    \"modality\": \"contacts\",\n    \"cached_count\": 0,\n    \"name\": \"Conference 2024 - Maui (West)\",\n    \"created_at\": \"2024-09-17T20:09:57.863Z\",\n    \"updated_at\": \"2024-09-17T20:09:57.863Z\",\n    \"user_id\": \"66302798d03b9601c7934ebf\",\n    \"book_of_business\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3e11049-3f98-470b-a876-30d6ba5d6bbd",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Apollo ID for the list you want to update.<br><br>To find list IDs, call the <a href=\"https://docs.apollo.io/reference/get-a-list-of-all-lists\">Get a List of All Lists endpoint</a> and identify the `id` value.<br><br>Example: `6612a4b7c8d9e0f123456789`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"book_of_business\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4c5ed33e-d37c-4f2b-9fb6-3beb53e20204",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Apollo ID for the list you want to update.<br><br>To find list IDs, call the <a href=\"https://docs.apollo.io/reference/get-a-list-of-all-lists\">Get a List of All Lists endpoint</a> and identify the `id` value.<br><br>Example: `6612a4b7c8d9e0f123456789`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"book_of_business\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"This API key is not authorized to access api/v1/labels/update. Request an API key from your administrator that includes this endpoint in its configured scope.\\\",\\n  \\\"error_code\\\": \\\"API_INACCESSIBLE\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "be9c7bed-9f34-481d-a5ee-19b55718b046",
+              "name": "404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Apollo ID for the list you want to update.<br><br>To find list IDs, call the <a href=\"https://docs.apollo.io/reference/get-a-list-of-all-lists\">Get a List of All Lists endpoint</a> and identify the `id` value.<br><br>Example: `6612a4b7c8d9e0f123456789`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"book_of_business\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"message\\\": \\\"Could not find label with id 6612a4b7c8d9e0f123456789\\\",\\n  \\\"error\\\": \\\"Record not found.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef2bf9f8-24d0-40e9-86f9-04452eaac9d0",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Apollo ID for the list you want to update.<br><br>To find list IDs, call the <a href=\"https://docs.apollo.io/reference/get-a-list-of-all-lists\">Get a List of All Lists endpoint</a> and identify the `id` value.<br><br>Example: `6612a4b7c8d9e0f123456789`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"book_of_business\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"Please enter a non-empty name!\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "61fe0267-aea8-4fa7-a34f-51006e0d5ef1",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Apollo ID for the list you want to update.<br><br>To find list IDs, call the <a href=\"https://docs.apollo.io/reference/get-a-list-of-all-lists\">Get a List of All Lists endpoint</a> and identify the `id` value.<br><br>Example: `6612a4b7c8d9e0f123456789`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"book_of_business\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/labels/update is 200 times per minute. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fedd81dd-3a54-492e-8549-557df81d70d1",
+          "name": "Add Records to a List",
+          "request": {
+            "name": "Add Records to a List",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/labels/add_entity_ids_to_label_names` or `Master API key`\n\n**OAuth scopes:** `lists_add_entities`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nA <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409728608525-Create-and-Use-a-List\" target=\"_blank\">list</a> is a saved group of contacts or accounts in Apollo that you can organize, action, and track together.<br><br>Use the Add Records to a List endpoint to add existing contacts or accounts to one or more lists, referencing the lists by name. If a list name you provide doesn't exist yet for the given modality, Apollo creates it automatically.<br><br>Provide the record IDs in `entity_ids` and the target list names in `label_names`. To find record IDs, use the <a href=\"https://docs.apollo.io/reference/search-for-contacts\">Search for Contacts</a> or <a href=\"https://docs.apollo.io/reference/search-for-accounts\">Search for Accounts</a> endpoints.<br><br>If you provide no valid `entity_ids` or no `label_names`, the endpoint makes no changes and returns a `200` response with a confirmation message.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "labels",
+                "add_entity_ids_to_label_names"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"label_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"modality\": \"<string>\",\n  \"async\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f81d3cea-39b9-42e1-8460-fde87e9f1ed4",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    "add_entity_ids_to_label_names"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"label_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"modality\": \"<string>\",\n  \"async\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"labels\": [\n    {\n      \"id\": \"6612a4b7c8d9e0f123456789\",\n      \"modality\": \"contacts\",\n      \"cached_count\": 2,\n      \"name\": \"Conference 2024 - Maui\",\n      \"created_at\": \"2024-09-17T20:09:57.863Z\",\n      \"updated_at\": \"2024-09-17T20:09:57.863Z\",\n      \"user_id\": \"66302798d03b9601c7934ebf\",\n      \"book_of_business\": null\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ee353ce-aa08-4627-a56a-48cbd8da3a81",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    "add_entity_ids_to_label_names"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"label_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"modality\": \"<string>\",\n  \"async\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c20e3bf0-cb0b-4f28-8e43-293815a8eb2f",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    "add_entity_ids_to_label_names"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"label_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"modality\": \"<string>\",\n  \"async\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"This API key is not authorized to access api/v1/labels/add_entity_ids_to_label_names. Request an API key from your administrator that includes this endpoint in its configured scope.\\\",\\n  \\\"error_code\\\": \\\"API_INACCESSIBLE\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bcb48afd-ee46-4ba1-b54a-706acd9e6823",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    "add_entity_ids_to_label_names"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"label_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"modality\": \"<string>\",\n  \"async\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"Invalid modality: leads.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65ed159a-518d-4f5f-b61d-7f9c5cd0a2b5",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    "add_entity_ids_to_label_names"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"label_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"modality\": \"<string>\",\n  \"async\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/labels/add_entity_ids_to_label_names is 200 times per minute. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9285716c-a682-428b-ac97-04af0eb11199",
+          "name": "Remove Records from a List",
+          "request": {
+            "name": "Remove Records from a List",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/labels/remove_entity_ids_from_label_names` or `Master API key`\n\n**OAuth scopes:** `lists_remove_entities`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nA <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409728608525-Create-and-Use-a-List\" target=\"_blank\">list</a> is a saved group of contacts or accounts in Apollo that you can organize, action, and track together.<br><br>Use the Remove Records from a List endpoint to remove contacts or accounts from one or more lists, referencing the lists by name. Removing records from a list doesn't delete the records themselves, it only removes them from the specified lists.<br><br>Provide the record IDs in `entity_ids` and the list names in `label_names`. To find record IDs, use the <a href=\"https://docs.apollo.io/reference/search-for-contacts\">Search for Contacts</a> or <a href=\"https://docs.apollo.io/reference/search-for-accounts\">Search for Accounts</a> endpoints.<br><br>If you provide no valid `entity_ids` or no `label_names`, the endpoint makes no changes and returns a `200` response with a confirmation message.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "labels",
+                "remove_entity_ids_from_label_names"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"label_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"modality\": \"<string>\",\n  \"async\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2f88d1cc-340d-4786-8d32-977d4da7397e",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    "remove_entity_ids_from_label_names"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"label_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"modality\": \"<string>\",\n  \"async\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"labels\": [\n    {\n      \"id\": \"6612a4b7c8d9e0f123456789\",\n      \"modality\": \"contacts\",\n      \"cached_count\": 0,\n      \"name\": \"Conference 2024 - Maui\",\n      \"created_at\": \"2024-09-17T20:09:57.863Z\",\n      \"updated_at\": \"2024-09-17T20:09:57.863Z\",\n      \"user_id\": \"66302798d03b9601c7934ebf\",\n      \"book_of_business\": null\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef03b9cb-c49e-4816-90f9-5b0ddb6402f1",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    "remove_entity_ids_from_label_names"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"label_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"modality\": \"<string>\",\n  \"async\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a94e7c4d-f767-4892-8749-c60981d0ab6f",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    "remove_entity_ids_from_label_names"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"label_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"modality\": \"<string>\",\n  \"async\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"This API key is not authorized to access api/v1/labels/remove_entity_ids_from_label_names. Request an API key from your administrator that includes this endpoint in its configured scope.\\\",\\n  \\\"error_code\\\": \\\"API_INACCESSIBLE\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c32ca75-c2a4-4049-8b0f-2a2d8986cc2b",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    "remove_entity_ids_from_label_names"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"label_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"modality\": \"<string>\",\n  \"async\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"Invalid modality: leads.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9901b02-03e1-4d82-9c50-563affac131f",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "labels",
+                    "remove_entity_ids_from_label_names"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entity_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"label_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"modality\": \"<string>\",\n  \"async\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/labels/remove_entity_ids_from_label_names is 200 times per minute. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8892fef5-0deb-4fc6-a10c-31bff391b912",
+          "name": "Poll Webhook Result",
+          "request": {
+            "name": "Poll Webhook Result",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/webhook_result/show` or `Master API key`\n\n**OAuth scopes:** `webhook_result_read`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the Poll Webhook Result endpoint to retrieve webhook results from Apollo. This endpoint enables you to poll for the webhook payload if you didn't receive the original webhook callback.<br><br>To use this endpoint, you need the <code>request_id</code> from the <a href=\"https://docs.apollo.io/reference/people-enrichment\">People Enrichment</a> or <a href=\"https://docs.apollo.io/reference/bulk-people-enrichment\">Bulk People Enrichment</a> endpoint. Pass this value as <code>request_id</code> in this endpoint.<br><br>This endpoint returns webhook results for your team from up to thirty days after the webhook was triggered.<br><br>While an enrichment is still processing, this endpoint returns a <code>404</code> with <code>error_code: result_pending</code> and a <code>retry_after_seconds</code> value—wait that many seconds and poll again. Once the result is ready, it returns a <code>200</code>.<br><br>Three responses are terminal, so stop polling if you receive any of them: <code>request_id_unknown</code> (<code>404</code>—the <code>request_id</code> is not recognized, usually because it was mistyped or never issued), <code>request_id_expired</code> (<code>410</code>—the result has aged out past the 30-day window, so start a fresh enrichment request), and <code>invalid_request_id</code> (<code>400</code>—the <code>request_id</code> is not a valid signed 64-bit integer).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhook_result",
+                ":request_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "request_id",
+                  "description": "(Required) The <code>request_id</code> returned when the original enrichment request was submitted. This value is a signed 64-bit integer and can be positive or negative. <br><br>Example: <code>1039995589705121900</code>"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cb7d5494-3f28-44ac-a9c4-dd720f8dd0a2",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_result",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "request_id",
+                      "description": "(Required) The <code>request_id</code> returned when the original enrichment request was submitted. This value is a signed 64-bit integer and can be positive or negative. <br><br>Example: <code>1039995589705121900</code>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"1039995589705121900\",\n  \"webhook_status\": \"success\",\n  \"request_type\": \"phone\",\n  \"last_dispatched_at\": \"2026-05-26T10:42:11Z\",\n  \"failure_reason\": null,\n  \"webhook_result\": {\n    \"status\": \"success\",\n    \"total_requested_enrichments\": 1,\n    \"unique_enriched_records\": 1,\n    \"missing_records\": 0,\n    \"credits_consumed\": 1,\n    \"people\": [\n      {\n        \"id\": \"587cf802f65125cad923a266\",\n        \"status\": \"success\",\n        \"phone_numbers\": [\n          {\n            \"_id\": \"64dbe6d172c24f00017b9b71\",\n            \"confidence_cd\": \"high\",\n            \"created_at\": null,\n            \"direct_dial_source_cd\": \"contact_trusted\",\n            \"dnc_other_info\": {\n              \"country\": \"United States\"\n            },\n            \"dnc_status_cd\": \"not_found\",\n            \"dnc_status_updated_at\": \"2023-08-15T20:57:53.108+00:00\",\n            \"position\": 0,\n            \"raw_number\": \"+1 555-555-0164\",\n            \"sanitized_number\": \"+15555550164\",\n            \"status_cd\": \"valid_number\",\n            \"type_cd\": \"other\",\n            \"updated_at\": null,\n            \"id\": \"64dbe6d172c24f00017b9b71\",\n            \"key\": \"64dbe6d172c24f00017b9b71\"\n          },\n          {\n            \"_id\": \"64dbe6d172c24f00017b9b72\",\n            \"confidence_cd\": \"high\",\n            \"created_at\": null,\n            \"direct_dial_source_cd\": \"contact_trusted\",\n            \"dnc_other_info\": {\n              \"country\": \"United States\"\n            },\n            \"dnc_status_cd\": \"not_found\",\n            \"dnc_status_updated_at\": \"2023-08-15T20:57:53.267+00:00\",\n            \"position\": 1,\n            \"raw_number\": \"+1 415-555-0117\",\n            \"sanitized_number\": \"+14155550117\",\n            \"status_cd\": \"valid_number\",\n            \"type_cd\": \"other\",\n            \"updated_at\": null,\n            \"id\": \"64dbe6d172c24f00017b9b72\",\n            \"key\": \"64dbe6d172c24f00017b9b72\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82f1572f-5eda-4ab9-8b38-728342506179",
+              "name": "400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_result",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "request_id",
+                      "description": "(Required) The <code>request_id</code> returned when the original enrichment request was submitted. This value is a signed 64-bit integer and can be positive or negative. <br><br>Example: <code>1039995589705121900</code>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"invalid_request_id\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f653630-cafb-4e7c-b1a2-d4b73e00624a",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_result",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "request_id",
+                      "description": "(Required) The <code>request_id</code> returned when the original enrichment request was submitted. This value is a signed 64-bit integer and can be positive or negative. <br><br>Example: <code>1039995589705121900</code>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4953dba7-4c42-4929-b877-ece684e82d7a",
+              "name": "404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_result",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "request_id",
+                      "description": "(Required) The <code>request_id</code> returned when the original enrichment request was submitted. This value is a signed 64-bit integer and can be positive or negative. <br><br>Example: <code>1039995589705121900</code>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"result_pending\",\n  \"retry_after_seconds\": 10\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bfba8af9-fd88-4216-a463-dfc3c100bc10",
+              "name": "410",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_result",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "request_id",
+                      "description": "(Required) The <code>request_id</code> returned when the original enrichment request was submitted. This value is a signed 64-bit integer and can be positive or negative. <br><br>Example: <code>1039995589705121900</code>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"request_id_expired\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b9e4b67e-e5a6-482f-901f-2e5a316362a1",
+          "name": "View Credit Usage Stats",
+          "request": {
+            "name": "View Credit Usage Stats",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/usage_stats/credit_usage_stats` or `Master API key`\n\n**OAuth scopes:** `credit_usage_stats_read`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the View Credit Usage Stats endpoint to monitor your team's credit balance across every credit type in the current billing cycle.\n\nFor each credit type, the response returns the `limit` (your team's allowance for the cycle), `consumed` (credits used so far), and `left_over` (credits remaining). The `current_credit_cycle` object reports the start and end dates of the billing cycle these stats cover.\n\nBalances reflect your team's running credit usage and update within seconds of a credit-consuming request. To retrieve credit usage for a single user instead of the whole team, use [Get Current User Profile](https://docs.apollo.io/reference/get-current-user-profile) with the `include_credit_usage` query parameter set to `true`.\n\n### Credit types\n\nThe `credit_usage_stats` object is keyed by credit type. Each key funds a different Apollo action:\n\n| Key | What it funds |\n| --- | --- |\n| `lead_credit` | Email address reveals and email enrichment. |\n| `direct_dial_credit` | Mobile and direct dial phone number reveals. |\n| `export_credit` | CSV exports of contacts and accounts. |\n| `conversation_credit` | Conversation intelligence and call recording. |\n| `ai_credit` | AI-generated email writing. |\n| `power_up_credit` | AI power-up field enrichment on contact and account records. |\n| `inbound_website_visitor_credit` | Inbound website visitor identification. |\n| `contact_website_visitor_credit` | Contact-level website visit tracking. |\n| `web_search_record_credit` | Web search enrichment records. |\n| `dialer` | Dialer talk time. Reported in **minutes**, not credits. |\n\nA credit type your <a href=\"https://app.apollo.io/#/settings/plans/upgrade\" target=\"_blank\">Apollo plan</a> doesn't include returns a `limit` of `0`.\n\nIf your team is on a unified credit plan, `lead_credit` is a shared pool: the `left_over` value already accounts for mobile reveals, exports, dialer minutes, and power-up enrichment, so don't add the individual balances together to estimate what's left.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "usage_stats",
+                "credit_usage_stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4c7a5c12-ceb0-4261-b56b-24742c202790",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "usage_stats",
+                    "credit_usage_stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"credit_usage_stats\\\": {\\n    \\\"lead_credit\\\": {\\n      \\\"limit\\\": 10000,\\n      \\\"consumed\\\": 2500,\\n      \\\"left_over\\\": 7500\\n    },\\n    \\\"direct_dial_credit\\\": {\\n      \\\"limit\\\": 1000,\\n      \\\"consumed\\\": 120,\\n      \\\"left_over\\\": 880\\n    },\\n    \\\"export_credit\\\": {\\n      \\\"limit\\\": 5000,\\n      \\\"consumed\\\": 250,\\n      \\\"left_over\\\": 4750\\n    },\\n    \\\"conversation_credit\\\": {\\n      \\\"limit\\\": 500,\\n      \\\"consumed\\\": 30,\\n      \\\"left_over\\\": 470\\n    },\\n    \\\"ai_credit\\\": {\\n      \\\"limit\\\": 2000,\\n      \\\"consumed\\\": 75,\\n      \\\"left_over\\\": 1925\\n    },\\n    \\\"power_up_credit\\\": {\\n      \\\"limit\\\": 1000,\\n      \\\"consumed\\\": 40,\\n      \\\"left_over\\\": 960\\n    },\\n    \\\"inbound_website_visitor_credit\\\": {\\n      \\\"limit\\\": 1000,\\n      \\\"consumed\\\": 60,\\n      \\\"left_over\\\": 940\\n    },\\n    \\\"dialer\\\": {\\n      \\\"limit\\\": 500,\\n      \\\"consumed\\\": 12,\\n      \\\"left_over\\\": 488\\n    },\\n    \\\"web_search_record_credit\\\": {\\n      \\\"limit\\\": 1000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 1000\\n    },\\n    \\\"contact_website_visitor_credit\\\": {\\n      \\\"limit\\\": 1000,\\n      \\\"consumed\\\": 15,\\n      \\\"left_over\\\": 985\\n    }\\n  },\\n  \\\"current_credit_cycle\\\": {\\n    \\\"start_date\\\": \\\"2026-04-01T00:00:00.000Z\\\",\\n    \\\"end_date\\\": \\\"2026-05-01T00:00:00.000Z\\\"\\n  }\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe8d43a8-3a58-4897-a6c0-5a3da64cda94",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "usage_stats",
+                    "credit_usage_stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cdd94745-0200-4cf7-9f3b-cc56c666ab8c",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "usage_stats",
+                    "credit_usage_stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"This API key is not authorized to access api/v1/usage_stats/credit_usage_stats. Request an API key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\": \"API_INACCESSIBLE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "800fe7e8-af5a-430c-9852-7bfef944adc5",
+          "name": "View API Usage Stats and Rate Limits",
+          "request": {
+            "name": "View API Usage Stats and Rate Limits",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/usage_stats/api_usage_stats` or `Master API key`\n\n**OAuth scopes:** `api_usage_stats_read`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the View API Usage Stats endpoint to view your team's usage of Apollo API and your rate limit for API endpoints.<br><br>Each endpoint has a rate limit per minute, hour, and day. Your <a href=\"https://docs.apollo.io/docs/api-pricing\">Apollo plan</a> does impact the rate limits for API endpoints.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "usage_stats",
+                "api_usage_stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dbf71381-27c7-4848-a294-771971d8d78e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "usage_stats",
+                    "api_usage_stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"[\\\\\\\"api/v1/contacts\\\\\\\", \\\\\\\"search\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 500,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 5,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 10,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/contacts\\\\\\\", \\\\\\\"intelligent_fuzzy_search\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/contacts\\\\\\\", \\\\\\\"create\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/contacts\\\\\\\", \\\\\\\"update\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/contacts\\\\\\\", \\\\\\\"match\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/contacts\\\\\\\", \\\\\\\"bulk_match\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 100,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 100\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 20,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 20\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/contact_stages\\\\\\\", \\\\\\\"index\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/accounts\\\\\\\", \\\\\\\"search\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/account_stages\\\\\\\", \\\\\\\"index\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/people\\\\\\\", \\\\\\\"search\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/people\\\\\\\", \\\\\\\"match\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/people\\\\\\\", \\\\\\\"bulk_match\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 100,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 100\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 20,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 20\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/people\\\\\\\", \\\\\\\"show\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/organizations\\\\\\\", \\\\\\\"show\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 3,\\n      \\\"left_over\\\": 5997\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 3,\\n      \\\"left_over\\\": 597\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/organizations\\\\\\\", \\\\\\\"show_with_context\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 3,\\n      \\\"left_over\\\": 5997\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 3,\\n      \\\"left_over\\\": 597\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/organizations\\\\\\\", \\\\\\\"search\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/organizations\\\\\\\", \\\\\\\"enrich\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/organizations\\\\\\\", \\\\\\\"bulk_enrich\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 100,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 100\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 20,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 20\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/organizations\\\\\\\", \\\\\\\"job_postings\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/organizations\\\\\\\", \\\\\\\"employee_metrics\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/mixed_companies\\\\\\\", \\\\\\\"search\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/mixed_people\\\\\\\", \\\\\\\"add_to_my_prospects\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 1,\\n      \\\"left_over\\\": 5999\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 100,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 100\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/mixed_people\\\\\\\", \\\\\\\"search\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 10,\\n      \\\"left_over\\\": 5990\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 10,\\n      \\\"left_over\\\": 590\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 1,\\n      \\\"left_over\\\": 199\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/mixed_people\\\\\\\", \\\\\\\"organization_top_people\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 2000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 2000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 400,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 400\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/conversation_shares\\\\\\\", \\\\\\\"create\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/conversation_shares\\\\\\\", \\\\\\\"update\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/conversation_shares\\\\\\\", \\\\\\\"show\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 300,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 300\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 50,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 50\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 10,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 10\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/conversation_shares\\\\\\\", \\\\\\\"external\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 300,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 300\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 50,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 50\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 10,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 10\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/conversations\\\\\\\", \\\\\\\"ask_anything_v2_chat\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 1000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 1000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 20,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 20\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/conversations\\\\\\\", \\\\\\\"export\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 480,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 480\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 20,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 20\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 1,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 1\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/voice_settings\\\\\\\", \\\\\\\"get_available_phone_numbers\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 50,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 50\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 10,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 10\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/tasks\\\\\\\", \\\\\\\"create\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/tasks\\\\\\\", \\\\\\\"search\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 3,\\n      \\\"left_over\\\": 5997\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 3,\\n      \\\"left_over\\\": 597\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/tasks\\\\\\\", \\\\\\\"bulk_complete\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/reports\\\\\\\", \\\\\\\"sync_report\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 5,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 5\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/mfa_config\\\\\\\", \\\\\\\"create\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 50,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 50\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 20,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 20\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 5,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 5\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/phone_calls\\\\\\\", \\\\\\\"create\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/phone_calls\\\\\\\", \\\\\\\"update\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/paging_events\\\\\\\", \\\\\\\"create\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 3,\\n      \\\"left_over\\\": 5997\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 1,\\n      \\\"left_over\\\": 599\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 1,\\n      \\\"left_over\\\": 199\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/crm\\\\\\\", \\\\\\\"object_fields_mapping\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/emailer_campaigns\\\\\\\", \\\\\\\"show\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 2,\\n      \\\"left_over\\\": 5998\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/emailer_campaigns\\\\\\\", \\\\\\\"search\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 2,\\n      \\\"left_over\\\": 5998\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/emailer_campaigns\\\\\\\", \\\\\\\"add_contact_ids\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/emailer_campaigns\\\\\\\", \\\\\\\"remove_or_stop_contact_ids\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/emailer_messages\\\\\\\", \\\\\\\"search\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/emailer_messages\\\\\\\", \\\\\\\"activities\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/users\\\\\\\", \\\\\\\"search\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 4,\\n      \\\"left_over\\\": 5996\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/email_accounts\\\\\\\", \\\\\\\"index\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/labels\\\\\\\", \\\\\\\"index\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  },\\n  \\\"[\\\\\\\"api/v1/typed_custom_fields\\\\\\\", \\\\\\\"index\\\\\\\"]\\\": {\\n    \\\"day\\\": {\\n      \\\"limit\\\": 6000,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 6000\\n    },\\n    \\\"hour\\\": {\\n      \\\"limit\\\": 600,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 600\\n    },\\n    \\\"minute\\\": {\\n      \\\"limit\\\": 200,\\n      \\\"consumed\\\": 0,\\n      \\\"left_over\\\": 200\\n    }\\n  }\\n0\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "53f8c338-ec6f-416c-ab64-4c2e1a7fbb79",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "usage_stats",
+                    "api_usage_stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7ef41ff8-5e56-4aa6-ae8d-f97d4107a498",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "usage_stats",
+                    "api_usage_stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"This API key is not authorized to access api/v1/usage_stats/api_usage_stats. Request an API key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\": \"API_INACCESSIBLE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cf6918fe-4b39-45f1-b0d4-c1a669c981e3",
+          "name": "Get a List of Notes",
+          "request": {
+            "name": "Get a List of Notes",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `meetings/api/v1/notes/index` or `Master API key`\n\n**OAuth scopes:** `notes_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/28746467476365-Notes-Overview\" target=\"_blank\">Notes</a> on Apollo let you keep track of info directly on prospect profiles.<br><br>The Get a List of Notes endpoint retrieves notes associated with a specific contact, account, opportunity, calendar event, or conversation in your Apollo account. You must provide at least one relation parameter (<code>account_id</code>, <code>contact_id</code>, <code>contact_ids</code>, <code>opportunity_id</code>, <code>calendar_event_id</code>, <code>conversation_id</code>, or <code>conversation_ids</code>). Use this endpoint to fetch notes with sorting and pagination support.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "notes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "contact_id",
+                  "value": "<string>",
+                  "description": "The ID of the contact whose notes you want to retrieve. <br><br>Example: `60a5c0b8e4b0c7001c4f1234`"
+                },
+                {
+                  "disabled": false,
+                  "key": "account_id",
+                  "value": "<string>",
+                  "description": "The ID of the account whose notes you want to retrieve. <br><br>Example: `60a5c0b8e4b0c7001c4f5678`"
+                },
+                {
+                  "disabled": false,
+                  "key": "opportunity_id",
+                  "value": "<string>",
+                  "description": "The ID of the opportunity whose notes you want to retrieve. <br><br>Example: `60a5c0b8e4b0c7001c4f9012`"
+                },
+                {
+                  "disabled": false,
+                  "key": "calendar_event_id",
+                  "value": "<string>",
+                  "description": "The ID of the calendar event whose notes you want to retrieve. <br><br>Example: `60a5c0b8e4b0c7001c4f3456`"
+                },
+                {
+                  "disabled": false,
+                  "key": "conversation_id",
+                  "value": "<string>",
+                  "description": "The ID of the conversation whose notes you want to retrieve. <br><br>Example: `60a5c0b8e4b0c7001c4f7890`"
+                },
+                {
+                  "disabled": false,
+                  "key": "conversation_ids",
+                  "value": "<string>",
+                  "description": "An array of conversation IDs to filter notes by multiple conversations."
+                },
+                {
+                  "disabled": false,
+                  "key": "conversation_ids",
+                  "value": "<string>",
+                  "description": "An array of conversation IDs to filter notes by multiple conversations."
+                },
+                {
+                  "disabled": false,
+                  "key": "contact_ids",
+                  "value": "<string>",
+                  "description": "An array of contact IDs to filter notes by multiple contacts."
+                },
+                {
+                  "disabled": false,
+                  "key": "contact_ids",
+                  "value": "<string>",
+                  "description": "An array of contact IDs to filter notes by multiple contacts."
+                },
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<string>",
+                  "description": "Filter notes created on or after this date. Must be a valid date string. <br><br>Example: `2024-01-01`"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by_field",
+                  "value": "created_at",
+                  "description": "The field to sort results by. Defaults to `created_at`."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_direction",
+                  "value": "desc",
+                  "description": "The direction to sort results. Defaults to `desc`."
+                },
+                {
+                  "disabled": false,
+                  "key": "skip",
+                  "value": "0",
+                  "description": "The number of notes to skip for pagination. Must be a non-negative integer. Defaults to `0`."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "The maximum number of notes to return per request. Defaults to `25`. Maximum value is `100`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f52d26e9-1f74-4fce-8b03-3ecd8779ba3a",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contact_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "account_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "opportunity_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "calendar_event_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "conversation_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "conversation_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "conversation_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by_field",
+                      "value": "created_at"
+                    },
+                    {
+                      "key": "sort_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"notes\": [\n    {\n      \"id\": \"60a5c0b8e4b0c7001c4fabcd\",\n      \"user_id\": \"60a5c0b8e4b0c7001c4f0001\",\n      \"content\": \"Had a productive call with the client. They are interested in the enterprise plan.\",\n      \"updated_at\": \"2024-06-15T14:30:00.000Z\",\n      \"created_at\": \"2024-06-15T14:30:00.000Z\",\n      \"contact_id\": \"60a5c0b8e4b0c7001c4f1234\",\n      \"conversation_id\": null,\n      \"account_id\": \"60a5c0b8e4b0c7001c4f5678\",\n      \"pinned_to_top\": false,\n      \"system\": false,\n      \"opportunity_id\": null,\n      \"account_ids\": [],\n      \"contact_ids\": [\n        \"60a5c0b8e4b0c7001c4f1234\"\n      ],\n      \"opportunity_ids\": [],\n      \"calendar_event_ids\": [],\n      \"conversation_ids\": [],\n      \"is_org_chart_note\": false,\n      \"crm_notes\": []\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b427f855-1ff3-4020-8fe6-bb224dccf89a",
+              "name": "400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contact_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "account_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "opportunity_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "calendar_event_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "conversation_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "conversation_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "conversation_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by_field",
+                      "value": "created_at"
+                    },
+                    {
+                      "key": "sort_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"At least one argument is required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e92b4f7c-8533-48c5-a838-f5676ee94b58",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contact_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "account_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "opportunity_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "calendar_event_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "conversation_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "conversation_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "conversation_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contact_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by_field",
+                      "value": "created_at"
+                    },
+                    {
+                      "key": "sort_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.apollo.io/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "13db3284-726f-443b-91bb-33543d04f15d",
+    "name": "Apollo API — Miscellaneous",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Apollo API provides programmatic access to [Apollo](https://www.apollo.io/), the all-in-one sales intelligence and engagement platform. Use it to enrich people and company data (individually or in bulk), search Apollo's database of over 240 million contacts and 30 million companies, and manage accounts, contacts, deals, sequences, tasks, calls, and conversations in your go-to-market workflows.\n\n## Base URL\n\nAll API requests are made to `https://api.apollo.io/api/v1`.\n\n## Authentication\n\n- **Apollo users** authenticate with an API key passed in the `x-api-key` request header. See [Create API Keys](https://docs.apollo.io/docs/create-api-key).\n- **Apollo partners** building integrations on behalf of mutual users authenticate with the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).\n\n## Rate limits & credits\n\nRate limits and credit consumption depend on your [Apollo pricing plan](https://docs.apollo.io/docs/api-pricing). Check your current limits and usage with the [View API Usage Stats and Rate Limits](https://docs.apollo.io/reference/view-api-usage-stats) endpoint. For more details, see [Rate Limits](https://docs.apollo.io/reference/rate-limits) and the [API FAQs](https://docs.apollo.io/docs/apollo-api-faqs).\n\nNew to the API? Start with the [Apollo API overview](https://docs.apollo.io/reference/apollo-api).\n\nContact Support:\n Name: Apollo API Support",
+      "type": "text/plain"
+    }
+  }
+}

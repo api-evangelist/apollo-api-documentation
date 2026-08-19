@@ -1,0 +1,3093 @@
+openapi: 3.1.0
+info:
+  title: Apollo API — Miscellaneous
+  summary: Programmatic access to Apollo's sales intelligence and engagement platform — data enrichment, prospect and company
+    search, and go-to-market workflow management.
+  description: 'The Apollo API provides programmatic access to [Apollo](https://www.apollo.io/), the all-in-one sales intelligence
+    and engagement platform. Use it to enrich people and company data (individually or in bulk), search Apollo''s database
+    of over 240 million contacts and 30 million companies, and manage accounts, contacts, deals, sequences, tasks, calls,
+    and conversations in your go-to-market workflows.
+
+
+    ## Base URL
+
+
+    All API requests are made to `https://api.apollo.io/api/v1`.
+
+
+    ## Authentication
+
+
+    - **Apollo users** authenticate with an API key passed in the `x-api-key` request header. See [Create API Keys](https://docs.apollo.io/docs/create-api-key).
+
+    - **Apollo partners** building integrations on behalf of mutual users authenticate with the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).
+
+
+    ## Rate limits & credits
+
+
+    Rate limits and credit consumption depend on your [Apollo pricing plan](https://docs.apollo.io/docs/api-pricing). Check
+    your current limits and usage with the [View API Usage Stats and Rate Limits](https://docs.apollo.io/reference/view-api-usage-stats)
+    endpoint. For more details, see [Rate Limits](https://docs.apollo.io/reference/rate-limits) and the [API FAQs](https://docs.apollo.io/docs/apollo-api-faqs).
+
+
+    New to the API? Start with the [Apollo API overview](https://docs.apollo.io/reference/apollo-api).'
+  termsOfService: https://www.apollo.io/terms/api
+  contact:
+    name: Apollo API Support
+    url: https://docs.apollo.io/
+  version: '1.0'
+servers:
+- url: https://api.apollo.io/api/v1
+tags:
+- name: Miscellaneous
+  description: Users, email accounts, lists, notes, usage stats, and webhook results.
+security:
+- apiKey: []
+- bearerAuth: []
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: '[Recommended] API key, passed in the `x-api-key` request header.
+
+        See [Create API Keys](https://docs.apollo.io/docs/create-api-key).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'OAuth 2.0 access token, used by Apollo partners building integrations.
+
+        See the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).'
+paths:
+  /users/search:
+    get:
+      summary: Get a List of Users
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/users/search` or `Master API key`
+
+
+        **OAuth scopes:** `users_list`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        <a href="https://knowledge.apollo.io/hc/en-us/articles/4409130537101-Add-Manage-and-Deactivate-Users" target="_blank">Users</a>
+        are the people who use your Apollo workspace.<br><br>Use the Get a List of Users endpoint to retrieve the IDs for
+        all of the users in your Apollo account.<br><br>These IDs can be used for several other endpoints, including the <a
+        href="https://docs.apollo.io/reference/create-deal">Create a Deal</a>, <a href="https://docs.apollo.io/reference/create-an-account">Create
+        an Account</a>, and <a href="https://docs.apollo.io/reference/create-a-task">Create a Task</a> endpoints.'
+      tags:
+      - Miscellaneous
+      operationId: get-a-list-of-users
+      parameters:
+      - name: page
+        in: query
+        description: 'The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination
+          with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint.
+          <br><br>Example: `4`'
+        schema:
+          type: integer
+          format: int32
+      - name: per_page
+        in: query
+        description: 'The number of search results that should be returned for each page. Limiting the number of results per
+          page improves the endpoint''s performance. <br><br>Use the `page` parameter to search the different pages of data.
+          <br><br>Example: `10`'
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"pagination\": {\n    \"page\": \"1\",\n    \"per_page\": \"3\",\n    \"total_entries\": 23,\n\
+                    \    \"total_pages\": 8\n  },\n  \"users\": [\n    {\n      \"id\": \"66c8db577ed7f201b25c0eef\",\n  \
+                    \    \"team_id\": \"6095a710bd01d100a506d4ac\",\n      \"first_name\": null,\n      \"last_name\": null,\n\
+                    \      \"title\": null,\n      \"email\": \"anita.rao@apollomail.io\",\n      \"created_at\": \"2024-08-23T18:56:24.067Z\"\
+                    ,\n      \"credit_limit\": null,\n      \"direct_dial_credit_limit\": null,\n      \"export_credit_limit\"\
+                    : null,\n      \"ai_credit_limit\": null,\n      \"salesforce_account\": null,\n      \"deleted\": false,\n\
+                    \      \"opt_out_html_template\": \"No longer interested in these messages? <%Unsubscribe%>\",\n     \
+                    \ \"name\": \"\",\n      \"referral_code\": \"nzu90RCUSGkFzsavf4Efh3\",\n      \"password_needs_reset\"\
+                    : false,\n      \"salesforce_id\": null,\n      \"default_cockpit_layout\": null,\n      \"default_account_overview_layout_id\"\
+                    : null,\n      \"default_contact_overview_layout_id\": null,\n      \"default_person_overview_layout_id\"\
+                    : null,\n      \"default_organization_overview_layout_id\": null,\n      \"default_opportunity_overview_layout_id\"\
+                    : null,\n      \"default_home_overview_layout_id\": null,\n      \"bridge_calls\": false,\n      \"bridge_phone_number\"\
+                    : null,\n      \"bridge_incoming_calls\": false,\n      \"bridge_incoming_phone_number\": null,\n    \
+                    \  \"current_email_verified\": true,\n      \"record_calls\": true,\n      \"salesforce_instance_url\"\
+                    : null,\n      \"permission_set_id\": \"6170904d46a82c00c227b744\",\n      \"default_use_local_numbers\"\
+                    : false,\n      \"disable_email_linking\": null,\n      \"sync_salesforce_id\": null,\n      \"sync_crm_id\"\
+                    : null,\n      \"zp_contact_id\": \"66ca3f1309358c0001ea7e4d\",\n      \"chrome_extension_downloaded\"\
+                    : false,\n      \"zp_is_super_analytics_user\": null,\n      \"email_oauth_signin_only\": false,\n   \
+                    \   \"notification_last_created_at\": null,\n      \"crm_requested_to_integrate\": null,\n      \"has_invited_user\"\
+                    : false,\n      \"has_used_enrichment\": false,\n      \"has_uploaded_csv\": false,\n      \"has_hidden_onboarding\"\
+                    : false,\n      \"notification_last_read_at\": null,\n      \"daily_data_request_email\": false,\n   \
+                    \   \"data_request_emails\": true,\n      \"daily_task_email\": true,\n      \"free_data_credits_email\"\
+                    : true,\n      \"dismiss_new_team_suggestion\": true,\n      \"request_email_change_to\": null,\n    \
+                    \  \"self_identified_persona\": null,\n      \"territory_is_active\": true,\n      \"conversation_is_private\"\
+                    : null,\n      \"show_deals_detail_page_updates_modal\": true,\n      \"assistant_setting\": {\n     \
+                    \   \"_id\": \"66c8db587ed7f201b25c0ef0\",\n        \"deal_size_metric\": \"amount\",\n        \"inactive_account_stage_ids\"\
+                    : [],\n        \"inactive_contact_stage_ids\": [],\n        \"insight_deal_size_signals\": {},\n     \
+                    \   \"insight_sale_cycle_signals\": {},\n        \"insight_win_rate_signals\": {},\n        \"is_persona_recommendation_requested\"\
+                    : false,\n        \"job_posting_locations\": [],\n        \"job_posting_titles\": [],\n        \"latest_funding_days\"\
+                    : 90,\n        \"max_num_active_accounts\": 100,\n        \"max_people_in_sequence_per_account\": 5,\n\
+                    \        \"num_inactive_days_to_re_engage\": 180,\n        \"persona_ids\": [\n          \"65d829661453d30300a0c9e3\"\
+                    ,\n          \"65e76d7f00d9c601aed49f6c\",\n          \"65e8bf1f1132a70579a84d61\",\n          \"65eb62d262c9dc01c66b2675\"\
+                    ,\n          \"66200c046194fa01c707b520\",\n          \"662057f7d9db7a01c7ba9960\"\n        ],\n     \
+                    \   \"should_show_persona_banner\": true,\n        \"success_case_account_stage_ids\": [],\n        \"\
+                    team_id\": \"6095a710bd01d100a506d4ac\",\n        \"technology_uids\": [],\n        \"territory_company_size_ranges\"\
+                    : [],\n        \"territory_location_override\": false,\n        \"territory_locations\": [\n         \
+                    \ \"United States\"\n        ],\n        \"territory_person_locations\": [\n          \"United States\"\
+                    \n        ],\n        \"user_id\": \"66c8db577ed7f201b25c0eef\",\n        \"id\": \"66c8db587ed7f201b25c0ef0\"\
+                    ,\n        \"key\": \"66c8db587ed7f201b25c0ef0\"\n      },\n      \"fields_fully_loaded\": true,\n   \
+                    \   \"typed_custom_fields\": null,\n      \"connected_to_slack\": false,\n      \"crm_email\": null,\n\
+                    \      \"triggered_referral_campaigns\": [],\n      \"enable_click_tracking\": false,\n      \"enable_open_tracking\"\
+                    : true,\n      \"should_include_unsubscribe_link\": false,\n      \"enable_one_click_unsubscribe\": null,\n\
+                    \      \"subteam_ids\": [],\n      \"prospect_territory_ids\": [],\n      \"toggled_on_territory_ids\"\
+                    : [],\n      \"linked_salesforce\": null,\n      \"linked_zoom_conference_account\": false,\n      \"\
+                    linked_bot_conference_account\": true,\n      \"linked_bot_conference_account_platforms\": [\n       \
+                    \ \"google_meet\",\n        \"ms_teams\"\n      ],\n      \"has_conference_account\": true,\n      \"\
+                    linked_hubspot\": false,\n      \"linked_salesloft\": false,\n      \"linked_crm_name\": null,\n     \
+                    \ \"chrome_extension_enabled_features\": [\n        \"apollo_everywhere\",\n        \"gmail\",\n     \
+                    \   \"linkedin\",\n        \"salesforce\",\n        \"hubspot\",\n        \"google_calendar\"\n      ],\n\
+                    \      \"chrome_extension_exclude_from_websites\": [\n        \"facebook.com\",\n        \"youtube.com\"\
+                    ,\n        \"instagram.com\",\n        \"google.com\",\n        \"live.com\",\n        \"yahoo.com\",\n\
+                    \        \"notion.so\",\n        \"atlassian.net\",\n        \"asana.com\",\n        \"typeform.com\"\
+                    ,\n        \"figma.com\"\n      ],\n      \"chrome_extension_everywhere_icon_horizontal_position\": \"\
+                    right\",\n      \"chrome_extension_everywhere_icon_vertical_position_in_vh\": 10,\n      \"default_chrome_extension_log_email_send_to_salesforce\"\
+                    : true,\n      \"default_chrome_extension_log_email_send_to_hubspot\": true,\n      \"chrome_extension_auto_match_salesforce_opportunity\"\
+                    : true,\n      \"chrome_extension_gmail_enable_email_tools\": true,\n      \"enable_desktop_notifications\"\
+                    : false,\n      \"enable_gmail_desktop_notifications\": null,\n      \"default_chrome_extension_enable_reminders\"\
+                    : false,\n      \"chrome_extension_gmail_enable_crm_sidebar\": true,\n      \"show_chrome_extension_buying_intent_promo\"\
+                    : true,\n      \"apollo_everywhere_search_count\": 0\n    },\n    {\n      \"id\": \"66aaac5a0e951f01b37012bd\"\
+                    ,\n      \"team_id\": \"6095a710bd01d100a506d4ac\",\n      \"first_name\": \"\",\n      \"last_name\"\
+                    : null,\n      \"title\": \"\",\n      \"email\": \"gina.larkin@apollomail.io\",\n      \"created_at\"\
+                    : \"2024-07-31T21:27:54.929Z\",\n      \"credit_limit\": null,\n      \"direct_dial_credit_limit\": null,\n\
+                    \      \"export_credit_limit\": null,\n      \"ai_credit_limit\": null,\n      \"salesforce_account\"\
+                    : null,\n      \"deleted\": false,\n      \"opt_out_html_template\": \"No longer interested in these messages?\
+                    \ <%Unsubscribe%>\",\n      \"name\": \"\",\n      \"referral_code\": \"vBNOmoTcZPy5Y0QdxJIAR9\",\n  \
+                    \    \"password_needs_reset\": false,\n      \"salesforce_id\": null,\n      \"default_cockpit_layout\"\
+                    : null,\n      \"default_account_overview_layout_id\": null,\n      \"default_contact_overview_layout_id\"\
+                    : null,\n      \"default_person_overview_layout_id\": null,\n      \"default_organization_overview_layout_id\"\
+                    : null,\n      \"default_opportunity_overview_layout_id\": null,\n      \"default_home_overview_layout_id\"\
+                    : null,\n      \"bridge_calls\": false,\n      \"bridge_phone_number\": null,\n      \"bridge_incoming_calls\"\
+                    : false,\n      \"bridge_incoming_phone_number\": null,\n      \"current_email_verified\": true,\n   \
+                    \   \"record_calls\": true,\n      \"salesforce_instance_url\": null,\n      \"permission_set_id\": \"\
+                    6095a711bd01d100a506d4d7\",\n      \"default_use_local_numbers\": false,\n      \"disable_email_linking\"\
+                    : null,\n      \"sync_salesforce_id\": null,\n      \"sync_crm_id\": null,\n      \"zp_contact_id\": \"\
+                    66abff979b4ed7000142aa19\",\n      \"chrome_extension_downloaded\": false,\n      \"zp_is_super_analytics_user\"\
+                    : null,\n      \"email_oauth_signin_only\": true,\n      \"notification_last_created_at\": null,\n   \
+                    \   \"crm_requested_to_integrate\": null,\n      \"has_invited_user\": false,\n      \"has_used_enrichment\"\
+                    : false,\n      \"has_uploaded_csv\": false,\n      \"has_hidden_onboarding\": false,\n      \"notification_last_read_at\"\
+                    : null,\n      \"daily_data_request_email\": false,\n      \"data_request_emails\": true,\n      \"daily_task_email\"\
+                    : true,\n      \"free_data_credits_email\": true,\n      \"dismiss_new_team_suggestion\": true,\n    \
+                    \  \"request_email_change_to\": null,\n      \"self_identified_persona\": null,\n      \"territory_is_active\"\
+                    : false,\n      \"conversation_is_private\": null,\n      \"show_deals_detail_page_updates_modal\": true,\n\
+                    \      \"assistant_setting\": {\n        \"_id\": \"66aaac5a0e951f01b37012be\",\n        \"deal_size_metric\"\
+                    : \"amount\",\n        \"inactive_account_stage_ids\": [],\n        \"inactive_contact_stage_ids\": [],\n\
+                    \        \"insight_deal_size_signals\": {},\n        \"insight_sale_cycle_signals\": {},\n        \"insight_win_rate_signals\"\
+                    : {},\n        \"is_persona_recommendation_requested\": false,\n        \"job_posting_locations\": [],\n\
+                    \        \"job_posting_titles\": [],\n        \"latest_funding_days\": 90,\n        \"max_num_active_accounts\"\
+                    : 100,\n        \"max_people_in_sequence_per_account\": 5,\n        \"num_inactive_days_to_re_engage\"\
+                    : 180,\n        \"persona_ids\": [\n          \"65d829661453d30300a0c9e3\",\n          \"65e76d7f00d9c601aed49f6c\"\
+                    ,\n          \"65e8bf1f1132a70579a84d61\",\n          \"65eb62d262c9dc01c66b2675\",\n          \"66200c046194fa01c707b520\"\
+                    ,\n          \"662057f7d9db7a01c7ba9960\"\n        ],\n        \"should_show_persona_banner\": true,\n\
+                    \        \"success_case_account_stage_ids\": [],\n        \"team_id\": \"6095a710bd01d100a506d4ac\",\n\
+                    \        \"technology_uids\": [],\n        \"territory_company_size_ranges\": [],\n        \"territory_location_override\"\
+                    : false,\n        \"territory_locations\": [\n          \"United States\"\n        ],\n        \"territory_person_locations\"\
+                    : [\n          \"United States\"\n        ],\n        \"user_id\": \"66aaac5a0e951f01b37012bd\",\n   \
+                    \     \"id\": \"66aaac5a0e951f01b37012be\",\n        \"key\": \"66aaac5a0e951f01b37012be\"\n      },\n\
+                    \      \"fields_fully_loaded\": true,\n      \"typed_custom_fields\": null,\n      \"connected_to_slack\"\
+                    : false,\n      \"crm_email\": null,\n      \"triggered_referral_campaigns\": [],\n      \"enable_click_tracking\"\
+                    : false,\n      \"enable_open_tracking\": true,\n      \"should_include_unsubscribe_link\": false,\n \
+                    \     \"enable_one_click_unsubscribe\": null,\n      \"subteam_ids\": [],\n      \"prospect_territory_ids\"\
+                    : [],\n      \"toggled_on_territory_ids\": [],\n      \"linked_salesforce\": null,\n      \"linked_zoom_conference_account\"\
+                    : false,\n      \"linked_bot_conference_account\": true,\n      \"linked_bot_conference_account_platforms\"\
+                    : [\n        \"google_meet\",\n        \"ms_teams\"\n      ],\n      \"has_conference_account\": true,\n\
+                    \      \"linked_hubspot\": false,\n      \"linked_salesloft\": false,\n      \"linked_crm_name\": null,\n\
+                    \      \"chrome_extension_enabled_features\": [\n        \"apollo_everywhere\",\n        \"gmail\",\n\
+                    \        \"linkedin\",\n        \"salesforce\",\n        \"hubspot\",\n        \"google_calendar\"\n \
+                    \     ],\n      \"chrome_extension_exclude_from_websites\": [\n        \"facebook.com\",\n        \"youtube.com\"\
+                    ,\n        \"instagram.com\",\n        \"google.com\",\n        \"live.com\",\n        \"yahoo.com\",\n\
+                    \        \"notion.so\",\n        \"atlassian.net\",\n        \"asana.com\",\n        \"typeform.com\"\
+                    ,\n        \"figma.com\"\n      ],\n      \"chrome_extension_everywhere_icon_horizontal_position\": \"\
+                    right\",\n      \"chrome_extension_everywhere_icon_vertical_position_in_vh\": 10,\n      \"default_chrome_extension_log_email_send_to_salesforce\"\
+                    : true,\n      \"default_chrome_extension_log_email_send_to_hubspot\": true,\n      \"chrome_extension_auto_match_salesforce_opportunity\"\
+                    : true,\n      \"chrome_extension_gmail_enable_email_tools\": true,\n      \"enable_desktop_notifications\"\
+                    : false,\n      \"enable_gmail_desktop_notifications\": null,\n      \"default_chrome_extension_enable_reminders\"\
+                    : false,\n      \"chrome_extension_gmail_enable_crm_sidebar\": true,\n      \"show_chrome_extension_buying_intent_promo\"\
+                    : true,\n      \"apollo_everywhere_search_count\": 0\n    },\n    {\n      \"id\": \"66a3d80d4238fe02d2baaaaf\"\
+                    ,\n      \"team_id\": \"6095a710bd01d100a506d4ac\",\n      \"first_name\": \"Priya\",\n      \"last_name\"\
+                    : \"Nadkarni\",\n      \"title\": null,\n      \"email\": \"priya.nadkarni@apollomail.io\",\n      \"\
+                    created_at\": \"2024-07-26T17:08:29.611Z\",\n      \"credit_limit\": null,\n      \"direct_dial_credit_limit\"\
+                    : null,\n      \"export_credit_limit\": null,\n      \"ai_credit_limit\": null,\n      \"salesforce_account\"\
+                    : null,\n      \"deleted\": false,\n      \"opt_out_html_template\": \"If you don't want to hear from\
+                    \ me again, please <%let me know%>.\",\n      \"name\": \"Priya Nadkarni\",\n      \"referral_code\":\
+                    \ \"5Zjw_UvAwQA-wd-NfSff8b\",\n      \"password_needs_reset\": false,\n      \"salesforce_id\": null,\n\
+                    \      \"default_cockpit_layout\": null,\n      \"default_account_overview_layout_id\": null,\n      \"\
+                    default_contact_overview_layout_id\": null,\n      \"default_person_overview_layout_id\": null,\n    \
+                    \  \"default_organization_overview_layout_id\": null,\n      \"default_opportunity_overview_layout_id\"\
+                    : null,\n      \"default_home_overview_layout_id\": null,\n      \"bridge_calls\": false,\n      \"bridge_phone_number\"\
+                    : null,\n      \"bridge_incoming_calls\": false,\n      \"bridge_incoming_phone_number\": null,\n    \
+                    \  \"current_email_verified\": true,\n      \"record_calls\": true,\n      \"salesforce_instance_url\"\
+                    : null,\n      \"permission_set_id\": \"6095a711bd01d100a506d4d7\",\n      \"default_use_local_numbers\"\
+                    : false,\n      \"disable_email_linking\": null,\n      \"sync_salesforce_id\": null,\n      \"sync_crm_id\"\
+                    : null,\n      \"zp_contact_id\": \"66a4b080cf1ffb000132c7e8\",\n      \"chrome_extension_downloaded\"\
+                    : true,\n      \"zp_is_super_analytics_user\": null,\n      \"email_oauth_signin_only\": false,\n    \
+                    \  \"notification_last_created_at\": \"2024-08-02T15:07:37.836+00:00\",\n      \"crm_requested_to_integrate\"\
+                    : null,\n      \"has_invited_user\": false,\n      \"has_used_enrichment\": false,\n      \"has_uploaded_csv\"\
+                    : false,\n      \"has_hidden_onboarding\": false,\n      \"notification_last_read_at\": \"2024-07-30T23:08:32.175+00:00\"\
+                    ,\n      \"daily_data_request_email\": false,\n      \"data_request_emails\": true,\n      \"daily_task_email\"\
+                    : true,\n      \"free_data_credits_email\": true,\n      \"dismiss_new_team_suggestion\": true,\n    \
+                    \  \"request_email_change_to\": null,\n      \"self_identified_persona\": null,\n      \"territory_is_active\"\
+                    : false,\n      \"conversation_is_private\": null,\n      \"show_deals_detail_page_updates_modal\": false,\n\
+                    \      \"assistant_setting\": {\n        \"_id\": \"66a3d80d4238fe02d2baaab0\",\n        \"deal_size_metric\"\
+                    : \"amount\",\n        \"inactive_account_stage_ids\": [],\n        \"inactive_contact_stage_ids\": [],\n\
+                    \        \"insight_deal_size_signals\": {},\n        \"insight_sale_cycle_signals\": {},\n        \"insight_win_rate_signals\"\
+                    : {},\n        \"is_persona_recommendation_requested\": false,\n        \"job_posting_locations\": [],\n\
+                    \        \"job_posting_titles\": [],\n        \"latest_funding_days\": 90,\n        \"max_num_active_accounts\"\
+                    : 100,\n        \"max_people_in_sequence_per_account\": 5,\n        \"num_inactive_days_to_re_engage\"\
+                    : 180,\n        \"persona_ids\": [\n          \"65d829661453d30300a0c9e3\",\n          \"65e76d7f00d9c601aed49f6c\"\
+                    ,\n          \"65e8bf1f1132a70579a84d61\",\n          \"65eb62d262c9dc01c66b2675\",\n          \"66200c046194fa01c707b520\"\
+                    ,\n          \"662057f7d9db7a01c7ba9960\"\n        ],\n        \"should_show_persona_banner\": true,\n\
+                    \        \"success_case_account_stage_ids\": [],\n        \"team_id\": \"6095a710bd01d100a506d4ac\",\n\
+                    \        \"technology_uids\": [],\n        \"territory_company_size_ranges\": [],\n        \"territory_location_override\"\
+                    : false,\n        \"territory_locations\": [\n          \"United States\"\n        ],\n        \"territory_person_locations\"\
+                    : [\n          \"United States\"\n        ],\n        \"user_id\": \"66a3d80d4238fe02d2baaaaf\",\n   \
+                    \     \"id\": \"66a3d80d4238fe02d2baaab0\",\n        \"key\": \"66a3d80d4238fe02d2baaab0\"\n      },\n\
+                    \      \"fields_fully_loaded\": true,\n      \"typed_custom_fields\": null,\n      \"connected_to_slack\"\
+                    : false,\n      \"crm_email\": null,\n      \"triggered_referral_campaigns\": [],\n      \"enable_click_tracking\"\
+                    : true,\n      \"enable_open_tracking\": true,\n      \"should_include_unsubscribe_link\": true,\n   \
+                    \   \"enable_one_click_unsubscribe\": null,\n      \"subteam_ids\": [],\n      \"prospect_territory_ids\"\
+                    : [],\n      \"toggled_on_territory_ids\": [],\n      \"linked_salesforce\": null,\n      \"linked_zoom_conference_account\"\
+                    : false,\n      \"linked_bot_conference_account\": true,\n      \"linked_bot_conference_account_platforms\"\
+                    : [\n        \"google_meet\",\n        \"ms_teams\"\n      ],\n      \"has_conference_account\": true,\n\
+                    \      \"linked_hubspot\": false,\n      \"linked_salesloft\": false,\n      \"linked_crm_name\": null,\n\
+                    \      \"chrome_extension_enabled_features\": [\n        \"apollo_everywhere\",\n        \"gmail\",\n\
+                    \        \"linkedin\",\n        \"salesforce\",\n        \"hubspot\",\n        \"google_calendar\"\n \
+                    \     ],\n      \"chrome_extension_exclude_from_websites\": [\n        \"facebook.com\",\n        \"youtube.com\"\
+                    ,\n        \"instagram.com\",\n        \"google.com\",\n        \"live.com\",\n        \"yahoo.com\",\n\
+                    \        \"notion.so\",\n        \"atlassian.net\",\n        \"asana.com\",\n        \"typeform.com\"\
+                    ,\n        \"figma.com\"\n      ],\n      \"chrome_extension_everywhere_icon_horizontal_position\": \"\
+                    right\",\n      \"chrome_extension_everywhere_icon_vertical_position_in_vh\": 10,\n      \"default_chrome_extension_log_email_send_to_salesforce\"\
+                    : true,\n      \"default_chrome_extension_log_email_send_to_hubspot\": true,\n      \"chrome_extension_auto_match_salesforce_opportunity\"\
+                    : true,\n      \"chrome_extension_gmail_enable_email_tools\": true,\n      \"enable_desktop_notifications\"\
+                    : false,\n      \"enable_gmail_desktop_notifications\": null,\n      \"default_chrome_extension_enable_reminders\"\
+                    : false,\n      \"chrome_extension_gmail_enable_crm_sidebar\": true,\n      \"show_chrome_extension_buying_intent_promo\"\
+                    : true,\n      \"apollo_everywhere_search_count\": 0\n    }\n  ],\n  \"num_fetch_result\": null\n}"
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: string
+                        example: '1'
+                      per_page:
+                        type: string
+                        example: '3'
+                      total_entries:
+                        type: integer
+                        example: 23
+                        default: 0
+                      total_pages:
+                        type: integer
+                        example: 8
+                        default: 0
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 66c8db577ed7f201b25c0eef
+                        team_id:
+                          type: string
+                          example: 6095a710bd01d100a506d4ac
+                        first_name: {}
+                        last_name: {}
+                        title: {}
+                        email:
+                          type: string
+                          example: anita.rao@apollomail.io
+                        created_at:
+                          type: string
+                          example: '2024-08-23T18:56:24.067Z'
+                        credit_limit: {}
+                        direct_dial_credit_limit: {}
+                        export_credit_limit: {}
+                        ai_credit_limit: {}
+                        salesforce_account: {}
+                        deleted:
+                          type: boolean
+                          example: false
+                          default: true
+                        opt_out_html_template:
+                          type: string
+                          example: No longer interested in these messages? <%Unsubscribe%>
+                        name:
+                          type: string
+                          example: ''
+                        referral_code:
+                          type: string
+                          example: nzu90RCUSGkFzsavf4Efh3
+                        password_needs_reset:
+                          type: boolean
+                          example: false
+                          default: true
+                        salesforce_id: {}
+                        default_cockpit_layout: {}
+                        default_account_overview_layout_id: {}
+                        default_contact_overview_layout_id: {}
+                        default_person_overview_layout_id: {}
+                        default_organization_overview_layout_id: {}
+                        default_opportunity_overview_layout_id: {}
+                        default_home_overview_layout_id: {}
+                        bridge_calls:
+                          type: boolean
+                          example: false
+                          default: true
+                        bridge_phone_number: {}
+                        bridge_incoming_calls:
+                          type: boolean
+                          example: false
+                          default: true
+                        bridge_incoming_phone_number: {}
+                        current_email_verified:
+                          type: boolean
+                          example: true
+                          default: true
+                        record_calls:
+                          type: boolean
+                          example: true
+                          default: true
+                        salesforce_instance_url: {}
+                        permission_set_id:
+                          type: string
+                          example: 6170904d46a82c00c227b744
+                        default_use_local_numbers:
+                          type: boolean
+                          example: false
+                          default: true
+                        disable_email_linking: {}
+                        sync_salesforce_id: {}
+                        sync_crm_id: {}
+                        zp_contact_id:
+                          type: string
+                          example: 66ca3f1309358c0001ea7e4d
+                        chrome_extension_downloaded:
+                          type: boolean
+                          example: false
+                          default: true
+                        zp_is_super_analytics_user: {}
+                        email_oauth_signin_only:
+                          type: boolean
+                          example: false
+                          default: true
+                        notification_last_created_at: {}
+                        crm_requested_to_integrate: {}
+                        has_invited_user:
+                          type: boolean
+                          example: false
+                          default: true
+                        has_used_enrichment:
+                          type: boolean
+                          example: false
+                          default: true
+                        has_uploaded_csv:
+                          type: boolean
+                          example: false
+                          default: true
+                        has_hidden_onboarding:
+                          type: boolean
+                          example: false
+                          default: true
+                        notification_last_read_at: {}
+                        daily_data_request_email:
+                          type: boolean
+                          example: false
+                          default: true
+                        data_request_emails:
+                          type: boolean
+                          example: true
+                          default: true
+                        daily_task_email:
+                          type: boolean
+                          example: true
+                          default: true
+                        free_data_credits_email:
+                          type: boolean
+                          example: true
+                          default: true
+                        dismiss_new_team_suggestion:
+                          type: boolean
+                          example: true
+                          default: true
+                        request_email_change_to: {}
+                        self_identified_persona: {}
+                        territory_is_active:
+                          type: boolean
+                          example: true
+                          default: true
+                        conversation_is_private: {}
+                        show_deals_detail_page_updates_modal:
+                          type: boolean
+                          example: true
+                          default: true
+                        assistant_setting:
+                          type: object
+                          properties:
+                            _id:
+                              type: string
+                              example: 66c8db587ed7f201b25c0ef0
+                            deal_size_metric:
+                              type: string
+                              example: amount
+                            inactive_account_stage_ids:
+                              type: array
+                            inactive_contact_stage_ids:
+                              type: array
+                            insight_deal_size_signals:
+                              type: object
+                              properties: {}
+                            insight_sale_cycle_signals:
+                              type: object
+                              properties: {}
+                            insight_win_rate_signals:
+                              type: object
+                              properties: {}
+                            is_persona_recommendation_requested:
+                              type: boolean
+                              example: false
+                              default: true
+                            job_posting_locations:
+                              type: array
+                            job_posting_titles:
+                              type: array
+                            latest_funding_days:
+                              type: integer
+                              example: 90
+                              default: 0
+                            max_num_active_accounts:
+                              type: integer
+                              example: 100
+                              default: 0
+                            max_people_in_sequence_per_account:
+                              type: integer
+                              example: 5
+                              default: 0
+                            num_inactive_days_to_re_engage:
+                              type: integer
+                              example: 180
+                              default: 0
+                            persona_ids:
+                              type: array
+                              items:
+                                type: string
+                                example: 65d829661453d30300a0c9e3
+                            should_show_persona_banner:
+                              type: boolean
+                              example: true
+                              default: true
+                            success_case_account_stage_ids:
+                              type: array
+                            team_id:
+                              type: string
+                              example: 6095a710bd01d100a506d4ac
+                            technology_uids:
+                              type: array
+                            territory_company_size_ranges:
+                              type: array
+                            territory_location_override:
+                              type: boolean
+                              example: false
+                              default: true
+                            territory_locations:
+                              type: array
+                              items:
+                                type: string
+                                example: United States
+                            territory_person_locations:
+                              type: array
+                              items:
+                                type: string
+                                example: United States
+                            user_id:
+                              type: string
+                              example: 66c8db577ed7f201b25c0eef
+                            id:
+                              type: string
+                              example: 66c8db587ed7f201b25c0ef0
+                            key:
+                              type: string
+                              example: 66c8db587ed7f201b25c0ef0
+                        fields_fully_loaded:
+                          type: boolean
+                          example: true
+                          default: true
+                        typed_custom_fields: {}
+                        connected_to_slack:
+                          type: boolean
+                          example: false
+                          default: true
+                        crm_email: {}
+                        triggered_referral_campaigns:
+                          type: array
+                        enable_click_tracking:
+                          type: boolean
+                          example: false
+                          default: true
+                        enable_open_tracking:
+                          type: boolean
+                          example: true
+                          default: true
+                        should_include_unsubscribe_link:
+                          type: boolean
+                          example: false
+                          default: true
+                        enable_one_click_unsubscribe: {}
+                        subteam_ids:
+                          type: array
+                        prospect_territory_ids:
+                          type: array
+                        toggled_on_territory_ids:
+                          type: array
+                        linked_salesforce: {}
+                        linked_zoom_conference_account:
+                          type: boolean
+                          example: false
+                          default: true
+                        linked_bot_conference_account:
+                          type: boolean
+                          example: true
+                          default: true
+                        linked_bot_conference_account_platforms:
+                          type: array
+                          items:
+                            type: string
+                            example: google_meet
+                        has_conference_account:
+                          type: boolean
+                          example: true
+                          default: true
+                        linked_hubspot:
+                          type: boolean
+                          example: false
+                          default: true
+                        linked_salesloft:
+                          type: boolean
+                          example: false
+                          default: true
+                        linked_crm_name: {}
+                        chrome_extension_enabled_features:
+                          type: array
+                          items:
+                            type: string
+                            example: apollo_everywhere
+                        chrome_extension_exclude_from_websites:
+                          type: array
+                          items:
+                            type: string
+                            example: facebook.com
+                        chrome_extension_everywhere_icon_horizontal_position:
+                          type: string
+                          example: right
+                        chrome_extension_everywhere_icon_vertical_position_in_vh:
+                          type: integer
+                          example: 10
+                          default: 0
+                        default_chrome_extension_log_email_send_to_salesforce:
+                          type: boolean
+                          example: true
+                          default: true
+                        default_chrome_extension_log_email_send_to_hubspot:
+                          type: boolean
+                          example: true
+                          default: true
+                        chrome_extension_auto_match_salesforce_opportunity:
+                          type: boolean
+                          example: true
+                          default: true
+                        chrome_extension_gmail_enable_email_tools:
+                          type: boolean
+                          example: true
+                          default: true
+                        enable_desktop_notifications:
+                          type: boolean
+                          example: false
+                          default: true
+                        enable_gmail_desktop_notifications: {}
+                        default_chrome_extension_enable_reminders:
+                          type: boolean
+                          example: false
+                          default: true
+                        chrome_extension_gmail_enable_crm_sidebar:
+                          type: boolean
+                          example: true
+                          default: true
+                        show_chrome_extension_buying_intent_promo:
+                          type: boolean
+                          example: true
+                          default: true
+                        apollo_everywhere_search_count:
+                          type: integer
+                          example: 0
+                          default: 0
+                  num_fetch_result: {}
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Need master API key:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/users/search. Request an API key\
+                    \ from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\": \"\
+                    API_INACCESSIBLE\"\n}"
+                Check Apollo pricing plan:
+                  value: "{\n  \"message\": \"This endpoint is only available to Apollo users on paid plans.\"\n}"
+              schema:
+                oneOf:
+                - title: Need master API key
+                  type: object
+                  properties:
+                    error:
+                      type: string
+                      example: This API key is not authorized to access api/v1/users/search. Request an API key from your
+                        administrator that includes this endpoint in its configured scope.
+                    error_code:
+                      type: string
+                      example: API_INACCESSIBLE
+                - title: Check Apollo pricing plan
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: This endpoint is only available to Apollo users on paid plans.
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/users/search is 600 times\
+                    \ per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of api calls allowed for api/v1/users/search is 600 times per hour. Please
+                      upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+      deprecated: false
+  /users/api_profile:
+    get:
+      summary: Get Current User Profile
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/users/api_profile` or `Master API key`
+
+
+        **OAuth scopes:** `read_user_profile`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        **Authentication note:** Default scope — granted automatically on every OAuth token.
+
+
+        <a href="https://knowledge.apollo.io/hc/en-us/articles/4409130537101-Add-Manage-and-Deactivate-Users" target="_blank">Users</a>
+        are the people who use your Apollo workspace.<br><br>Use the Get Current User Profile endpoint to retrieve the authenticated
+        profile of the person who owns the API key being used.<br><br>By default, the endpoint returns the user''s identity
+        fields. Set the `include_credit_usage` query parameter to `true` to also return the user''s and team''s credit usage
+        and remaining credit balances.<br><br>If you call this endpoint without valid access credentials, you receive a `401`
+        response.'
+      operationId: get-current-user-profile
+      parameters:
+      - name: include_credit_usage
+        in: query
+        description: 'Set to `true` to include credit usage and remaining credit details (lead, direct dial, export, AI, and
+          power-up credits) in the response. Accepts boolean (`true`/`false`) or string (`"true"`/`"false"`) values. Defaults
+          to `false`. <br><br>Example: `true`'
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Without credit usage:
+                  value: "{\n  \"id\": \"66c8db577ed7f201b25c0eef\",\n  \"team_id\": \"6095a710bd01d100a506d4ac\",\n  \"first_name\"\
+                    : \"John\",\n  \"last_name\": \"Doe\",\n  \"title\": \"Developer\",\n  \"email\": \"john.doe@example.com\"\
+                    \n}"
+                With credit usage:
+                  value: "{\n  \"id\": \"66c8db577ed7f201b25c0eef\",\n  \"team_id\": \"6095a710bd01d100a506d4ac\",\n  \"first_name\"\
+                    : \"John\",\n  \"last_name\": \"Doe\",\n  \"title\": \"Developer\",\n  \"email\": \"john.doe@example.com\"\
+                    ,\n  \"num_credits_remaining\": 9500,\n  \"effective_num_lead_credits\": 10000,\n  \"num_lead_credits_used\"\
+                    : 500,\n  \"effective_num_direct_dial_credits\": 1000,\n  \"num_direct_dial_credits_used\": 120,\n  \"\
+                    effective_num_export_credits\": 5000,\n  \"num_export_credits_used\": 250,\n  \"effective_num_ai_credits\"\
+                    : 2000,\n  \"num_ai_credits_used\": 75,\n  \"effective_num_power_up_credits\": 1000,\n  \"num_power_up_credits_used\"\
+                    : 40,\n  \"total_unified_credits_used\": 910\n}"
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 66c8db577ed7f201b25c0eef
+                  team_id:
+                    type: string
+                    example: 6095a710bd01d100a506d4ac
+                  first_name:
+                    type: string
+                    example: John
+                  last_name:
+                    type: string
+                    example: Doe
+                  title:
+                    type: string
+                    example: Developer
+                  email:
+                    type: string
+                    example: john.doe@example.com
+                  num_credits_remaining:
+                    type: integer
+                    example: 9500
+                    description: Remaining lead credits for the user. Only present when `include_credit_usage=true`.
+                  effective_num_lead_credits:
+                    type: integer
+                    example: 10000
+                    description: Effective lead credit allowance for the user. Only present when `include_credit_usage=true`.
+                  num_lead_credits_used:
+                    type: integer
+                    example: 500
+                    description: Lead credits used by the user. Only present when `include_credit_usage=true`.
+                  effective_num_direct_dial_credits:
+                    type: integer
+                    example: 1000
+                    description: Effective direct dial credit allowance for the user. Only present when `include_credit_usage=true`.
+                  num_direct_dial_credits_used:
+                    type: integer
+                    example: 120
+                    description: Direct dial credits used by the user. Only present when `include_credit_usage=true`.
+                  effective_num_export_credits:
+                    type: integer
+                    example: 5000
+                    description: Effective export credit allowance for the user. Only present when `include_credit_usage=true`.
+                  num_export_credits_used:
+                    type: integer
+                    example: 250
+                    description: Export credits used by the user. Only present when `include_credit_usage=true`.
+                  effective_num_ai_credits:
+                    type: integer
+                    example: 2000
+                    description: Effective AI credit allowance for the user. Only present when `include_credit_usage=true`.
+                  num_ai_credits_used:
+                    type: integer
+                    example: 75
+                    description: AI credits used by the user. Only present when `include_credit_usage=true`.
+                  effective_num_power_up_credits:
+                    type: integer
+                    example: 1000
+                    description: Effective power-up credit allowance for the team. Only present when `include_credit_usage=true`.
+                  num_power_up_credits_used:
+                    type: integer
+                    example: 40
+                    description: Power-up credits used (user this cycle on unified credits, otherwise team total). Only present
+                      when `include_credit_usage=true`.
+                  total_unified_credits_used:
+                    type: integer
+                    example: 910
+                    description: Sum of lead, direct dial, export, and power-up credits used. Only present when `include_credit_usage=true`
+                      and the team is on unified credits.
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+      deprecated: false
+      tags:
+      - Miscellaneous
+  /email_accounts:
+    get:
+      summary: Get a List of Email Accounts
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/email_accounts/index` or `Master API key`
+
+
+        **OAuth scopes:** `email_accounts_list`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        You can <a href="https://knowledge.apollo.io/hc/en-us/articles/4409127806093-Link-Your-Mailbox-to-Apollo" target="_blank">link
+        mailboxes to Apollo</a>, and use them for prospect outreach.<br><br>Use the Get a List of Email Accounts endpoint
+        to retrieve information about the linked email inboxes that your teammates use in your Apollo account.<br><br>In particular,
+        this endpoint returns IDs for each of your team''s linked email accounts, which can be used with the <a href="https://docs.apollo.io/reference/add-contacts-to-sequence">Add
+        Contacts to a Sequence endpoint</a>.<br><br>This endpoint doesn''t require any parameters.'
+      tags:
+      - Miscellaneous
+      operationId: get-a-list-of-email-accounts
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"email_accounts\": [\n    {\n      \"aliases\": [\n        \"test.liam@apollomail.io\"\n \
+                    \     ],\n      \"id\": \"6630ffa2a7f52601c7578345\",\n      \"user_id\": \"66302798d03b9601c7934ebc\"\
+                    ,\n      \"email\": \"test.liam@apollomail.io\",\n      \"type\": \"gmail\",\n      \"active\": true,\n\
+                    \      \"default\": true,\n      \"seconds_delay_between_emails\": 600,\n      \"provider_display_name\"\
+                    : \"Gmail\",\n      \"nylas_provider\": null,\n      \"last_synced_at\": \"2024-09-19T18:50:45.088+00:00\"\
+                    ,\n      \"email_sending_policy_cd\": \"default\",\n      \"sendgrid_api_user\": null,\n      \"mailgun_domains\"\
+                    : null,\n      \"nylas_api_version\": null,\n      \"signature_edit_disabled\": false,\n      \"revoked_at\"\
+                    : null,\n      \"inactive_reason\": null,\n      \"created_at\": \"2024-04-30T14:26:42.061Z\",\n     \
+                    \ \"sendgrid_api_key_v3\": null,\n      \"email_daily_threshold\": 50,\n      \"deliverability_score\"\
+                    : {\n        \"_id\": \"66de4138d8a8a300016b404e\",\n        \"avg_click_rate\": 0,\n        \"avg_daily_sent\"\
+                    : 0,\n        \"avg_delivered_rate\": 0,\n        \"avg_hard_bounce_rate\": 0,\n        \"avg_open_rate\"\
+                    : 0,\n        \"avg_reply_rate\": 0,\n        \"avg_spam_block_rate\": 0,\n        \"avg_unsubscribe_rate\"\
+                    : 0,\n        \"click_rate_score\": 0,\n        \"concurrency_locks\": null,\n        \"created_at\":\
+                    \ \"2024-09-09T00:28:41.695Z\",\n        \"daily_email_sent_score\": 0,\n        \"date_from\": \"2024-09-09\"\
+                    ,\n        \"date_to\": \"2024-09-15\",\n        \"deliverability_score\": 0,\n        \"domain_health_score\"\
+                    : 5,\n        \"email_account_domain_age_score\": 5,\n        \"email_account_id\": \"6630ffa2a7f52601c7578345\"\
+                    ,\n        \"hard_bounce_score\": 0,\n        \"open_rate_score\": 0,\n        \"random\": 0.6074748,\n\
+                    \        \"reply_rate_score\": 0,\n        \"spam_block_score\": 0,\n        \"sum_clicked_count\": 0,\n\
+                    \        \"sum_delivered_count\": 0,\n        \"sum_hard_bounced_count\": 0,\n        \"sum_opened_count\"\
+                    : 0,\n        \"sum_replied_count\": 0,\n        \"sum_sent_count\": 0,\n        \"sum_spam_blocked_count\"\
+                    : 0,\n        \"sum_unsubscribed_count\": 0,\n        \"team_id\": \"6095a710bd01d100a506d4ac\",\n   \
+                    \     \"unsubscribe_rate_score\": 0,\n        \"updated_at\": \"2024-09-09T00:28:41.695Z\",\n        \"\
+                    user_id\": \"66302798d03b9601c7934ebc\",\n        \"id\": \"66de4138d8a8a300016b404e\",\n        \"key\"\
+                    : \"66de4138d8a8a300016b404e\"\n      },\n      \"max_outbound_emails_per_hour\": 6,\n      \"limits_editable\"\
+                    : true,\n      \"is_opted_in_mailwarming\": null,\n      \"mailwarming_max\": 0,\n      \"mailwarming_to_send_daily\"\
+                    : 0,\n      \"mailwarming_to_send_incrementor\": 0,\n      \"mailwarming_status\": \"never_started\",\n\
+                    \      \"mailwarming_eta\": null,\n      \"mailwarming_subject_token\": null,\n      \"mailwarming_score\"\
+                    : 0,\n      \"mailwarming_score_banner\": \"start_warm_up_for_score\",\n      \"mailwarming_on_weekdays_only\"\
+                    : true,\n      \"true_warmup_enabled\": false,\n      \"true_warmup_daily_limit\": 0,\n      \"true_warmup_progress\"\
+                    : 0,\n      \"true_warmup_status\": null,\n      \"true_warmup_approximate_end_date\": null,\n      \"\
+                    true_warmup_last_throttled_at\": null,\n      \"true_warmup_enable_thresholds\": false,\n      \"true_warmup_thresholds\"\
+                    : {\n        \"open_rate\": 20,\n        \"reply_rate\": 1,\n        \"bounce_rate\": 1,\n        \"spam_block_rate\"\
+                    : 1\n      },\n      \"active_campaigns_count\": 2,\n      \"nudge_user_to_send_mails\": true,\n     \
+                    \ \"signature_html\": \"<div>Liam Donovan</div><div>Apollo Academy Sales Instructor</div><div>liam.donovan@apollo.io</div><div><br></div><div><a\
+                    \ href=\\\"http://www.berkley.edu\\\" rel=\\\"noopener noreferrer\\\" target=\\\"_blank\\\">Apollo Knowledge\
+                    \ Base</a></div><div><br></div><div>Book time to meet with me <a href=\\\"https://app.apollo.io/#/meet/liam_donovan_a1b2/30-min\\\
+                    \" rel=\\\"noopener noreferrer\\\" target=\\\"_blank\\\">here</a>.</div>\",\n      \"fields_fully_loaded\"\
+                    : true\n    },\n    {\n      \"aliases\": [\n        \"test.dana@apollomail.io\"\n      ],\n      \"id\"\
+                    : \"6631066fab78f601c7b0a8bf\",\n      \"user_id\": \"663027d1d03b9606c1934335\",\n      \"email\": \"\
+                    test.dana@apollomail.io\",\n      \"type\": \"gmail\",\n      \"active\": true,\n      \"default\": true,\n\
+                    \      \"seconds_delay_between_emails\": 500,\n      \"provider_display_name\": \"Gmail\",\n      \"nylas_provider\"\
+                    : null,\n      \"last_synced_at\": \"2024-09-19T18:49:21.990+00:00\",\n      \"email_sending_policy_cd\"\
+                    : \"default\",\n      \"sendgrid_api_user\": null,\n      \"mailgun_domains\": null,\n      \"nylas_api_version\"\
+                    : null,\n      \"signature_edit_disabled\": false,\n      \"revoked_at\": null,\n      \"inactive_reason\"\
+                    : null,\n      \"created_at\": \"2024-04-30T14:55:43.556Z\",\n      \"sendgrid_api_key_v3\": null,\n \
+                    \     \"email_daily_threshold\": 50,\n      \"deliverability_score\": {\n        \"_id\": \"66de40f0d8a8a300016b4014\"\
+                    ,\n        \"avg_click_rate\": 0,\n        \"avg_daily_sent\": 0,\n        \"avg_delivered_rate\": 0,\n\
+                    \        \"avg_hard_bounce_rate\": 0,\n        \"avg_open_rate\": 0,\n        \"avg_reply_rate\": 0,\n\
+                    \        \"avg_spam_block_rate\": 0,\n        \"avg_unsubscribe_rate\": 0,\n        \"click_rate_score\"\
+                    : 0,\n        \"concurrency_locks\": null,\n        \"created_at\": \"2024-09-09T00:27:28.539Z\",\n  \
+                    \      \"daily_email_sent_score\": 0,\n        \"date_from\": \"2024-09-09\",\n        \"date_to\": \"\
+                    2024-09-15\",\n        \"deliverability_score\": 0,\n        \"domain_health_score\": 5,\n        \"email_account_domain_age_score\"\
+                    : 5,\n        \"email_account_id\": \"6631066fab78f601c7b0a8bf\",\n        \"hard_bounce_score\": 0,\n\
+                    \        \"open_rate_score\": 0,\n        \"random\": 0.64551977,\n        \"reply_rate_score\": 0,\n\
+                    \        \"spam_block_score\": 0,\n        \"sum_clicked_count\": 0,\n        \"sum_delivered_count\"\
+                    : 0,\n        \"sum_hard_bounced_count\": 0,\n        \"sum_opened_count\": 0,\n        \"sum_replied_count\"\
+                    : 0,\n        \"sum_sent_count\": 0,\n        \"sum_spam_blocked_count\": 0,\n        \"sum_unsubscribed_count\"\
+                    : 0,\n        \"team_id\": \"6095a710bd01d100a506d4ac\",\n        \"unsubscribe_rate_score\": 0,\n   \
+                    \     \"updated_at\": \"2024-09-09T00:27:28.539Z\",\n        \"user_id\": \"663027d1d03b9606c1934335\"\
+                    ,\n        \"id\": \"66de40f0d8a8a300016b4014\",\n        \"key\": \"66de40f0d8a8a300016b4014\"\n    \
+                    \  },\n      \"max_outbound_emails_per_hour\": 6,\n      \"limits_editable\": true,\n      \"is_opted_in_mailwarming\"\
+                    : null,\n      \"mailwarming_max\": 0,\n      \"mailwarming_to_send_daily\": 0,\n      \"mailwarming_to_send_incrementor\"\
+                    : 0,\n      \"mailwarming_status\": \"never_started\",\n      \"mailwarming_eta\": null,\n      \"mailwarming_subject_token\"\
+                    : null,\n      \"mailwarming_score\": 0,\n      \"mailwarming_score_banner\": \"start_warm_up_for_score\"\
+                    ,\n      \"mailwarming_on_weekdays_only\": true,\n      \"true_warmup_enabled\": false,\n      \"true_warmup_daily_limit\"\
+                    : 0,\n      \"true_warmup_progress\": 0,\n      \"true_warmup_status\": null,\n      \"true_warmup_approximate_end_date\"\
+                    : null,\n      \"true_warmup_last_throttled_at\": null,\n      \"true_warmup_enable_thresholds\": false,\n\
+                    \      \"true_warmup_thresholds\": {\n        \"open_rate\": 20,\n        \"reply_rate\": 1,\n       \
+                    \ \"bounce_rate\": 1,\n        \"spam_block_rate\": 1\n      },\n      \"active_campaigns_count\": 2,\n\
+                    \      \"nudge_user_to_send_mails\": true,\n      \"signature_html\": \"<div>Janet Testing</div><div><a\
+                    \ href=\\\"http://www.berkley.edu\\\" target=\\\"_blank\\\">Apollo Knowledge Base</a></div><div> </div>\"\
+                    ,\n      \"fields_fully_loaded\": true\n    }\n  ]\n}"
+              schema:
+                type: object
+                properties:
+                  email_accounts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        aliases:
+                          type: array
+                          items:
+                            type: string
+                            example: test.liam@apollomail.io
+                        id:
+                          type: string
+                          example: 6630ffa2a7f52601c7578345
+                        user_id:
+                          type: string
+                          example: 66302798d03b9601c7934ebc
+                        email:
+                          type: string
+                          example: test.liam@apollomail.io
+                        type:
+                          type: string
+                          example: gmail
+                        active:
+                          type: boolean
+                          example: true
+                          default: true
+                        default:
+                          type: boolean
+                          example: true
+                          default: true
+                        seconds_delay_between_emails:
+                          type: integer
+                          example: 600
+                          default: 0
+                        provider_display_name:
+                          type: string
+                          example: Gmail
+                        nylas_provider: {}
+                        last_synced_at:
+                          type: string
+                          example: '2024-09-19T18:50:45.088+00:00'
+                        email_sending_policy_cd:
+                          type: string
+                          example: default
+                        sendgrid_api_user: {}
+                        mailgun_domains: {}
+                        nylas_api_version: {}
+                        signature_edit_disabled:
+                          type: boolean
+                          example: false
+                          default: true
+                        revoked_at: {}
+                        inactive_reason: {}
+                        created_at:
+                          type: string
+                          example: '2024-04-30T14:26:42.061Z'
+                        sendgrid_api_key_v3: {}
+                        email_daily_threshold:
+                          type: integer
+                          example: 50
+                          default: 0
+                        deliverability_score:
+                          type: object
+                          properties:
+                            _id:
+                              type: string
+                              example: 66de4138d8a8a300016b404e
+                            avg_click_rate:
+                              type: integer
+                              example: 0
+                              default: 0
+                            avg_daily_sent:
+                              type: integer
+                              example: 0
+                              default: 0
+                            avg_delivered_rate:
+                              type: integer
+                              example: 0
+                              default: 0
+                            avg_hard_bounce_rate:
+                              type: integer
+                              example: 0
+                              default: 0
+                            avg_open_rate:
+                              type: integer
+                              example: 0
+                              default: 0
+                            avg_reply_rate:
+                              type: integer
+                              example: 0
+                              default: 0
+                            avg_spam_block_rate:
+                              type: integer
+                              example: 0
+                              default: 0
+                            avg_unsubscribe_rate:
+                              type: integer
+                              example: 0
+                              default: 0
+                            click_rate_score:
+                              type: integer
+                              example: 0
+                              default: 0
+                            concurrency_locks: {}
+                            created_at:
+                              type: string
+                              example: '2024-09-09T00:28:41.695Z'
+                            daily_email_sent_score:
+                              type: integer
+                              example: 0
+                              default: 0
+                            date_from:
+                              type: string
+                              example: '2024-09-09'
+                            date_to:
+                              type: string
+                              example: '2024-09-15'
+                            deliverability_score:
+                              type: integer
+                              example: 0
+                              default: 0
+                            domain_health_score:
+                              type: integer
+                              example: 5
+                              default: 0
+                            email_account_domain_age_score:
+                              type: integer
+                              example: 5
+                              default: 0
+                            email_account_id:
+                              type: string
+                              example: 6630ffa2a7f52601c7578345
+                            hard_bounce_score:
+                              type: integer
+                              example: 0
+                              default: 0
+                            open_rate_score:
+                              type: integer
+                              example: 0
+                              default: 0
+                            random:
+                              type: number
+                              example: 0.6074748
+                              default: 0
+                            reply_rate_score:
+                              type: integer
+                              example: 0
+                              default: 0
+                            spam_block_score:
+                              type: integer
+                              example: 0
+                              default: 0
+                            sum_clicked_count:
+                              type: integer
+                              example: 0
+                              default: 0
+                            sum_delivered_count:
+                              type: integer
+                              example: 0
+                              default: 0
+                            sum_hard_bounced_count:
+                              type: integer
+                              example: 0
+                              default: 0
+                            sum_opened_count:
+                              type: integer
+                              example: 0
+                              default: 0
+                            sum_replied_count:
+                              type: integer
+                              example: 0
+                              default: 0
+                            sum_sent_count:
+                              type: integer
+                              example: 0
+                              default: 0
+                            sum_spam_blocked_count:
+                              type: integer
+                              example: 0
+                              default: 0
+                            sum_unsubscribed_count:
+                              type: integer
+                              example: 0
+                              default: 0
+                            team_id:
+                              type: string
+                              example: 6095a710bd01d100a506d4ac
+                            unsubscribe_rate_score:
+                              type: integer
+                              example: 0
+                              default: 0
+                            updated_at:
+                              type: string
+                              example: '2024-09-09T00:28:41.695Z'
+                            user_id:
+                              type: string
+                              example: 66302798d03b9601c7934ebc
+                            id:
+                              type: string
+                              example: 66de4138d8a8a300016b404e
+                            key:
+                              type: string
+                              example: 66de4138d8a8a300016b404e
+                        max_outbound_emails_per_hour:
+                          type: integer
+                          example: 6
+                          default: 0
+                        limits_editable:
+                          type: boolean
+                          example: true
+                          default: true
+                        is_opted_in_mailwarming: {}
+                        mailwarming_max:
+                          type: integer
+                          example: 0
+                          default: 0
+                        mailwarming_to_send_daily:
+                          type: integer
+                          example: 0
+                          default: 0
+                        mailwarming_to_send_incrementor:
+                          type: integer
+                          example: 0
+                          default: 0
+                        mailwarming_status:
+                          type: string
+                          example: never_started
+                        mailwarming_eta: {}
+                        mailwarming_subject_token: {}
+                        mailwarming_score:
+                          type: integer
+                          example: 0
+                          default: 0
+                        mailwarming_score_banner:
+                          type: string
+                          example: start_warm_up_for_score
+                        mailwarming_on_weekdays_only:
+                          type: boolean
+                          example: true
+                          default: true
+                        true_warmup_enabled:
+                          type: boolean
+                          example: false
+                          default: true
+                        true_warmup_daily_limit:
+                          type: integer
+                          example: 0
+                          default: 0
+                        true_warmup_progress:
+                          type: integer
+                          example: 0
+                          default: 0
+                        true_warmup_status: {}
+                        true_warmup_approximate_end_date: {}
+                        true_warmup_last_throttled_at: {}
+                        true_warmup_enable_thresholds:
+                          type: boolean
+                          example: false
+                          default: true
+                        true_warmup_thresholds:
+                          type: object
+                          properties:
+                            open_rate:
+                              type: integer
+                              example: 20
+                              default: 0
+                            reply_rate:
+                              type: integer
+                              example: 1
+                              default: 0
+                            bounce_rate:
+                              type: integer
+                              example: 1
+                              default: 0
+                            spam_block_rate:
+                              type: integer
+                              example: 1
+                              default: 0
+                        active_campaigns_count:
+                          type: integer
+                          example: 2
+                          default: 0
+                        nudge_user_to_send_mails:
+                          type: boolean
+                          example: true
+                          default: true
+                        signature_html:
+                          type: string
+                          example: <div>Liam Donovan</div><div>Apollo Academy Sales Instructor</div><div>liam.donovan@apollo.io</div><div><br></div><div><a
+                            href="http://www.berkley.edu" rel="noopener noreferrer" target="_blank">Apollo Knowledge Base</a></div><div><br></div><div>Book
+                            time to meet with me <a href="https://app.apollo.io/#/meet/liam_donovan_a1b2/30-min" rel="noopener
+                            noreferrer" target="_blank">here</a>.</div>
+                        fields_fully_loaded:
+                          type: boolean
+                          example: true
+                          default: true
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Need master API key:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/email_accounts/index. Request\
+                    \ an API key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\"\
+                    : \"API_INACCESSIBLE\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: This API key is not authorized to access api/v1/email_accounts/index. Request an API key from
+                      your administrator that includes this endpoint in its configured scope.
+                  error_code:
+                    type: string
+                    example: API_INACCESSIBLE
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/email_accounts is 600 times\
+                    \ per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of api calls allowed for api/v1/email_accounts is 600 times per hour. Please
+                      upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+      deprecated: false
+  /labels:
+    get:
+      summary: Get a List of All Lists
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/labels/index` or `Master API key`
+
+
+        **OAuth scopes:** `tags_list`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        Use the Get a List of All Lists endpoint to retrieve information about every <a href="https://knowledge.apollo.io/hc/en-us/articles/4409728608525-Create-and-Use-a-List"
+        target="_blank">list</a> that has been created in your Apollo account. This endpoint can be used to check the available
+        lists before you use the <a href="https://docs.apollo.io/reference/create-a-contact">Create a Contact endpoint</a>.
+        <br><br>This endpoint doesn''t require any parameters.'
+      tags:
+      - Miscellaneous
+      operationId: get-a-list-of-all-lists
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                  - _id: 66e9e215ece19801b2199981
+                    cached_count: 1
+                    concurrency_locks: {}
+                    created_at: '2024-09-17T20:09:57.863Z'
+                    modality: emailer_campaigns
+                    name: Dublin market
+                    need_cached_count_update: false
+                    needs_count_update_at: '2024-09-17T20:09:57.885+00:00'
+                    rule_config_template_id: null
+                    team_id: 6095a710bd01d100a506d4ac
+                    updated_at: '2024-09-17T20:09:57.910Z'
+                    user_id: 66302798d03b9601c7934ebf
+                    id: 66e9e215ece19801b2199981
+                    key: 66e9e215ece19801b2199981
+                  - _id: 6660862c078cf0038abedb64
+                    cached_count: 25
+                    concurrency_locks: {}
+                    created_at: '2024-06-05T15:37:16.684Z'
+                    modality: contacts
+                    name: Conference 2024 - Maui
+                    need_cached_count_update: false
+                    needs_count_update_at: '2024-06-05T15:37:16.708+00:00'
+                    rule_config_template_id: null
+                    team_id: 6095a710bd01d100a506d4ac
+                    updated_at: '2024-06-05T15:37:16.738Z'
+                    user_id: 66302798d03b9601c7934ec2
+                    id: 6660862c078cf0038abedb64
+                    key: 6660862c078cf0038abedb64
+                  - _id: 66e361494acd1307386d4073
+                    cached_count: 0
+                    concurrency_locks: {}
+                    created_at: '2024-09-12T21:46:49.464Z'
+                    modality: contacts
+                    name: 2024 fiction writers of america attendees
+                    need_cached_count_update: false
+                    needs_count_update_at: '2024-09-13T00:43:17.703+00:00'
+                    rule_config_template_id: null
+                    team_id: 6095a710bd01d100a506d4ac
+                    updated_at: '2024-09-13T00:47:35.416Z'
+                    user_id: 60affe7d6e270a00f5db6fe4
+                    id: 66e361494acd1307386d4073
+                    key: 66e361494acd1307386d4073
+                  - _id: 66ad0f4bc1a9d50001765e61
+                    cached_count: 11
+                    concurrency_locks: {}
+                    created_at: '2024-08-02T16:54:35.303Z'
+                    modality: contacts
+                    name: Demo Meeting Booked
+                    need_cached_count_update: false
+                    needs_count_update_at: '2024-09-17T22:44:30.338+00:00'
+                    rule_config_template_id: null
+                    team_id: 6095a710bd01d100a506d4ac
+                    updated_at: '2024-09-17T22:44:30.370Z'
+                    user_id: 6578a336d8ecfd03eca315d8
+                    id: 66ad0f4bc1a9d50001765e61
+                    key: 66ad0f4bc1a9d50001765e61
+                  - _id: 660333cbb93a2102e8f00331
+                    cached_count: 83
+                    concurrency_locks: {}
+                    created_at: '2024-03-26T20:44:59.053Z'
+                    modality: contacts
+                    name: Trade Show Leads
+                    need_cached_count_update: false
+                    needs_count_update_at: '2024-03-26T20:45:03.106+00:00'
+                    rule_config_template_id: null
+                    team_id: 6095a710bd01d100a506d4ac
+                    updated_at: '2024-03-26T20:45:03.139Z'
+                    user_id: 60affe7d6e270a00f5db6fe4
+                    id: 660333cbb93a2102e8f00331
+                    key: 660333cbb93a2102e8f00331
+                  - _id: 6614710916c22b01c7dd5e9b
+                    cached_count: 8
+                    concurrency_locks: {}
+                    created_at: '2024-04-08T22:34:49.454Z'
+                    modality: accounts
+                    name: CSV Import
+                    need_cached_count_update: false
+                    needs_count_update_at: '2024-04-08T22:34:49.489+00:00'
+                    rule_config_template_id: null
+                    team_id: 6095a710bd01d100a506d4ac
+                    updated_at: '2024-04-08T22:37:23.037Z'
+                    user_id: 60affe7d6e270a00f5db6fe4
+                    id: 6614710916c22b01c7dd5e9b
+                    key: 6614710916c22b01c7dd5e9b
+                  - _id: 6625244b0909d600078ad116
+                    cached_count: 229
+                    concurrency_locks: {}
+                    created_at: '2024-04-21T14:35:55.672Z'
+                    modality: contacts
+                    name: Cold Call Leads
+                    need_cached_count_update: false
+                    needs_count_update_at: '2024-05-21T21:11:06.074+00:00'
+                    rule_config_template_id: null
+                    team_id: 6095a710bd01d100a506d4ac
+                    updated_at: '2024-05-21T21:11:06.106Z'
+                    user_id: 60affe7d6e270a00f5db6fe4
+                    id: 6625244b0909d600078ad116
+                    key: 6625244b0909d600078ad116
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      example: 66e9e215ece19801b2199981
+                    cached_count:
+                      type: integer
+                      example: 1
+                      default: 0
+                    concurrency_locks:
+                      type: object
+                      properties: {}
+                    created_at:
+                      type: string
+                      example: '2024-09-17T20:09:57.863Z'
+                    modality:
+                      type: string
+                      example: emailer_campaigns
+                    name:
+                      type: string
+                      example: Dublin market
+                    need_cached_count_update:
+                      type: boolean
+                      example: false
+                      default: true
+                    needs_count_update_at:
+                      type: string
+                      example: '2024-09-17T20:09:57.885+00:00'
+                    rule_config_template_id: {}
+                    team_id:
+                      type: string
+                      example: 6095a710bd01d100a506d4ac
+                    updated_at:
+                      type: string
+                      example: '2024-09-17T20:09:57.910Z'
+                    user_id:
+                      type: string
+                      example: 66302798d03b9601c7934ebf
+                    id:
+                      type: string
+                      example: 66e9e215ece19801b2199981
+                    key:
+                      type: string
+                      example: 66e9e215ece19801b2199981
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Need master API key:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/labels/index. Request an API key\
+                    \ from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\": \"\
+                    API_INACCESSIBLE\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: This API key is not authorized to access api/v1/labels/index. Request an API key from your administrator
+                      that includes this endpoint in its configured scope.
+                  error_code:
+                    type: string
+                    example: API_INACCESSIBLE
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/labels is 600 times per\
+                    \ hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of api calls allowed for api/v1/labels is 600 times per hour. Please upgrade
+                      your plan from https://app.apollo.io/#/settings/plans/upgrade.
+      deprecated: false
+    post:
+      summary: Create a List
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/labels/create` or `Master API key`
+
+
+        **OAuth scopes:** `lists_create`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        A <a href="https://knowledge.apollo.io/hc/en-us/articles/4409728608525-Create-and-Use-a-List" target="_blank">list</a>
+        is a saved group of contacts or accounts in Apollo that you can organize, action, and track together.<br><br>Use the
+        Create a List endpoint to create a new, empty contact or account list in your team''s Apollo account. After you create
+        a list, add records to it with the <a href="https://docs.apollo.io/reference/add-records-to-a-list">Add Records to
+        a List endpoint</a>.<br><br>List names must be unique for each modality within your team. If you try to create a list
+        with a name that already exists for the same modality, Apollo returns a `422` response.'
+      tags:
+      - Miscellaneous
+      operationId: create-a-list
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              - modality
+              properties:
+                name:
+                  type: string
+                  description: 'The name for the new list. Must be unique for the given `modality` within your team.<br><br>Example:
+                    `Conference 2024 - Maui`'
+                modality:
+                  type: string
+                  enum:
+                  - contacts
+                  - accounts
+                  description: 'The type of records the list holds. <ul><li>`contacts`: a list of contacts (people).</li><li>`accounts`:
+                    a list of accounts (companies).</li></ul>'
+                book_of_business:
+                  type: boolean
+                  description: Set to `true` to mark an account list as a Book of Business (BoB) list. Only applies when `modality`
+                    is `accounts`. Defaults to `false`.
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  label:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      modality:
+                        type: string
+                      cached_count:
+                        type: integer
+                      name:
+                        type: string
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+                      user_id:
+                        type: string
+                      book_of_business:
+                        type: boolean
+                        nullable: true
+              examples:
+                Result:
+                  value:
+                    label:
+                      id: 6612a4b7c8d9e0f123456789
+                      modality: contacts
+                      cached_count: 0
+                      name: Conference 2024 - Maui
+                      created_at: '2024-09-17T20:09:57.863Z'
+                      updated_at: '2024-09-17T20:09:57.863Z'
+                      user_id: 66302798d03b9601c7934ebf
+                      book_of_business: null
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Missing or invalid API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Key lacks required scope:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/labels/create. Request an API\
+                    \ key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\"\
+                    : \"API_INACCESSIBLE\"\n}"
+                No access to lists:
+                  value: "{\n  \"error\": \"You do not have permission to access lists. Contact your admin to get access to\
+                    \ Contacts & Accounts.\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  error_code:
+                    type: string
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Name is required:
+                  value: "{\n  \"error\": \"Please enter a non-empty name!\"\n}"
+                Modality is required:
+                  value: "{\n  \"error\": \"Please enter a non-empty modality!\"\n}"
+                Invalid modality:
+                  value: "{\n  \"error\": \"Please enter a valid modality!\"\n}"
+                Name already exists:
+                  value: "{\n  \"error\": \"Conference 2024 - Maui already exists\",\n  \"skip_alert_dialog\": true\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  skip_alert_dialog:
+                    type: boolean
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n  \"message\": \"The maximum number of api calls allowed for api/v1/labels/create is 200 times\
+                    \ per minute. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /labels/{id}:
+    patch:
+      summary: Update a List
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/labels/update` or `Master API key`
+
+
+        **OAuth scopes:** `lists_update`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        A <a href="https://knowledge.apollo.io/hc/en-us/articles/4409728608525-Create-and-Use-a-List" target="_blank">list</a>
+        is a saved group of contacts or accounts in Apollo that you can organize, action, and track together.<br><br>Use the
+        Update a List endpoint to rename an existing list or to toggle its Book of Business status. You can''t change a list''s
+        modality after it''s created.<br><br>To find list IDs, call the <a href="https://docs.apollo.io/reference/get-a-list-of-all-lists">Get
+        a List of All Lists endpoint</a> and identify the `id` value for the list you want to update.'
+      tags:
+      - Miscellaneous
+      operationId: update-a-list
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: 'The Apollo ID for the list you want to update.<br><br>To find list IDs, call the <a href="https://docs.apollo.io/reference/get-a-list-of-all-lists">Get
+          a List of All Lists endpoint</a> and identify the `id` value.<br><br>Example: `6612a4b7c8d9e0f123456789`'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  description: 'The new name for the list. Must be unique for the list''s modality within your team.<br><br>Example:
+                    `Conference 2024 - Maui (West)`'
+                book_of_business:
+                  type: boolean
+                  description: Set to `true` to mark an account list as a Book of Business (BoB) list. Only applies to account
+                    lists.
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  label:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      modality:
+                        type: string
+                      cached_count:
+                        type: integer
+                      name:
+                        type: string
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+                      user_id:
+                        type: string
+                      book_of_business:
+                        type: boolean
+                        nullable: true
+              examples:
+                Result:
+                  value:
+                    label:
+                      id: 6612a4b7c8d9e0f123456789
+                      modality: contacts
+                      cached_count: 0
+                      name: Conference 2024 - Maui (West)
+                      created_at: '2024-09-17T20:09:57.863Z'
+                      updated_at: '2024-09-17T20:09:57.863Z'
+                      user_id: 66302798d03b9601c7934ebf
+                      book_of_business: null
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Missing or invalid API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Key lacks required scope:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/labels/update. Request an API\
+                    \ key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\"\
+                    : \"API_INACCESSIBLE\"\n}"
+                No access to lists:
+                  value: "{\n  \"error\": \"You do not have permission to access lists. Contact your admin to get access to\
+                    \ Contacts & Accounts.\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  error_code:
+                    type: string
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                List not found:
+                  value: "{\n  \"message\": \"Could not find label with id 6612a4b7c8d9e0f123456789\",\n  \"error\": \"Record\
+                    \ not found.\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  error:
+                    type: string
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Name is required:
+                  value: "{\n  \"error\": \"Please enter a non-empty name!\"\n}"
+                Name already exists:
+                  value: "{\n  \"error\": \"Conference 2024 - Maui already exists\",\n  \"skip_alert_dialog\": true\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  skip_alert_dialog:
+                    type: boolean
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n  \"message\": \"The maximum number of api calls allowed for api/v1/labels/update is 200 times\
+                    \ per minute. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /labels/add_entity_ids_to_label_names:
+    post:
+      summary: Add Records to a List
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/labels/add_entity_ids_to_label_names` or `Master API key`
+
+
+        **OAuth scopes:** `lists_add_entities`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        A <a href="https://knowledge.apollo.io/hc/en-us/articles/4409728608525-Create-and-Use-a-List" target="_blank">list</a>
+        is a saved group of contacts or accounts in Apollo that you can organize, action, and track together.<br><br>Use the
+        Add Records to a List endpoint to add existing contacts or accounts to one or more lists, referencing the lists by
+        name. If a list name you provide doesn''t exist yet for the given modality, Apollo creates it automatically.<br><br>Provide
+        the record IDs in `entity_ids` and the target list names in `label_names`. To find record IDs, use the <a href="https://docs.apollo.io/reference/search-for-contacts">Search
+        for Contacts</a> or <a href="https://docs.apollo.io/reference/search-for-accounts">Search for Accounts</a> endpoints.<br><br>If
+        you provide no valid `entity_ids` or no `label_names`, the endpoint makes no changes and returns a `200` response
+        with a confirmation message.'
+      tags:
+      - Miscellaneous
+      operationId: add-records-to-a-list
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - entity_ids
+              - label_names
+              - modality
+              properties:
+                entity_ids:
+                  type: array
+                  items:
+                    type: string
+                  description: 'The Apollo IDs of the contacts or accounts to add to the lists. IDs that aren''t valid are
+                    ignored.<br><br>Example: `["66e34b81740c50074e3d1bd4"]`'
+                label_names:
+                  type: array
+                  items:
+                    type: string
+                  description: 'The names of the lists to add the records to. If a name doesn''t already exist for the given
+                    `modality`, Apollo creates a new list with that name.<br><br>Example: `["Conference 2024 - Maui"]`'
+                modality:
+                  type: string
+                  enum:
+                  - contacts
+                  - accounts
+                  description: The type of records referenced by `entity_ids`. Must be `contacts` or `accounts`.
+                async:
+                  type: boolean
+                  description: 'Controls whether the request is processed synchronously or in the background. <ul><li>`false`
+                    (default): Apollo processes the request during the API call and returns the updated lists. A synchronous
+                    request must finish within the API''s 5-minute (300-second) request timeout, so a large `entity_ids` batch
+                    can time out.</li><li>`true`: Apollo processes the work in the background and immediately returns an `entity_progress_job`
+                    object — instead of the updated lists — that you can poll for progress. Use this for batches large enough
+                    to risk the 5-minute timeout.</li></ul>'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  labels:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        modality:
+                          type: string
+                        cached_count:
+                          type: integer
+                        name:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                        user_id:
+                          type: string
+                        book_of_business:
+                          type: boolean
+                          nullable: true
+                  message:
+                    type: string
+                  entity_progress_job:
+                    type: object
+                    description: Returned instead of `labels` when `async` is `true`. Represents the background job processing
+                      the request; poll it to track progress.
+                    properties:
+                      id:
+                        type: string
+                      user_id:
+                        type: string
+                        nullable: true
+                      job_type:
+                        type: string
+                      entity_ids:
+                        type: array
+                        items:
+                          type: string
+                      params:
+                        type: object
+                      progress:
+                        type: number
+                        description: '`-1` before processing starts, a fraction while in progress, and `1` when complete.'
+                      batch_size:
+                        type: integer
+                        nullable: true
+              examples:
+                Records added:
+                  value:
+                    labels:
+                    - id: 6612a4b7c8d9e0f123456789
+                      modality: contacts
+                      cached_count: 2
+                      name: Conference 2024 - Maui
+                      created_at: '2024-09-17T20:09:57.863Z'
+                      updated_at: '2024-09-17T20:09:57.863Z'
+                      user_id: 66302798d03b9601c7934ebf
+                      book_of_business: null
+                Nothing to change:
+                  value:
+                    message: No Models or Lists provided
+                Processing in background (async):
+                  value:
+                    entity_progress_job:
+                      id: 6a1f2c9e4b7d8f0012345678
+                      user_id: 66302798d03b9601c7934ebf
+                      job_type: add_entities_to_labels
+                      entity_ids:
+                      - 66e34b81740c50074e3d1bd4
+                      params:
+                        modality: contacts
+                        label_names:
+                        - Conference 2024 - Maui
+                      progress: -1
+                      batch_size: null
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Missing or invalid API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Key lacks required scope:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/labels/add_entity_ids_to_label_names.\
+                    \ Request an API key from your administrator that includes this endpoint in its configured scope.\",\n\
+                    \  \"error_code\": \"API_INACCESSIBLE\"\n}"
+                No access to lists:
+                  value: "{\n  \"error\": \"You do not have permission to access lists. Contact your admin to get access to\
+                    \ Contacts & Accounts.\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  error_code:
+                    type: string
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Invalid modality:
+                  value: "{\n  \"error\": \"Invalid modality: leads.\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n  \"message\": \"The maximum number of api calls allowed for api/v1/labels/add_entity_ids_to_label_names\
+                    \ is 200 times per minute. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\
+                    \n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /labels/remove_entity_ids_from_label_names:
+    post:
+      summary: Remove Records from a List
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/labels/remove_entity_ids_from_label_names` or `Master API key`
+
+
+        **OAuth scopes:** `lists_remove_entities`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        A <a href="https://knowledge.apollo.io/hc/en-us/articles/4409728608525-Create-and-Use-a-List" target="_blank">list</a>
+        is a saved group of contacts or accounts in Apollo that you can organize, action, and track together.<br><br>Use the
+        Remove Records from a List endpoint to remove contacts or accounts from one or more lists, referencing the lists by
+        name. Removing records from a list doesn''t delete the records themselves, it only removes them from the specified
+        lists.<br><br>Provide the record IDs in `entity_ids` and the list names in `label_names`. To find record IDs, use
+        the <a href="https://docs.apollo.io/reference/search-for-contacts">Search for Contacts</a> or <a href="https://docs.apollo.io/reference/search-for-accounts">Search
+        for Accounts</a> endpoints.<br><br>If you provide no valid `entity_ids` or no `label_names`, the endpoint makes no
+        changes and returns a `200` response with a confirmation message.'
+      tags:
+      - Miscellaneous
+      operationId: remove-records-from-a-list
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - entity_ids
+              - label_names
+              - modality
+              properties:
+                entity_ids:
+                  type: array
+                  items:
+                    type: string
+                  description: 'The Apollo IDs of the contacts or accounts to remove from the lists. IDs that aren''t valid
+                    are ignored.<br><br>Example: `["66e34b81740c50074e3d1bd4"]`'
+                label_names:
+                  type: array
+                  items:
+                    type: string
+                  description: 'The names of the lists to remove the records from.<br><br>Example: `["Conference 2024 - Maui"]`'
+                modality:
+                  type: string
+                  enum:
+                  - contacts
+                  - accounts
+                  description: The type of records referenced by `entity_ids`. Must be `contacts` or `accounts`.
+                async:
+                  type: boolean
+                  description: 'Controls whether the request is processed synchronously or in the background. <ul><li>`false`
+                    (default): Apollo processes the request during the API call and returns the updated lists. A synchronous
+                    request must finish within the API''s 5-minute (300-second) request timeout, so a large `entity_ids` batch
+                    can time out.</li><li>`true`: Apollo processes the work in the background and immediately returns an `entity_progress_job`
+                    object — instead of the updated lists — that you can poll for progress. Use this for batches large enough
+                    to risk the 5-minute timeout.</li></ul>'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  labels:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        modality:
+                          type: string
+                        cached_count:
+                          type: integer
+                        name:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                        user_id:
+                          type: string
+                        book_of_business:
+                          type: boolean
+                          nullable: true
+                  message:
+                    type: string
+                  entity_progress_job:
+                    type: object
+                    description: Returned instead of `labels` when `async` is `true`. Represents the background job processing
+                      the request; poll it to track progress.
+                    properties:
+                      id:
+                        type: string
+                      user_id:
+                        type: string
+                        nullable: true
+                      job_type:
+                        type: string
+                      entity_ids:
+                        type: array
+                        items:
+                          type: string
+                      params:
+                        type: object
+                      progress:
+                        type: number
+                        description: '`-1` before processing starts, a fraction while in progress, and `1` when complete.'
+                      batch_size:
+                        type: integer
+                        nullable: true
+              examples:
+                Records removed:
+                  value:
+                    labels:
+                    - id: 6612a4b7c8d9e0f123456789
+                      modality: contacts
+                      cached_count: 0
+                      name: Conference 2024 - Maui
+                      created_at: '2024-09-17T20:09:57.863Z'
+                      updated_at: '2024-09-17T20:09:57.863Z'
+                      user_id: 66302798d03b9601c7934ebf
+                      book_of_business: null
+                Nothing to change:
+                  value:
+                    message: No Models or Lists provided
+                Processing in background (async):
+                  value:
+                    entity_progress_job:
+                      id: 6a1f2c9e4b7d8f0012345678
+                      user_id: 66302798d03b9601c7934ebf
+                      job_type: remove_entities_from_labels
+                      entity_ids:
+                      - 66e34b81740c50074e3d1bd4
+                      params:
+                        modality: contacts
+                        label_names:
+                        - Conference 2024 - Maui
+                      progress: -1
+                      batch_size: null
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Missing or invalid API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Key lacks required scope:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/labels/remove_entity_ids_from_label_names.\
+                    \ Request an API key from your administrator that includes this endpoint in its configured scope.\",\n\
+                    \  \"error_code\": \"API_INACCESSIBLE\"\n}"
+                No access to lists:
+                  value: "{\n  \"error\": \"You do not have permission to access lists. Contact your admin to get access to\
+                    \ Contacts & Accounts.\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  error_code:
+                    type: string
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Invalid modality:
+                  value: "{\n  \"error\": \"Invalid modality: leads.\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n  \"message\": \"The maximum number of api calls allowed for api/v1/labels/remove_entity_ids_from_label_names\
+                    \ is 200 times per minute. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\
+                    \n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /webhook_result/{request_id}:
+    get:
+      summary: Poll Webhook Result
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/webhook_result/show` or `Master API key`
+
+
+        **OAuth scopes:** `webhook_result_read`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        Use the Poll Webhook Result endpoint to retrieve webhook results from Apollo. This endpoint enables you to poll for
+        the webhook payload if you didn''t receive the original webhook callback.<br><br>To use this endpoint, you need the
+        <code>request_id</code> from the <a href="https://docs.apollo.io/reference/people-enrichment">People Enrichment</a>
+        or <a href="https://docs.apollo.io/reference/bulk-people-enrichment">Bulk People Enrichment</a> endpoint. Pass this
+        value as <code>request_id</code> in this endpoint.<br><br>This endpoint returns webhook results for your team from
+        up to thirty days after the webhook was triggered.<br><br>While an enrichment is still processing, this endpoint returns
+        a <code>404</code> with <code>error_code: result_pending</code> and a <code>retry_after_seconds</code> value—wait
+        that many seconds and poll again. Once the result is ready, it returns a <code>200</code>.<br><br>Three responses
+        are terminal, so stop polling if you receive any of them: <code>request_id_unknown</code> (<code>404</code>—the <code>request_id</code>
+        is not recognized, usually because it was mistyped or never issued), <code>request_id_expired</code> (<code>410</code>—the
+        result has aged out past the 30-day window, so start a fresh enrichment request), and <code>invalid_request_id</code>
+        (<code>400</code>—the <code>request_id</code> is not a valid signed 64-bit integer).'
+      tags:
+      - Miscellaneous
+      operationId: poll-webhook-result
+      parameters:
+      - name: request_id
+        in: path
+        required: true
+        description: 'The <code>request_id</code> returned when the original enrichment request was submitted. This value
+          is a signed 64-bit integer and can be positive or negative. <br><br>Example: <code>1039995589705121900</code>'
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Phone enrichment:
+                  value:
+                    request_id: '1039995589705121900'
+                    webhook_status: success
+                    request_type: phone
+                    last_dispatched_at: '2026-05-26T10:42:11Z'
+                    failure_reason: null
+                    webhook_result:
+                      status: success
+                      total_requested_enrichments: 1
+                      unique_enriched_records: 1
+                      missing_records: 0
+                      credits_consumed: 1
+                      people:
+                      - id: 587cf802f65125cad923a266
+                        status: success
+                        phone_numbers:
+                        - _id: 64dbe6d172c24f00017b9b71
+                          confidence_cd: high
+                          created_at: null
+                          direct_dial_source_cd: contact_trusted
+                          dnc_other_info:
+                            country: United States
+                          dnc_status_cd: not_found
+                          dnc_status_updated_at: '2023-08-15T20:57:53.108+00:00'
+                          position: 0
+                          raw_number: +1 555-555-0164
+                          sanitized_number: '+15555550164'
+                          status_cd: valid_number
+                          type_cd: other
+                          updated_at: null
+                          id: 64dbe6d172c24f00017b9b71
+                          key: 64dbe6d172c24f00017b9b71
+                        - _id: 64dbe6d172c24f00017b9b72
+                          confidence_cd: high
+                          created_at: null
+                          direct_dial_source_cd: contact_trusted
+                          dnc_other_info:
+                            country: United States
+                          dnc_status_cd: not_found
+                          dnc_status_updated_at: '2023-08-15T20:57:53.267+00:00'
+                          position: 1
+                          raw_number: +1 415-555-0117
+                          sanitized_number: '+14155550117'
+                          status_cd: valid_number
+                          type_cd: other
+                          updated_at: null
+                          id: 64dbe6d172c24f00017b9b72
+                          key: 64dbe6d172c24f00017b9b72
+                Waterfall enrichment:
+                  value:
+                    request_id: '1039995589705121900'
+                    webhook_status: success
+                    request_type: waterfall
+                    last_dispatched_at: '2026-05-26T10:42:11Z'
+                    failure_reason: null
+                    webhook_result:
+                      status: success
+                      total_requested_enrichments: 1
+                      target_fields:
+                      - emails
+                      - phone_numbers
+                      records_enriched: 1
+                      email_records_enriched: 1
+                      mobile_records_enriched: 1
+                      enrichment_not_found: 0
+                      email_records_not_found: 0
+                      mobile_records_not_found: 0
+                      credits_consumed: 0
+                      request_id: '1039995589705121900'
+                      request_initiated: '2026-01-08T08:05:49Z'
+                      request_completed: '2026-01-08T08:10:56Z'
+                      people:
+                      - id: 695f655dc46b8364aefc80c0
+                        waterfall:
+                          emails:
+                          - vendors:
+                            - id: icypeas_single_email_search-1
+                              name: Icypeas
+                              status: UNVERIFIED
+                              emails:
+                              - email1@example.com
+                              usedForVerification: false
+                              statusCode: null
+                              statusMessage: null
+                              authMechanism: native
+                          phone_numbers:
+                          - vendors:
+                            - id: prospeo_mobile_finder-1
+                              name: Prospeo
+                              status: UNVERIFIED
+                              phone_numbers:
+                              - 916-555-0111
+                              usedForVerification: false
+                              statusCode: null
+                              statusMessage: null
+                              authMechanism: native
+                        phone_numbers:
+                        - _id: 695f668dc46b8364aefc80fa
+                          confidence_cd: null
+                          dnc_other_info: {}
+                          dnc_status_cd: null
+                          dnc_status_updated_at: null
+                          raw_number: 916-555-0111
+                          sanitized_number: '+19165550111'
+                          status_cd: no_status
+                          type_cd: null
+                          id: 695f668dc46b8364aefc80fa
+                          key: 695f668dc46b8364aefc80fa
+                        emails:
+                        - email: email1@example.com
+                          email_source_cd: null
+                          position: 0
+                          email_status_cd: Verified
+                          extrapolated_email_confidence: null
+                          third_party_data_provider_id: icypeas_single_email_search
+                          waterfall_enriched_at: '2026-01-08T08:05:50.241Z'
+                          vendor_validation_statuses: []
+              schema:
+                type: object
+                properties:
+                  request_id:
+                    type: string
+                    description: Echoes the <code>request_id</code> from the URL.
+                    example: '1039995589705121900'
+                  webhook_status:
+                    type: string
+                    description: The current webhook status.
+                    enum:
+                    - in_progress
+                    - success
+                    - failed
+                    example: success
+                  request_type:
+                    type: string
+                    description: The enrichment request type.
+                    enum:
+                    - email
+                    - phone
+                    - waterfall
+                    example: phone
+                  last_dispatched_at:
+                    type: string
+                    nullable: true
+                    description: ISO 8601 UTC timestamp of the last webhook <code>POST</code> attempt. Returns <code>null</code>
+                      until Apollo makes the first dispatch attempt.
+                    example: '2026-05-26T10:42:11Z'
+                  failure_reason:
+                    type: string
+                    nullable: true
+                    description: The error message from the last failed dispatch. This field is populated when <code>webhook_status</code>
+                      is <code>failed</code>.
+                    example: null
+                  webhook_result:
+                    type: object
+                    nullable: true
+                    description: The original webhook payload that Apollo delivered, or would have delivered, to the customer
+                      webhook URL. The shape varies by <code>request_type</code>.
+                    additionalProperties: true
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Malformed request_id:
+                  value:
+                    error_code: invalid_request_id
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                    description: Machine-readable error code. <code>invalid_request_id</code> means the <code>request_id</code>
+                      was not a valid signed 64-bit integer.
+                    enum:
+                    - invalid_request_id
+                    example: invalid_request_id
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Unauthorized:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                Result still processing:
+                  value:
+                    error_code: result_pending
+                    retry_after_seconds: 10
+                Request ID not recognized:
+                  value:
+                    error_code: request_id_unknown
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                    description: Machine-readable error code. <code>result_pending</code> means the enrichment is still processing
+                      — wait <code>retry_after_seconds</code> and poll again. <code>request_id_unknown</code> means the <code>request_id</code>
+                      is not recognized, usually because it was mistyped or never issued — do not retry.
+                    enum:
+                    - result_pending
+                    - request_id_unknown
+                    example: result_pending
+                  retry_after_seconds:
+                    type: integer
+                    nullable: true
+                    description: Present only when <code>error_code</code> is <code>result_pending</code>. The number of seconds
+                      to wait before polling again. This value does not guarantee that phone or email enrichment results will
+                      be available after that time.
+                    example: 10
+        '410':
+          description: '410'
+          content:
+            application/json:
+              examples:
+                Result expired:
+                  value:
+                    error_code: request_id_expired
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                    description: Machine-readable error code. <code>request_id_expired</code> means the request was valid
+                      but its result has aged out past the 30-day retention window. Do not retry; start a fresh enrichment
+                      request instead.
+                    enum:
+                    - request_id_expired
+                    example: request_id_expired
+      deprecated: false
+  /usage_stats/credit_usage_stats:
+    post:
+      summary: View Credit Usage Stats
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/usage_stats/credit_usage_stats` or `Master API key`
+
+
+        **OAuth scopes:** `credit_usage_stats_read`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        Use the View Credit Usage Stats endpoint to monitor your team''s credit balance across every credit type in the current
+        billing cycle.
+
+
+        For each credit type, the response returns the `limit` (your team''s allowance for the cycle), `consumed` (credits
+        used so far), and `left_over` (credits remaining). The `current_credit_cycle` object reports the start and end dates
+        of the billing cycle these stats cover.
+
+
+        Balances reflect your team''s running credit usage and update within seconds of a credit-consuming request. To retrieve
+        credit usage for a single user instead of the whole team, use [Get Current User Profile](https://docs.apollo.io/reference/get-current-user-profile)
+        with the `include_credit_usage` query parameter set to `true`.
+
+
+        ### Credit types
+
+
+        The `credit_usage_stats` object is keyed by credit type. Each key funds a different Apollo action:
+
+
+        | Key | What it funds |
+
+        | --- | --- |
+
+        | `lead_credit` | Email address reveals and email enrichment. |
+
+        | `direct_dial_credit` | Mobile and direct dial phone number reveals. |
+
+        | `export_credit` | CSV exports of contacts and accounts. |
+
+        | `conversation_credit` | Conversation intelligence and call recording. |
+
+        | `ai_credit` | AI-generated email writing. |
+
+        | `power_up_credit` | AI power-up field enrichment on contact and account records. |
+
+        | `inbound_website_visitor_credit` | Inbound website visitor identification. |
+
+        | `contact_website_visitor_credit` | Contact-level website visit tracking. |
+
+        | `web_search_record_credit` | Web search enrichment records. |
+
+        | `dialer` | Dialer talk time. Reported in **minutes**, not credits. |
+
+
+        A credit type your <a href="https://app.apollo.io/#/settings/plans/upgrade" target="_blank">Apollo plan</a> doesn''t
+        include returns a `limit` of `0`.
+
+
+        If your team is on a unified credit plan, `lead_credit` is a shared pool: the `left_over` value already accounts for
+        mobile reveals, exports, dialer minutes, and power-up enrichment, so don''t add the individual balances together to
+        estimate what''s left.'
+      tags:
+      - Miscellaneous
+      operationId: view-credit-usage-stats
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              examples:
+                OK:
+                  summary: OK
+                  value: "{\n  \"credit_usage_stats\": {\n    \"lead_credit\": {\n      \"limit\": 10000,\n      \"consumed\"\
+                    : 2500,\n      \"left_over\": 7500\n    },\n    \"direct_dial_credit\": {\n      \"limit\": 1000,\n  \
+                    \    \"consumed\": 120,\n      \"left_over\": 880\n    },\n    \"export_credit\": {\n      \"limit\":\
+                    \ 5000,\n      \"consumed\": 250,\n      \"left_over\": 4750\n    },\n    \"conversation_credit\": {\n\
+                    \      \"limit\": 500,\n      \"consumed\": 30,\n      \"left_over\": 470\n    },\n    \"ai_credit\":\
+                    \ {\n      \"limit\": 2000,\n      \"consumed\": 75,\n      \"left_over\": 1925\n    },\n    \"power_up_credit\"\
+                    : {\n      \"limit\": 1000,\n      \"consumed\": 40,\n      \"left_over\": 960\n    },\n    \"inbound_website_visitor_credit\"\
+                    : {\n      \"limit\": 1000,\n      \"consumed\": 60,\n      \"left_over\": 940\n    },\n    \"dialer\"\
+                    : {\n      \"limit\": 500,\n      \"consumed\": 12,\n      \"left_over\": 488\n    },\n    \"web_search_record_credit\"\
+                    : {\n      \"limit\": 1000,\n      \"consumed\": 0,\n      \"left_over\": 1000\n    },\n    \"contact_website_visitor_credit\"\
+                    : {\n      \"limit\": 1000,\n      \"consumed\": 15,\n      \"left_over\": 985\n    }\n  },\n  \"current_credit_cycle\"\
+                    : {\n    \"start_date\": \"2026-04-01T00:00:00.000Z\",\n    \"end_date\": \"2026-05-01T00:00:00.000Z\"\
+                    \n  }\n}"
+              schema:
+                type: object
+                properties:
+                  credit_usage_stats:
+                    type: object
+                    description: Credit usage for the current billing cycle, keyed by credit type. Every credit type is always
+                      returned; a type your Apollo plan doesn't include returns a `limit` of `0`. See the Credit types table
+                      above for what each key funds. Values are credits, except `dialer`, which is reported in minutes.
+                    additionalProperties:
+                      type: object
+                      properties:
+                        limit:
+                          type: integer
+                          example: 10000
+                          description: Credit allowance for the current billing cycle.
+                        consumed:
+                          type: integer
+                          example: 2500
+                          description: Credits used so far this cycle. Equals `limit` minus `left_over`, and can be negative
+                            if remaining exceeds the allowance.
+                        left_over:
+                          type: integer
+                          example: 7500
+                          description: Credits remaining for the current billing cycle.
+                  current_credit_cycle:
+                    type: object
+                    description: Start and end of the billing cycle the stats cover. Both values are `null` when the team
+                      has no active billing cycle.
+                    properties:
+                      start_date:
+                        type: string
+                        format: date-time
+                        nullable: true
+                        example: '2026-04-01T00:00:00.000Z'
+                        description: Start of the current credit cycle.
+                      end_date:
+                        type: string
+                        format: date-time
+                        nullable: true
+                        example: '2026-05-01T00:00:00.000Z'
+                        description: End of the current credit cycle.
+        '401':
+          description: Unauthorized
+          content:
+            text/plain:
+              examples:
+                Check API Key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                Need Master API Key:
+                  value:
+                    error: This API key is not authorized to access api/v1/usage_stats/credit_usage_stats. Request an API
+                      key from your administrator that includes this endpoint in its configured scope.
+                    error_code: API_INACCESSIBLE
+                  summary: Need Master API Key
+      parameters: []
+  /usage_stats/api_usage_stats:
+    post:
+      summary: View API Usage Stats and Rate Limits
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/usage_stats/api_usage_stats` or `Master API key`
+
+
+        **OAuth scopes:** `api_usage_stats_read`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        Use the View API Usage Stats endpoint to view your team''s usage of Apollo API and your rate limit for API endpoints.<br><br>Each
+        endpoint has a rate limit per minute, hour, and day. Your <a href="https://docs.apollo.io/docs/api-pricing">Apollo
+        plan</a> does impact the rate limits for API endpoints.'
+      tags:
+      - Miscellaneous
+      operationId: post_apiusage
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              examples:
+                OK:
+                  summary: OK
+                  value: "{\n  \"[\\\"api/v1/contacts\\\", \\\"search\\\"]\": {\n    \"day\": {\n      \"limit\": 6000,\n\
+                    \      \"consumed\": 500,\n      \"left_over\": 6000\n    },\n    \"hour\": {\n      \"limit\": 600,\n\
+                    \      \"consumed\": 5,\n      \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\": 200,\n\
+                    \      \"consumed\": 10,\n      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/contacts\\\", \\\"intelligent_fuzzy_search\\\
+                    \"]\": {\n    \"day\": {\n      \"limit\": 6000,\n      \"consumed\": 0,\n      \"left_over\": 6000\n\
+                    \    },\n    \"hour\": {\n      \"limit\": 600,\n      \"consumed\": 0,\n      \"left_over\": 600\n  \
+                    \  },\n    \"minute\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n  \
+                    \  }\n  },\n  \"[\\\"api/v1/contacts\\\", \\\"create\\\"]\": {\n    \"day\": {\n      \"limit\": 6000,\n\
+                    \      \"consumed\": 0,\n      \"left_over\": 6000\n    },\n    \"hour\": {\n      \"limit\": 600,\n \
+                    \     \"consumed\": 0,\n      \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\": 200,\n \
+                    \     \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/contacts\\\", \\\"update\\\
+                    \"]\": {\n    \"day\": {\n      \"limit\": 6000,\n      \"consumed\": 0,\n      \"left_over\": 6000\n\
+                    \    },\n    \"hour\": {\n      \"limit\": 600,\n      \"consumed\": 0,\n      \"left_over\": 600\n  \
+                    \  },\n    \"minute\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n  \
+                    \  }\n  },\n  \"[\\\"api/v1/contacts\\\", \\\"match\\\"]\": {\n    \"day\": {\n      \"limit\": 6000,\n\
+                    \      \"consumed\": 0,\n      \"left_over\": 6000\n    },\n    \"hour\": {\n      \"limit\": 600,\n \
+                    \     \"consumed\": 0,\n      \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\": 200,\n \
+                    \     \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/contacts\\\", \\\"bulk_match\\\
+                    \"]\": {\n    \"day\": {\n      \"limit\": 6000,\n      \"consumed\": 0,\n      \"left_over\": 6000\n\
+                    \    },\n    \"hour\": {\n      \"limit\": 100,\n      \"consumed\": 0,\n      \"left_over\": 100\n  \
+                    \  },\n    \"minute\": {\n      \"limit\": 20,\n      \"consumed\": 0,\n      \"left_over\": 20\n    }\n\
+                    \  },\n  \"[\\\"api/v1/contact_stages\\\", \\\"index\\\"]\": {\n    \"day\": {\n      \"limit\": 6000,\n\
+                    \      \"consumed\": 0,\n      \"left_over\": 6000\n    },\n    \"hour\": {\n      \"limit\": 600,\n \
+                    \     \"consumed\": 0,\n      \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\": 200,\n \
+                    \     \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/accounts\\\", \\\"search\\\
+                    \"]\": {\n    \"day\": {\n      \"limit\": 6000,\n      \"consumed\": 0,\n      \"left_over\": 6000\n\
+                    \    },\n    \"hour\": {\n      \"limit\": 600,\n      \"consumed\": 0,\n      \"left_over\": 600\n  \
+                    \  },\n    \"minute\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n  \
+                    \  }\n  },\n  \"[\\\"api/v1/account_stages\\\", \\\"index\\\"]\": {\n    \"day\": {\n      \"limit\":\
+                    \ 6000,\n      \"consumed\": 0,\n      \"left_over\": 6000\n    },\n    \"hour\": {\n      \"limit\":\
+                    \ 600,\n      \"consumed\": 0,\n      \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\":\
+                    \ 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/people\\\", \\\"\
+                    search\\\"]\": {\n    \"day\": {\n      \"limit\": 6000,\n      \"consumed\": 0,\n      \"left_over\"\
+                    : 6000\n    },\n    \"hour\": {\n      \"limit\": 600,\n      \"consumed\": 0,\n      \"left_over\": 600\n\
+                    \    },\n    \"minute\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n\
+                    \    }\n  },\n  \"[\\\"api/v1/people\\\", \\\"match\\\"]\": {\n    \"day\": {\n      \"limit\": 6000,\n\
+                    \      \"consumed\": 0,\n      \"left_over\": 6000\n    },\n    \"hour\": {\n      \"limit\": 600,\n \
+                    \     \"consumed\": 0,\n      \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\": 200,\n \
+                    \     \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/people\\\", \\\"bulk_match\\\
+                    \"]\": {\n    \"day\": {\n      \"limit\": 6000,\n      \"consumed\": 0,\n      \"left_over\": 6000\n\
+                    \    },\n    \"hour\": {\n      \"limit\": 100,\n      \"consumed\": 0,\n      \"left_over\": 100\n  \
+                    \  },\n    \"minute\": {\n      \"limit\": 20,\n      \"consumed\": 0,\n      \"left_over\": 20\n    }\n\
+                    \  },\n  \"[\\\"api/v1/people\\\", \\\"show\\\"]\": {\n    \"day\": {\n      \"limit\": 6000,\n      \"\
+                    consumed\": 0,\n      \"left_over\": 6000\n    },\n    \"hour\": {\n      \"limit\": 600,\n      \"consumed\"\
+                    : 0,\n      \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\": 200,\n      \"consumed\":\
+                    \ 0,\n      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/organizations\\\", \\\"show\\\"]\": {\n \
+                    \   \"day\": {\n      \"limit\": 6000,\n      \"consumed\": 3,\n      \"left_over\": 5997\n    },\n  \
+                    \  \"hour\": {\n      \"limit\": 600,\n      \"consumed\": 3,\n      \"left_over\": 597\n    },\n    \"\
+                    minute\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n  \"\
+                    [\\\"api/v1/organizations\\\", \\\"show_with_context\\\"]\": {\n    \"day\": {\n      \"limit\": 6000,\n\
+                    \      \"consumed\": 3,\n      \"left_over\": 5997\n    },\n    \"hour\": {\n      \"limit\": 600,\n \
+                    \     \"consumed\": 3,\n      \"left_over\": 597\n    },\n    \"minute\": {\n      \"limit\": 200,\n \
+                    \     \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/organizations\\\", \\\"\
+                    search\\\"]\": {\n    \"day\": {\n      \"limit\": 6000,\n      \"consumed\": 0,\n      \"left_over\"\
+                    : 6000\n    },\n    \"hour\": {\n      \"limit\": 600,\n      \"consumed\": 0,\n      \"left_over\": 600\n\
+                    \    },\n    \"minute\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n\
+                    \    }\n  },\n  \"[\\\"api/v1/organizations\\\", \\\"enrich\\\"]\": {\n    \"day\": {\n      \"limit\"\
+                    : 6000,\n      \"consumed\": 0,\n      \"left_over\": 6000\n    },\n    \"hour\": {\n      \"limit\":\
+                    \ 600,\n      \"consumed\": 0,\n      \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\":\
+                    \ 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/organizations\\\
+                    \", \\\"bulk_enrich\\\"]\": {\n    \"day\": {\n      \"limit\": 600,\n      \"consumed\": 0,\n      \"\
+                    left_over\": 600\n    },\n    \"hour\": {\n      \"limit\": 100,\n      \"consumed\": 0,\n      \"left_over\"\
+                    : 100\n    },\n    \"minute\": {\n      \"limit\": 20,\n      \"consumed\": 0,\n      \"left_over\": 20\n\
+                    \    }\n  },\n  \"[\\\"api/v1/organizations\\\", \\\"job_postings\\\"]\": {\n    \"day\": {\n      \"\
+                    limit\": 6000,\n      \"consumed\": 0,\n      \"left_over\": 6000\n    },\n    \"hour\": {\n      \"limit\"\
+                    : 600,\n      \"consumed\": 0,\n      \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\":\
+                    \ 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/organizations\\\
+                    \", \\\"employee_metrics\\\"]\": {\n    \"day\": {\n      \"limit\": 6000,\n      \"consumed\": 0,\n \
+                    \     \"left_over\": 6000\n    },\n    \"hour\": {\n      \"limit\": 600,\n      \"consumed\": 0,\n  \
+                    \    \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n  \
+                    \    \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/mixed_companies\\\", \\\"search\\\"]\": {\n    \"\
+                    day\": {\n      \"limit\": 6000,\n      \"consumed\": 0,\n      \"left_over\": 6000\n    },\n    \"hour\"\
+                    : {\n      \"limit\": 600,\n      \"consumed\": 0,\n      \"left_over\": 600\n    },\n    \"minute\":\
+                    \ {\n      \"limit\": 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/mixed_people\\\
+                    \", \\\"add_to_my_prospects\\\"]\": {\n    \"day\": {\n      \"limit\": 6000,\n      \"consumed\": 1,\n\
+                    \      \"left_over\": 5999\n    },\n    \"hour\": {\n      \"limit\": 600,\n      \"consumed\": 0,\n \
+                    \     \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\": 100,\n      \"consumed\": 0,\n \
+                    \     \"left_over\": 100\n    }\n  },\n  \"[\\\"api/v1/mixed_people\\\", \\\"search\\\"]\": {\n    \"\
+                    day\": {\n      \"limit\": 6000,\n      \"consumed\": 10,\n      \"left_over\": 5990\n    },\n    \"hour\"\
+                    : {\n      \"limit\": 600,\n      \"consumed\": 10,\n      \"left_over\": 590\n    },\n    \"minute\"\
+                    : {\n      \"limit\": 200,\n      \"consumed\": 1,\n      \"left_over\": 199\n    }\n  },\n  \"[\\\"api/v1/mixed_people\\\
+                    \", \\\"organization_top_people\\\"]\": {\n    \"day\": {\n      \"limit\": 2000,\n      \"consumed\"\
+                    : 0,\n      \"left_over\": 2000\n    },\n    \"hour\": {\n      \"limit\": 400,\n      \"consumed\": 0,\n\
+                    \      \"left_over\": 400\n    },\n    \"minute\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n\
+                    \      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/conversation_shares\\\", \\\"create\\\"]\": {\n\
+                    \    \"day\": {\n      \"limit\": 6000,\n      \"consumed\": 0,\n      \"left_over\": 6000\n    },\n \
+                    \   \"hour\": {\n      \"limit\": 600,\n      \"consumed\": 0,\n      \"left_over\": 600\n    },\n   \
+                    \ \"minute\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n\
+                    \  \"[\\\"api/v1/conversation_shares\\\", \\\"update\\\"]\": {\n    \"day\": {\n      \"limit\": 6000,\n\
+                    \      \"consumed\": 0,\n      \"left_over\": 6000\n    },\n    \"hour\": {\n      \"limit\": 600,\n \
+                    \     \"consumed\": 0,\n      \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\": 200,\n \
+                    \     \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/conversation_shares\\\"\
+                    , \\\"show\\\"]\": {\n    \"day\": {\n      \"limit\": 300,\n      \"consumed\": 0,\n      \"left_over\"\
+                    : 300\n    },\n    \"hour\": {\n      \"limit\": 50,\n      \"consumed\": 0,\n      \"left_over\": 50\n\
+                    \    },\n    \"minute\": {\n      \"limit\": 10,\n      \"consumed\": 0,\n      \"left_over\": 10\n  \
+                    \  }\n  },\n  \"[\\\"api/v1/conversation_shares\\\", \\\"external\\\"]\": {\n    \"day\": {\n      \"\
+                    limit\": 300,\n      \"consumed\": 0,\n      \"left_over\": 300\n    },\n    \"hour\": {\n      \"limit\"\
+                    : 50,\n      \"consumed\": 0,\n      \"left_over\": 50\n    },\n    \"minute\": {\n      \"limit\": 10,\n\
+                    \      \"consumed\": 0,\n      \"left_over\": 10\n    }\n  },\n  \"[\\\"api/v1/conversations\\\", \\\"\
+                    ask_anything_v2_chat\\\"]\": {\n    \"day\": {\n      \"limit\": 1000,\n      \"consumed\": 0,\n     \
+                    \ \"left_over\": 1000\n    },\n    \"hour\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n      \"\
+                    left_over\": 200\n    },\n    \"minute\": {\n      \"limit\": 20,\n      \"consumed\": 0,\n      \"left_over\"\
+                    : 20\n    }\n  },\n  \"[\\\"api/v1/conversations\\\", \\\"export\\\"]\": {\n    \"day\": {\n      \"limit\"\
+                    : 480,\n      \"consumed\": 0,\n      \"left_over\": 480\n    },\n    \"hour\": {\n      \"limit\": 20,\n\
+                    \      \"consumed\": 0,\n      \"left_over\": 20\n    },\n    \"minute\": {\n      \"limit\": 1,\n   \
+                    \   \"consumed\": 0,\n      \"left_over\": 1\n    }\n  },\n  \"[\\\"api/v1/voice_settings\\\", \\\"get_available_phone_numbers\\\
+                    \"]\": {\n    \"day\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n  \
+                    \  },\n    \"hour\": {\n      \"limit\": 50,\n      \"consumed\": 0,\n      \"left_over\": 50\n    },\n\
+                    \    \"minute\": {\n      \"limit\": 10,\n      \"consumed\": 0,\n      \"left_over\": 10\n    }\n  },\n\
+                    \  \"[\\\"api/v1/tasks\\\", \\\"create\\\"]\": {\n    \"day\": {\n      \"limit\": 6000,\n      \"consumed\"\
+                    : 0,\n      \"left_over\": 6000\n    },\n    \"hour\": {\n      \"limit\": 600,\n      \"consumed\": 0,\n\
+                    \      \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n\
+                    \      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/tasks\\\", \\\"search\\\"]\": {\n    \"day\":\
+                    \ {\n      \"limit\": 6000,\n      \"consumed\": 3,\n      \"left_over\": 5997\n    },\n    \"hour\":\
+                    \ {\n      \"limit\": 600,\n      \"consumed\": 3,\n      \"left_over\": 597\n    },\n    \"minute\":\
+                    \ {\n      \"limit\": 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/tasks\\\
+                    \", \\\"bulk_complete\\\"]\": {\n    \"day\": {\n      \"limit\": 6000,\n      \"consumed\": 0,\n    \
+                    \  \"left_over\": 6000\n    },\n    \"hour\": {\n      \"limit\": 600,\n      \"consumed\": 0,\n     \
+                    \ \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n     \
+                    \ \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/reports\\\", \\\"sync_report\\\"]\": {\n    \"day\"\
+                    : {\n      \"limit\": 6000,\n      \"consumed\": 0,\n      \"left_over\": 6000\n    },\n    \"hour\":\
+                    \ {\n      \"limit\": 5,\n      \"consumed\": 0,\n      \"left_over\": 5\n    },\n    \"minute\": {\n\
+                    \      \"limit\": 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/mfa_config\\\
+                    \", \\\"create\\\"]\": {\n    \"day\": {\n      \"limit\": 50,\n      \"consumed\": 0,\n      \"left_over\"\
+                    : 50\n    },\n    \"hour\": {\n      \"limit\": 20,\n      \"consumed\": 0,\n      \"left_over\": 20\n\
+                    \    },\n    \"minute\": {\n      \"limit\": 5,\n      \"consumed\": 0,\n      \"left_over\": 5\n    }\n\
+                    \  },\n  \"[\\\"api/v1/phone_calls\\\", \\\"create\\\"]\": {\n    \"day\": {\n      \"limit\": 6000,\n\
+                    \      \"consumed\": 0,\n      \"left_over\": 6000\n    },\n    \"hour\": {\n      \"limit\": 600,\n \
+                    \     \"consumed\": 0,\n      \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\": 200,\n \
+                    \     \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/phone_calls\\\", \\\"update\\\
+                    \"]\": {\n    \"day\": {\n      \"limit\": 6000,\n      \"consumed\": 0,\n      \"left_over\": 6000\n\
+                    \    },\n    \"hour\": {\n      \"limit\": 600,\n      \"consumed\": 0,\n      \"left_over\": 600\n  \
+                    \  },\n    \"minute\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n  \
+                    \  }\n  },\n  \"[\\\"api/v1/paging_events\\\", \\\"create\\\"]\": {\n    \"day\": {\n      \"limit\":\
+                    \ 6000,\n      \"consumed\": 3,\n      \"left_over\": 5997\n    },\n    \"hour\": {\n      \"limit\":\
+                    \ 600,\n      \"consumed\": 1,\n      \"left_over\": 599\n    },\n    \"minute\": {\n      \"limit\":\
+                    \ 200,\n      \"consumed\": 1,\n      \"left_over\": 199\n    }\n  },\n  \"[\\\"api/v1/crm\\\", \\\"object_fields_mapping\\\
+                    \"]\": {\n    \"day\": {\n      \"limit\": 6000,\n      \"consumed\": 0,\n      \"left_over\": 6000\n\
+                    \    },\n    \"hour\": {\n      \"limit\": 600,\n      \"consumed\": 0,\n      \"left_over\": 600\n  \
+                    \  },\n    \"minute\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n  \
+                    \  }\n  },\n  \"[\\\"api/v1/emailer_campaigns\\\", \\\"show\\\"]\": {\n    \"day\": {\n      \"limit\"\
+                    : 6000,\n      \"consumed\": 2,\n      \"left_over\": 5998\n    },\n    \"hour\": {\n      \"limit\":\
+                    \ 600,\n      \"consumed\": 0,\n      \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\":\
+                    \ 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/emailer_campaigns\\\
+                    \", \\\"search\\\"]\": {\n    \"day\": {\n      \"limit\": 6000,\n      \"consumed\": 2,\n      \"left_over\"\
+                    : 5998\n    },\n    \"hour\": {\n      \"limit\": 600,\n      \"consumed\": 0,\n      \"left_over\": 600\n\
+                    \    },\n    \"minute\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n\
+                    \    }\n  },\n  \"[\\\"api/v1/emailer_campaigns\\\", \\\"add_contact_ids\\\"]\": {\n    \"day\": {\n \
+                    \     \"limit\": 6000,\n      \"consumed\": 0,\n      \"left_over\": 6000\n    },\n    \"hour\": {\n \
+                    \     \"limit\": 600,\n      \"consumed\": 0,\n      \"left_over\": 600\n    },\n    \"minute\": {\n \
+                    \     \"limit\": 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/emailer_campaigns\\\
+                    \", \\\"remove_or_stop_contact_ids\\\"]\": {\n    \"day\": {\n      \"limit\": 6000,\n      \"consumed\"\
+                    : 0,\n      \"left_over\": 6000\n    },\n    \"hour\": {\n      \"limit\": 600,\n      \"consumed\": 0,\n\
+                    \      \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n\
+                    \      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/emailer_messages\\\", \\\"search\\\"]\": {\n \
+                    \   \"day\": {\n      \"limit\": 6000,\n      \"consumed\": 0,\n      \"left_over\": 6000\n    },\n  \
+                    \  \"hour\": {\n      \"limit\": 600,\n      \"consumed\": 0,\n      \"left_over\": 600\n    },\n    \"\
+                    minute\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n  \"\
+                    [\\\"api/v1/emailer_messages\\\", \\\"activities\\\"]\": {\n    \"day\": {\n      \"limit\": 6000,\n \
+                    \     \"consumed\": 0,\n      \"left_over\": 6000\n    },\n    \"hour\": {\n      \"limit\": 600,\n  \
+                    \    \"consumed\": 0,\n      \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\": 200,\n  \
+                    \    \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/users\\\", \\\"search\\\"\
+                    ]\": {\n    \"day\": {\n      \"limit\": 6000,\n      \"consumed\": 4,\n      \"left_over\": 5996\n  \
+                    \  },\n    \"hour\": {\n      \"limit\": 600,\n      \"consumed\": 0,\n      \"left_over\": 600\n    },\n\
+                    \    \"minute\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n    }\n \
+                    \ },\n  \"[\\\"api/v1/email_accounts\\\", \\\"index\\\"]\": {\n    \"day\": {\n      \"limit\": 6000,\n\
+                    \      \"consumed\": 0,\n      \"left_over\": 6000\n    },\n    \"hour\": {\n      \"limit\": 600,\n \
+                    \     \"consumed\": 0,\n      \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\": 200,\n \
+                    \     \"consumed\": 0,\n      \"left_over\": 200\n    }\n  },\n  \"[\\\"api/v1/labels\\\", \\\"index\\\
+                    \"]\": {\n    \"day\": {\n      \"limit\": 6000,\n      \"consumed\": 0,\n      \"left_over\": 6000\n\
+                    \    },\n    \"hour\": {\n      \"limit\": 600,\n      \"consumed\": 0,\n      \"left_over\": 600\n  \
+                    \  },\n    \"minute\": {\n      \"limit\": 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n  \
+                    \  }\n  },\n  \"[\\\"api/v1/typed_custom_fields\\\", \\\"index\\\"]\": {\n    \"day\": {\n      \"limit\"\
+                    : 6000,\n      \"consumed\": 0,\n      \"left_over\": 6000\n    },\n    \"hour\": {\n      \"limit\":\
+                    \ 600,\n      \"consumed\": 0,\n      \"left_over\": 600\n    },\n    \"minute\": {\n      \"limit\":\
+                    \ 200,\n      \"consumed\": 0,\n      \"left_over\": 200\n    }\n  }\n0"
+        '401':
+          description: Unauthorized
+          content:
+            text/plain:
+              examples:
+                Check API Key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                Need Master API Key:
+                  value:
+                    error: This API key is not authorized to access api/v1/usage_stats/api_usage_stats. Request an API key
+                      from your administrator that includes this endpoint in its configured scope.
+                    error_code: API_INACCESSIBLE
+                  summary: Need Master API Key
+      parameters: []
+  /notes:
+    get:
+      summary: Get a List of Notes
+      description: '## Endpoint essentials
+
+
+        **API key access:** `meetings/api/v1/notes/index` or `Master API key`
+
+
+        **OAuth scopes:** `notes_list`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        <a href="https://knowledge.apollo.io/hc/en-us/articles/28746467476365-Notes-Overview" target="_blank">Notes</a> on
+        Apollo let you keep track of info directly on prospect profiles.<br><br>The Get a List of Notes endpoint retrieves
+        notes associated with a specific contact, account, opportunity, calendar event, or conversation in your Apollo account.
+        You must provide at least one relation parameter (<code>account_id</code>, <code>contact_id</code>, <code>contact_ids</code>,
+        <code>opportunity_id</code>, <code>calendar_event_id</code>, <code>conversation_id</code>, or <code>conversation_ids</code>).
+        Use this endpoint to fetch notes with sorting and pagination support.'
+      tags:
+      - Miscellaneous
+      operationId: get-a-list-of-notes
+      parameters:
+      - name: contact_id
+        in: query
+        description: 'The ID of the contact whose notes you want to retrieve. <br><br>Example: `60a5c0b8e4b0c7001c4f1234`'
+        schema:
+          type: string
+      - name: account_id
+        in: query
+        description: 'The ID of the account whose notes you want to retrieve. <br><br>Example: `60a5c0b8e4b0c7001c4f5678`'
+        schema:
+          type: string
+      - name: opportunity_id
+        in: query
+        description: 'The ID of the opportunity whose notes you want to retrieve. <br><br>Example: `60a5c0b8e4b0c7001c4f9012`'
+        schema:
+          type: string
+      - name: calendar_event_id
+        in: query
+        description: 'The ID of the calendar event whose notes you want to retrieve. <br><br>Example: `60a5c0b8e4b0c7001c4f3456`'
+        schema:
+          type: string
+      - name: conversation_id
+        in: query
+        description: 'The ID of the conversation whose notes you want to retrieve. <br><br>Example: `60a5c0b8e4b0c7001c4f7890`'
+        schema:
+          type: string
+      - name: conversation_ids
+        in: query
+        description: An array of conversation IDs to filter notes by multiple conversations.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: contact_ids
+        in: query
+        description: An array of contact IDs to filter notes by multiple contacts.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: start_date
+        in: query
+        description: 'Filter notes created on or after this date. Must be a valid date string. <br><br>Example: `2024-01-01`'
+        schema:
+          type: string
+      - name: sort_by_field
+        in: query
+        description: The field to sort results by. Defaults to `created_at`.
+        schema:
+          type: string
+          enum:
+          - created_at
+          - updated_at
+          default: created_at
+      - name: sort_direction
+        in: query
+        description: The direction to sort results. Defaults to `desc`.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: skip
+        in: query
+        description: The number of notes to skip for pagination. Must be a non-negative integer. Defaults to `0`.
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: The maximum number of notes to return per request. Defaults to `25`. Maximum value is `100`.
+        schema:
+          type: integer
+          default: 25
+          maximum: 100
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    notes:
+                    - id: 60a5c0b8e4b0c7001c4fabcd
+                      user_id: 60a5c0b8e4b0c7001c4f0001
+                      content: Had a productive call with the client. They are interested in the enterprise plan.
+                      updated_at: '2024-06-15T14:30:00.000Z'
+                      created_at: '2024-06-15T14:30:00.000Z'
+                      contact_id: 60a5c0b8e4b0c7001c4f1234
+                      conversation_id: null
+                      account_id: 60a5c0b8e4b0c7001c4f5678
+                      pinned_to_top: false
+                      system: false
+                      opportunity_id: null
+                      account_ids: []
+                      contact_ids:
+                      - 60a5c0b8e4b0c7001c4f1234
+                      opportunity_ids: []
+                      calendar_event_ids: []
+                      conversation_ids: []
+                      is_org_chart_note: false
+                      crm_notes: []
+              schema:
+                type: object
+                properties:
+                  notes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The unique identifier of the note.
+                          example: 60a5c0b8e4b0c7001c4fabcd
+                        user_id:
+                          type: string
+                          description: The ID of the user who created the note.
+                          example: 60a5c0b8e4b0c7001c4f0001
+                        content:
+                          type: string
+                          description: The content of the note.
+                          example: Had a productive call with the client.
+                        updated_at:
+                          type: string
+                          description: The timestamp when the note was last updated.
+                          example: '2024-06-15T14:30:00.000Z'
+                        created_at:
+                          type: string
+                          description: The timestamp when the note was created.
+                          example: '2024-06-15T14:30:00.000Z'
+                        contact_id:
+                          type: string
+                          nullable: true
+                          description: The ID of the associated contact.
+                          example: 60a5c0b8e4b0c7001c4f1234
+                        conversation_id:
+                          type: string
+                          nullable: true
+                          description: The ID of the associated conversation.
+                          example: null
+                        account_id:
+                          type: string
+                          nullable: true
+                          description: The ID of the associated account.
+                          example: 60a5c0b8e4b0c7001c4f5678
+                        pinned_to_top:
+                          type: boolean
+                          description: Whether the note is pinned to the top.
+                          example: false
+                        system:
+                          type: boolean
+                          description: Whether this is a system-generated note.
+                          example: false
+                        opportunity_id:
+                          type: string
+                          nullable: true
+                          description: The ID of the associated opportunity.
+                          example: null
+                        account_ids:
+                          type: array
+                          items:
+                            type: string
+                          description: Array of associated account IDs.
+                        contact_ids:
+                          type: array
+                          items:
+                            type: string
+                          description: Array of associated contact IDs.
+                        opportunity_ids:
+                          type: array
+                          items:
+                            type: string
+                          description: Array of associated opportunity IDs.
+                        calendar_event_ids:
+                          type: array
+                          items:
+                            type: string
+                          description: Array of associated calendar event IDs.
+                        conversation_ids:
+                          type: array
+                          items:
+                            type: string
+                          description: Array of associated conversation IDs.
+                        is_org_chart_note:
+                          type: boolean
+                          description: Whether this note is an org chart note.
+                          example: false
+                        crm_notes:
+                          type: array
+                          description: Array of associated CRM note records.
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Missing required filter:
+                  value:
+                    error: At least one argument is required
+                Invalid sort direction:
+                  value:
+                    error: sort_direction must be "asc" or "desc"
+                Invalid sort field:
+                  value:
+                    error: 'sort_by_field must be one of: created_at, updated_at'
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: At least one argument is required
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+      deprecated: false

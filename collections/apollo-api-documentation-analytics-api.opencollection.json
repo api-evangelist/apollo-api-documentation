@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apollo API — Analytics",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Analytics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Query Analytics Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/reports/sync_report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/reports/sync_report` or `Master API key`\n\n**OAuth scopes:** `report_sync`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the Query Analytics Report endpoint to programmatically query <a href=\"https://knowledge.apollo.io/hc/en-us/articles/33574373762317-Analytics-Overview\" target=\"_blank\">Apollo analytics</a> and retrieve aggregated sales activity data for your team.<br>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

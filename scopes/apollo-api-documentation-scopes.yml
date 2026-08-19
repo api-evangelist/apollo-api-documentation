@@ -1,0 +1,112 @@
+generated: '2026-08-14'
+method: probed
+source: https://mcp.apollo.io/.well-known/oauth-authorization-server
+docs: https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners
+provider: Apollo API Documentation
+providerId: apollo-api-documentation
+description: >-
+  Apollo's OAuth 2.0 scope vocabulary, read verbatim from the RFC 8414 authorization-server metadata Apollo
+  serves anonymously at https://mcp.apollo.io/.well-known/oauth-authorization-server (HTTP 200, 2026-08-14).
+  The identical list is served at /.well-known/oauth-protected-resource and /.well-known/openid-configuration.
+  Scopes are per-endpoint capability grants, not read/write tiers — a partner app requests exactly the
+  endpoints it calls. Apollo adds read_user_profile and app_scopes by default to every registered app.
+  Note the REST OpenAPI declares OAuth as a plain `http bearer` securityScheme with no flows block, so these
+  scopes are NOT derivable from the spec; this artifact is the only machine-readable record of them.
+authorization_server:
+  issuer: https://mcp.apollo.io
+  authorization_endpoint: https://mcp.apollo.io/mcp/oauth_metadata/redirect_to_authorize
+  user_facing_authorize_url: https://app.apollo.io/#/oauth/authorize
+  token_endpoint: https://mcp.apollo.io/api/v1/oauth/token
+  revocation_endpoint: https://mcp.apollo.io/api/v1/oauth/revoke
+  registration_endpoint: https://mcp.apollo.io/api/v1/oauth/applications/register_oauth_client
+  jwks_uri: https://mcp.apollo.io/mcp/oauth_metadata/jwks
+  grant_types: [authorization_code, refresh_token, client_credentials]
+  response_types: [code]
+  code_challenge_methods: [S256]
+  token_endpoint_auth_methods: [client_secret_basic, client_secret_post, none]
+  scope_delimiter: space
+scope_count: 67
+scopes:
+  - {name: read_user_profile, description: Basic user info. Added by Apollo to every app by default., default: true}
+  - {name: app_scopes, description: Umbrella grant covering all scopes selected during app registration., default: true}
+  - {name: people_match, description: People enrichment., operation: people-enrichment}
+  - {name: people_bulk_match, description: Bulk people enrichment., operation: bulk-people-enrichment}
+  - {name: organizations_enrich, description: Organization enrichment., operation: organization-enrichment}
+  - {name: organizations_bulk_enrich, description: Bulk organization enrichment., operation: bulk-organization-enrichment}
+  - {name: organizations_job_posting, description: Organization job postings., operation: organization-jobs-postings}
+  - {name: mixed_people_api_search, description: People API search., operation: people-api-search}
+  - {name: mixed_companies_search, description: Organization search., operation: organization-search}
+  - {name: organizations_search, description: Organization search (alternate grant).}
+  - {name: webhook_result_read, description: Poll asynchronous webhook results., operation: poll-webhook-result}
+  - {name: contact_read, description: Read a saved contact., operation: view-a-contact}
+  - {name: contact_write, description: Create contacts., operation: create-a-contact}
+  - {name: contact_update, description: Update contacts., operation: update-a-contact}
+  - {name: contacts_search, description: Search saved contacts., operation: search-for-contacts}
+  - {name: contacts_bulk_create, description: Bulk create contacts., operation: bulk-create-contacts}
+  - {name: account_write, description: Create accounts., operation: create-an-account}
+  - {name: account_update, description: Update accounts., operation: update-an-account}
+  - {name: account_bulk_create, description: Bulk create accounts., operation: bulk-create-accounts}
+  - {name: opportunity_read, description: Read a deal., operation: view-deal}
+  - {name: opportunity_write, description: Create or update a deal., operation: create-deal}
+  - {name: opportunities_list, description: List deals., operation: list-all-deals}
+  - {name: emailer_campaign_read, description: Read a sequence.}
+  - {name: emailer_campaigns_search, description: Search sequences., operation: search-for-sequences}
+  - {name: emailer_campaigns_create, description: Create a sequence., operation: create-sequence}
+  - {name: emailer_campaigns_update, description: Update a sequence., operation: update-sequence}
+  - {name: emailer_campaigns_approve, description: Activate a sequence., operation: approve-sequence}
+  - {name: emailer_campaigns_add_contact_ids, description: Add contacts to a sequence., operation: add-contacts-to-sequence}
+  - {name: emailer_campaigns_remove_or_stop_contact_ids, description: Remove or stop contacts in a sequence., operation: update-contact-status-sequence}
+  - {name: emailer_campaigns_activity_feed, description: Contact sequence activity., operation: get-contact-sequence-activity}
+  - {name: emailer_schedules_list, description: List email schedules., operation: list-email-schedules}
+  - {name: emailer_messages_search, description: Search outreach emails.}
+  - {name: emailer_messages_create, description: Create an email draft., operation: create-an-email-draft}
+  - {name: emailer_messages_send_now, description: Send an email now., operation: send-email-now}
+  - {name: emailer_messages_email_send_status, description: Check email send status., operation: check-email-send-status}
+  - {name: emailer_messages_get_content, description: Get email content., operation: get-email-content}
+  - {name: email_accounts_list, description: List connected mailboxes., operation: get-a-list-of-email-accounts}
+  - {name: email_account_purchase_list, description: Browse purchasable mailboxes for cold email.}
+  - {name: email_account_purchase_create, description: Purchase a mailbox for cold email.}
+  - {name: domain_purchase_list, description: Browse purchasable sending domains.}
+  - {name: domain_purchase_create, description: Purchase a sending domain.}
+  - {name: domain_authentication_status, description: Check SPF/DKIM/DMARC status for a sending domain.}
+  - {name: tasks_create, description: Create tasks., operation: create-a-task}
+  - {name: tasks_list, description: Search or list tasks., operation: search-tasks}
+  - {name: report_sync, description: Query the analytics report., operation: sync-report}
+  - {name: agent_task, description: Agent task execution.}
+  - {name: context_center_read, description: Read Context Center data.}
+  - {name: context_center_write, description: Write Context Center data.}
+  - {name: custom_objects_read, description: Read custom object records.}
+  - {name: custom_objects_write, description: Create or update custom objects.}
+  - {name: custom_field_write, description: Create or update a custom field., operation: create-a-custom-field}
+  - {name: custom_fields_list, description: List custom fields., operation: get-a-list-of-all-custom-fields}
+  - {name: api_usage_stats_read, description: View API usage stats and rate limits., operation: post_apiusage}
+  - {name: credit_usage_stats_read, description: View credit usage stats., operation: view-credit-usage-stats}
+  - {name: users_list, description: List workspace users., operation: get-a-list-of-users}
+  - {name: conversation_intelligence_search, description: Search conversations., operation: search-conversations}
+  - {name: conversation_intelligence_show, description: Get conversation info., operation: get-conversations-info}
+  - {name: tags_list, description: List tags.}
+  - {name: lists_create, description: Create a list., operation: create-a-list}
+  - {name: lists_update, description: Update a list., operation: update-a-list}
+  - {name: lists_add_entities, description: Add records to a list., operation: add-records-to-a-list}
+  - {name: lists_remove_entities, description: Remove records from a list., operation: remove-records-from-a-list}
+  - {name: website_visitors_read, description: Read website-visitor intent data.}
+  - {name: website_visitor_domain_tracker_read, description: Read website visitor domain tracker config.}
+  - {name: website_visitor_domain_tracker_update, description: Update website visitor domain tracker config.}
+  - {name: website_visitor_domain_tracker_send_install_email, description: Email the visitor-tracker install script.}
+  - {name: website_visitor_domain_tracker_install_script, description: Retrieve the visitor-tracker install script.}
+notes:
+  - >-
+    `operation:` is a derived cross-reference to the operationId in
+    openapi/_original/apollo-api-documentation-apollo-rest-api-openapi.json where the scope name and the
+    endpoint path are the same resource. Scopes with no `operation:` have no matching public REST operation —
+    they grant MCP-only or app-only capability (custom objects, Context Center, website visitors, domain and
+    mailbox purchasing, agent_task).
+  - >-
+    Example authorization URL published by Apollo:
+    https://app.apollo.io/#/oauth/authorize?client_id=<id>&redirect_uri=<uri>&response_type=code&scope=contacts_search%20person_read&state=xxxx
+  - >-
+    Apollo warns that editing an app's scopes after registration requires repeating the whole authorization
+    flow.
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com

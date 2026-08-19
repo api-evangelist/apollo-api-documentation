@@ -1,0 +1,83 @@
+generated: '2026-08-14'
+method: probed
+source: live HTTPS probes of every apis.yml / OpenAPI servers[] host
+provider: Apollo API Documentation
+providerId: apollo-api-documentation
+description: >-
+  Probe of the RFC 8615 /.well-known/ surface on every Apollo host in this profile. Three real documents were
+  returned: an RFC 9727 api-catalog on the docs host that points at Apollo's published OpenAPI, and OAuth 2.0
+  authorization-server / protected-resource metadata plus OpenID configuration on the MCP host. Everything else
+  404s. HTML/SPA shells returned with a 200 or a 404 status are recorded as misses, not documents.
+hosts:
+  - host: docs.apollo.io
+    paths:
+      - path: /.well-known/api-catalog
+        status: 200
+        content_type: application/json
+        document: true
+        file: well-known/apollo-api-documentation-api-catalog.json
+        note: >-
+          RFC 9727 linkset. service-desc points at https://docs.apollo.io/openapi/apollo-rest-api.json
+          (application/vnd.oai.openapi+json); service-doc points at https://docs.apollo.io/reference.
+          This is how the real Apollo OpenAPI was discovered.
+      - {path: /.well-known/security.txt, status: 404, document: false, note: HTML docs shell}
+      - {path: /.well-known/openid-configuration, status: 404, document: false}
+      - {path: /.well-known/oauth-authorization-server, status: 404, document: false}
+      - {path: /.well-known/oauth-protected-resource, status: 404, document: false}
+      - {path: /.well-known/ai-plugin.json, status: 404, document: false, note: HTML docs shell}
+      - {path: /.well-known/agent-card.json, status: 404, document: false, note: HTML docs shell}
+      - {path: /.well-known/agent.json, status: 404, document: false, note: HTML docs shell}
+  - host: api.apollo.io
+    paths:
+      - {path: /.well-known/security.txt, status: 404, document: false}
+      - {path: /.well-known/openid-configuration, status: 404, document: false}
+      - {path: /.well-known/oauth-authorization-server, status: 404, document: false}
+      - {path: /.well-known/oauth-protected-resource, status: 404, document: false}
+      - {path: /.well-known/api-catalog, status: 404, document: false}
+      - {path: /.well-known/ai-plugin.json, status: 404, document: false}
+      - {path: /.well-known/agent-card.json, status: 404, document: false}
+      - {path: /.well-known/agent.json, status: 404, document: false}
+  - host: mcp.apollo.io
+    paths:
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        content_type: application/json
+        document: true
+        file: well-known/apollo-api-documentation-oauth-authorization-server.json
+        note: RFC 8414 metadata. 67 scopes_supported, PKCE S256, RFC 7591 dynamic client registration.
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        content_type: application/json
+        document: true
+        file: well-known/apollo-api-documentation-oauth-protected-resource.json
+        note: RFC 9728 metadata for the MCP resource https://mcp.apollo.io/mcp.
+      - path: /.well-known/openid-configuration
+        status: 200
+        content_type: application/json
+        document: true
+        file: well-known/apollo-api-documentation-openid-configuration.json
+        note: Adds jwks_uri, subject_types_supported and RS256 id_token signing to the same metadata.
+      - {path: /.well-known/security.txt, status: 401, document: false, note: MCP gateway rejects unauthenticated requests}
+      - {path: /.well-known/api-catalog, status: 401, document: false}
+      - {path: /.well-known/ai-plugin.json, status: 401, document: false}
+      - {path: /.well-known/agent-card.json, status: 401, document: false, note: not an agent card; the gateway 401s every unknown path}
+      - {path: /.well-known/agent.json, status: 401, document: false}
+  - host: www.apollo.io
+    paths:
+      - {path: /.well-known/security.txt, status: 404, document: false, note: Next.js SPA shell}
+      - {path: /.well-known/openid-configuration, status: 404, document: false}
+      - {path: /.well-known/oauth-authorization-server, status: 404, document: false}
+      - {path: /.well-known/oauth-protected-resource, status: 404, document: false}
+      - {path: /.well-known/api-catalog, status: 404, document: false}
+      - {path: /.well-known/ai-plugin.json, status: 404, document: false}
+      - {path: /.well-known/agent-card.json, status: 404, document: false}
+      - {path: /.well-known/agent.json, status: 404, document: false}
+summary:
+  documents_found: 4
+  security_txt: false
+  api_catalog: true
+  oauth_metadata: true
+  agent_card: false
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com

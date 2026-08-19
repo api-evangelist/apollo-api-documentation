@@ -1,0 +1,123 @@
+generated: '2026-08-14'
+method: searched
+source: https://docs.apollo.io/docs/apollo-cli-overview
+provider: Apollo API Documentation
+providerId: apollo-api-documentation
+name: Apollo CLI
+binary: apollo
+description: >-
+  Apollo ships a first-party CLI that gives shell-native access to the full Apollo API — search 240M+
+  contacts, enrich people and companies, manage CRM records and run sequences from a terminal. Written in
+  TypeScript, authenticated with OAuth 2.0 (no API key), pipeable with jq, and explicitly positioned by
+  Apollo for AI coding agents like Claude Code and Cursor.
+repository: https://github.com/apolloio/apollo-io-cli
+docs: https://docs.apollo.io/docs/apollo-cli-overview
+version: 2.1.0
+released: '2026-08-07'
+authentication:
+  method: oauth2
+  api_key_required: false
+  commands: [apollo auth login, apollo auth logout, apollo auth whoami]
+install:
+  - method: homebrew
+    recommended: true
+    command: brew install apolloio/apollo-io-cli/apollo-io-cli
+    alt: brew tap apolloio/apollo-io-cli && brew trust apolloio/apollo-io-cli && brew install apollo-io-cli
+    upgrade: brew upgrade apollo-io-cli
+    platforms: [macOS, Linux]
+  - method: prebuilt-binary
+    source: https://github.com/apolloio/apollo-io-cli/releases
+    node_required: false
+    platforms: [macOS, Linux, Windows]
+  - method: from-source
+    requires: Node.js 18 or above
+    platforms: [macOS, Linux, Windows]
+command_group_count: 20
+command_count: 76
+command_groups:
+  - group: people
+    theme: Research and prospect
+    commands: [people search, people enrich, people bulk-enrich, people email, people get, people employees]
+  - group: companies
+    theme: Research and prospect
+    commands: [companies search, companies enrich, companies bulk-enrich, companies get, companies jobs]
+  - group: news
+    theme: Research and prospect
+    commands: [news search]
+  - group: contacts
+    theme: Manage records
+    commands: [contacts search, contacts show, contacts create, contacts bulk-create, contacts update, contacts bulk-update, contacts update-stages, contacts update-owners, contacts stages]
+  - group: accounts
+    theme: Manage records
+    commands: [accounts search, accounts show, accounts create, accounts bulk-create, accounts update, accounts bulk-update, accounts update-owners, accounts stages]
+  - group: deals
+    theme: Manage records
+    commands: [deals search, deals show, deals create, deals update, deals stages]
+  - group: labels
+    theme: Manage records
+    commands: [labels list, labels create, labels update, labels add, labels remove]
+  - group: fields
+    theme: Manage records
+    commands: [fields list, fields create, fields custom]
+  - group: notes
+    theme: Manage records
+    commands: []
+  - group: email-accounts
+    theme: Engage prospects
+    commands: [email-accounts list]
+  - group: sequences
+    theme: Engage prospects
+    commands: [sequences search, sequences create, sequences update, sequences approve, sequences abort, sequences archive, sequences add-contacts, sequences remove-contacts, sequences schedules]
+  - group: emails
+    theme: Engage prospects
+    commands: [emails draft, emails send, emails status, emails search]
+  - group: calls
+    theme: Engage prospects
+    commands: [calls log, calls search, calls update]
+  - group: tasks
+    theme: Engage prospects
+    commands: [tasks search, tasks show, tasks create, tasks bulk-create, tasks update, tasks complete, tasks skip]
+  - group: conversations
+    theme: Analyze activity and performance
+    commands: [conversations search, conversations show, conversations export, conversations export-status]
+  - group: analytics
+    theme: Analyze activity and performance
+    commands: [analytics report]
+  - group: users
+    theme: Manage access and operations
+    commands: [users search, users profile]
+  - group: usage
+    theme: Manage access and operations
+    commands: [usage api, usage credits]
+  - group: auth
+    theme: Manage access and operations
+    commands: [auth login, auth logout, auth whoami]
+  - group: webhooks
+    theme: Manage access and operations
+    commands: []
+global_flags:
+  - flag: --add-header <key:value>
+    description: >-
+      Add a custom HTTP header to the request; repeat to add several. Header names are normalized to
+      lowercase. Must appear BEFORE the command group and subcommand.
+output_formats:
+  default: json
+  flag: -f, --format
+  formats:
+    - {name: json, best_for: 'Pretty-printed structured output for scripts, AI agents and jq.'}
+    - {name: jsonl, best_for: One JSON object per line for streaming and data pipelines.}
+    - {name: csv, best_for: 'Flat exports for spreadsheets; nested objects are stringified into one cell.'}
+    - {name: yaml, best_for: Human-readable inspection of deeply nested responses.}
+    - {name: table, best_for: Quick terminal browsing of small responses.}
+agent_notes:
+  - Apollo positions the CLI as an agent surface — "works natively with AI coding agents like Claude Code and Cursor".
+  - >-
+    Search and list responses carry pagination metadata alongside the record array; CSV and table output
+    stringify that array, so agents should use --format json and extract with jq.
+  - >-
+    --industry on people search expects Apollo industry tag IDs, not free text; free-text values return
+    HTTP 422.
+package_artifact: packages/apollo-api-documentation-packages.yml
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com

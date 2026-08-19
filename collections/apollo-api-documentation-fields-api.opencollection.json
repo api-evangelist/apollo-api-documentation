@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apollo API — Fields",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Fields",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a List of Fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/fields",
+            "params": [
+              {
+                "name": "source",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/fields/index` or `Master API key`\n\n**OAuth scopes:** `custom_fields_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the Get a List of Fields endpoint to retrieve information about all of the fields that exist in your Apollo account."
+        },
+        {
+          "info": {
+            "name": "Create a Custom Field",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/fields",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/fields/create` or `Master API key`\n\n**OAuth scopes:** `custom_field_write`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nThe Create a Custom Field endpoint lets you add custom fields to your Apollo account, helping your team capture unique details with <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4412498825869-Create-Custom-Contact-Fields\" target=\"_blank\">custom "
+        },
+        {
+          "info": {
+            "name": "Update a Custom Field",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.apollo.io/api/v1/fields",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/fields/update` or `Master API key`\n\n**OAuth scopes:** `custom_field_write`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the Update a Custom Field endpoint to change fields that already exist in your Apollo Workspace, such as renaming a field, changing the maximum length of a text field, or updating the values available in a picklist.<br><br>Pass the field under the `f"
+        },
+        {
+          "info": {
+            "name": "Get a List of All Custom Fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/typed_custom_fields"
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/typed_custom_fields/index` or `Master API key`\n\n**OAuth scopes:** `custom_fields_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nThis endpoint is deprecated. To achieve the same result, use the <a href=\"https://docs.apollo.io/reference/get-a-list-of-fields\">Fields endpoint</a> (use `source: custom` to get custom fields only).<br><br> Use the Get a List of Custom Fields"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

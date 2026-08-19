@@ -1,0 +1,78 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://docs.apollo.io/reference/apollo-api, https://docs.apollo.io/reference/openapi-specification,
+  https://status.apollo.io, plus deprecation flags derived from
+  openapi/_original/apollo-api-documentation-apollo-rest-api-openapi.json
+provider: Apollo API Documentation
+providerId: apollo-api-documentation
+description: >-
+  Versioning, deprecation and operational-status posture for the Apollo API. Honest summary: Apollo versions
+  in the URL path (/api/v1), regenerates and republishes its OpenAPI on every docs publish, and runs a public
+  Statuspage — but publishes NO written deprecation policy, NO changelog, and returns no Deprecation or
+  Sunset headers. One operation is flagged deprecated in the spec with no sunset date attached.
+versioning:
+  scheme: uri-path
+  current: v1
+  base: https://api.apollo.io/api/v1
+  spec_version: '1.0'
+  header_versioning: false
+  date_versioning: false
+  note: >-
+    All 80 published operations sit under a single /api/v1 prefix. Note the base changed shape at some point:
+    Apollo's current docs and OpenAPI both say https://api.apollo.io/api/v1, and the older
+    https://api.apollo.io/v1 form no longer matches the published spec.
+spec_currency:
+  url: https://docs.apollo.io/openapi/apollo-rest-api.json
+  discovery: https://docs.apollo.io/.well-known/api-catalog
+  policy: >-
+    "The spec is regenerated whenever these docs are published, so the download URL always reflects the
+    latest version of the API." (Apollo, OpenAPI Specification page.)
+  freshness_signal: >-
+    Every docs page carries an `updatedAt` timestamp in its markdown front matter — the closest thing Apollo
+    publishes to a change record. Observed 2026-08-14: rate-limits 2026-08-12, apollo-mcp 2026-08-11,
+    apollo-cli-overview 2026-08-07, authentication 2026-08-07, status-codes 2026-08-03.
+deprecation:
+  policy_published: false
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation or versioning policy page exists in Apollo's developer docs (checked the full llms.txt
+    index, /changelog, /docs/release-notes — all absent or 404). Deprecation is signalled only by the
+    OpenAPI `deprecated` flag, with no replacement pointer and no removal date.
+  deprecated_operations:
+    - operationId: get-a-list-of-all-custom-fields
+      method: get
+      path: /typed_custom_fields
+      tag: Fields
+      sunset: null
+      replacement: null
+      source: 'OpenAPI `deprecated: true`'
+  deprecated_count: 1
+status_page:
+  url: https://status.apollo.io
+  status: 200
+  provider: Statuspage
+  mirror: https://apollo.statuspage.io
+  probed: '2026-08-14'
+changelog:
+  published: false
+  note: >-
+    No dated API changelog or release-notes page. Probed https://docs.apollo.io/changelog (404),
+    https://docs.apollo.io/docs/changelog (404), https://docs.apollo.io/docs/release-notes (404),
+    https://www.apollo.io/product-updates (404), and the complete llms.txt page index contains no changelog
+    entry. No ChangeLog pointer is emitted for this provider because there is nothing to point at.
+sla:
+  published: false
+  note: No public API SLA. Enterprise terms are contractual.
+support:
+  in_app: https://app.apollo.io/#/settings/account?nextStep=redirecttochat
+  faq: https://docs.apollo.io/docs/developer-faqs
+  knowledge_base: https://knowledge.apollo.io/
+terms:
+  api_terms: https://www.apollo.io/terms/api
+  source: OpenAPI info.termsOfService
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com

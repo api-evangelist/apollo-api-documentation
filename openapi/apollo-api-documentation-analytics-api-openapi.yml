@@ -1,0 +1,685 @@
+openapi: 3.1.0
+info:
+  title: Apollo API — Analytics
+  summary: Programmatic access to Apollo's sales intelligence and engagement platform — data enrichment, prospect and company
+    search, and go-to-market workflow management.
+  description: 'The Apollo API provides programmatic access to [Apollo](https://www.apollo.io/), the all-in-one sales intelligence
+    and engagement platform. Use it to enrich people and company data (individually or in bulk), search Apollo''s database
+    of over 240 million contacts and 30 million companies, and manage accounts, contacts, deals, sequences, tasks, calls,
+    and conversations in your go-to-market workflows.
+
+
+    ## Base URL
+
+
+    All API requests are made to `https://api.apollo.io/api/v1`.
+
+
+    ## Authentication
+
+
+    - **Apollo users** authenticate with an API key passed in the `x-api-key` request header. See [Create API Keys](https://docs.apollo.io/docs/create-api-key).
+
+    - **Apollo partners** building integrations on behalf of mutual users authenticate with the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).
+
+
+    ## Rate limits & credits
+
+
+    Rate limits and credit consumption depend on your [Apollo pricing plan](https://docs.apollo.io/docs/api-pricing). Check
+    your current limits and usage with the [View API Usage Stats and Rate Limits](https://docs.apollo.io/reference/view-api-usage-stats)
+    endpoint. For more details, see [Rate Limits](https://docs.apollo.io/reference/rate-limits) and the [API FAQs](https://docs.apollo.io/docs/apollo-api-faqs).
+
+
+    New to the API? Start with the [Apollo API overview](https://docs.apollo.io/reference/apollo-api).'
+  termsOfService: https://www.apollo.io/terms/api
+  contact:
+    name: Apollo API Support
+    url: https://docs.apollo.io/
+  version: '1.0'
+servers:
+- url: https://api.apollo.io/api/v1
+tags:
+- name: Analytics
+  description: Query saved analytics reports.
+security:
+- apiKey: []
+- bearerAuth: []
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: '[Recommended] API key, passed in the `x-api-key` request header.
+
+        See [Create API Keys](https://docs.apollo.io/docs/create-api-key).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'OAuth 2.0 access token, used by Apollo partners building integrations.
+
+        See the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).'
+paths:
+  /reports/sync_report:
+    post:
+      summary: Query Analytics Report
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/reports/sync_report` or `Master API key`
+
+
+        **OAuth scopes:** `report_sync`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        Use the Query Analytics Report endpoint to programmatically query <a href="https://knowledge.apollo.io/hc/en-us/articles/33574373762317-Analytics-Overview"
+        target="_blank">Apollo analytics</a> and retrieve aggregated sales activity data for your team.<br><br>This endpoint
+        accepts a flexible payload specifying which metrics to measure, how to group and filter results, and which date range
+        to apply — returning the same data that powers Apollo''s built-in Analytics dashboards. <br><br>Three query modes
+        are supported: flat totals (no <code>group_by</code>), grouped by one dimension such as user or sequence, and pivot
+        cross-tab (one <code>group_by</code> dimension as rows + one <code>pivot_group_by</code> dimension as columns). Each
+        array supports a maximum of one entry.<br><br>
+
+        <strong>Authentication:</strong> Requires an Apollo API key with access to the <code>api/v1/reports/sync_report</code>
+        API. When creating or editing an API key in Apollo Settings, open the <strong>APIs</strong> tab and select <code>api/v1/reports/sync_report</code>
+        from the list. Check out <a href="https://docs.apollo.io/docs/create-api-key">Create an API Key</a> for detailed instructions.<br><br><strong>Tip:</strong>
+        The easiest way to discover valid metric and group_by combinations is to build a report interactively at <a href="https://app.apollo.io/#/analytics/reports/new"
+        target="_blank">Apollo Analytics → Start from scratch</a>, then replicate that configuration in your API request.'
+      tags:
+      - Analytics
+      operationId: sync-report
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - metrics
+              - group_by
+              - sorts
+              - filters
+              - group_by_totals_selected
+              - pivot_group_by_totals_selected
+              - date_ranges
+              properties:
+                metrics:
+                  type: array
+                  description: The metrics to query. Each object specifies which metric to measure and which date and user
+                    columns the engine should use for that metric. The <code>smart_datetime_reference</code> and <code>smart_user_id_reference</code>
+                    values are metric-specific — using the wrong values will return no data. Refer to the <a href="https://docs.apollo.io/reference/sync-report-metrics"
+                    target="_blank">Metrics and Dimensions Reference</a> for valid metric names and the correct reference
+                    fields for each. <br><br>Pass an empty array <code>[]</code> to return a response with no metric columns.
+                  items:
+                    type: object
+                    required:
+                    - value
+                    - smart_datetime_reference
+                    - smart_user_id_reference
+                    properties:
+                      value:
+                        type: string
+                        description: The metric identifier. For built-in metrics, use the metric name (e.g. <code>num_emails_sent</code>).
+                          For team-defined custom metrics, use the format <code>custom_metric_{id}</code> where <code>{id}</code>
+                          is the custom metric's id.
+                      smart_datetime_reference:
+                        type: string
+                        description: 'The date column name to use for this metric time range. Valid values depend on the metric.
+                          See the smart reference field values table for supported values by metric type. Unsupported values
+                          may cause the related date or user filter not to apply. <br><br>Example: <code>activity_datetime</code>'
+                      smart_user_id_reference:
+                        type: string
+                        description: 'The user column name that filters per user. Many metrics use <code>user_id</code>. See
+                          the smart reference field values table for supported values by metric family. Unsupported values
+                          may cause the related date or user filter not to apply. <br><br>Example: <code>user_id</code>'
+                      display_name:
+                        type: string
+                        description: Optional label override for this metric's column in the response.
+                group_by:
+                  type: array
+                  maxItems: 1
+                  description: The dimension to group results by (row dimension). Pass one object to break results down by
+                    that dimension. Pass an empty array <code>[]</code> for flat totals with no grouping. <br><br>Only one
+                    entry is supported. Refer to the <a href="https://docs.apollo.io/reference/sync-report-metrics" target="_blank">Metrics
+                    and Dimensions Reference</a> for valid dimension names.
+                  items:
+                    type: object
+                    required:
+                    - name
+                    properties:
+                      name:
+                        type: string
+                        description: 'The dimension name. <br><br>Example: <code>smart_user_id</code>'
+                      limit:
+                        type: integer
+                        description: Maximum number of dimension values to return.
+                pivot_group_by:
+                  type: array
+                  maxItems: 1
+                  description: 'The dimension to pivot on (column dimension). Used together with <code>group_by</code> to
+                    produce a two-dimensional cross-tab table: <code>group_by</code> defines the row dimension and <code>pivot_group_by</code>
+                    defines the column dimension. Pass an empty array <code>[]</code> for non-pivot queries. <br><br>Only
+                    one entry is supported.'
+                  items:
+                    type: object
+                    required:
+                    - name
+                    properties:
+                      name:
+                        type: string
+                        description: 'The dimension name to pivot on. <br><br>Example: <code>emailer_campaign_id</code>'
+                      limit:
+                        type: integer
+                        description: Maximum number of pivot column values to return.
+                sorts:
+                  type: array
+                  description: Sort order for the result rows. Only the first entry is applied. Pass an empty array <code>[]</code>
+                    to use the default order. <br><br>Sorting is supported by metric value — provide the <code>metric</code>
+                    field with the same structure as an entry in the <code>metrics</code> array. The <code>asc</code> field
+                    controls direction (<code>true</code> = ascending, <code>false</code> = descending). <br><br>Sorting by
+                    dimension value (e.g. alphabetically by user name) is not supported via the API.
+                  items:
+                    type: object
+                    required:
+                    - asc
+                    properties:
+                      asc:
+                        type: boolean
+                        description: Sort ascending (<code>true</code>) or descending (<code>false</code>).
+                      metric:
+                        type: object
+                        description: Sort by a metric column. Provide the same structure as a metric entry in the <code>metrics</code>
+                          array.
+                        properties:
+                          value:
+                            type: string
+                          smart_datetime_reference:
+                            type: string
+                          smart_user_id_reference:
+                            type: string
+                filters:
+                  type: object
+                  description: Key/value filter map to narrow the result set. Pass an empty object <code>{}</code> for no
+                    filters. Common filter keys are documented in the <code>properties</code> below; additional dimension-based
+                    filters may also be passed using the same key names as <code>group_by[].name</code> values. Refer to the
+                    <a href="https://docs.apollo.io/reference/sync-report-metrics" target="_blank">Metrics and Dimensions
+                    Reference</a> for a complete list.
+                  properties:
+                    smart_user_id:
+                      type: array
+                      description: 'Filter to specific team member IDs. Use <code>"current"</code> for the authenticated user.
+                        <br><br>Example: <code>["current"]</code>'
+                      items:
+                        type: string
+                    smart_subteam_id:
+                      type: array
+                      description: Filter to specific sub-team IDs.
+                      items:
+                        type: string
+                    emailer_campaign_ids:
+                      type: array
+                      description: Filter to specific sequence IDs.
+                      items:
+                        type: string
+                    contact_stage_ids:
+                      type: array
+                      description: Filter to specific contact stage IDs.
+                      items:
+                        type: string
+                    account_stage_ids:
+                      type: array
+                      description: Filter to specific account stage IDs.
+                      items:
+                        type: string
+                    opportunity_stage_ids:
+                      type: array
+                      description: Filter to specific opportunity stage IDs.
+                      items:
+                        type: string
+                    email_account_ids:
+                      type: array
+                      description: Filter to specific sender mailbox IDs.
+                      items:
+                        type: string
+                    smart_datetime_range:
+                      type: object
+                      description: Required when <code>date_ranges[].modality</code> is <code>custom_range</code>. Specifies
+                        the exact date window as ISO 8601 date strings.
+                      required:
+                      - min
+                      - max
+                      properties:
+                        min:
+                          type: string
+                          description: 'Start date (inclusive). Format: <code>YYYY-MM-DD</code>. <br><br>Example: <code>2024-01-01</code>'
+                        max:
+                          type: string
+                          description: 'End date (inclusive). Format: <code>YYYY-MM-DD</code>. <br><br>Example: <code>2024-03-31</code>'
+                  additionalProperties: true
+                group_by_totals_selected:
+                  type: boolean
+                  description: When <code>true</code>, the response includes an aggregated totals row in addition to the per-dimension-value
+                    rows.
+                pivot_group_by_totals_selected:
+                  type: boolean
+                  description: When <code>true</code>, the pivot response includes an aggregated totals column in addition
+                    to the per-pivot-value columns.
+                date_ranges:
+                  type: array
+                  description: 'The time window for the query. Provide one object with a <code>modality</code> preset. For
+                    a custom date range, set <code>modality</code> to <code>custom_range</code> and add a <code>smart_datetime_range</code>
+                    key in <code>filters</code> with <code>{"min": "YYYY-MM-DD", "max": "YYYY-MM-DD"}</code>.'
+                  items:
+                    type: object
+                    required:
+                    - modality
+                    properties:
+                      modality:
+                        type: string
+                        description: 'Date range preset. Valid values: <code>today</code>, <code>yesterday</code>, <code>current_week</code>,
+                          <code>current_month</code>, <code>current_quarter</code>, <code>current_year</code>, <code>last_7_days</code>,
+                          <code>last_2_weeks</code>, <code>last_30_days</code>, <code>last_3_months</code>, <code>last_6_months</code>,
+                          <code>last_12_months</code>, <code>last_4_quarters</code>, <code>last_2_years</code>, <code>previous_week</code>,
+                          <code>previous_month</code>, <code>previous_quarter</code>, <code>previous_year</code>, <code>all_time</code>,
+                          <code>custom_range</code> (requires <code>smart_datetime_range</code> in <code>filters</code>).'
+                  maxItems: 1
+                skip_group_by_values:
+                  type: array
+                  maxItems: 500
+                  description: Exclude specific dimension values from the result rows. Values must match the raw <code>key</code>
+                    field returned in bucket responses for the active <code>group_by</code> dimension (e.g. a contact stage
+                    ID string, a user ID string, or a date string for datetime dimensions). Maximum 500 entries.
+                  items:
+                    type: string
+                min_ratio_denominator:
+                  type: integer
+                  default: 0
+                  description: Minimum denominator threshold for ratio metrics. Rows where the denominator falls below this
+                    value are excluded from ratio calculations.
+            examples:
+              Flat totals — email performance:
+                value:
+                  metrics:
+                  - value: num_emails_sent
+                    smart_datetime_reference: activity_datetime
+                    smart_user_id_reference: user_id
+                  - value: num_emails_opened
+                    smart_datetime_reference: activity_datetime
+                    smart_user_id_reference: user_id
+                  - value: percent_emails_opened_tracked
+                    smart_datetime_reference: activity_datetime
+                    smart_user_id_reference: user_id
+                  group_by: []
+                  pivot_group_by: []
+                  sorts: []
+                  filters: {}
+                  group_by_totals_selected: false
+                  pivot_group_by_totals_selected: false
+                  date_ranges:
+                  - modality: last_30_days
+              Grouped — email activity by user:
+                value:
+                  metrics:
+                  - value: num_emails_sent
+                    smart_datetime_reference: activity_datetime
+                    smart_user_id_reference: user_id
+                  - value: num_emails_replied
+                    smart_datetime_reference: activity_datetime
+                    smart_user_id_reference: user_id
+                  - value: percent_emails_replied
+                    smart_datetime_reference: activity_datetime
+                    smart_user_id_reference: user_id
+                  group_by:
+                  - name: smart_user_id
+                  pivot_group_by: []
+                  sorts:
+                  - metric:
+                      value: num_emails_sent
+                      smart_datetime_reference: activity_datetime
+                      smart_user_id_reference: user_id
+                    asc: false
+                  filters: {}
+                  group_by_totals_selected: true
+                  pivot_group_by_totals_selected: false
+                  date_ranges:
+                  - modality: current_month
+              Grouped — email volume by month:
+                value:
+                  metrics:
+                  - value: num_emails_sent
+                    smart_datetime_reference: activity_datetime
+                    smart_user_id_reference: user_id
+                  group_by:
+                  - name: smart_datetime_month
+                  pivot_group_by: []
+                  sorts: []
+                  filters: {}
+                  group_by_totals_selected: false
+                  pivot_group_by_totals_selected: false
+                  date_ranges:
+                  - modality: last_12_months
+              Pivot — emails sent by user x contact stage:
+                value:
+                  metrics:
+                  - value: num_emails_sent
+                    smart_datetime_reference: activity_datetime
+                    smart_user_id_reference: user_id
+                  group_by:
+                  - name: smart_user_id
+                  pivot_group_by:
+                  - name: contact_stage_id
+                  sorts: []
+                  filters: {}
+                  group_by_totals_selected: true
+                  pivot_group_by_totals_selected: true
+                  date_ranges:
+                  - modality: last_30_days
+              Sorted — top 5 reps by reply rate:
+                value:
+                  metrics:
+                  - value: num_emails_sent
+                    smart_datetime_reference: activity_datetime
+                    smart_user_id_reference: user_id
+                  - value: num_emails_replied
+                    smart_datetime_reference: activity_datetime
+                    smart_user_id_reference: user_id
+                  - value: percent_emails_replied
+                    smart_datetime_reference: activity_datetime
+                    smart_user_id_reference: user_id
+                  group_by:
+                  - name: smart_user_id
+                    limit: 5
+                  pivot_group_by: []
+                  sorts:
+                  - metric:
+                      value: percent_emails_replied
+                      smart_datetime_reference: activity_datetime
+                      smart_user_id_reference: user_id
+                    asc: false
+                  filters: {}
+                  group_by_totals_selected: false
+                  pivot_group_by_totals_selected: false
+                  date_ranges:
+                  - modality: current_quarter
+              Custom date range — call activity for Q1:
+                value:
+                  metrics:
+                  - value: num_phone_calls
+                    smart_datetime_reference: activity_datetime
+                    smart_user_id_reference: user_id
+                  - value: num_phone_calls_connect
+                    smart_datetime_reference: activity_datetime
+                    smart_user_id_reference: user_id
+                  - value: percent_phone_calls_connect
+                    smart_datetime_reference: activity_datetime
+                    smart_user_id_reference: user_id
+                  group_by:
+                  - name: smart_user_id
+                  pivot_group_by: []
+                  sorts: []
+                  filters:
+                    smart_datetime_range:
+                      min: '2024-01-01'
+                      max: '2024-03-31'
+                  group_by_totals_selected: true
+                  pivot_group_by_totals_selected: false
+                  date_ranges:
+                  - modality: custom_range
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: object
+                    description: The query result. Contains four sub-keys depending on query mode and flags. See response
+                      examples for each shape.
+                    properties:
+                      table_response:
+                        type: object
+                        description: 'Main aggregated data. Shape varies by query mode: a flat key/value object when <code>group_by</code>
+                          is empty (metric name → value); a bucketed object <code>{ "dimension": { "buckets": [...] } }</code>
+                          for grouped queries; a nested bucketed object for pivot queries where the outer key is the <code>pivot_group_by</code>
+                          dimension and each outer bucket contains a nested <code>group_by</code> dimension with its own <code>buckets</code>.'
+                        additionalProperties: true
+                      group_by_total_response:
+                        type: object
+                        description: Aggregated totals per <code>group_by</code> dimension value, without pivot breakdown.
+                          Same bucketed structure as <code>table_response</code>. Populated when <code>group_by_totals_selected</code>
+                          is <code>true</code>; otherwise <code>{}</code>.
+                        additionalProperties: true
+                      pivot_group_by_total_response:
+                        type: object
+                        description: Aggregated totals per <code>pivot_group_by</code> dimension value, without group_by breakdown.
+                          Populated when <code>pivot_group_by_totals_selected</code> is <code>true</code>; otherwise <code>{}</code>.
+                        additionalProperties: true
+                  incompatible_filters:
+                    type: object
+                    description: A map of filter keys that were incompatible with one or more requested metrics and were silently
+                      ignored. Keys are filter names; values are arrays of affected metric names. Inspect this field when
+                      results appear incomplete.
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+                  goals:
+                    type: array
+                    description: Goal attainment data. This field is unrelated to data querying — you can ignore it.
+                    items:
+                      type: object
+              examples:
+                Flat totals — email performance:
+                  value:
+                    response:
+                      table_response:
+                        num_emails_sent: 1240
+                        num_emails_opened: 410
+                        percent_emails_opened_tracked: 0.331
+                        percent_emails_opened_tracked_denominator: 1240
+                      group_by_total_response: {}
+                      pivot_group_by_total_response: {}
+                    incompatible_filters: {}
+                    goals: []
+                Grouped — email activity by user:
+                  value:
+                    response:
+                      table_response:
+                        smart_user_id:
+                          buckets:
+                          - key: 60a5c0b8e4b0c7001c4f1234
+                            readable_key: Alice Smith
+                            num_emails_sent: 320
+                            num_emails_replied: 48
+                            percent_emails_replied: 0.15
+                            percent_emails_replied_denominator: 320
+                          - key: 60a5c0b8e4b0c7001c4f5678
+                            readable_key: Bob Jones
+                            num_emails_sent: 280
+                            num_emails_replied: 56
+                            percent_emails_replied: 0.2
+                            percent_emails_replied_denominator: 280
+                      group_by_total_response:
+                        smart_user_id:
+                          buckets:
+                          - key: total
+                            readable_key: Total
+                            num_emails_sent: 600
+                            num_emails_replied: 104
+                            percent_emails_replied: 0.173
+                            percent_emails_replied_denominator: 600
+                      pivot_group_by_total_response: {}
+                    incompatible_filters: {}
+                    goals: []
+                Grouped — email volume by month:
+                  value:
+                    response:
+                      table_response:
+                        smart_datetime_month:
+                          buckets:
+                          - key: '2024-01-01'
+                            readable_key: Jan 2024
+                            num_emails_sent: 840
+                          - key: '2024-02-01'
+                            readable_key: Feb 2024
+                            num_emails_sent: 920
+                          - key: '2024-03-01'
+                            readable_key: Mar 2024
+                            num_emails_sent: 1105
+                          - key: '2024-04-01'
+                            readable_key: Apr 2024
+                            num_emails_sent: 980
+                      group_by_total_response: {}
+                      pivot_group_by_total_response: {}
+                    incompatible_filters: {}
+                    goals: []
+                Pivot — emails sent by user x contact stage:
+                  value:
+                    response:
+                      table_response:
+                        contact_stage_id:
+                          buckets:
+                          - key: 5f9a1b2c3d4e5f6a7b8c9d0e
+                            readable_key: New
+                            smart_user_id:
+                              buckets:
+                              - key: 60a5c0b8e4b0c7001c4f1234
+                                readable_key: Alice Smith
+                                num_emails_sent: 120
+                              - key: 60a5c0b8e4b0c7001c4f5678
+                                readable_key: Bob Jones
+                                num_emails_sent: 95
+                          - key: 5f9a1b2c3d4e5f6a7b8c9d1f
+                            readable_key: Contacted
+                            smart_user_id:
+                              buckets:
+                              - key: 60a5c0b8e4b0c7001c4f1234
+                                readable_key: Alice Smith
+                                num_emails_sent: 85
+                              - key: 60a5c0b8e4b0c7001c4f5678
+                                readable_key: Bob Jones
+                                num_emails_sent: 110
+                      group_by_total_response: {}
+                      pivot_group_by_total_response: {}
+                    incompatible_filters: {}
+                    goals: []
+                Sorted — top 5 reps by reply rate:
+                  value:
+                    response:
+                      table_response:
+                        smart_user_id:
+                          buckets:
+                          - key: 60a5c0b8e4b0c7001c4f9abc
+                            readable_key: Carol Lee
+                            num_emails_sent: 215
+                            num_emails_replied: 47
+                            percent_emails_replied: 0.219
+                            percent_emails_replied_denominator: 215
+                          - key: 60a5c0b8e4b0c7001c4f5678
+                            readable_key: Bob Jones
+                            num_emails_sent: 280
+                            num_emails_replied: 56
+                            percent_emails_replied: 0.2
+                            percent_emails_replied_denominator: 280
+                          - key: 60a5c0b8e4b0c7001c4f1234
+                            readable_key: Alice Smith
+                            num_emails_sent: 320
+                            num_emails_replied: 48
+                            percent_emails_replied: 0.15
+                            percent_emails_replied_denominator: 320
+                      group_by_total_response: {}
+                      pivot_group_by_total_response: {}
+                    incompatible_filters: {}
+                    goals: []
+                Custom date range — call activity for Q1:
+                  value:
+                    response:
+                      table_response:
+                        smart_user_id:
+                          buckets:
+                          - key: 60a5c0b8e4b0c7001c4f1234
+                            readable_key: Alice Smith
+                            num_phone_calls: 185
+                            num_phone_calls_connect: 62
+                            percent_phone_calls_connect: 0.335
+                            percent_phone_calls_connect_denominator: 185
+                          - key: 60a5c0b8e4b0c7001c4f5678
+                            readable_key: Bob Jones
+                            num_phone_calls: 140
+                            num_phone_calls_connect: 53
+                            percent_phone_calls_connect: 0.379
+                            percent_phone_calls_connect_denominator: 140
+                      group_by_total_response:
+                        smart_user_id:
+                          buckets:
+                          - key: total
+                            readable_key: Total
+                            num_phone_calls: 325
+                            num_phone_calls_connect: 115
+                            percent_phone_calls_connect: 0.354
+                            percent_phone_calls_connect_denominator: 325
+                      pivot_group_by_total_response: {}
+                    incompatible_filters: {}
+                    goals: []
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Missing required parameter:
+                  value:
+                    error: 'param is missing or the value is empty: metrics'
+                Invalid metric value:
+                  value:
+                    error: Invalid metric type
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                API not accessible:
+                  value:
+                    error: This API key is not authorized to access api/v1/reports/sync_report. Request an API key from your
+                      administrator that includes this endpoint in its configured scope.
+                    error_code: API_INACCESSIBLE
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  error_code:
+                    type: string
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value:
+                    message: The maximum number of api calls allowed for api/v1/reports/sync_report is 200 times per hour.
+                      Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+      deprecated: false

@@ -1,0 +1,299 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apollo API — Calls",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Calls",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search for Calls",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/phone_calls/search",
+            "params": [
+              {
+                "name": "date_range[max]",
+                "value": "",
+                "type": "query",
+                "description": "Set the upper bound of the date range you want to search. <br><br>Use this parameter in combination with the `date_range[min]` parameter. This date should fall after the `date_range[min]` date. <br><br>The date should be formatted as `YYYY-MM-DD`. <br><br>Example: `2025-06-12`"
+              },
+              {
+                "name": "date_range[min]",
+                "value": "",
+                "type": "query",
+                "description": "Set the lower bound of the date range you want to search. <br><br>Use this parameter in combination with the `date_range[max]` parameter. This date should fall before the `date_range[max]` date. <br><br>The date should be formatted as `YYYY-MM-DD`. <br><br>Example: `2025-04-01`"
+              },
+              {
+                "name": "duration[max]",
+                "value": "",
+                "type": "query",
+                "description": "Set the upper bound for the call duration you want to search. The duration should be seconds, not minutes or hours. <br><br>Use this parameter in combination with the `duration[min]` parameter. This number should be larger than `duration[min]`. <br><br>Example: `180`"
+              },
+              {
+                "name": "duration[min]",
+                "value": "",
+                "type": "query",
+                "description": "Set the lower bound for the call duration you want to search. The duration should be seconds, not minutes or hours. <br><br>Use this parameter in combination with the `duration[max]` parameter. This number should be smallerr than `duration[min]`. <br><br>Example: `30`"
+              },
+              {
+                "name": "inbound",
+                "value": "",
+                "type": "query",
+                "description": "Search for calls based on whether they were `incoming` (the prospect called your team) or `outgoing` (your team called the prospect)."
+              },
+              {
+                "name": "user_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "Find calls that included specific users in your team's Apollo account. You can add multiple users. <br><br>Use the <a href=\"https://docs.apollo.io/reference/get-a-list-of-users\" target=\"_blank\">Get a List of Users endpoint</a> to retrieve IDs for all of the users within your Apollo account. <br><br>Example: `67e33d527de088000daa60c4`"
+              },
+              {
+                "name": "contact_label_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "Find calls that included specific contacts. You can add multiple contacts. <br><br>In Apollo terminology, a contact is a person that your team has explicitly added to your database. <br><br>Use the <a href=\"https://docs.apollo.io/reference/get-a-list-of-users\" target=\"_blank\">Get a List of Users endpoint</a> to retrieve IDs for all of the users within your Apollo account. <br><br>Example: `67e33d527de088000daa60c4` 6708415f59d9c70001b2f852"
+              },
+              {
+                "name": "phone_call_purpose_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "Filter calls based on their purpose. <br><br>Call purposes are unique to your team's Apollo account. When you use the <b>Purpose</b> search filter for calls in the Apollo product, you can find the corresponding call purpose ID in the URL. <br><br>Example: `6095a710bd01d100a506d4cf`"
+              },
+              {
+                "name": "phone_call_outcome_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "Filter calls based on their outcome. <br><br>Call outcomes are unique to your team's Apollo account. When you use the <b>Disposition</b> search filter for calls in the Apollo product, you can find the corresponding call outcome ID in the URL. <br><br>Example: `6095a710bd01d100a506d4c5`"
+              },
+              {
+                "name": "q_keywords",
+                "value": "",
+                "type": "query",
+                "description": "Add keywords to narrow the search of the calls in your team's Apollo account. <br><br>Example: `marketing conference attendees`"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint. <br><br>Example: `4`"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of search results that should be returned for each page. Limiting the number of results per page improves the endpoint's performance. <br><br>Use the page parameter to search the different pages of data. <br><br>Example: `10`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `Master API key`\n\n**OAuth scopes:** `phone_call_search`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the Search for Calls endpoint to find calls that your team has made or  received using <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409140527757-Dialer-Overview\" target=\"_blank\">the dialer</a> on Apollo."
+        },
+        {
+          "info": {
+            "name": "Create Call Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/phone_calls",
+            "params": [
+              {
+                "name": "logged",
+                "value": "",
+                "type": "query",
+                "description": "Set to `true` if you want to create an individual record for the phone call in Apollo."
+              },
+              {
+                "name": "user_id[]",
+                "value": "",
+                "type": "query",
+                "description": "Designate the caller in your team's Apollo account. <br><br>Use the <a href=\"https://docs.apollo.io/reference/get-a-list-of-users\" target=\"_blank\">Get a List of Users endpoint</a> to retrieve IDs for all of the users within your Apollo account. <br><br>Example: `67e33d527de088000daa60c4`"
+              },
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "query",
+                "description": "Designate the contact that was called. <br><br>Use the <a href=\"https://docs.apollo.io/reference/search-for-contacts#/\" target=\"_blank\">Search for Contacts endpoint</a> to retrieve IDs for all of the contacts within your Apollo account. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+              },
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "query",
+                "description": "Associate the call with an account. <br><br>Use the <a href=\"https://docs.apollo.io/reference/search-for-accounts#/\" target=\"_blank\">Search for Accounts endpoint</a> to retrieve IDs for all of the accounts within your Apollo account. <br><br>Example: `66e9abf95ac32901b20d1a0d`"
+              },
+              {
+                "name": "to_number",
+                "value": "",
+                "type": "query",
+                "description": "The phone number that you dialed. <br><br>Example: `5555550164`"
+              },
+              {
+                "name": "from_number",
+                "value": "",
+                "type": "query",
+                "description": "The phone number that dialed you. <br><br>Example: `5555550164`"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "The status of the phone call. Possible values include: <ul> <li>`queued`</li> <li>`ringing`</li> <li>`in-progress`</li> <li>`completed`</li> <li>`no_answer`</li> <li>`failed`</li> <li>`busy`</li></ul>"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "The time when the call started. <br><br>Your entry should adhere to the ISO 8601 date-time format. Apollo uses Greenwich Mean Time (GMT) by default. If you do not account for time zone differences, you could add a start time that falls on a different day than you intended. <br><br>The value you enter can either adhere to GMT, or you can adjust the time manually by specifiying in hours and minutes how much you want to offset GMT. <br><br>Example: `2025-02-15T08:10:30Z`; `2025-03-25T10:15:30+05:00Z`"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "The time when the call ended. <br><br>Your entry should adhere to the ISO 8601 date-time format. Apollo uses Greenwich Mean Time (GMT) by default. If you do not account for time zone differences, you could add a end time that falls on a different day than you intended. <br><br>The value you enter can either adhere to GMT, or you can adjust the time manually by specifiying in hours and minutes how much you want to offset GMT. <br><br>Example: `2025-05-15T08:10:30Z`; `2025-05-25T10:15:30+05:00Z`"
+              },
+              {
+                "name": "duration",
+                "value": "",
+                "type": "query",
+                "description": "The duration of the call in seconds. Do not enter minutes. <br><br>Examples: `120`; `205`"
+              },
+              {
+                "name": "phone_call_purpose_id",
+                "value": "",
+                "type": "query",
+                "description": "Assign a call purpose to the record. <br><br>Call purposes are unique to your team's Apollo account. When you use the <b>Purpose</b> search filter for calls in the Apollo product, you can find the corresponding call purpose ID in the URL. <br><br>Examples: `6095a710bd01d100a506d4cd`"
+              },
+              {
+                "name": "phone_call_outcome_id",
+                "value": "",
+                "type": "query",
+                "description": "Assign a call outcome to the record. <br><br>Call outcomes are unique to your team's Apollo account. When you use the <b>Disposition</b> search filter for calls in the Apollo product, you can find the corresponding call outcome ID in the URL. <br><br>Examples: `6095a710bd01d100a506d4c5`"
+              },
+              {
+                "name": "note",
+                "value": "",
+                "type": "query",
+                "description": "Add a note to the call record. <br><br>Example: `This lead is interested in learning more about our new product line.`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `Master API key`\n\n**OAuth scopes:** `phone_call_write`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the Create Call Records endpoint to log calls in Apollo that were made using outside systems such as Orum or Nooks. This endpoint can only be used create call records, not to dial prospects."
+        },
+        {
+          "info": {
+            "name": "Update Call Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.apollo.io/api/v1/phone_calls/:id",
+            "params": [
+              {
+                "name": "logged",
+                "value": "",
+                "type": "query",
+                "description": "Set to `true` if you want to create an individual record for the phone call in Apollo."
+              },
+              {
+                "name": "user_id[]",
+                "value": "",
+                "type": "query",
+                "description": "Designate the caller in your team's Apollo account. <br><br>Use the <a href=\"https://docs.apollo.io/reference/get-a-list-of-users\" target=\"_blank\">Get a List of Users endpoint</a> to retrieve IDs for all of the users within your Apollo account. <br><br>Example: `67e33d527de088000daa60c4`"
+              },
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "query",
+                "description": "Designate the contact that was called. <br><br>Use the <a href=\"https://docs.apollo.io/reference/search-for-contacts#/\" target=\"_blank\">Search for Contacts endpoint</a> to retrieve IDs for all of the contacts within your Apollo account. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+              },
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "query",
+                "description": "Associate the call with an account. <br><br>Use the <a href=\"https://docs.apollo.io/reference/search-for-accounts#/\" target=\"_blank\">Search for Accounts endpoint</a> to retrieve IDs for all of the accounts within your Apollo account. <br><br>Example: `66e9abf95ac32901b20d1a0d`"
+              },
+              {
+                "name": "to_number",
+                "value": "",
+                "type": "query",
+                "description": "The phone number that you dialed. <br><br>Example: `5555550164`"
+              },
+              {
+                "name": "from_number",
+                "value": "",
+                "type": "query",
+                "description": "The phone number that dialed you. <br><br>Example: `5555550164`"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "The status of the phone call. Possible values include: <ul> <li>`queued`</li> <li>`ringing`</li> <li>`in-progress`</li> <li>`completed`</li> <li>`no_answer`</li> <li>`failed`</li> <li>`busy`</li></ul>"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "The time when the call started. <br><br>Your entry should adhere to the ISO 8601 date-time format. Apollo uses Greenwich Mean Time (GMT) by default. If you do not account for time zone differences, you could add a start time that falls on a different day than you intended. <br><br>The value you enter can either adhere to GMT, or you can adjust the time manually by specifiying in hours and minutes how much you want to offset GMT. <br><br>Example: `2025-02-15T08:10:30Z`; `2025-03-25T10:15:30+05:00Z`"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "The time when the call ended. <br><br>Your entry should adhere to the ISO 8601 date-time format. Apollo uses Greenwich Mean Time (GMT) by default. If you do not account for time zone differences, you could add a end time that falls on a different day than you intended. <br><br>The value you enter can either adhere to GMT, or you can adjust the time manually by specifiying in hours and minutes how much you want to offset GMT. <br><br>Example: `2025-05-15T08:10:30Z`; `2025-05-25T10:15:30+05:00Z`"
+              },
+              {
+                "name": "duration",
+                "value": "",
+                "type": "query",
+                "description": "The duration of the call in seconds. Do not enter minutes. <br><br>Examples: `120`; `205`"
+              },
+              {
+                "name": "phone_call_purpose_id",
+                "value": "",
+                "type": "query",
+                "description": "Assign a call purpose to the record. <br><br>Call purposes are unique to your team's Apollo account. When you use the <b>Purpose</b> search filter for calls in the Apollo product, you can find the corresponding call purpose ID in the URL. <br><br>Examples: `6095a710bd01d100a506d4cd`"
+              },
+              {
+                "name": "phone_call_outcome_id",
+                "value": "",
+                "type": "query",
+                "description": "Assign a call outcome to the record. <br><br>Call outcomes are unique to your team's Apollo account. When you use the <b>Disposition</b> search filter for calls in the Apollo product, you can find the corresponding call outcome ID in the URL. <br><br>Examples: `6095a710bd01d100a506d4c5`"
+              },
+              {
+                "name": "note",
+                "value": "",
+                "type": "query",
+                "description": "Add a note to the call record. <br><br>Example: `This lead is interested in learning more about our new product line.`"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Apollo ID for the call record that you want to update. <br><br>To find call record IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-calls#/\" target=\"_blank\">Search for Calls endpoint</a> and identify the `id` value for the call record. <br><br>Example: `6859b0dd828b270021e69648`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `Master API key`\n\n**OAuth scopes:** `phone_call_update`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the Update Call Records endpoint to update your team's call records in Apollo."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

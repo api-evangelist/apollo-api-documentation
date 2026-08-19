@@ -3,87 +3,110 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Apollo API Documentation
 providerId: apollo-api-documentation
+generated: '2026-08-14'
+method: searched
+source: https://docs.apollo.io/reference/rate-limits
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-08-14'
 tags:
-  - API Documentation
-  - Best Practices
-  - Data Enrichment
-  - People Search
-  - Sales Intelligence
   - Rate Limiting
   - Quotas
   - Throttling
-description: Machine-readable rate limit definitions for the Apollo API Documentation API surface. Captures
-  per-tier quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values
-  to be replaced with published provider limits.
+  - Sales Intelligence
+description: >-
+  Apollo's published REST API rate limits, replacing the 2026-05-04 scaffold that carried invented values.
+  Every number here is read verbatim from https://docs.apollo.io/reference/rate-limits (page updatedAt
+  2026-08-12). Limits are per TEAM (not per key or per user — child workspaces share the parent's limits),
+  per ENDPOINT (each endpoint keeps its own counters), and enforced in three simultaneous fixed windows:
+  minute, hour and day. A window opens on the first request and is not clock-aligned.
+scope: per-team-per-endpoint
+window_model: fixed
+window_alignment: not-clock-aligned
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  limit_minute: x-rate-limit-minute
+  limit_hourly: x-rate-limit-hourly
+  limit_daily: x-rate-limit-24-hour
+  usage_minute: x-minute-usage
+  usage_hourly: x-hourly-usage
+  usage_daily: x-24-hour-usage
+  remaining_minute: x-minute-requests-left
+  remaining_hourly: x-hourly-requests-left
+  remaining_daily: x-24-hour-requests-left
+  retryAfter: retry-after
+header_notes:
+  - >-
+    Headers are added only AFTER authentication, authorization and the endpoint rate-limit check. 401/403
+    responses returned before that check carry no rate-limit headers.
+  - >-
+    If a window is not limited for the endpoint called, its x-rate-limit-* header is empty and no usage
+    headers are returned for that window. Enrichment on paid plans returns a per-minute limit and nothing else.
+  - retry-after is returned with 429 and carries seconds until the exhausted window resets.
+  - Apollo MCP uses separate rate limits and does NOT return these headers.
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+limit_count: 17
 limits:
+  - {tier: free, name: Default per-minute, scope: team-endpoint, metric: requests_per_minute, limit: 50, timeFrame: minute, applies: [All endpoints not otherwise listed]}
+  - {tier: free, name: Default per-hour, scope: team-endpoint, metric: requests_per_hour, limit: 200, timeFrame: hour, applies: [All endpoints not otherwise listed]}
+  - {tier: free, name: Default per-day, scope: team-endpoint, metric: requests_per_day, limit: 600, timeFrame: day, applies: [All endpoints not otherwise listed]}
+  - {tier: basic, name: Default per-minute, scope: team-endpoint, metric: requests_per_minute, limit: 200, timeFrame: minute}
+  - {tier: basic, name: Default per-hour, scope: team-endpoint, metric: requests_per_hour, limit: 400, timeFrame: hour}
+  - {tier: basic, name: Default per-day, scope: team-endpoint, metric: requests_per_day, limit: 2000, timeFrame: day}
+  - {tier: professional, name: Default per-minute, scope: team-endpoint, metric: requests_per_minute, limit: 200, timeFrame: minute}
+  - {tier: professional, name: Default per-hour, scope: team-endpoint, metric: requests_per_hour, limit: 400, timeFrame: hour}
+  - {tier: professional, name: Default per-day, scope: team-endpoint, metric: requests_per_day, limit: 2000, timeFrame: day}
+  - {tier: organization, name: Default per-minute, scope: team-endpoint, metric: requests_per_minute, limit: 200, timeFrame: minute}
+  - {tier: organization, name: Default per-hour, scope: team-endpoint, metric: requests_per_hour, limit: 600, timeFrame: hour}
+  - {tier: organization, name: Default per-day, scope: team-endpoint, metric: requests_per_day, limit: 6000, timeFrame: day}
   - tier: free
-    name: Free Tier Default
-    scope: api-key
+    name: Enrichment endpoints
+    scope: team-endpoint
     metric: requests_per_minute
-    limit: 10
-    burst: 20
+    limit: 50
+    burst: null
     timeFrame: minute
-    applies:
-      - Apollo REST API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Apollo REST API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Apollo REST API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Apollo REST API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
+    applies: [people-enrichment, bulk-people-enrichment, organization-enrichment, bulk-organization-enrichment, organization-jobs-postings, 'get_people{id}', 'get_organizations{id}']
+    note: 20 per minute for the bulk endpoints; 200/hour (100/hour bulk); 600/day.
+  - tier: paid
+    name: Enrichment endpoints
+    scope: team-endpoint
     metric: requests_per_minute
     limit: 1000
-    burst: 5000
     timeFrame: minute
-    applies:
-      - Apollo REST API
+    applies: [people-enrichment, bulk-people-enrichment, organization-enrichment, bulk-organization-enrichment, organization-jobs-postings, 'get_people{id}', 'get_organizations{id}']
+    note: Basic, Professional and Organization all get 1,000/min with no hourly and no daily limit. Credit balance still governs volume.
+  - tier: paid
+    name: Search endpoints
+    scope: team-endpoint
+    metric: requests_per_hour
+    limit: 6000
+    timeFrame: hour
+    applies: [people-api-search, organization-search, news_articles_search]
+    note: 200/min, 6,000/hour, 50,000/day on Basic, Professional and Organization. Free stays at 50/200/600. Searching your OWN saved records (search-for-contacts, search-for-accounts) uses the plan defaults, not these.
+  - {tier: all, name: Query Analytics Report, scope: team-endpoint, metric: requests_per_hour, limit: 5, timeFrame: hour, applies: [sync-report]}
+  - tier: free
+    name: Export Conversations
+    scope: team-endpoint
+    metric: requests_per_minute
+    limit: 1
+    timeFrame: minute
+    applies: [export-conversations]
+    note: 1/minute and 20/hour on Free plans.
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: Retry
+    description: >-
+      On 429, read the retry-after header for the exact number of seconds until the exhausted window resets,
+      then retry. Apollo does not publish a backoff algorithm; retry-after is the authoritative signal.
+  - name: Legacy plans
+    description: >-
+      The published table applies to current Apollo plans. Legacy workspaces may differ — call the
+      view-api-usage-stats endpoint (POST /usage_stats/api_usage_stats) for the team's live per-route limits.
+  - name: Raising limits
+    description: Teams needing more than their plan allows contact Apollo Support; there is no self-serve limit increase.
+runtime_source_of_truth:
+  operationId: post_apiusage
+  path: /usage_stats/api_usage_stats
+  docs: https://docs.apollo.io/reference/view-api-usage-stats
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com

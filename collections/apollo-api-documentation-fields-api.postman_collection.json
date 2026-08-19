@@ -1,0 +1,993 @@
+{
+  "item": [
+    {
+      "id": "6786426a-5c2d-4718-abe4-0bcde38f04fc",
+      "name": "Fields",
+      "description": {
+        "content": "List, create, and update the fields and custom fields in your Apollo account.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bf798146-f5d1-4b4f-817e-431eabe79682",
+          "name": "Get a List of Fields",
+          "request": {
+            "name": "Get a List of Fields",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/fields/index` or `Master API key`\n\n**OAuth scopes:** `custom_fields_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the Get a List of Fields endpoint to retrieve information about all of the fields that exist in your Apollo account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fields"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cc4091b4-eca8-4a0d-af1d-f18b1b77bad0",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"fields\": [\n    {\n      \"id\": \"contact.id\",\n      \"category\": \"person\",\n      \"context\": [\n        \"finder\",\n        \"csv_export\"\n      ],\n      \"description\": null,\n      \"editable\": false,\n      \"example\": \"673c929202c6025d8bc4e680\",\n      \"field_name\": \"contact.id\",\n      \"group\": \"basic_info\",\n      \"icon_class\": \"user\",\n      \"label\": \"Identifier\",\n      \"modality\": \"contact\",\n      \"parent\": null,\n      \"source\": \"system\",\n      \"type\": \"string\",\n      \"finder_view_ids\": [],\n      \"project_workspace_id\": null,\n      \"finder_views\": [],\n      \"is_local\": false\n    },\n    {\n      \"id\": \"contact.attr1\",\n      \"category\": \"person\",\n      \"context\": [\n        \"finder\",\n        \"csv_export\"\n      ],\n      \"description\": null,\n      \"editable\": false,\n      \"example\": \"Test Corp\",\n      \"field_name\": \"contact.attr1\",\n      \"group\": \"basic_info\",\n      \"icon_class\": \"company\",\n      \"label\": \"Person\",\n      \"modality\": \"contact\",\n      \"parent\": null,\n      \"source\": \"system\",\n      \"type\": \"association\",\n      \"finder_view_ids\": [],\n      \"project_workspace_id\": null,\n      \"finder_views\": [],\n      \"is_local\": false\n    },\n    {\n      \"id\": \"contact.attr2\",\n      \"category\": \"person\",\n      \"context\": [\n        \"prompt\",\n        \"formula\",\n        \"snippets\",\n        \"finder\"\n      ],\n      \"description\": null,\n      \"editable\": false,\n      \"example\": \"John\",\n      \"field_name\": \"contact.attr2\",\n      \"group\": \"basic_info\",\n      \"icon_class\": \"user\",\n      \"label\": \"First name\",\n      \"modality\": \"contact\",\n      \"parent\": \"contact.name\",\n      \"source\": \"system\",\n      \"type\": \"string\",\n      \"finder_view_ids\": [],\n      \"project_workspace_id\": null,\n      \"finder_views\": [],\n      \"is_local\": false\n    },\n    {\n      \"id\": \"account.694095a80f1b6000110fc556\",\n      \"category\": \"company\",\n      \"context\": [\n        \"csv_export\",\n        \"finder\",\n        \"prompt\"\n      ],\n      \"description\": null,\n      \"editable\": false,\n      \"example\": null,\n      \"field_name\": \"Custom field name\",\n      \"group\": null,\n      \"icon_class\": null,\n      \"label\": \"last name\",\n      \"modality\": \"account\",\n      \"parent\": \"account.other_custom_field\",\n      \"source\": \"custom\",\n      \"type\": \"string\",\n      \"finder_view_ids\": [],\n      \"project_workspace_id\": null,\n      \"finder_views\": [],\n      \"is_local\": false,\n      \"created_at\": \"2025-12-15T23:11:36.084Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b732b365-8b26-43ff-a57e-5f7e645f9142",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "47f9c97a-5ab0-4b13-9e77-51161fdc104a",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"This API key is not authorized to access api/v1/fields/index. Request an API key from your administrator that includes this endpoint in its configured scope.\\\",\\n  \\\"error_code\\\": \\\"API_INACCESSIBLE\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c75c958-0747-4325-93c0-2a1ee28b5f3c",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of API calls allowed for api/v1/fields is 600 times per hour. To change your rate limit, upgrade your Apollo plan at https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c3c0c4d-1d91-4346-87e2-25fe75eb84c0",
+          "name": "Create a Custom Field",
+          "request": {
+            "name": "Create a Custom Field",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/fields/create` or `Master API key`\n\n**OAuth scopes:** `custom_field_write`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nThe Create a Custom Field endpoint lets you add custom fields to your Apollo account, helping your team capture unique details with <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4412498825869-Create-Custom-Contact-Fields\" target=\"_blank\">custom contact</a>, <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4412498754445-Create-Custom-Account-Fields\" target=\"_blank\">custom account</a>, or <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4415062486669-Create-a-Deal\" target=\"_blank\">custom deal fields</a>.<br><br>Use these fields to enhance your sequences and deliver more personalized, relevant outreach.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fields"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"label\": \"<string>\",\n  \"modality\": \"<string>\",\n  \"type\": \"<string>\",\n  \"meta\": {\n    \"max_length\": \"<number>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9b8d219d-dfec-4de5-af23-47e4dd4eb310",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"<string>\",\n  \"modality\": \"<string>\",\n  \"type\": \"<string>\",\n  \"meta\": {\n    \"max_length\": \"<number>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"typed_custom_fields\": [\n    {\n      \"id\": \"32d42c92-5be4-4ec4-96c7-f689b43ec8a8\",\n      \"name\": \"Test Name\",\n      \"modality\": \"contact\",\n      \"text_field_max_length\": 120\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "81698b07-f93b-4cc5-ab4e-41a1c8293c14",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"<string>\",\n  \"modality\": \"<string>\",\n  \"type\": \"<string>\",\n  \"meta\": {\n    \"max_length\": \"<number>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "799a0128-e5ca-4039-b67b-a49df010ddf0",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"<string>\",\n  \"modality\": \"<string>\",\n  \"type\": \"<string>\",\n  \"meta\": {\n    \"max_length\": \"<number>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"api/v1/fields this api_key\\\",\\n  \\\"error_code\\\": \\\"API_INACCESSIBLE\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bbf04872-a128-4d91-95b1-b0bf3ae7af5b",
+          "name": "Update a Custom Field",
+          "request": {
+            "name": "Update a Custom Field",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/fields/update` or `Master API key`\n\n**OAuth scopes:** `custom_field_write`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the Update a Custom Field endpoint to change fields that already exist in your Apollo Workspace, such as renaming a field, changing the maximum length of a text field, or updating the values available in a picklist.<br><br>Pass the field under the `fields` array, where each object identifies the field by its unique `id`. To find field IDs, call the <a href=\"https://docs.apollo.io/reference/get-a-list-of-fields\">Get a List of Fields</a> endpoint with `source: custom`. Update 1 field per request.<br><br>Only custom fields can be updated. System fields, and the child fields of a JSON field, cannot be updated.<br><br>Apollo only changes the parameters you include in your request, so you can omit any parameter that you want to leave as-is.<br><br><b>Updates overwrite the field's current configuration.</b> The values you send replace the field's existing configuration for every record of that modality, and the change cannot be cleanly undone. Removing or renaming picklist options in particular can drop or rewrite data already stored on your records.<br><br><b>Picklist fields:</b> every update to a `picklist` or `multipicklist` field must include the complete set of options you want to keep in `meta.picklist_values`, even when you are only renaming the field.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fields"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fields\": [\n    {\n      \"id\": \"<string>\",\n      \"modality\": \"<string>\",\n      \"type\": \"<string>\",\n      \"label\": \"<string>\",\n      \"field_group_id\": \"<string>\",\n      \"autorun_downstream_enrichment\": \"<boolean>\",\n      \"schedule\": {\n        \"enabled\": \"<boolean>\",\n        \"schedule_type\": \"<string>\",\n        \"schedule_timezone\": \"<string>\",\n        \"run_limit\": \"<number>\",\n        \"max_executions\": \"<number>\",\n        \"end_date\": \"<date>\",\n        \"reset_execution_count\": \"<boolean>\",\n        \"schedule_config\": {\n          \"hour\": \"<number>\",\n          \"minute\": \"<number>\",\n          \"day_of_week\": \"<number>\",\n          \"day_of_month\": \"<number>\",\n          \"interval\": \"<number>\"\n        }\n      },\n      \"meta\": {\n        \"max_length\": \"<number>\",\n        \"picklist_values\": [\n          {\n            \"name\": \"<string>\",\n            \"id\": \"<string>\",\n            \"mapped_crm_id\": \"<string>\",\n            \"reassign_from\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"name\": \"<string>\",\n            \"id\": \"<string>\",\n            \"mapped_crm_id\": \"<string>\",\n            \"reassign_from\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ],\n        \"picklist_value_set_id\": \"<string>\"\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"modality\": \"<string>\",\n      \"type\": \"<string>\",\n      \"label\": \"<string>\",\n      \"field_group_id\": \"<string>\",\n      \"autorun_downstream_enrichment\": \"<boolean>\",\n      \"schedule\": {\n        \"enabled\": \"<boolean>\",\n        \"schedule_type\": \"<string>\",\n        \"schedule_timezone\": \"<string>\",\n        \"run_limit\": \"<number>\",\n        \"max_executions\": \"<number>\",\n        \"end_date\": \"<date>\",\n        \"reset_execution_count\": \"<boolean>\",\n        \"schedule_config\": {\n          \"hour\": \"<number>\",\n          \"minute\": \"<number>\",\n          \"day_of_week\": \"<number>\",\n          \"day_of_month\": \"<number>\",\n          \"interval\": \"<number>\"\n        }\n      },\n      \"meta\": {\n        \"max_length\": \"<number>\",\n        \"picklist_values\": [\n          {\n            \"name\": \"<string>\",\n            \"id\": \"<string>\",\n            \"mapped_crm_id\": \"<string>\",\n            \"reassign_from\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"name\": \"<string>\",\n            \"id\": \"<string>\",\n            \"mapped_crm_id\": \"<string>\",\n            \"reassign_from\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ],\n        \"picklist_value_set_id\": \"<string>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9ce8f534-fe39-4cac-b855-56ea203541d0",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fields\": [\n    {\n      \"id\": \"contact.694095a80f1b6000110fc556\",\n      \"label\": \"Renewal owner\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"fields\": [\n    {\n      \"id\": \"contact.694095a80f1b6000110fc556\",\n      \"category\": \"person\",\n      \"context\": [\n        \"finder\",\n        \"csv_export\"\n      ],\n      \"description\": null,\n      \"editable\": true,\n      \"example\": null,\n      \"field_name\": \"Renewal owner\",\n      \"group\": null,\n      \"icon_class\": null,\n      \"label\": \"Renewal owner\",\n      \"modality\": \"contact\",\n      \"parent\": null,\n      \"source\": \"custom\",\n      \"type\": \"string\",\n      \"finder_view_ids\": [],\n      \"project_workspace_id\": null,\n      \"context_card_ids\": [],\n      \"product_profile_ids\": [],\n      \"is_system_field\": false,\n      \"finder_views\": [],\n      \"is_local\": false,\n      \"created_at\": \"2025-12-15T23:11:36.084Z\",\n      \"meta\": {\n        \"max_length\": 240,\n        \"computed_type\": \"manual\",\n        \"visibility_status\": \"active\"\n      }\n    }\n  ],\n  \"typed_custom_fields\": [\n    {\n      \"id\": \"694095a80f1b6000110fc556\",\n      \"name\": \"Renewal owner\",\n      \"modality\": \"contact\",\n      \"text_field_max_length\": 240\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9048d555-21af-40b2-8a53-8c587c4ca6a5",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fields\": [\n    {\n      \"id\": \"contact.694095a80f1b6000110fc556\",\n      \"label\": \"Renewal owner\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "28cf5ea7-8890-4778-9537-1288eb77e761",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fields\": [\n    {\n      \"id\": \"contact.694095a80f1b6000110fc556\",\n      \"label\": \"Renewal owner\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"This API key is not authorized to access api/v1/fields/update. Request an API key from your administrator that includes this endpoint in its configured scope.\\\",\\n  \\\"error_code\\\": \\\"API_INACCESSIBLE\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db220c2d-3396-44bf-a8a6-740c26278014",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fields\": [\n    {\n      \"id\": \"contact.694095a80f1b6000110fc556\",\n      \"label\": \"Renewal owner\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"Picklist fields must have at least one option\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44a3c2b0-b254-449c-b497-eb21c46fb56f",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fields\": [\n    {\n      \"id\": \"contact.694095a80f1b6000110fc556\",\n      \"label\": \"Renewal owner\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of API calls allowed for api/v1/fields is 600 times per hour. To change your rate limit, upgrade your Apollo plan at https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3bfb1317-dfd0-4cc5-81ff-942e8e0b8379",
+          "name": "Get a List of All Custom Fields",
+          "request": {
+            "name": "Get a List of All Custom Fields",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/typed_custom_fields/index` or `Master API key`\n\n**OAuth scopes:** `custom_fields_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nThis endpoint is deprecated. To achieve the same result, use the <a href=\"https://docs.apollo.io/reference/get-a-list-of-fields\">Fields endpoint</a> (use `source: custom` to get custom fields only).<br><br> Use the Get a List of Custom Fields endpoint to retrieve information about all of the custom fields that have been created in your Apollo account.<br><br>This endpoint doesn't require any parameters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "typed_custom_fields"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "30134daf-1b4f-440a-9258-ec2d50a37891",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "typed_custom_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"typed_custom_fields\\\": [\\n    {\\n      \\\"id\\\": \\\"60c39ed82bd02f01154c470a\\\",\\n      \\\"modality\\\": \\\"contact\\\",\\n      \\\"name\\\": \\\"New Product Launch Date\\\",\\n      \\\"type\\\": \\\"datetime\\\",\\n      \\\"picklist_options\\\": [],\\n      \\\"mapped_crm_field\\\": null,\\n      \\\"additional_mapped_crm_field\\\": null,\\n      \\\"is_readonly_mapped_crm_field\\\": null,\\n      \\\"picklist_options_last_synced_at\\\": \\\"2021-06-11T17:35:12.000+00:00\\\",\\n      \\\"picklist_value_set_id\\\": null,\\n      \\\"mirrored\\\": false,\\n      \\\"system_name\\\": null,\\n      \\\"text_field_max_length\\\": null,\\n      \\\"finder_view_ids\\\": [],\\n      \\\"is_local\\\": false\\n    },\\n    {\\n      \\\"id\\\": \\\"617ff4041e711500a401c25e\\\",\\n      \\\"modality\\\": \\\"contact\\\",\\n      \\\"name\\\": \\\"Customer Age\\\",\\n      \\\"type\\\": \\\"picklist\\\",\\n      \\\"picklist_options\\\": [],\\n      \\\"mapped_crm_field\\\": null,\\n      \\\"additional_mapped_crm_field\\\": null,\\n      \\\"is_readonly_mapped_crm_field\\\": null,\\n      \\\"picklist_options_last_synced_at\\\": \\\"2021-11-01T14:02:48.000+00:00\\\",\\n      \\\"picklist_value_set_id\\\": \\\"61117d862f006400da5bf2e4\\\",\\n      \\\"mirrored\\\": false,\\n      \\\"system_name\\\": null,\\n      \\\"text_field_max_length\\\": null,\\n      \\\"finder_view_ids\\\": [],\\n      \\\"is_local\\\": false,\\n      \\\"picklist_values\\\": [\\n        {\\n          \\\"_id\\\": \\\"617ff4041e711500a401c25f\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"New Customer\\\",\\n          \\\"id\\\": \\\"617ff4041e711500a401c25f\\\",\\n          \\\"key\\\": \\\"617ff4041e711500a401c25f\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"617ff4041e711500a401c260\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"1 year\\\",\\n          \\\"id\\\": \\\"617ff4041e711500a401c260\\\",\\n          \\\"key\\\": \\\"617ff4041e711500a401c260\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"617ff4041e711500a401c261\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"2 years\\\",\\n          \\\"id\\\": \\\"617ff4041e711500a401c261\\\",\\n          \\\"key\\\": \\\"617ff4041e711500a401c261\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"617ff4041e711500a401c262\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"3 years\\\",\\n          \\\"id\\\": \\\"617ff4041e711500a401c262\\\",\\n          \\\"key\\\": \\\"617ff4041e711500a401c262\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"617ff4041e711500a401c263\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"Longterm\\\",\\n          \\\"id\\\": \\\"617ff4041e711500a401c263\\\",\\n          \\\"key\\\": \\\"617ff4041e711500a401c263\\\"\\n        }\\n      ]\\n    },\\n    {\\n      \\\"id\\\": \\\"6462b86c1a511900a3f3a30d\\\",\\n      \\\"modality\\\": \\\"contact\\\",\\n      \\\"name\\\": \\\"Lead Source\\\",\\n      \\\"type\\\": \\\"picklist\\\",\\n      \\\"picklist_options\\\": [],\\n      \\\"mapped_crm_field\\\": null,\\n      \\\"additional_mapped_crm_field\\\": null,\\n      \\\"is_readonly_mapped_crm_field\\\": true,\\n      \\\"picklist_options_last_synced_at\\\": \\\"2024-04-10T08:30:46.185+00:00\\\",\\n      \\\"picklist_value_set_id\\\": \\\"6462b86c1a511900a3f3a317\\\",\\n      \\\"mirrored\\\": false,\\n      \\\"system_name\\\": null,\\n      \\\"text_field_max_length\\\": null,\\n      \\\"finder_view_ids\\\": [],\\n      \\\"is_local\\\": false,\\n      \\\"picklist_values\\\": [\\n        {\\n          \\\"_id\\\": \\\"6462b86c1a511900a3f3a30e\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"Organic Search\\\",\\n          \\\"id\\\": \\\"6462b86c1a511900a3f3a30e\\\",\\n          \\\"key\\\": \\\"6462b86c1a511900a3f3a30e\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"6462b86c1a511900a3f3a30f\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"Paid Search\\\",\\n          \\\"id\\\": \\\"6462b86c1a511900a3f3a30f\\\",\\n          \\\"key\\\": \\\"6462b86c1a511900a3f3a30f\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"6462b86c1a511900a3f3a310\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"Email Marketing\\\",\\n          \\\"id\\\": \\\"6462b86c1a511900a3f3a310\\\",\\n          \\\"key\\\": \\\"6462b86c1a511900a3f3a310\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"6462b86c1a511900a3f3a311\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"Organic Social\\\",\\n          \\\"id\\\": \\\"6462b86c1a511900a3f3a311\\\",\\n          \\\"key\\\": \\\"6462b86c1a511900a3f3a311\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"6462b86c1a511900a3f3a312\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"Referrals\\\",\\n          \\\"id\\\": \\\"6462b86c1a511900a3f3a312\\\",\\n          \\\"key\\\": \\\"6462b86c1a511900a3f3a312\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"6462b86c1a511900a3f3a313\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"Other Campaigns\\\",\\n          \\\"id\\\": \\\"6462b86c1a511900a3f3a313\\\",\\n          \\\"key\\\": \\\"6462b86c1a511900a3f3a313\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"6462b86c1a511900a3f3a314\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"Direct Traffic\\\",\\n          \\\"id\\\": \\\"6462b86c1a511900a3f3a314\\\",\\n          \\\"key\\\": \\\"6462b86c1a511900a3f3a314\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"6462b86c1a511900a3f3a315\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"Offline Sources\\\",\\n          \\\"id\\\": \\\"6462b86c1a511900a3f3a315\\\",\\n          \\\"key\\\": \\\"6462b86c1a511900a3f3a315\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"6462b86c1a511900a3f3a316\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"Paid Social\\\",\\n          \\\"id\\\": \\\"6462b86c1a511900a3f3a316\\\",\\n          \\\"key\\\": \\\"6462b86c1a511900a3f3a316\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"6462b92fad39c900a3070100\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"Inbound\\\",\\n          \\\"id\\\": \\\"6462b92fad39c900a3070100\\\",\\n          \\\"key\\\": \\\"6462b92fad39c900a3070100\\\"\\n        }\\n      ]\\n    },\\n    {\\n      \\\"id\\\": \\\"64e3a392038e3000a3beebcf\\\",\\n      \\\"modality\\\": \\\"contact\\\",\\n      \\\"name\\\": \\\"Last Engagement Type\\\",\\n      \\\"type\\\": \\\"picklist\\\",\\n      \\\"picklist_options\\\": [],\\n      \\\"mapped_crm_field\\\": null,\\n      \\\"additional_mapped_crm_field\\\": null,\\n      \\\"is_readonly_mapped_crm_field\\\": true,\\n      \\\"picklist_options_last_synced_at\\\": \\\"2024-04-10T08:30:46.185+00:00\\\",\\n      \\\"picklist_value_set_id\\\": \\\"64e3a392038e3000a3beebd8\\\",\\n      \\\"mirrored\\\": false,\\n      \\\"system_name\\\": null,\\n      \\\"text_field_max_length\\\": null,\\n      \\\"finder_view_ids\\\": [],\\n      \\\"is_local\\\": false,\\n      \\\"picklist_values\\\": [\\n        {\\n          \\\"_id\\\": \\\"64e3a392038e3000a3beebd0\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"Company Website Visit\\\",\\n          \\\"id\\\": \\\"64e3a392038e3000a3beebd0\\\",\\n          \\\"key\\\": \\\"64e3a392038e3000a3beebd0\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"64e3a392038e3000a3beebd1\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"Document View\\\",\\n          \\\"id\\\": \\\"64e3a392038e3000a3beebd1\\\",\\n          \\\"key\\\": \\\"64e3a392038e3000a3beebd1\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"64e3a392038e3000a3beebd2\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"Email Click\\\",\\n          \\\"id\\\": \\\"64e3a392038e3000a3beebd2\\\",\\n          \\\"key\\\": \\\"64e3a392038e3000a3beebd2\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"64e3a392038e3000a3beebd3\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"Email Open\\\",\\n          \\\"id\\\": \\\"64e3a392038e3000a3beebd3\\\",\\n          \\\"key\\\": \\\"64e3a392038e3000a3beebd3\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"64e3a392038e3000a3beebd4\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"Email Reply\\\",\\n          \\\"id\\\": \\\"64e3a392038e3000a3beebd4\\\",\\n          \\\"key\\\": \\\"64e3a392038e3000a3beebd4\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"64e3a392038e3000a3beebd5\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"Form Submitted\\\",\\n          \\\"id\\\": \\\"64e3a392038e3000a3beebd5\\\",\\n          \\\"key\\\": \\\"64e3a392038e3000a3beebd5\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"64e3a392038e3000a3beebd6\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"Meeting Booked\\\",\\n          \\\"id\\\": \\\"64e3a392038e3000a3beebd6\\\",\\n          \\\"key\\\": \\\"64e3a392038e3000a3beebd6\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"64e3a392038e3000a3beebd7\\\",\\n          \\\"mapped_crm_values\\\": {},\\n          \\\"name\\\": \\\"Website Visit\\\",\\n          \\\"id\\\": \\\"64e3a392038e3000a3beebd7\\\",\\n          \\\"key\\\": \\\"64e3a392038e3000a3beebd7\\\"\\n        }\\n      ]\\n    }\\n  ]\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "681843a5-b4b6-4bd6-9925-c9262cd1a470",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "typed_custom_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "839880e4-0288-4a85-8827-9463a3e5d25c",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "typed_custom_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"This API key is not authorized to access api/v1/typed_custom_fields/index. Request an API key from your administrator that includes this endpoint in its configured scope.\\\",\\n  \\\"error_code\\\": \\\"API_INACCESSIBLE\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e44f256-920e-4d4a-8419-4f6b67654ba8",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "typed_custom_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/typed_custom_fields is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.apollo.io/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a2f0b7fe-8f74-47aa-9782-5e46fc1e2663",
+    "name": "Apollo API — Fields",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Apollo API provides programmatic access to [Apollo](https://www.apollo.io/), the all-in-one sales intelligence and engagement platform. Use it to enrich people and company data (individually or in bulk), search Apollo's database of over 240 million contacts and 30 million companies, and manage accounts, contacts, deals, sequences, tasks, calls, and conversations in your go-to-market workflows.\n\n## Base URL\n\nAll API requests are made to `https://api.apollo.io/api/v1`.\n\n## Authentication\n\n- **Apollo users** authenticate with an API key passed in the `x-api-key` request header. See [Create API Keys](https://docs.apollo.io/docs/create-api-key).\n- **Apollo partners** building integrations on behalf of mutual users authenticate with the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).\n\n## Rate limits & credits\n\nRate limits and credit consumption depend on your [Apollo pricing plan](https://docs.apollo.io/docs/api-pricing). Check your current limits and usage with the [View API Usage Stats and Rate Limits](https://docs.apollo.io/reference/view-api-usage-stats) endpoint. For more details, see [Rate Limits](https://docs.apollo.io/reference/rate-limits) and the [API FAQs](https://docs.apollo.io/docs/apollo-api-faqs).\n\nNew to the API? Start with the [Apollo API overview](https://docs.apollo.io/reference/apollo-api).\n\nContact Support:\n Name: Apollo API Support",
+      "type": "text/plain"
+    }
+  }
+}

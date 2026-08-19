@@ -1,0 +1,181 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apollo API — Tasks",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tasks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/tasks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/tasks/create` or `Master API key`\n\n**OAuth scopes:** `tasks_create`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/28705458602125-Tasks-Overview\" target=\"_blank\">Tasks</a> let you track, prioritize, and help you complete actions required for your outbound sales motion.<br><br>Use the Create a Task endpoint to create a s"
+        },
+        {
+          "info": {
+            "name": "Bulk Create Tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/tasks/bulk_create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/tasks/bulk_create` or `Master API key`\n\n**OAuth scopes:** `tasks_create`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n**Authentication note:** Shares scope with `tasks/create`.\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/28705458602125-Tasks-Overview\" target=\"_blank\">Tasks</a> let you track, prioritize, and help you complete actions required for your outbound "
+        },
+        {
+          "info": {
+            "name": "Get a Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/tasks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Apollo ID for the task. <br><br>To find task IDs, call the <a href=\"https://docs.apollo.io/reference/search-tasks\">Search for Tasks endpoint</a> and identify the `id` value for the task. <br><br>Example: `67a1b2c3d4e5f60001234567`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/tasks/show` or `Master API key`\n\n**OAuth scopes:** `tasks_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/28705458602125-Tasks-Overview\" target=\"_blank\">Tasks</a> let you track, prioritize, and help you complete actions required for your outbound sales motion.<br><br>Use the Get a Task endpoint to retrieve the full"
+        },
+        {
+          "info": {
+            "name": "Update a Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.apollo.io/api/v1/tasks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Apollo ID for the task. <br><br>To find task IDs, call the <a href=\"https://docs.apollo.io/reference/search-tasks\">Search for Tasks endpoint</a> and identify the `id` value for the task. <br><br>Example: `67a1b2c3d4e5f60001234567`"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/tasks/update` or `Master API key`\n\n**OAuth scopes:** `tasks_create`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/28705458602125-Tasks-Overview\" target=\"_blank\">Tasks</a> let you track, prioritize, and help you complete actions required for your outbound sales motion.<br><br>Use the Update a Task endpoint to change the"
+        },
+        {
+          "info": {
+            "name": "Complete a Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/tasks/:id/complete",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Apollo ID for the task. <br><br>To find task IDs, call the <a href=\"https://docs.apollo.io/reference/search-tasks\">Search for Tasks endpoint</a> and identify the `id` value for the task. <br><br>Example: `67a1b2c3d4e5f60001234567`"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/tasks/complete` or `Master API key`\n\n**OAuth scopes:** `tasks_create`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/28705458602125-Tasks-Overview\" target=\"_blank\">Tasks</a> let you track, prioritize, and help you complete actions required for your outbound sales motion.<br><br>Use the Complete a Task endpoint to mark a"
+        },
+        {
+          "info": {
+            "name": "Skip a Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/tasks/:id/skip",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Apollo ID for the task. <br><br>To find task IDs, call the <a href=\"https://docs.apollo.io/reference/search-tasks\">Search for Tasks endpoint</a> and identify the `id` value for the task. <br><br>Example: `67a1b2c3d4e5f60001234567`"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/tasks/skip` or `Master API key`\n\n**OAuth scopes:** `tasks_create`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/28705458602125-Tasks-Overview\" target=\"_blank\">Tasks</a> let you track, prioritize, and help you complete actions required for your outbound sales motion.<br><br>Use the Skip a Task endpoint to mark an existi"
+        },
+        {
+          "info": {
+            "name": "Search for Tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/tasks/search",
+            "params": [
+              {
+                "name": "sort_by_field",
+                "value": "",
+                "type": "query",
+                "description": "Sort the tasks by 1 of the following options:  <ul> <li> `task_due_at`: The most future-dated first. </li> <li> `task_priority`: The highest priority first. </li> </ul>"
+              },
+              {
+                "name": "open_factor_names[]",
+                "value": "",
+                "type": "query",
+                "description": "Enter `task_types` for this parameter to return a count of tasks by task type. <br><br>When used, the response includes a `\"task_types\": []` array with a `\"count\"` value for each task type."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint. <br><br>Example: `4`"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of search results that should be returned for each page. Limiting the number of results per page improves the endpoint's performance. <br><br>Use the `page` parameter to search the different pages of data. <br><br>Example: `10`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/tasks/search` or `Master API key`\n\n**OAuth scopes:** `tasks_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/28705458602125-Tasks-Overview\" target=\"_blank\">Tasks</a> let you track, prioritize, and help you complete actions required for your outbound sales motion.<br><br>Use the Search for Tasks endpoint to find task"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

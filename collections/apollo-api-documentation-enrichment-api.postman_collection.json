@@ -1,0 +1,1712 @@
+{
+  "item": [
+    {
+      "id": "38329153-244d-466c-9a23-db8bbc65dfcb",
+      "name": "Enrichment",
+      "description": {
+        "content": "Enrich people and company records, individually or in bulk.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "eed44943-b26a-4408-af5b-e49d6ca2a9e1",
+          "name": "People Enrichment",
+          "request": {
+            "name": "People Enrichment",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/people/match` or `Master API key`\n\n**OAuth scopes:** `people_match`\n\n**Free account access:** Requires an Apollo account registered with a work email address. Paid accounts aren't affected.\n\n**Credit usage:** `1–9 credits per person` without waterfall enrichment\n\nCredits are charged only if credit-consuming data is found: 1 credit for demographics or email, plus 8 credits if a mobile phone is returned. If no credit-consuming data is found, the request consumes 0 credits. Learn more about [API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nIf waterfall enrichment is used for phone or email, credit usage depends on the returned data and the vendors included in your [waterfall enrichment configuration](https://knowledge.apollo.io/hc/en-us/articles/34071121664781-Use-Waterfall-Enrichment); some vendors consume credits per lookup even when no data is found.\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/33699917233293-Enrichment-Overview\" target=\"_blank\">Enrichment</a> is when you refresh existing records so your prospecting data is up-to-date.<br><br>Use the People Enrichment endpoint to enrich data for one person. To enrich data for up to ten people with a single API call, use the <a href=\"https://docs.apollo.io/reference/bulk-people-enrichment\">Bulk People Enrichment endpoint</a> instead.<br><br>Apollo relies on the information you pass via the endpoint's parameters to identify the correct person to enrich. If you provide more information about a person, Apollo is more likely to find a match within its database. If you only provide general information, such as a name without a domain or email address, you might receive a `200` response, but the response indicates that no records have been enriched.<br><br>By default, this endpoint doesn't return personal emails or phone numbers. Use the `reveal_personal_emails` and `reveal_phone_number` parameters to retrieve emails and phone numbers.<br><br>When you use `reveal_phone_number`, a valid `webhook_url` is required so Apollo can deliver the completed phone enrichment results. Apollo returns the main enrichment response synchronously, then sends the requested phone numbers to the webhook asynchronously. [See webhook details](#webhook-details).<br><br>You can also use the `run_waterfall_email` and `run_waterfall_phone` parameters to run waterfall enrichment via this endpoint. [Waterfall enrichment](https://knowledge.apollo.io/hc/en-us/articles/34071089002509-Waterfall-Enrichment-Overview) gives you broader data coverage by checking connected third-party data sources for contact emails and phone numbers.<br><br>When you call this endpoint and include at least one waterfall parameter, a valid `webhook_url` is required so Apollo can deliver the completed waterfall enrichment results. Apollo returns an immediate synchronous response with demographic and firmographic data, along with a waterfall enrichment request status. Apollo then delivers enriched emails or phone numbers asynchronously to the configured webhook.\n\n### Webhook Details\n\n- When using Apollo enrichment for phone number reveal, the webhook response follows: [Native webhook response details](doc:retrieve-mobile-phone-numbers-for-contacts#webhook-response-details).\n\n- When using waterfall enrichment, the webhook response follows: [Waterfall webhook response details](doc:enrich-phone-and-email-using-data-waterfall#response-details).\n\n- You can poll webhook results with the [poll webhook result](doc:poll-webhook-result) endpoint by passing the <code>request_id</code> from the people enrichment response.\n\n### Webhook Requirements\n\n- **HTTPS Required:** Your endpoint must be publicly accessible over HTTPS.\n\n- **Rate Limiting:** Ensure your webhook endpoint can handle the volume of webhook traffic sent by Apollo.\n\n- **Idempotency:** Apollo may retry webhook calls; your endpoint should be idempotent to handle duplicate payloads safely.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "people",
+                "match"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "first_name",
+                  "value": "<string>",
+                  "description": "The first name of the person. This is typically used in combination with the `last_name` parameter. <br><br>Example: `tim`"
+                },
+                {
+                  "disabled": false,
+                  "key": "last_name",
+                  "value": "<string>",
+                  "description": "The last name of the person. This is typically used in combination with the `first_name` parameter. <br><br>Example: `zheng`"
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "The full name of the person. This will typically be a first name and last name separated by a space.  If you use this parameter, you do not need to use the `first_name` and `last_name` parameters. <br><br>Example: `tim zheng`"
+                },
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<string>",
+                  "description": "The email address of the person. <br><br>Example: `example@email.com`"
+                },
+                {
+                  "disabled": false,
+                  "key": "hashed_email",
+                  "value": "<string>",
+                  "description": "The hashed email of the person. The email should adhere to either the MD5 or SHA-256 hash format. <br><br>Example: `8d935115b9ff4489f2d1f9249503cadf` (MD5) or `97817c0c49994eb500ad0a5e7e2d8aed51977b26424d508f66e4e8887746a152` (SHA-256)"
+                },
+                {
+                  "disabled": false,
+                  "key": "organization_name",
+                  "value": "<string>",
+                  "description": "The name of the person's employer. This can be the current employer or a previous employer. <br><br>Example: `apollo`"
+                },
+                {
+                  "disabled": false,
+                  "key": "domain",
+                  "value": "<string>",
+                  "description": "The domain name for the person's employer. This can be the current employer or a previous employer. Do not include `www.`, the `@` symbol, or similar. <br><br>Example: `apollo.io` or `microsoft.com`"
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "The Apollo ID for the person. Each person in the Apollo database is assigned a unique ID. <br><br>To find IDs, call the <a href=\"https://docs.apollo.io/reference/people-api-search\" target=\"_blank\">People API Search endpoint</a> and identify the values for `person_id`. <br><br>Example: `587cf802f65125cad923a266`"
+                },
+                {
+                  "disabled": false,
+                  "key": "linkedin_url",
+                  "value": "<string>",
+                  "description": "The URL for the person's LinkedIn profile. <br><br>Example: `http://www.linkedin.com/in/tim-zheng-677ba010`"
+                },
+                {
+                  "disabled": false,
+                  "key": "run_waterfall_email",
+                  "value": "false",
+                  "description": "Set to true to enable email waterfall enrichment"
+                },
+                {
+                  "disabled": false,
+                  "key": "run_waterfall_phone",
+                  "value": "false",
+                  "description": "Set to true to enable phone waterfall enrichment"
+                },
+                {
+                  "disabled": false,
+                  "key": "reveal_personal_emails",
+                  "value": "false",
+                  "description": "Set to `true` if you want to enrich the person's data with personal emails. This potentially consumes credits as part of your <a href=\"https://docs.apollo.io/docs/api-pricing\" target=\"_blank\">Apollo pricing plan</a>. The default value is `false`. <br><br>If a person resides in a <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409141087757\" target=\"_blank\">GDPR</a>-compliant region, Apollo will not reveal their personal email."
+                },
+                {
+                  "disabled": false,
+                  "key": "reveal_phone_number",
+                  "value": "false",
+                  "description": "Set to `true` if you want to enrich the person's data with all available phone numbers, including mobile phone numbers. This potentially consumes credits as part of your <a href=\"https://docs.apollo.io/docs/api-pricing\" target=\"_blank\">Apollo pricing plan</a>. The default value is `false`. <br><br>If this parameter is set to `true`, you must enter a webhook URL for the `webhook_url` parameter. Apollo will asynchronously verify phone numbers for you, then send a JSON response that includes only details about the person's phone numbers to the webhook URL you provide. It can take several minutes for the phone numbers to be delivered."
+                },
+                {
+                  "disabled": false,
+                  "key": "webhook_url",
+                  "value": "<string>",
+                  "description": "If you set the `reveal_phone_number` parameter to `true`, this parameter becomes mandatory. Otherwise, do not use this parameter. <br><br>Enter the webhook URL that specifies where Apollo should send a JSON response that includes the phone number you requested. Apollo suggests testing this flow to ensure you receive the separate response with the phone number. <br><br>If phone numbers are not revealed delivered to the webhook URL, try applying UTF-8 encoding to the webhook URL. <br><br>Example: `https://webhook.site/11f2643a-b1b4-c6be-8e6a-6c7da2c12610`; `https%3A%2F%2Fwebhook.site%2F11f2643a-b1b4-c6be-8e6a-6c7da2c12610`"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0464309a-d698-4f22-bb10-456a3d056e3e",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "people",
+                    "match"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "first_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hashed_email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "organization_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "linkedin_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "run_waterfall_email",
+                      "value": "false"
+                    },
+                    {
+                      "key": "run_waterfall_phone",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reveal_personal_emails",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reveal_phone_number",
+                      "value": "false"
+                    },
+                    {
+                      "key": "webhook_url",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"person\": {\n    \"id\": \"64a7ff0cc4dfae00013df1a5\",\n    \"first_name\": \"Tim\",\n    \"last_name\": \"Zheng\",\n    \"name\": \"Tim Zheng\",\n    \"linkedin_url\": \"http://www.linkedin.com/in/tim-zheng-677ba010\",\n    \"title\": \"Founder & CEO\",\n    \"email_status\": \"verified\",\n    \"photo_url\": \"https://static.licdn.com/aero-v1/sc/h/uzfsocwl05iywf1hd7ba3915x\",\n    \"twitter_url\": null,\n    \"github_url\": null,\n    \"facebook_url\": null,\n    \"extrapolated_email_confidence\": null,\n    \"headline\": \"Founder & CEO at Apollo\",\n    \"email\": \"tim@apollo.io\",\n    \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n    \"employment_history\": [\n      {\n        \"_id\": \"66d7af8c200cad0001404c1f\",\n        \"created_at\": null,\n        \"current\": true,\n        \"degree\": null,\n        \"description\": null,\n        \"emails\": null,\n        \"end_date\": null,\n        \"grade_level\": null,\n        \"kind\": null,\n        \"major\": null,\n        \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n        \"organization_name\": \"Apollo\",\n        \"raw_address\": null,\n        \"start_date\": \"2016-01-01\",\n        \"title\": \"Founder & CEO\",\n        \"updated_at\": null,\n        \"id\": \"66d7af8c200cad0001404c1f\",\n        \"key\": \"66d7af8c200cad0001404c1f\"\n      },\n      {\n        \"_id\": \"66d7af8c200cad0001404c20\",\n        \"created_at\": null,\n        \"current\": false,\n        \"degree\": null,\n        \"description\": null,\n        \"emails\": null,\n        \"end_date\": \"2015-01-01\",\n        \"grade_level\": null,\n        \"kind\": null,\n        \"major\": null,\n        \"organization_id\": null,\n        \"organization_name\": \"Braingenie\",\n        \"raw_address\": null,\n        \"start_date\": \"2011-01-01\",\n        \"title\": \"Founder & CEO\",\n        \"updated_at\": null,\n        \"id\": \"66d7af8c200cad0001404c20\",\n        \"key\": \"66d7af8c200cad0001404c20\"\n      },\n      {\n        \"_id\": \"66d7af8c200cad0001404c21\",\n        \"created_at\": null,\n        \"current\": false,\n        \"degree\": null,\n        \"description\": null,\n        \"emails\": null,\n        \"end_date\": \"2011-01-01\",\n        \"grade_level\": null,\n        \"kind\": null,\n        \"major\": null,\n        \"organization_id\": \"54a22f23746869331840e813\",\n        \"organization_name\": \"Citadel Investment Group\",\n        \"raw_address\": null,\n        \"start_date\": \"2011-01-01\",\n        \"title\": \"Investment & Trading Associate\",\n        \"updated_at\": null,\n        \"id\": \"66d7af8c200cad0001404c21\",\n        \"key\": \"66d7af8c200cad0001404c21\"\n      },\n      {\n        \"_id\": \"66d7af8c200cad0001404c22\",\n        \"created_at\": null,\n        \"current\": false,\n        \"degree\": null,\n        \"description\": null,\n        \"emails\": null,\n        \"end_date\": \"2010-09-01\",\n        \"grade_level\": null,\n        \"kind\": null,\n        \"major\": null,\n        \"organization_id\": \"54a1216169702d7fe6dfca02\",\n        \"organization_name\": \"The Boston Consulting Group\",\n        \"raw_address\": null,\n        \"start_date\": \"2010-08-01\",\n        \"title\": \"Summer Associate\",\n        \"updated_at\": null,\n        \"id\": \"66d7af8c200cad0001404c22\",\n        \"key\": \"66d7af8c200cad0001404c22\"\n      },\n      {\n        \"_id\": \"66d7af8c200cad0001404c23\",\n        \"created_at\": null,\n        \"current\": false,\n        \"degree\": null,\n        \"description\": null,\n        \"emails\": null,\n        \"end_date\": \"2010-08-01\",\n        \"grade_level\": null,\n        \"kind\": null,\n        \"major\": null,\n        \"organization_id\": \"5da2e6a3f978a8000177e831\",\n        \"organization_name\": \"Goldman Sachs\",\n        \"raw_address\": null,\n        \"start_date\": \"2010-06-01\",\n        \"title\": \"Summer Analyst\",\n        \"updated_at\": null,\n        \"id\": \"66d7af8c200cad0001404c23\",\n        \"key\": \"66d7af8c200cad0001404c23\"\n      },\n      {\n        \"_id\": \"66d7af8c200cad0001404c24\",\n        \"created_at\": null,\n        \"current\": false,\n        \"degree\": null,\n        \"description\": null,\n        \"emails\": null,\n        \"end_date\": \"2010-02-01\",\n        \"grade_level\": null,\n        \"kind\": null,\n        \"major\": null,\n        \"organization_id\": \"54a1a06274686945fa1ffc02\",\n        \"organization_name\": \"Jane Street\",\n        \"raw_address\": null,\n        \"start_date\": \"2009-12-01\",\n        \"title\": \"Trading Intern\",\n        \"updated_at\": null,\n        \"id\": \"66d7af8c200cad0001404c24\",\n        \"key\": \"66d7af8c200cad0001404c24\"\n      }\n    ],\n    \"state\": \"California\",\n    \"city\": \"San Francisco\",\n    \"country\": \"United States\",\n    \"contact_id\": \"664fa05cf8299f0001f90876\",\n    \"contact\": {\n      \"contact_roles\": [],\n      \"id\": \"664fa05cf8299f0001f90876\",\n      \"first_name\": \"Roy\",\n      \"last_name\": \"Chung\",\n      \"name\": \"Roy Chung\",\n      \"linkedin_url\": \"http://www.linkedin.com/in/tim-zheng-677ba010\",\n      \"title\": \"Reaching Peak Potential 💪⛰️📈🧪️ | President\",\n      \"contact_stage_id\": \"6095a710bd01d100a506d4ae\",\n      \"owner_id\": null,\n      \"creator_id\": \"66302798d03b9601c7934ec2\",\n      \"person_id\": \"64a7ff0cc4dfae00013df1a5\",\n      \"email_needs_tickling\": null,\n      \"organization_name\": \"Apollo.io\",\n      \"source\": \"crm\",\n      \"original_source\": \"crm\",\n      \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n      \"headline\": \"Reaching Peak Potential 💪⛰️📈🧪️ | President at FRC\",\n      \"photo_url\": null,\n      \"present_raw_address\": \"New York, New York, United States\",\n      \"linkedin_uid\": null,\n      \"extrapolated_email_confidence\": null,\n      \"salesforce_id\": null,\n      \"salesforce_lead_id\": null,\n      \"salesforce_contact_id\": null,\n      \"salesforce_account_id\": null,\n      \"crm_owner_id\": null,\n      \"created_at\": \"2024-05-23T20:00:28.527Z\",\n      \"emailer_campaign_ids\": [],\n      \"direct_dial_status\": null,\n      \"direct_dial_enrichment_failed_at\": null,\n      \"email_status\": \"verified\",\n      \"email_source\": null,\n      \"account_id\": \"6658955877a2f20001c648ac\",\n      \"last_activity_date\": null,\n      \"hubspot_vid\": null,\n      \"hubspot_company_id\": null,\n      \"crm_id\": null,\n      \"sanitized_phone\": \"+11235550158\",\n      \"merged_crm_ids\": null,\n      \"updated_at\": \"2024-06-02T08:53:51.266Z\",\n      \"queued_for_crm_push\": null,\n      \"suggested_from_rule_engine_config_id\": null,\n      \"email_unsubscribed\": null,\n      \"label_ids\": [],\n      \"has_pending_email_arcgate_request\": false,\n      \"has_email_arcgate_request\": false,\n      \"existence_level\": \"invisible\",\n      \"email\": \"roy@apollo.io\",\n      \"email_from_customer\": true,\n      \"typed_custom_fields\": {},\n      \"custom_field_errors\": null,\n      \"crm_record_url\": null,\n      \"email_status_unavailable_reason\": null,\n      \"email_true_status\": \"Verified\",\n      \"updated_email_true_status\": false,\n      \"contact_rule_config_statuses\": [],\n      \"source_display_name\": \"Imported from CRM\",\n      \"contact_emails\": [\n        {\n          \"email\": \"roy@apollo.iorrr\",\n          \"email_md5\": \"879440a4afe6515e2de11dd7c531b770\",\n          \"email_sha256\": \"d445592892011f8539d5e92394929dfda7936867c21000b21788be8a46aa73d9\",\n          \"email_status\": \"verified\",\n          \"email_source\": null,\n          \"extrapolated_email_confidence\": null,\n          \"position\": 0,\n          \"email_from_customer\": null,\n          \"free_domain\": false\n        }\n      ],\n      \"time_zone\": \"America/Los_Angeles\",\n      \"phone_numbers\": [\n        {\n          \"raw_number\": \"(123) 555-0158\",\n          \"sanitized_number\": \"+11235550158\",\n          \"type\": null,\n          \"position\": 0,\n          \"status\": \"valid_number\",\n          \"dnc_status\": null,\n          \"dnc_other_info\": null,\n          \"dialer_flags\": null\n        },\n        {\n          \"raw_number\": \"(123) 555-0126\",\n          \"sanitized_number\": \"+11235550126\",\n          \"type\": null,\n          \"position\": 1,\n          \"status\": \"valid_number\",\n          \"dnc_status\": null,\n          \"dnc_other_info\": null,\n          \"dialer_flags\": null\n        },\n        {\n          \"raw_number\": \"+1-415-555-0121\",\n          \"sanitized_number\": \"+14155550121\",\n          \"type\": null,\n          \"position\": 2,\n          \"status\": \"valid_number\",\n          \"dnc_status\": null,\n          \"dnc_other_info\": null,\n          \"dialer_flags\": {\n            \"country_name\": \"United States\",\n            \"country_enabled\": true,\n            \"high_risk_calling_enabled\": false,\n            \"potential_high_risk_number\": false\n          }\n        }\n      ],\n      \"account_phone_note\": null,\n      \"free_domain\": false,\n      \"is_likely_to_engage\": false\n    },\n    \"revealed_for_current_team\": true,\n    \"organization\": {\n      \"id\": \"5e66b6381e05b4008c8331b8\",\n      \"name\": \"Apollo.io\",\n      \"website_url\": \"http://www.apollo.io\",\n      \"blog_url\": null,\n      \"angellist_url\": null,\n      \"linkedin_url\": \"http://www.linkedin.com/company/apolloio\",\n      \"twitter_url\": \"https://twitter.com/meetapollo/\",\n      \"facebook_url\": \"https://www.facebook.com/MeetApollo\",\n      \"primary_phone\": {},\n      \"languages\": [],\n      \"alexa_ranking\": 3514,\n      \"phone\": null,\n      \"linkedin_uid\": \"18511550\",\n      \"founded_year\": 2015,\n      \"publicly_traded_symbol\": null,\n      \"publicly_traded_exchange\": null,\n      \"logo_url\": \"https://zenprospect-production.s3.amazonaws.com/uploads/pictures/79049be00ff8e398b5935de8/picture\",\n      \"crunchbase_url\": null,\n      \"primary_domain\": \"apollo.io\",\n      \"industry\": \"information technology & services\",\n      \"keywords\": [\n        \"sales engagement\",\n        \"lead generation\",\n        \"predictive analytics\",\n        \"lead scoring\",\n        \"sales strategy\",\n        \"conversation intelligence\",\n        \"sales enablement\",\n        \"lead routing\",\n        \"sales development\",\n        \"email engagement\",\n        \"revenue intelligence\",\n        \"sales operations\",\n        \"sales intelligence\",\n        \"lead intelligence\",\n        \"prospecting\",\n        \"b2b data\"\n      ],\n      \"estimated_num_employees\": 1600,\n      \"industries\": [\n        \"information technology & services\"\n      ],\n      \"secondary_industries\": [],\n      \"snippets_loaded\": true,\n      \"industry_tag_id\": \"5567cd4773696439b10b0000\",\n      \"industry_tag_hash\": {\n        \"information technology & services\": \"5567cd4773696439b10b0000\"\n      },\n      \"retail_location_count\": 0,\n      \"raw_address\": \"415 Mission St, Floor 37, San Francisco, California 94105, US\",\n      \"street_address\": \"415 Mission St\",\n      \"city\": \"San Francisco\",\n      \"state\": \"California\",\n      \"postal_code\": \"94105-2301\",\n      \"country\": \"United States\",\n      \"owned_by_organization_id\": null,\n      \"seo_description\": \"Search, engage, and convert over 240 million contacts at over 30 million companies with Apollo's sales intelligence and engagement platform.\",\n      \"short_description\": \"Apollo.io combines a buyer database of over 270M contacts and powerful sales engagement and automation tools in one, easy to use platform. Trusted by over 160,000 companies including Autodesk, Rippling, Deel, Jasper.ai, Divvy, and Heap, Apollo has more than one million users globally. By helping sales professionals find their ideal buyers and intelligently automate outreach, Apollo helps go-to-market teams sell anything.\\n\\nCelebrating a $100M Series D Funding Round 🦄\",\n      \"suborganizations\": [],\n      \"num_suborganizations\": 0,\n      \"annual_revenue_printed\": \"100M\",\n      \"annual_revenue\": 100000000,\n      \"total_funding\": 251200000,\n      \"total_funding_printed\": \"251.2M\",\n      \"latest_funding_round_date\": \"2023-08-01T00:00:00.000+00:00\",\n      \"latest_funding_stage\": \"Series D\",\n      \"funding_events\": [\n        {\n          \"id\": \"6574c1ff9b797d0001fdab1b\",\n          \"date\": \"2023-08-01T00:00:00.000+00:00\",\n          \"news_url\": null,\n          \"type\": \"Series D\",\n          \"investors\": \"Bain Capital Ventures, Sequoia Capital, Tribe Capital, Nexus Venture Partners\",\n          \"amount\": \"100M\",\n          \"currency\": \"$\"\n        },\n        {\n          \"id\": \"624f4dfec786590001768016\",\n          \"date\": \"2022-03-01T00:00:00.000+00:00\",\n          \"news_url\": null,\n          \"type\": \"Series C\",\n          \"investors\": \"Sequoia Capital, Tribe Capital, Nexus Venture Partners, NewView Capital\",\n          \"amount\": \"110M\",\n          \"currency\": \"$\"\n        },\n        {\n          \"id\": \"61b13677623110000186a478\",\n          \"date\": \"2021-10-01T00:00:00.000+00:00\",\n          \"news_url\": null,\n          \"type\": \"Series B\",\n          \"investors\": \"Tribe Capital, NewView Capital, Nexus Venture Partners\",\n          \"amount\": \"32M\",\n          \"currency\": \"$\"\n        },\n        {\n          \"id\": \"5ffe93caa54d75077c59acef\",\n          \"date\": \"2018-06-26T00:00:00.000+00:00\",\n          \"news_url\": \"https://techcrunch.com/2018/06/26/yc-grad-zenprospect-rebrands-as-apollo-lands-7-m-series-a/\",\n          \"type\": \"Series A\",\n          \"investors\": \"Nexus Venture Partners, Social Capital, Y Combinator\",\n          \"amount\": \"7M\",\n          \"currency\": \"$\"\n        },\n        {\n          \"id\": \"6574c1ff9b797d0001fdab20\",\n          \"date\": \"2016-10-01T00:00:00.000+00:00\",\n          \"news_url\": null,\n          \"type\": \"Other\",\n          \"investors\": \"Y Combinator, SV Angel, Social Capital, Nexus Venture Partners\",\n          \"amount\": \"2.2M\",\n          \"currency\": \"$\"\n        }\n      ],\n      \"technology_names\": [\n        \"AI\",\n        \"Android\",\n        \"Basis\",\n        \"Canva\",\n        \"Circle\",\n        \"CloudFlare Hosting\",\n        \"Cloudflare DNS\",\n        \"Drift\",\n        \"Gmail\",\n        \"Google Apps\",\n        \"Google Tag Manager\",\n        \"Google Workspace\",\n        \"Gravity Forms\",\n        \"Hubspot\",\n        \"Intercom\",\n        \"Mailchimp Mandrill\",\n        \"Marketo\",\n        \"Microsoft Office 365\",\n        \"Mobile Friendly\",\n        \"Python\",\n        \"Rackspace MailGun\",\n        \"Remote\",\n        \"Render\",\n        \"Reviews\",\n        \"Salesforce\",\n        \"Stripe\",\n        \"Typekit\",\n        \"WP Engine\",\n        \"Wistia\",\n        \"WordPress.org\",\n        \"Yandex Metrica\",\n        \"reCAPTCHA\"\n      ],\n      \"current_technologies\": [\n        {\n          \"uid\": \"ai\",\n          \"name\": \"AI\",\n          \"category\": \"Other\"\n        },\n        {\n          \"uid\": \"android\",\n          \"name\": \"Android\",\n          \"category\": \"Frameworks and Programming Languages\"\n        },\n        {\n          \"uid\": \"basis\",\n          \"name\": \"Basis\",\n          \"category\": \"Advertising Networks\"\n        },\n        {\n          \"uid\": \"canva\",\n          \"name\": \"Canva\",\n          \"category\": \"Content Management Platform\"\n        },\n        {\n          \"uid\": \"circle\",\n          \"name\": \"Circle\",\n          \"category\": \"Financial Software\"\n        },\n        {\n          \"uid\": \"cloudflare_hosting\",\n          \"name\": \"CloudFlare Hosting\",\n          \"category\": \"Hosting\"\n        },\n        {\n          \"uid\": \"cloudflare_dns\",\n          \"name\": \"Cloudflare DNS\",\n          \"category\": \"Domain Name Services\"\n        },\n        {\n          \"uid\": \"drift\",\n          \"name\": \"Drift\",\n          \"category\": \"Widgets\"\n        },\n        {\n          \"uid\": \"gmail\",\n          \"name\": \"Gmail\",\n          \"category\": \"Email Providers\"\n        },\n        {\n          \"uid\": \"google_apps\",\n          \"name\": \"Google Apps\",\n          \"category\": \"Other\"\n        },\n        {\n          \"uid\": \"google_tag_manager\",\n          \"name\": \"Google Tag Manager\",\n          \"category\": \"Tag Management\"\n        },\n        {\n          \"uid\": \"google workspace\",\n          \"name\": \"Google Workspace\",\n          \"category\": \"Cloud Services\"\n        },\n        {\n          \"uid\": \"gravity_forms\",\n          \"name\": \"Gravity Forms\",\n          \"category\": \"Hosted Forms\"\n        },\n        {\n          \"uid\": \"hubspot\",\n          \"name\": \"Hubspot\",\n          \"category\": \"Marketing Automation\"\n        },\n        {\n          \"uid\": \"intercom\",\n          \"name\": \"Intercom\",\n          \"category\": \"Support and Feedback\"\n        },\n        {\n          \"uid\": \"mailchimp_mandrill\",\n          \"name\": \"Mailchimp Mandrill\",\n          \"category\": \"Email Delivery\"\n        },\n        {\n          \"uid\": \"marketo\",\n          \"name\": \"Marketo\",\n          \"category\": \"Marketing Automation\"\n        },\n        {\n          \"uid\": \"office_365\",\n          \"name\": \"Microsoft Office 365\",\n          \"category\": \"Other\"\n        },\n        {\n          \"uid\": \"mobile_friendly\",\n          \"name\": \"Mobile Friendly\",\n          \"category\": \"Other\"\n        },\n        {\n          \"uid\": \"python\",\n          \"name\": \"Python\",\n          \"category\": \"Frameworks and Programming Languages\"\n        },\n        {\n          \"uid\": \"rackspace_mailgun\",\n          \"name\": \"Rackspace MailGun\",\n          \"category\": \"Email Delivery\"\n        },\n        {\n          \"uid\": \"remote\",\n          \"name\": \"Remote\",\n          \"category\": \"Other\"\n        },\n        {\n          \"uid\": \"render\",\n          \"name\": \"Render\",\n          \"category\": \"Other\"\n        },\n        {\n          \"uid\": \"reviews\",\n          \"name\": \"Reviews\",\n          \"category\": \"Customer Reviews\"\n        },\n        {\n          \"uid\": \"salesforce\",\n          \"name\": \"Salesforce\",\n          \"category\": \"Customer Relationship Management\"\n        },\n        {\n          \"uid\": \"stripe\",\n          \"name\": \"Stripe\",\n          \"category\": \"Payments\"\n        },\n        {\n          \"uid\": \"typekit\",\n          \"name\": \"Typekit\",\n          \"category\": \"Fonts\"\n        },\n        {\n          \"uid\": \"wp_engine\",\n          \"name\": \"WP Engine\",\n          \"category\": \"CMS\"\n        },\n        {\n          \"uid\": \"wistia\",\n          \"name\": \"Wistia\",\n          \"category\": \"Online Video Platforms\"\n        },\n        {\n          \"uid\": \"wordpress_org\",\n          \"name\": \"WordPress.org\",\n          \"category\": \"CMS\"\n        },\n        {\n          \"uid\": \"yandex_metrika\",\n          \"name\": \"Yandex Metrica\",\n          \"category\": \"Analytics and Tracking\"\n        },\n        {\n          \"uid\": \"recaptcha\",\n          \"name\": \"reCAPTCHA\",\n          \"category\": \"Captcha\"\n        }\n      ],\n      \"org_chart_root_people_ids\": [\n        \"652fc57e2802bf00010c52f8\"\n      ],\n      \"org_chart_sector\": \"OrgChart::SectorHierarchy::Rules::IT\",\n      \"org_chart_removed\": false,\n      \"org_chart_show_department_filter\": true\n    },\n    \"is_likely_to_engage\": true,\n    \"show_intent\": false,\n    \"departments\": [\n      \"c_suite\"\n    ],\n    \"subdepartments\": [\n      \"executive\",\n      \"founder\"\n    ],\n    \"functions\": [\n      \"entrepreneurship\"\n    ],\n    \"seniority\": \"founder\"\n  },\n  \"waterfall\": {\n    \"status\": \"accepted\",\n    \"message\": \"Waterfall enrichment request accepted. Results will be sent to the provided webhook URL.\"\n  },\n  \"request_id\": 1039995589705121900\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e849441-4499-46db-9664-95a8c6288d7d",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "people",
+                    "match"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "first_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hashed_email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "organization_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "linkedin_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "run_waterfall_email",
+                      "value": "false"
+                    },
+                    {
+                      "key": "run_waterfall_phone",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reveal_personal_emails",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reveal_phone_number",
+                      "value": "false"
+                    },
+                    {
+                      "key": "webhook_url",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f416ccca-2582-4677-9941-be908594b572",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "people",
+                    "match"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "first_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hashed_email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "organization_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "linkedin_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "run_waterfall_email",
+                      "value": "false"
+                    },
+                    {
+                      "key": "run_waterfall_phone",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reveal_personal_emails",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reveal_phone_number",
+                      "value": "false"
+                    },
+                    {
+                      "key": "webhook_url",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The maximum number of api calls allowed for api/v1/people/match is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e8039057-e36f-4345-a138-e70c0a8370a7",
+          "name": "Bulk People Enrichment",
+          "request": {
+            "name": "Bulk People Enrichment",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/people/bulk_match` or `Master API key`\n\n**OAuth scopes:** `people_bulk_match`\n\n**Free account access:** Requires an Apollo account registered with a work email address. Paid accounts aren't affected.\n\n**Credit usage:** `1–9 credits per person` without waterfall enrichment\n\nCredits are charged only if credit-consuming data is found: 1 credit for demographics or email, plus 8 credits if a mobile phone is returned. If no credit-consuming data is found, the request consumes 0 credits. You can enrich up to 10 people per request. Learn more about [API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nIf waterfall enrichment is used for phone or email, credit usage depends on the returned data and the vendors included in your [waterfall enrichment configuration](https://knowledge.apollo.io/hc/en-us/articles/34071121664781-Use-Waterfall-Enrichment); some vendors consume credits per lookup even when no data is found.\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/33699917233293-Enrichment-Overview\" target=\"_blank\">Enrichment</a> is when you refresh existing records so your prospecting data is up-to-date.<br><br>Use the Bulk People Enrichment endpoint to enrich data for up to ten people with a single API call. To enrich data for a single person, use the <a href=\"https://docs.apollo.io/reference/people-enrichment\">People Enrichment endpoint</a> instead.<br><br>Apollo relies on the information you pass via the endpoint's parameters to identify the correct people to enrich. When you provide more information, Apollo is more likely to find matches within its database. If you only provide general information, such as a name without a domain or email address, you may receive a `200` response, but the response indicates that no records have been enriched. The details for each person should be passed as an object in the `details[]` array.<br><br>By default, this endpoint doesn't return personal emails or phone numbers. Use the `reveal_personal_emails` parameter to retrieve personal emails and `reveal_phone_number` to retrieve phone numbers. If you set either of these parameters to `true`, Apollo attempts to provide emails or phone numbers for all matches.<br><br>When you use `reveal_phone_number`, a valid `webhook_url` is required so Apollo can deliver the completed phone enrichment results. Apollo returns the main enrichment response synchronously, then sends the requested phone numbers to the webhook asynchronously. [See webhook details](#webhook-details).<br><br>You can also use the `run_waterfall_email` and `run_waterfall_phone` parameters to run waterfall enrichment via this endpoint. [Waterfall enrichment](https://knowledge.apollo.io/hc/en-us/articles/34071089002509-Waterfall-Enrichment-Overview) gives you broader data coverage by checking connected third-party data sources for contact emails and phone numbers.<br><br>When you call this endpoint and include at least one waterfall parameter, a valid `webhook_url` is required so Apollo can deliver the completed waterfall enrichment results. Apollo returns an immediate synchronous response with demographic and firmographic data, along with a waterfall enrichment request status. Apollo then delivers enriched emails or phone numbers asynchronously to the configured webhook.<br><br>\n\n### Reading the Response\n\nThe response shape depends on whether you requested waterfall enrichment, so check for the fields you need rather than assuming a fixed payload.\n\n**Standard requests** (no waterfall parameters) return `total_requested_enrichments`, `unique_enriched_records`, `missing_records`, and `credits_consumed` alongside `matches`.\n\n**Waterfall requests** (`run_waterfall_email` or `run_waterfall_phone` set to `true`) return a `waterfall` object instead. On these, `unique_enriched_records`, `missing_records`, and `credits_consumed` are **absent entirely** — not zero — because enrichment is still running and final credit usage isn't known. Only `total_requested_enrichments` appears in both shapes. When `run_waterfall_email` is `true`, each `matches` entry also omits `email` and `email_status`, since the address arrives later via your webhook.\n\nAlso worth knowing:\n\n* `unique_enriched_records` counts distinct people that **consumed credits**, not people that matched. It can be lower than the length of `matches`, or `0` while `matches` is non-empty.\n\n* `credits_consumed` can be fractional depending on your plan's credit pricing. Parse it as a decimal.\n\n* `request_id` is a signed 64-bit integer and is frequently negative. Store it in a type that handles the full signed range, and pass it unchanged to [Poll Webhook Result](https://docs.apollo.io/reference/poll-webhook-result).\n\n* `status` is `success` for any `200` response, including one that matched nobody. Use `missing_records` and `matches` to judge what was actually enriched.\n\n### Webhook Details\n\n* When using native phone enrichment, the webhook response follows: [Native webhook response details](doc:retrieve-mobile-phone-numbers-for-contacts#webhook-response-details).\n\n* When using waterfall enrichment, the webhook response follows: [Waterfall webhook response details](doc:enrich-phone-and-email-using-data-waterfall#response-details).\n\n* You can poll webhook results with the <a href=\"https://docs.apollo.io/reference/poll-webhook-result\">Poll Webhook Result</a> endpoint by passing the <code>request_id</code> from the bulk people enrichment response.\n\n### Webhook Requirements\n\n* **HTTPS Required:** Your endpoint must be publicly accessible over HTTPS.\n\n* **Rate Limiting:** Ensure your webhook endpoint can handle the volume of webhook traffic sent by Apollo.\n\n* **Idempotency:** Apollo may retry webhook calls. Your endpoint should be idempotent to handle duplicate payloads safely.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "people",
+                "bulk_match"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "run_waterfall_email",
+                  "value": "false",
+                  "description": "Set to true to enable email waterfall enrichment"
+                },
+                {
+                  "disabled": false,
+                  "key": "run_waterfall_phone",
+                  "value": "false",
+                  "description": "Set to true to enable phone waterfall enrichment"
+                },
+                {
+                  "disabled": false,
+                  "key": "reveal_personal_emails",
+                  "value": "false",
+                  "description": "Set to `true` if you want to enrich all matched people with personal emails. This potentially consumes credits as part of your <a href=\"https://docs.apollo.io/docs/api-pricing\" target=\"_blank\">Apollo pricing plan</a>. The default value is `false`. <br><br>If a person resides in a <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409141087757\" target=\"_blank\">GDPR</a>-compliant region, Apollo will not reveal their personal email."
+                },
+                {
+                  "disabled": false,
+                  "key": "reveal_phone_number",
+                  "value": "false",
+                  "description": "Set to `true` if you want to enrich the data of all matched people with all available phone numbers, including mobile phone numbers. This potentially consumes credits as part of your <a href=\"https://docs.apollo.io/docs/api-pricing\" target=\"_blank\">Apollo pricing plan</a>. The default value is `false`. <br><br>If this parameter is set to `true`, you must enter a webhook URL for the `webhook_url` parameter. Apollo will asynchronously verify phone numbers for you, then send a JSON response that includes only details about the phone numbers to the webhook URL you provide. It can take several minutes for the phone numbers to be delivered."
+                },
+                {
+                  "disabled": false,
+                  "key": "webhook_url",
+                  "value": "<string>",
+                  "description": "If you set the `reveal_phone_number` parameter to `true`, this parameter becomes mandatory. Otherwise, do not use this parameter. <br><br>Enter the webhook URL that specifies where Apollo should send a JSON response that includes the phone number you requested. Apollo suggests testing this flow to ensure you receive the separate response with the phone number. <br><br>If phone numbers are not revealed delivered to the webhook URL, try applying UTF-8 encoding to the webhook URL. <br><br>Example: `https://webhook.site/11f2643a-b1b4-c6be-8e6a-6c7da2c12610`; `https%3A%2F%2Fwebhook.site%2F11f2643a-b1b4-c6be-8e6a-6c7da2c12610`"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"details\": [\n    {\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"hashed_email\": \"<string>\",\n      \"organization_name\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"id\": \"<string>\",\n      \"linkedin_url\": \"<string>\"\n    },\n    {\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"hashed_email\": \"<string>\",\n      \"organization_name\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"id\": \"<string>\",\n      \"linkedin_url\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5a538a52-4fe8-4fee-a085-13ace18486e4",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "people",
+                    "bulk_match"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "run_waterfall_email",
+                      "value": "false"
+                    },
+                    {
+                      "key": "run_waterfall_phone",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reveal_personal_emails",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reveal_phone_number",
+                      "value": "false"
+                    },
+                    {
+                      "key": "webhook_url",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"details\": [\n    {\n      \"id\": \"64a7ff0cc4dfae00013df1a5\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"error_code\": null,\n  \"error_message\": null,\n  \"total_requested_enrichments\": 3,\n  \"unique_enriched_records\": 3,\n  \"missing_records\": 0,\n  \"credits_consumed\": 3,\n  \"matches\": [\n    {\n      \"id\": \"64a7ff0cc4dfae00013df1a5\",\n      \"first_name\": \"Marcus\",\n      \"last_name\": \"Ellery\",\n      \"name\": \"Marcus Ellery\",\n      \"linkedin_url\": \"http://www.linkedin.com/in/marcus-ellery-4c2b81de\",\n      \"title\": \"VP of Sales Operations\",\n      \"email_status\": \"verified\",\n      \"photo_url\": \"https://media.example.com/photos/marcus-ellery.jpg\",\n      \"twitter_url\": null,\n      \"github_url\": null,\n      \"facebook_url\": null,\n      \"extrapolated_email_confidence\": null,\n      \"headline\": \"VP of Sales Operations at Apollo\",\n      \"email\": \"marcus.ellery@apollo.io\",\n      \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n      \"employment_history\": [\n        {\n          \"_id\": \"66d8c632580636000195735f\",\n          \"created_at\": null,\n          \"current\": true,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": null,\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n          \"organization_name\": \"Apollo\",\n          \"raw_address\": null,\n          \"start_date\": \"2016-01-01\",\n          \"title\": \"VP of Sales Operations\",\n          \"updated_at\": null,\n          \"id\": \"66d8c632580636000195735f\",\n          \"key\": \"66d8c632580636000195735f\"\n        },\n        {\n          \"_id\": \"66d8c6325806360001957360\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2015-01-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": null,\n          \"organization_name\": \"Braingenie\",\n          \"raw_address\": null,\n          \"start_date\": \"2011-01-01\",\n          \"title\": \"VP of Sales Operations\",\n          \"updated_at\": null,\n          \"id\": \"66d8c6325806360001957360\",\n          \"key\": \"66d8c6325806360001957360\"\n        },\n        {\n          \"_id\": \"66d8c6325806360001957361\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2011-01-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"54a22f23746869331840e813\",\n          \"organization_name\": \"Citadel Investment Group\",\n          \"raw_address\": null,\n          \"start_date\": \"2011-01-01\",\n          \"title\": \"Investment & Trading Associate\",\n          \"updated_at\": null,\n          \"id\": \"66d8c6325806360001957361\",\n          \"key\": \"66d8c6325806360001957361\"\n        },\n        {\n          \"_id\": \"66d8c6325806360001957362\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2010-09-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"54a1216169702d7fe6dfca02\",\n          \"organization_name\": \"The Boston Consulting Group\",\n          \"raw_address\": null,\n          \"start_date\": \"2010-08-01\",\n          \"title\": \"Summer Associate\",\n          \"updated_at\": null,\n          \"id\": \"66d8c6325806360001957362\",\n          \"key\": \"66d8c6325806360001957362\"\n        },\n        {\n          \"_id\": \"66d8c6325806360001957363\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2010-08-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"5da2e6a3f978a8000177e831\",\n          \"organization_name\": \"Goldman Sachs\",\n          \"raw_address\": null,\n          \"start_date\": \"2010-06-01\",\n          \"title\": \"Summer Analyst\",\n          \"updated_at\": null,\n          \"id\": \"66d8c6325806360001957363\",\n          \"key\": \"66d8c6325806360001957363\"\n        },\n        {\n          \"_id\": \"66d8c6325806360001957364\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2010-02-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"54a1a06274686945fa1ffc02\",\n          \"organization_name\": \"Jane Street\",\n          \"raw_address\": null,\n          \"start_date\": \"2009-12-01\",\n          \"title\": \"Trading Intern\",\n          \"updated_at\": null,\n          \"id\": \"66d8c6325806360001957364\",\n          \"key\": \"66d8c6325806360001957364\"\n        }\n      ],\n      \"state\": \"California\",\n      \"city\": \"San Francisco\",\n      \"country\": \"United States\",\n      \"organization\": {\n        \"id\": \"5e66b6381e05b4008c8331b8\",\n        \"name\": \"Apollo.io\",\n        \"website_url\": \"http://www.apollo.io\",\n        \"blog_url\": null,\n        \"angellist_url\": null,\n        \"linkedin_url\": \"http://www.linkedin.com/company/apolloio\",\n        \"twitter_url\": \"https://twitter.com/meetapollo/\",\n        \"facebook_url\": \"https://www.facebook.com/MeetApollo\",\n        \"primary_phone\": {},\n        \"languages\": [],\n        \"alexa_ranking\": 3514,\n        \"phone\": null,\n        \"linkedin_uid\": \"18511550\",\n        \"founded_year\": 2015,\n        \"publicly_traded_symbol\": null,\n        \"publicly_traded_exchange\": null,\n        \"logo_url\": \"https://zenprospect-production.s3.amazonaws.com/uploads/pictures/79049be00ff8e398b5935de8/picture\",\n        \"crunchbase_url\": null,\n        \"primary_domain\": \"apollo.io\",\n        \"industry\": \"information technology & services\",\n        \"keywords\": [\n          \"sales engagement\",\n          \"lead generation\",\n          \"predictive analytics\",\n          \"lead scoring\",\n          \"sales strategy\",\n          \"conversation intelligence\",\n          \"sales enablement\",\n          \"lead routing\",\n          \"sales development\",\n          \"email engagement\",\n          \"revenue intelligence\",\n          \"sales operations\",\n          \"sales intelligence\",\n          \"lead intelligence\",\n          \"prospecting\",\n          \"b2b data\"\n        ],\n        \"estimated_num_employees\": 1600,\n        \"industries\": [\n          \"information technology & services\"\n        ],\n        \"secondary_industries\": [],\n        \"snippets_loaded\": true,\n        \"industry_tag_id\": \"5567cd4773696439b10b0000\",\n        \"industry_tag_hash\": {\n          \"information technology & services\": \"5567cd4773696439b10b0000\"\n        },\n        \"retail_location_count\": 0,\n        \"raw_address\": \"415 Mission St, Floor 37, San Francisco, California 94105, US\",\n        \"street_address\": \"415 Mission St\",\n        \"city\": \"San Francisco\",\n        \"state\": \"California\",\n        \"postal_code\": \"94105-2301\",\n        \"country\": \"United States\"\n      },\n      \"is_likely_to_engage\": true,\n      \"account_id\": \"63f53afe4ceeca00016bdd2f\",\n      \"account\": {\n        \"id\": \"63f53afe4ceeca00016bdd2f\",\n        \"name\": \"Apollo.io\",\n        \"website_url\": \"http://www.apollo.io\",\n        \"blog_url\": null,\n        \"angellist_url\": null,\n        \"linkedin_url\": \"http://www.linkedin.com/company/apolloio\",\n        \"twitter_url\": \"https://twitter.com/meetapollo/\",\n        \"facebook_url\": \"https://www.facebook.com/MeetApollo\",\n        \"primary_phone\": {},\n        \"languages\": [],\n        \"alexa_ranking\": 3514,\n        \"phone\": \"+1(202) 555-0114\",\n        \"linkedin_uid\": \"18511550\",\n        \"founded_year\": 2015,\n        \"publicly_traded_symbol\": null,\n        \"publicly_traded_exchange\": null,\n        \"logo_url\": \"https://zenprospect-production.s3.amazonaws.com/uploads/pictures/79049be00ff8e398b5935de8/picture\",\n        \"crunchbase_url\": null,\n        \"primary_domain\": \"apollo.io\",\n        \"domain\": \"apollo.io\",\n        \"team_id\": \"6095a710bd01d100a506d4ac\",\n        \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n        \"account_stage_id\": null,\n        \"source\": \"csv_import\",\n        \"original_source\": \"salesforce\",\n        \"creator_id\": null,\n        \"owner_id\": \"66aaac5a0e951f01b37012bd\",\n        \"created_at\": \"2023-02-21T21:43:26.351Z\",\n        \"phone_status\": \"no_status\",\n        \"hubspot_id\": null,\n        \"salesforce_id\": \"001niCRAYZ4Ho6GTKv\",\n        \"crm_owner_id\": \"005Ux6UIthHN0CrhuW\",\n        \"parent_account_id\": null,\n        \"sanitized_phone\": \"+12025550114\",\n        \"account_playbook_statuses\": [],\n        \"account_rule_config_statuses\": [\n          {\n            \"_id\": \"664f9eef1fded70001e4983e\",\n            \"created_at\": null,\n            \"rule_action_config_id\": \"65735e0ea63d2700faba5c6e\",\n            \"rule_config_id\": \"65735e0ea63d2700faba5c6f\",\n            \"status_cd\": \"completed\",\n            \"updated_at\": null,\n            \"id\": \"664f9eef1fded70001e4983e\",\n            \"key\": \"664f9eef1fded70001e4983e\"\n          }\n        ],\n        \"existence_level\": \"full\",\n        \"label_ids\": [\n          \"6504905b21ba8e00a334eb0f\"\n        ],\n        \"typed_custom_fields\": {},\n        \"custom_field_errors\": null,\n        \"modality\": \"account\",\n        \"source_display_name\": \"Uploaded from CSV\",\n        \"salesforce_record_url\": \"https://saas-drive-2207.my.salesforce.com/001niCRAYZ4Ho6GTKv\",\n        \"crm_record_url\": \"https://saas-drive-2207.my.salesforce.com/001niCRAYZ4Ho6GTKv\"\n      },\n      \"departments\": [\n        \"c_suite\"\n      ],\n      \"subdepartments\": [\n        \"executive\",\n        \"founder\"\n      ],\n      \"seniority\": \"founder\",\n      \"functions\": [\n        \"entrepreneurship\"\n      ],\n      \"show_intent\": false,\n      \"revealed_for_current_team\": true\n    },\n    {\n      \"id\": \"587cf802f65125cad923a266\",\n      \"first_name\": \"Brian\",\n      \"last_name\": \"Calderwood\",\n      \"name\": \"Brian Calderwood\",\n      \"linkedin_url\": \"http://www.linkedin.com/in/brian-calderwood-9d4f2a7b\",\n      \"title\": \"VP @ Apollo.io | Publisher\",\n      \"email_status\": \"verified\",\n      \"photo_url\": \"https://media.example.com/photos/brian-calderwood.jpg\",\n      \"twitter_url\": null,\n      \"github_url\": null,\n      \"facebook_url\": null,\n      \"extrapolated_email_confidence\": null,\n      \"headline\": \"VP @ Apollo.io | Publisher at Backlit Comics\",\n      \"email\": \"brian.calderwood@apollo.io\",\n      \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n      \"employment_history\": [\n        {\n          \"_id\": \"66d9e67b86199f0001b24246\",\n          \"created_at\": null,\n          \"current\": true,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": null,\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n          \"organization_name\": \"Apollo.io\",\n          \"raw_address\": null,\n          \"start_date\": \"2023-08-01\",\n          \"title\": \"VP @ Apollo.io | Publisher\",\n          \"updated_at\": null,\n          \"id\": \"66d9e67b86199f0001b24246\",\n          \"key\": \"66d9e67b86199f0001b24246\"\n        },\n        {\n          \"_id\": \"66d9e67b86199f0001b24247\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2023-08-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n          \"organization_name\": \"Apollo.io\",\n          \"raw_address\": null,\n          \"start_date\": \"2022-12-01\",\n          \"title\": \"Head of Content Marketing & Customer Education\",\n          \"updated_at\": null,\n          \"id\": \"66d9e67b86199f0001b24247\",\n          \"key\": \"66d9e67b86199f0001b24247\"\n        },\n        {\n          \"_id\": \"66d9e67b86199f0001b24248\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2022-12-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"5ff745ebd2b12300da0d8c49\",\n          \"organization_name\": \"Teamflow\",\n          \"raw_address\": null,\n          \"start_date\": \"2022-01-01\",\n          \"title\": \"Head of Revenue\",\n          \"updated_at\": null,\n          \"id\": \"66d9e67b86199f0001b24248\",\n          \"key\": \"66d9e67b86199f0001b24248\"\n        },\n        {\n          \"_id\": \"66d9e67b86199f0001b24249\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2022-01-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"5ff745ebd2b12300da0d8c49\",\n          \"organization_name\": \"Teamflow\",\n          \"raw_address\": null,\n          \"start_date\": \"2021-12-01\",\n          \"title\": \"Head Of Marketing\",\n          \"updated_at\": null,\n          \"id\": \"66d9e67b86199f0001b24249\",\n          \"key\": \"66d9e67b86199f0001b24249\"\n        },\n        {\n          \"_id\": \"66d9e67b86199f0001b2424a\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2021-11-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"62b0a223c6e72300ca47b474\",\n          \"organization_name\": \"Autodesk\",\n          \"raw_address\": null,\n          \"start_date\": \"2021-04-01\",\n          \"title\": \"Sr. Growth Marketing Manager\",\n          \"updated_at\": null,\n          \"id\": \"66d9e67b86199f0001b2424a\",\n          \"key\": \"66d9e67b86199f0001b2424a\"\n        },\n        {\n          \"_id\": \"66d9e67b86199f0001b2424b\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2021-04-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"62b0a223c6e72300ca47b474\",\n          \"organization_name\": \"Autodesk\",\n          \"raw_address\": null,\n          \"start_date\": \"2019-03-01\",\n          \"title\": \"Growth Marketing Manager\",\n          \"updated_at\": null,\n          \"id\": \"66d9e67b86199f0001b2424b\",\n          \"key\": \"66d9e67b86199f0001b2424b\"\n        },\n        {\n          \"_id\": \"66d9e67b86199f0001b2424c\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2019-03-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": null,\n          \"organization_name\": \"BuildingConnected, an Autodesk product\",\n          \"raw_address\": null,\n          \"start_date\": \"2018-10-01\",\n          \"title\": \"Marketing Automation Manager\",\n          \"updated_at\": null,\n          \"id\": \"66d9e67b86199f0001b2424c\",\n          \"key\": \"66d9e67b86199f0001b2424c\"\n        },\n        {\n          \"_id\": \"66d9e67b86199f0001b2424d\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2018-08-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": null,\n          \"organization_name\": \"SpotMe Lending\",\n          \"raw_address\": null,\n          \"start_date\": \"2018-03-01\",\n          \"title\": \"Co-Founder, Product & Marketing\",\n          \"updated_at\": null,\n          \"id\": \"66d9e67b86199f0001b2424d\",\n          \"key\": \"66d9e67b86199f0001b2424d\"\n        },\n        {\n          \"_id\": \"66d9e67b86199f0001b2424e\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2016-06-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": null,\n          \"organization_name\": \"inDinero\",\n          \"raw_address\": null,\n          \"start_date\": \"2015-11-01\",\n          \"title\": \"Director of Account Management\",\n          \"updated_at\": null,\n          \"id\": \"66d9e67b86199f0001b2424e\",\n          \"key\": \"66d9e67b86199f0001b2424e\"\n        },\n        {\n          \"_id\": \"66d9e67b86199f0001b2424f\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2015-11-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": null,\n          \"organization_name\": \"inDinero\",\n          \"raw_address\": null,\n          \"start_date\": \"2014-09-01\",\n          \"title\": \"Director of Enterprise Sales\",\n          \"updated_at\": null,\n          \"id\": \"66d9e67b86199f0001b2424f\",\n          \"key\": \"66d9e67b86199f0001b2424f\"\n        },\n        {\n          \"_id\": \"66d9e67b86199f0001b24250\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2014-07-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"5da61143b495bc000168bdca\",\n          \"organization_name\": \"FXCM\",\n          \"raw_address\": null,\n          \"start_date\": \"2013-06-01\",\n          \"title\": \"Forex Sales Broker\",\n          \"updated_at\": null,\n          \"id\": \"66d9e67b86199f0001b24250\",\n          \"key\": \"66d9e67b86199f0001b24250\"\n        },\n        {\n          \"_id\": \"66d9e67b86199f0001b24251\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2012-12-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"5d0a6a7da3ae6121868fabb8\",\n          \"organization_name\": \"CreditRepair.com\",\n          \"raw_address\": null,\n          \"start_date\": \"2012-02-01\",\n          \"title\": \"Sales Team Leader\",\n          \"updated_at\": null,\n          \"id\": \"66d9e67b86199f0001b24251\",\n          \"key\": \"66d9e67b86199f0001b24251\"\n        },\n        {\n          \"_id\": \"66d9e67b86199f0001b24252\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2011-08-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"54a1b7477468694f8f25ae0a\",\n          \"organization_name\": \"Progrexion\",\n          \"raw_address\": null,\n          \"start_date\": \"2011-04-01\",\n          \"title\": \"Inbound Sales Representative\",\n          \"updated_at\": null,\n          \"id\": \"66d9e67b86199f0001b24252\",\n          \"key\": \"66d9e67b86199f0001b24252\"\n        }\n      ],\n      \"state\": \"California\",\n      \"city\": \"San Francisco\",\n      \"country\": \"United States\",\n      \"organization\": {\n        \"id\": \"5e66b6381e05b4008c8331b8\",\n        \"name\": \"Apollo.io\",\n        \"website_url\": \"http://www.apollo.io\",\n        \"blog_url\": null,\n        \"angellist_url\": null,\n        \"linkedin_url\": \"http://www.linkedin.com/company/apolloio\",\n        \"twitter_url\": \"https://twitter.com/meetapollo/\",\n        \"facebook_url\": \"https://www.facebook.com/MeetApollo\",\n        \"primary_phone\": {},\n        \"languages\": [],\n        \"alexa_ranking\": 3514,\n        \"phone\": null,\n        \"linkedin_uid\": \"18511550\",\n        \"founded_year\": 2015,\n        \"publicly_traded_symbol\": null,\n        \"publicly_traded_exchange\": null,\n        \"logo_url\": \"https://zenprospect-production.s3.amazonaws.com/uploads/pictures/79049be00ff8e398b5935de8/picture\",\n        \"crunchbase_url\": null,\n        \"primary_domain\": \"apollo.io\",\n        \"industry\": \"information technology & services\",\n        \"keywords\": [\n          \"sales engagement\",\n          \"lead generation\",\n          \"predictive analytics\",\n          \"lead scoring\",\n          \"sales strategy\",\n          \"conversation intelligence\",\n          \"sales enablement\",\n          \"lead routing\",\n          \"sales development\",\n          \"email engagement\",\n          \"revenue intelligence\",\n          \"sales operations\",\n          \"sales intelligence\",\n          \"lead intelligence\",\n          \"prospecting\",\n          \"b2b data\"\n        ],\n        \"estimated_num_employees\": 1600,\n        \"industries\": [\n          \"information technology & services\"\n        ],\n        \"secondary_industries\": [],\n        \"snippets_loaded\": true,\n        \"industry_tag_id\": \"5567cd4773696439b10b0000\",\n        \"industry_tag_hash\": {\n          \"information technology & services\": \"5567cd4773696439b10b0000\"\n        },\n        \"retail_location_count\": 0,\n        \"raw_address\": \"415 Mission St, Floor 37, San Francisco, California 94105, US\",\n        \"street_address\": \"415 Mission St\",\n        \"city\": \"San Francisco\",\n        \"state\": \"California\",\n        \"postal_code\": \"94105-2301\",\n        \"country\": \"United States\"\n      },\n      \"is_likely_to_engage\": false,\n      \"account_id\": \"63f53afe4ceeca00016bdd2f\",\n      \"account\": {\n        \"id\": \"63f53afe4ceeca00016bdd2f\",\n        \"name\": \"Apollo.io\",\n        \"website_url\": \"http://www.apollo.io\",\n        \"blog_url\": null,\n        \"angellist_url\": null,\n        \"linkedin_url\": \"http://www.linkedin.com/company/apolloio\",\n        \"twitter_url\": \"https://twitter.com/meetapollo/\",\n        \"facebook_url\": \"https://www.facebook.com/MeetApollo\",\n        \"primary_phone\": {},\n        \"languages\": [],\n        \"alexa_ranking\": 3514,\n        \"phone\": \"+1(202) 555-0114\",\n        \"linkedin_uid\": \"18511550\",\n        \"founded_year\": 2015,\n        \"publicly_traded_symbol\": null,\n        \"publicly_traded_exchange\": null,\n        \"logo_url\": \"https://zenprospect-production.s3.amazonaws.com/uploads/pictures/79049be00ff8e398b5935de8/picture\",\n        \"crunchbase_url\": null,\n        \"primary_domain\": \"apollo.io\",\n        \"domain\": \"apollo.io\",\n        \"team_id\": \"6095a710bd01d100a506d4ac\",\n        \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n        \"account_stage_id\": null,\n        \"source\": \"csv_import\",\n        \"original_source\": \"salesforce\",\n        \"creator_id\": null,\n        \"owner_id\": \"66aaac5a0e951f01b37012bd\",\n        \"created_at\": \"2023-02-21T21:43:26.351Z\",\n        \"phone_status\": \"no_status\",\n        \"hubspot_id\": null,\n        \"salesforce_id\": \"001niCRAYZ4Ho6GTKv\",\n        \"crm_owner_id\": \"005Ux6UIthHN0CrhuW\",\n        \"parent_account_id\": null,\n        \"sanitized_phone\": \"+12025550114\",\n        \"account_playbook_statuses\": [],\n        \"account_rule_config_statuses\": [\n          {\n            \"_id\": \"664f9eef1fded70001e4983e\",\n            \"created_at\": null,\n            \"rule_action_config_id\": \"65735e0ea63d2700faba5c6e\",\n            \"rule_config_id\": \"65735e0ea63d2700faba5c6f\",\n            \"status_cd\": \"completed\",\n            \"updated_at\": null,\n            \"id\": \"664f9eef1fded70001e4983e\",\n            \"key\": \"664f9eef1fded70001e4983e\"\n          }\n        ],\n        \"existence_level\": \"full\",\n        \"label_ids\": [\n          \"6504905b21ba8e00a334eb0f\"\n        ],\n        \"typed_custom_fields\": {},\n        \"custom_field_errors\": null,\n        \"modality\": \"account\",\n        \"source_display_name\": \"Uploaded from CSV\",\n        \"salesforce_record_url\": \"https://saas-drive-2207.my.salesforce.com/001niCRAYZ4Ho6GTKv\",\n        \"crm_record_url\": \"https://saas-drive-2207.my.salesforce.com/001niCRAYZ4Ho6GTKv\"\n      },\n      \"departments\": [],\n      \"subdepartments\": [],\n      \"seniority\": \"vp\",\n      \"functions\": [],\n      \"show_intent\": false,\n      \"revealed_for_current_team\": true\n    },\n    {\n      \"id\": \"611d751fa587f80001890daa\",\n      \"first_name\": \"Nadia\",\n      \"last_name\": \"Calloway\",\n      \"name\": \"Nadia Calloway\",\n      \"linkedin_url\": \"http://www.linkedin.com/in/nadia-calloway-7b1e9c34\",\n      \"title\": \"Product Marketing Leader at Apollo.io, formerly\",\n      \"email_status\": \"verified\",\n      \"photo_url\": \"https://media.example.com/photos/nadia-calloway.jpg\",\n      \"twitter_url\": null,\n      \"github_url\": null,\n      \"facebook_url\": null,\n      \"extrapolated_email_confidence\": null,\n      \"headline\": \"Product Marketing Leader at Apollo.io, formerly @ Gainsight, Marketo, Podium\",\n      \"email\": \"nadia.calloway@apollo.io\",\n      \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n      \"employment_history\": [\n        {\n          \"_id\": \"66d9520b7fea3e000137e512\",\n          \"created_at\": null,\n          \"current\": true,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": null,\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n          \"organization_name\": \"Apollo.io\",\n          \"raw_address\": null,\n          \"start_date\": \"2023-06-01\",\n          \"title\": \"Product Marketing Leader at Apollo.io, formerly\",\n          \"updated_at\": null,\n          \"id\": \"66d9520b7fea3e000137e512\",\n          \"key\": \"66d9520b7fea3e000137e512\"\n        },\n        {\n          \"_id\": \"66d9520b7fea3e000137e513\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2023-05-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"5b84e1f6f874f7499946da53\",\n          \"organization_name\": \"Podium\",\n          \"raw_address\": null,\n          \"start_date\": \"2021-10-01\",\n          \"title\": \"VP, Product Marketing & Brand\",\n          \"updated_at\": null,\n          \"id\": \"66d9520b7fea3e000137e513\",\n          \"key\": \"66d9520b7fea3e000137e513\"\n        },\n        {\n          \"_id\": \"66d9520b7fea3e000137e514\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2021-10-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"5b84e1f6f874f7499946da53\",\n          \"organization_name\": \"Podium\",\n          \"raw_address\": null,\n          \"start_date\": \"2020-11-01\",\n          \"title\": \"Sr. Director, Head of Product Marketing\",\n          \"updated_at\": null,\n          \"id\": \"66d9520b7fea3e000137e514\",\n          \"key\": \"66d9520b7fea3e000137e514\"\n        },\n        {\n          \"_id\": \"66d9520b7fea3e000137e515\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2020-11-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"5da4169904a137000118172a\",\n          \"organization_name\": \"Gainsight\",\n          \"raw_address\": null,\n          \"start_date\": \"2020-06-01\",\n          \"title\": \"Head of Product Marketing\",\n          \"updated_at\": null,\n          \"id\": \"66d9520b7fea3e000137e515\",\n          \"key\": \"66d9520b7fea3e000137e515\"\n        },\n        {\n          \"_id\": \"66d9520b7fea3e000137e516\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2020-06-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"5da4169904a137000118172a\",\n          \"organization_name\": \"Gainsight\",\n          \"raw_address\": null,\n          \"start_date\": \"2019-10-01\",\n          \"title\": \"Sr. Director, Product Marketing\",\n          \"updated_at\": null,\n          \"id\": \"66d9520b7fea3e000137e516\",\n          \"key\": \"66d9520b7fea3e000137e516\"\n        },\n        {\n          \"_id\": \"66d9520b7fea3e000137e517\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2019-10-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"5da4169904a137000118172a\",\n          \"organization_name\": \"Gainsight\",\n          \"raw_address\": null,\n          \"start_date\": \"2018-09-01\",\n          \"title\": \"Director of Product Marketing\",\n          \"updated_at\": null,\n          \"id\": \"66d9520b7fea3e000137e517\",\n          \"key\": \"66d9520b7fea3e000137e517\"\n        },\n        {\n          \"_id\": \"66d9520b7fea3e000137e518\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2018-08-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"5ce358f53acc510bd70fee14\",\n          \"organization_name\": \"Marketo, an Adobe company\",\n          \"raw_address\": null,\n          \"start_date\": \"2018-01-01\",\n          \"title\": \"Director of Solutions & Content Marketing (Head of Global Content Marketing)\",\n          \"updated_at\": null,\n          \"id\": \"66d9520b7fea3e000137e518\",\n          \"key\": \"66d9520b7fea3e000137e518\"\n        },\n        {\n          \"_id\": \"66d9520b7fea3e000137e519\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2018-01-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"5ce358f53acc510bd70fee14\",\n          \"organization_name\": \"Marketo, an Adobe company\",\n          \"raw_address\": null,\n          \"start_date\": \"2017-01-01\",\n          \"title\": \"Principal, Commercial Product Marketing\",\n          \"updated_at\": null,\n          \"id\": \"66d9520b7fea3e000137e519\",\n          \"key\": \"66d9520b7fea3e000137e519\"\n        },\n        {\n          \"_id\": \"66d9520b7fea3e000137e51a\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2017-01-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"5ce358f53acc510bd70fee14\",\n          \"organization_name\": \"Marketo, an Adobe company\",\n          \"raw_address\": null,\n          \"start_date\": \"2015-08-01\",\n          \"title\": \"Senior Product Marketing Manager\",\n          \"updated_at\": null,\n          \"id\": \"66d9520b7fea3e000137e51a\",\n          \"key\": \"66d9520b7fea3e000137e51a\"\n        },\n        {\n          \"_id\": \"66d9520b7fea3e000137e51b\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2015-08-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": \"5e596f42110b1400019edb6a\",\n          \"organization_name\": \"PeopleFluent\",\n          \"raw_address\": null,\n          \"start_date\": \"2015-01-01\",\n          \"title\": \"Product Marketing Manager\",\n          \"updated_at\": null,\n          \"id\": \"66d9520b7fea3e000137e51b\",\n          \"key\": \"66d9520b7fea3e000137e51b\"\n        },\n        {\n          \"_id\": \"66d9520b7fea3e000137e51c\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2014-12-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": null,\n          \"organization_name\": \"Harte Hanks / The Aberdeen Group\",\n          \"raw_address\": null,\n          \"start_date\": \"2014-05-01\",\n          \"title\": \"Product Marketing Manager\",\n          \"updated_at\": null,\n          \"id\": \"66d9520b7fea3e000137e51c\",\n          \"key\": \"66d9520b7fea3e000137e51c\"\n        },\n        {\n          \"_id\": \"66d9520b7fea3e000137e51d\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2014-05-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": null,\n          \"organization_name\": \"Harte Hanks / The Aberdeen Group\",\n          \"raw_address\": null,\n          \"start_date\": \"2013-12-01\",\n          \"title\": \"Product Marketing Specialist\",\n          \"updated_at\": null,\n          \"id\": \"66d9520b7fea3e000137e51d\",\n          \"key\": \"66d9520b7fea3e000137e51d\"\n        },\n        {\n          \"_id\": \"66d9520b7fea3e000137e51e\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2013-12-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": null,\n          \"organization_name\": \"ConnectEDU (formerly Experience, Inc.)\",\n          \"raw_address\": null,\n          \"start_date\": \"2013-06-01\",\n          \"title\": \"Director of Marketing\",\n          \"updated_at\": null,\n          \"id\": \"66d9520b7fea3e000137e51e\",\n          \"key\": \"66d9520b7fea3e000137e51e\"\n        },\n        {\n          \"_id\": \"66d9520b7fea3e000137e51f\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2013-06-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": null,\n          \"organization_name\": \"ConnectEDU (formerly Experience, Inc.)\",\n          \"raw_address\": null,\n          \"start_date\": \"2012-09-01\",\n          \"title\": \"Marketing Manager\",\n          \"updated_at\": null,\n          \"id\": \"66d9520b7fea3e000137e51f\",\n          \"key\": \"66d9520b7fea3e000137e51f\"\n        },\n        {\n          \"_id\": \"66d9520b7fea3e000137e520\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2012-09-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": null,\n          \"organization_name\": \"ConnectEDU (formerly Experience, Inc.)\",\n          \"raw_address\": null,\n          \"start_date\": \"2012-04-01\",\n          \"title\": \"Solutions Consultant\",\n          \"updated_at\": null,\n          \"id\": \"66d9520b7fea3e000137e520\",\n          \"key\": \"66d9520b7fea3e000137e520\"\n        },\n        {\n          \"_id\": \"66d9520b7fea3e000137e521\",\n          \"created_at\": null,\n          \"current\": false,\n          \"degree\": null,\n          \"description\": null,\n          \"emails\": null,\n          \"end_date\": \"2012-04-01\",\n          \"grade_level\": null,\n          \"kind\": null,\n          \"major\": null,\n          \"organization_id\": null,\n          \"organization_name\": \"ConnectEDU (formerly Experience, Inc.)\",\n          \"raw_address\": null,\n          \"start_date\": \"2011-03-01\",\n          \"title\": \"Account Executive\",\n          \"updated_at\": null,\n          \"id\": \"66d9520b7fea3e000137e521\",\n          \"key\": \"66d9520b7fea3e000137e521\"\n        }\n      ],\n      \"state\": \"Georgia\",\n      \"city\": \"Atlanta\",\n      \"country\": \"United States\",\n      \"organization\": {\n        \"id\": \"5e66b6381e05b4008c8331b8\",\n        \"name\": \"Apollo.io\",\n        \"website_url\": \"http://www.apollo.io\",\n        \"blog_url\": null,\n        \"angellist_url\": null,\n        \"linkedin_url\": \"http://www.linkedin.com/company/apolloio\",\n        \"twitter_url\": \"https://twitter.com/meetapollo/\",\n        \"facebook_url\": \"https://www.facebook.com/MeetApollo\",\n        \"primary_phone\": {},\n        \"languages\": [],\n        \"alexa_ranking\": 3514,\n        \"phone\": null,\n        \"linkedin_uid\": \"18511550\",\n        \"founded_year\": 2015,\n        \"publicly_traded_symbol\": null,\n        \"publicly_traded_exchange\": null,\n        \"logo_url\": \"https://zenprospect-production.s3.amazonaws.com/uploads/pictures/79049be00ff8e398b5935de8/picture\",\n        \"crunchbase_url\": null,\n        \"primary_domain\": \"apollo.io\",\n        \"industry\": \"information technology & services\",\n        \"keywords\": [\n          \"sales engagement\",\n          \"lead generation\",\n          \"predictive analytics\",\n          \"lead scoring\",\n          \"sales strategy\",\n          \"conversation intelligence\",\n          \"sales enablement\",\n          \"lead routing\",\n          \"sales development\",\n          \"email engagement\",\n          \"revenue intelligence\",\n          \"sales operations\",\n          \"sales intelligence\",\n          \"lead intelligence\",\n          \"prospecting\",\n          \"b2b data\"\n        ],\n        \"estimated_num_employees\": 1600,\n        \"industries\": [\n          \"information technology & services\"\n        ],\n        \"secondary_industries\": [],\n        \"snippets_loaded\": true,\n        \"industry_tag_id\": \"5567cd4773696439b10b0000\",\n        \"industry_tag_hash\": {\n          \"information technology & services\": \"5567cd4773696439b10b0000\"\n        },\n        \"retail_location_count\": 0,\n        \"raw_address\": \"415 Mission St, Floor 37, San Francisco, California 94105, US\",\n        \"street_address\": \"415 Mission St\",\n        \"city\": \"San Francisco\",\n        \"state\": \"California\",\n        \"postal_code\": \"94105-2301\",\n        \"country\": \"United States\"\n      },\n      \"is_likely_to_engage\": false,\n      \"account_id\": \"63f53afe4ceeca00016bdd2f\",\n      \"account\": {\n        \"id\": \"63f53afe4ceeca00016bdd2f\",\n        \"name\": \"Apollo.io\",\n        \"website_url\": \"http://www.apollo.io\",\n        \"blog_url\": null,\n        \"angellist_url\": null,\n        \"linkedin_url\": \"http://www.linkedin.com/company/apolloio\",\n        \"twitter_url\": \"https://twitter.com/meetapollo/\",\n        \"facebook_url\": \"https://www.facebook.com/MeetApollo\",\n        \"primary_phone\": {},\n        \"languages\": [],\n        \"alexa_ranking\": 3514,\n        \"phone\": \"+1(202) 555-0114\",\n        \"linkedin_uid\": \"18511550\",\n        \"founded_year\": 2015,\n        \"publicly_traded_symbol\": null,\n        \"publicly_traded_exchange\": null,\n        \"logo_url\": \"https://zenprospect-production.s3.amazonaws.com/uploads/pictures/79049be00ff8e398b5935de8/picture\",\n        \"crunchbase_url\": null,\n        \"primary_domain\": \"apollo.io\",\n        \"domain\": \"apollo.io\",\n        \"team_id\": \"6095a710bd01d100a506d4ac\",\n        \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n        \"account_stage_id\": null,\n        \"source\": \"csv_import\",\n        \"original_source\": \"salesforce\",\n        \"creator_id\": null,\n        \"owner_id\": \"66aaac5a0e951f01b37012bd\",\n        \"created_at\": \"2023-02-21T21:43:26.351Z\",\n        \"phone_status\": \"no_status\",\n        \"hubspot_id\": null,\n        \"salesforce_id\": \"001niCRAYZ4Ho6GTKv\",\n        \"crm_owner_id\": \"005Ux6UIthHN0CrhuW\",\n        \"parent_account_id\": null,\n        \"sanitized_phone\": \"+12025550114\",\n        \"account_playbook_statuses\": [],\n        \"account_rule_config_statuses\": [\n          {\n            \"_id\": \"664f9eef1fded70001e4983e\",\n            \"created_at\": null,\n            \"rule_action_config_id\": \"65735e0ea63d2700faba5c6e\",\n            \"rule_config_id\": \"65735e0ea63d2700faba5c6f\",\n            \"status_cd\": \"completed\",\n            \"updated_at\": null,\n            \"id\": \"664f9eef1fded70001e4983e\",\n            \"key\": \"664f9eef1fded70001e4983e\"\n          }\n        ],\n        \"existence_level\": \"full\",\n        \"label_ids\": [\n          \"6504905b21ba8e00a334eb0f\"\n        ],\n        \"typed_custom_fields\": {},\n        \"custom_field_errors\": null,\n        \"modality\": \"account\",\n        \"source_display_name\": \"Uploaded from CSV\",\n        \"salesforce_record_url\": \"https://saas-drive-2207.my.salesforce.com/001niCRAYZ4Ho6GTKv\",\n        \"crm_record_url\": \"https://saas-drive-2207.my.salesforce.com/001niCRAYZ4Ho6GTKv\"\n      },\n      \"departments\": [\n        \"master_marketing\"\n      ],\n      \"subdepartments\": [\n        \"marketing\",\n        \"product_marketing\"\n      ],\n      \"seniority\": \"entry\",\n      \"functions\": [\n        \"marketing\"\n      ],\n      \"show_intent\": false,\n      \"revealed_for_current_team\": true\n    }\n  ],\n  \"request_id\": 1039995589705121900\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e16b987d-8747-425b-9b80-eb555d35690d",
+              "name": "400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "people",
+                    "bulk_match"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "run_waterfall_email",
+                      "value": "false"
+                    },
+                    {
+                      "key": "run_waterfall_phone",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reveal_personal_emails",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reveal_phone_number",
+                      "value": "false"
+                    },
+                    {
+                      "key": "webhook_url",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"details\": [\n    {\n      \"id\": \"64a7ff0cc4dfae00013df1a5\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"failed\",\n  \"error_code\": \"INVALID_REQUEST\",\n  \"error_message\": \"invalid request, missing details\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4dc1f455-4216-4b99-a438-68ad634ff3d1",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "people",
+                    "bulk_match"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "run_waterfall_email",
+                      "value": "false"
+                    },
+                    {
+                      "key": "run_waterfall_phone",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reveal_personal_emails",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reveal_phone_number",
+                      "value": "false"
+                    },
+                    {
+                      "key": "webhook_url",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"details\": [\n    {\n      \"id\": \"64a7ff0cc4dfae00013df1a5\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c0baa37a-e09e-4e1c-a0fe-a87b14e6e40c",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "people",
+                    "bulk_match"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "run_waterfall_email",
+                      "value": "false"
+                    },
+                    {
+                      "key": "run_waterfall_phone",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reveal_personal_emails",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reveal_phone_number",
+                      "value": "false"
+                    },
+                    {
+                      "key": "webhook_url",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"details\": [\n    {\n      \"id\": \"64a7ff0cc4dfae00013df1a5\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"status\\\": \\\"failed\\\",\\n  \\\"error_code\\\": \\\"UNKNOWN_ERROR\\\",\\n  \\\"error_message\\\": \\\"no implicit conversion of Symbol into Integer\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1805ce93-6fd6-4e8e-b74f-636902712a0e",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "people",
+                    "bulk_match"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "run_waterfall_email",
+                      "value": "false"
+                    },
+                    {
+                      "key": "run_waterfall_phone",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reveal_personal_emails",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reveal_phone_number",
+                      "value": "false"
+                    },
+                    {
+                      "key": "webhook_url",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"details\": [\n    {\n      \"id\": \"64a7ff0cc4dfae00013df1a5\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/people/bulk_match is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fb602c70-7e3f-4ad6-b88d-66266bfcbbb0",
+          "name": "Organization Enrichment",
+          "request": {
+            "name": "Organization Enrichment",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/organizations/enrich` or `Master API key`\n\n**OAuth scopes:** `organizations_enrich`\n\n**Free account access:** Requires an Apollo account registered with a work email address. Paid accounts aren't affected.\n\n**Credit usage:** `1 credit per organization` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/33699917233293-Enrichment-Overview\" target=\"_blank\">Enrichment</a> is when you refresh existing records so your prospecting data is up-to-date.<br><br>Use the Organization Enrichment endpoint to enrich data for one company. To enrich data for up to ten companies with a single API call, use the <a href=\"https://docs.apollo.io/reference/bulk-organization-enrichment\">Bulk Organization Enrichment endpoint</a> instead.<br><br>You can match the company to enrich by domain, LinkedIn URL, name, and/or website. At least one of these is required, and providing more than one improves match accuracy.<br><br>Enriched data potentially includes industry information, revenue, employee counts, funding round details, corporate phone numbers, locations, language counts, retail-location counts, and organization hierarchy data. The <code>owned_by_organization</code> field identifies the immediate parent, <code>owned_by_chain</code> lists parent organization IDs from the immediate parent to the ultimate parent, and <code>ultimate_parent_organization</code> identifies the topmost parent. The <code>suborganizations</code> array includes each direct subsidiary's industries, estimated employee count, and country when available.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations",
+                "enrich"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "domain",
+                  "value": "<string>",
+                  "description": "The domain of the company that you want to enrich. Do not include `www.`, the `@` symbol, or similar. <br><br>At least one of `domain`, `linkedin_url`, `name`, or `website` is required. <br><br>Example: `apollo.io` or `microsoft.com`"
+                },
+                {
+                  "disabled": false,
+                  "key": "linkedin_url",
+                  "value": "<string>",
+                  "description": "The URL for the company's LinkedIn profile. <br><br>At least one of `domain`, `linkedin_url`, `name`, or `website` is required. <br><br>Example: `http://www.linkedin.com/company/apolloio`"
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "The name of the company that you want to enrich. <br><br>At least one of `domain`, `linkedin_url`, `name`, or `website` is required. <br><br>Example: `apollo`"
+                },
+                {
+                  "disabled": false,
+                  "key": "website",
+                  "value": "<string>",
+                  "description": "The full website URL of the company that you want to enrich. <br><br>At least one of `domain`, `linkedin_url`, `name`, or `website` is required. <br><br>Example: `http://www.apollo.io`"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "81093589-d426-4a7b-bdde-91295deebc93",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    "enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "linkedin_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "website",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"organization\": {\n    \"id\": \"5e66b6381e05b4008c8331b8\",\n    \"name\": \"Apollo.io\",\n    \"website_url\": \"http://www.apollo.io\",\n    \"blog_url\": null,\n    \"angellist_url\": null,\n    \"linkedin_url\": \"http://www.linkedin.com/company/apolloio\",\n    \"twitter_url\": \"https://twitter.com/meetapollo/\",\n    \"facebook_url\": \"https://www.facebook.com/MeetApollo\",\n    \"primary_phone\": {},\n    \"languages\": [],\n    \"num_languages\": 0,\n    \"alexa_ranking\": 3514,\n    \"phone\": null,\n    \"linkedin_uid\": \"18511550\",\n    \"founded_year\": 2015,\n    \"publicly_traded_symbol\": null,\n    \"publicly_traded_exchange\": null,\n    \"logo_url\": \"https://zenprospect-production.s3.amazonaws.com/uploads/pictures/79049be00ff8e398b5935de8/picture\",\n    \"crunchbase_url\": null,\n    \"primary_domain\": \"apollo.io\",\n    \"industry\": \"information technology & services\",\n    \"keywords\": [\n      \"sales engagement\",\n      \"lead generation\",\n      \"predictive analytics\",\n      \"lead scoring\",\n      \"sales strategy\",\n      \"conversation intelligence\",\n      \"sales enablement\",\n      \"lead routing\",\n      \"sales development\",\n      \"email engagement\",\n      \"revenue intelligence\",\n      \"sales operations\",\n      \"sales intelligence\",\n      \"lead intelligence\",\n      \"prospecting\",\n      \"b2b data\"\n    ],\n    \"estimated_num_employees\": 1600,\n    \"industries\": [\n      \"information technology & services\"\n    ],\n    \"secondary_industries\": [],\n    \"snippets_loaded\": true,\n    \"industry_tag_id\": \"5567cd4773696439b10b0000\",\n    \"industry_tag_hash\": {\n      \"information technology & services\": \"5567cd4773696439b10b0000\"\n    },\n    \"retail_location_count\": 0,\n    \"num_retail_locations\": 0,\n    \"raw_address\": \"415 Mission St, Floor 37, San Francisco, California 94105, US\",\n    \"street_address\": \"415 Mission St\",\n    \"city\": \"San Francisco\",\n    \"state\": \"California\",\n    \"postal_code\": \"94105-2301\",\n    \"country\": \"United States\",\n    \"owned_by_organization_id\": null,\n    \"seo_description\": \"Search, engage, and convert over 240 million contacts at over 30 million companies with Apollo's sales intelligence and engagement platform.\",\n    \"short_description\": \"Apollo.io combines a buyer database of over 270M contacts and powerful sales engagement and automation tools in one, easy to use platform. Trusted by over 160,000 companies including Autodesk, Rippling, Deel, Jasper.ai, Divvy, and Heap, Apollo has more than one million users globally. By helping sales professionals find their ideal buyers and intelligently automate outreach, Apollo helps go-to-market teams sell anything.\\n\\nCelebrating a $100M Series D Funding Round 🦄\",\n    \"suborganizations\": [],\n    \"num_suborganizations\": 0,\n    \"annual_revenue_printed\": \"100M\",\n    \"annual_revenue\": 100000000,\n    \"total_funding\": 251200000,\n    \"total_funding_printed\": \"251.2M\",\n    \"latest_funding_round_date\": \"2023-08-01T00:00:00.000+00:00\",\n    \"latest_funding_stage\": \"Series D\",\n    \"funding_events\": [\n      {\n        \"id\": \"6574c1ff9b797d0001fdab1b\",\n        \"date\": \"2023-08-01T00:00:00.000+00:00\",\n        \"news_url\": null,\n        \"type\": \"Series D\",\n        \"investors\": \"Bain Capital Ventures, Sequoia Capital, Tribe Capital, Nexus Venture Partners\",\n        \"amount\": \"100M\",\n        \"currency\": \"$\"\n      },\n      {\n        \"id\": \"624f4dfec786590001768016\",\n        \"date\": \"2022-03-01T00:00:00.000+00:00\",\n        \"news_url\": null,\n        \"type\": \"Series C\",\n        \"investors\": \"Sequoia Capital, Tribe Capital, Nexus Venture Partners, NewView Capital\",\n        \"amount\": \"110M\",\n        \"currency\": \"$\"\n      },\n      {\n        \"id\": \"61b13677623110000186a478\",\n        \"date\": \"2021-10-01T00:00:00.000+00:00\",\n        \"news_url\": null,\n        \"type\": \"Series B\",\n        \"investors\": \"Tribe Capital, NewView Capital, Nexus Venture Partners\",\n        \"amount\": \"32M\",\n        \"currency\": \"$\"\n      },\n      {\n        \"id\": \"5ffe93caa54d75077c59acef\",\n        \"date\": \"2018-06-26T00:00:00.000+00:00\",\n        \"news_url\": \"https://techcrunch.com/2018/06/26/yc-grad-zenprospect-rebrands-as-apollo-lands-7-m-series-a/\",\n        \"type\": \"Series A\",\n        \"investors\": \"Nexus Venture Partners, Social Capital, Y Combinator\",\n        \"amount\": \"7M\",\n        \"currency\": \"$\"\n      },\n      {\n        \"id\": \"6574c1ff9b797d0001fdab20\",\n        \"date\": \"2016-10-01T00:00:00.000+00:00\",\n        \"news_url\": null,\n        \"type\": \"Other\",\n        \"investors\": \"Y Combinator, SV Angel, Social Capital, Nexus Venture Partners\",\n        \"amount\": \"2.2M\",\n        \"currency\": \"$\"\n      }\n    ],\n    \"technology_names\": [\n      \"AI\",\n      \"Android\",\n      \"Basis\",\n      \"Canva\",\n      \"Circle\",\n      \"CloudFlare Hosting\",\n      \"Cloudflare DNS\",\n      \"Drift\",\n      \"Gmail\",\n      \"Google Apps\",\n      \"Google Tag Manager\",\n      \"Google Workspace\",\n      \"Gravity Forms\",\n      \"Hubspot\",\n      \"Intercom\",\n      \"Mailchimp Mandrill\",\n      \"Marketo\",\n      \"Microsoft Office 365\",\n      \"Mobile Friendly\",\n      \"Python\",\n      \"Rackspace MailGun\",\n      \"Remote\",\n      \"Render\",\n      \"Reviews\",\n      \"Salesforce\",\n      \"Stripe\",\n      \"Typekit\",\n      \"WP Engine\",\n      \"Wistia\",\n      \"WordPress.org\",\n      \"Yandex Metrica\",\n      \"reCAPTCHA\"\n    ],\n    \"current_technologies\": [\n      {\n        \"uid\": \"ai\",\n        \"name\": \"AI\",\n        \"category\": \"Other\"\n      },\n      {\n        \"uid\": \"android\",\n        \"name\": \"Android\",\n        \"category\": \"Frameworks and Programming Languages\"\n      },\n      {\n        \"uid\": \"basis\",\n        \"name\": \"Basis\",\n        \"category\": \"Advertising Networks\"\n      },\n      {\n        \"uid\": \"canva\",\n        \"name\": \"Canva\",\n        \"category\": \"Content Management Platform\"\n      },\n      {\n        \"uid\": \"circle\",\n        \"name\": \"Circle\",\n        \"category\": \"Financial Software\"\n      },\n      {\n        \"uid\": \"cloudflare_hosting\",\n        \"name\": \"CloudFlare Hosting\",\n        \"category\": \"Hosting\"\n      },\n      {\n        \"uid\": \"cloudflare_dns\",\n        \"name\": \"Cloudflare DNS\",\n        \"category\": \"Domain Name Services\"\n      },\n      {\n        \"uid\": \"drift\",\n        \"name\": \"Drift\",\n        \"category\": \"Widgets\"\n      },\n      {\n        \"uid\": \"gmail\",\n        \"name\": \"Gmail\",\n        \"category\": \"Email Providers\"\n      },\n      {\n        \"uid\": \"google_apps\",\n        \"name\": \"Google Apps\",\n        \"category\": \"Other\"\n      },\n      {\n        \"uid\": \"google_tag_manager\",\n        \"name\": \"Google Tag Manager\",\n        \"category\": \"Tag Management\"\n      },\n      {\n        \"uid\": \"google workspace\",\n        \"name\": \"Google Workspace\",\n        \"category\": \"Cloud Services\"\n      },\n      {\n        \"uid\": \"gravity_forms\",\n        \"name\": \"Gravity Forms\",\n        \"category\": \"Hosted Forms\"\n      },\n      {\n        \"uid\": \"hubspot\",\n        \"name\": \"Hubspot\",\n        \"category\": \"Marketing Automation\"\n      },\n      {\n        \"uid\": \"intercom\",\n        \"name\": \"Intercom\",\n        \"category\": \"Support and Feedback\"\n      },\n      {\n        \"uid\": \"mailchimp_mandrill\",\n        \"name\": \"Mailchimp Mandrill\",\n        \"category\": \"Email Delivery\"\n      },\n      {\n        \"uid\": \"marketo\",\n        \"name\": \"Marketo\",\n        \"category\": \"Marketing Automation\"\n      },\n      {\n        \"uid\": \"office_365\",\n        \"name\": \"Microsoft Office 365\",\n        \"category\": \"Other\"\n      },\n      {\n        \"uid\": \"mobile_friendly\",\n        \"name\": \"Mobile Friendly\",\n        \"category\": \"Other\"\n      },\n      {\n        \"uid\": \"python\",\n        \"name\": \"Python\",\n        \"category\": \"Frameworks and Programming Languages\"\n      },\n      {\n        \"uid\": \"rackspace_mailgun\",\n        \"name\": \"Rackspace MailGun\",\n        \"category\": \"Email Delivery\"\n      },\n      {\n        \"uid\": \"remote\",\n        \"name\": \"Remote\",\n        \"category\": \"Other\"\n      },\n      {\n        \"uid\": \"render\",\n        \"name\": \"Render\",\n        \"category\": \"Other\"\n      },\n      {\n        \"uid\": \"reviews\",\n        \"name\": \"Reviews\",\n        \"category\": \"Customer Reviews\"\n      },\n      {\n        \"uid\": \"salesforce\",\n        \"name\": \"Salesforce\",\n        \"category\": \"Customer Relationship Management\"\n      },\n      {\n        \"uid\": \"stripe\",\n        \"name\": \"Stripe\",\n        \"category\": \"Payments\"\n      },\n      {\n        \"uid\": \"typekit\",\n        \"name\": \"Typekit\",\n        \"category\": \"Fonts\"\n      },\n      {\n        \"uid\": \"wp_engine\",\n        \"name\": \"WP Engine\",\n        \"category\": \"CMS\"\n      },\n      {\n        \"uid\": \"wistia\",\n        \"name\": \"Wistia\",\n        \"category\": \"Online Video Platforms\"\n      },\n      {\n        \"uid\": \"wordpress_org\",\n        \"name\": \"WordPress.org\",\n        \"category\": \"CMS\"\n      },\n      {\n        \"uid\": \"yandex_metrika\",\n        \"name\": \"Yandex Metrica\",\n        \"category\": \"Analytics and Tracking\"\n      },\n      {\n        \"uid\": \"recaptcha\",\n        \"name\": \"reCAPTCHA\",\n        \"category\": \"Captcha\"\n      }\n    ],\n    \"org_chart_root_people_ids\": [\n      \"652fc57e2802bf00010c52f8\"\n    ],\n    \"org_chart_sector\": \"OrgChart::SectorHierarchy::Rules::IT\",\n    \"org_chart_removed\": false,\n    \"org_chart_show_department_filter\": true,\n    \"account_id\": \"63f53afe4ceeca00016bdd37\",\n    \"account\": {\n      \"id\": \"63f53afe4ceeca00016bdd37\",\n      \"domain\": \"apollo.io\",\n      \"name\": \"Apollo\",\n      \"team_id\": \"6095a710bd01d100a506d4ac\",\n      \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n      \"account_stage_id\": null,\n      \"source\": \"salesforce\",\n      \"original_source\": \"salesforce\",\n      \"creator_id\": null,\n      \"owner_id\": \"60affe7d6e270a00f5db6fe4\",\n      \"created_at\": \"2023-02-21T21:43:26.351Z\",\n      \"phone\": \"+1(202) 555-0114\",\n      \"phone_status\": \"no_status\",\n      \"hubspot_id\": null,\n      \"salesforce_id\": null,\n      \"crm_owner_id\": null,\n      \"parent_account_id\": null,\n      \"linkedin_url\": null,\n      \"sanitized_phone\": \"+12025550114\",\n      \"account_playbook_statuses\": [],\n      \"account_rule_config_statuses\": [],\n      \"existence_level\": \"full\",\n      \"label_ids\": [\n        \"6504905b21ba8e00a334eb0f\"\n      ],\n      \"typed_custom_fields\": {},\n      \"custom_field_errors\": {},\n      \"modality\": \"account\",\n      \"source_display_name\": \"Imported from Salesforce\",\n      \"crm_record_url\": null,\n      \"show_intent\": false,\n      \"has_intent_signal_account\": false,\n      \"intent_signal_account\": null\n    },\n    \"departmental_head_count\": {\n      \"engineering\": 228,\n      \"operations\": 28,\n      \"support\": 30,\n      \"marketing\": 36,\n      \"human_resources\": 29,\n      \"sales\": 177,\n      \"finance\": 8,\n      \"consulting\": 8,\n      \"legal\": 5,\n      \"arts_and_design\": 27,\n      \"accounting\": 3,\n      \"business_development\": 14,\n      \"information_technology\": 8,\n      \"education\": 6,\n      \"media_and_commmunication\": 3,\n      \"product_management\": 16,\n      \"entrepreneurship\": 3,\n      \"data_science\": 6,\n      \"administrative\": 3\n    },\n    \"organization_headcount_six_month_growth\": 12.3,\n    \"organization_headcount_twelve_month_growth\": 24.6,\n    \"organization_headcount_twenty_four_month_growth\": 48.9\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "318613f9-fc41-4e9d-97f3-a2bbfcf23c46",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    "enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "linkedin_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "website",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d5c9151c-ae80-415b-9083-6fa6efe033eb",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    "enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "linkedin_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "website",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"This API key is not authorized to access api/v1/organizations/enrich. Request an API key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\": \"API_INACCESSIBLE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83734d49-0580-42ee-a797-6e8c2ab32fa2",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    "enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "linkedin_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "website",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"Required parameter 'domain' missing\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "75114fda-3467-4a1e-a9e8-a197985c5484",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    "enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "linkedin_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "website",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/organizations/enrich is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "77e76d03-7b74-43e1-b34b-f6fa96ff33ff",
+          "name": "Bulk Organization Enrichment",
+          "request": {
+            "name": "Bulk Organization Enrichment",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/organizations/bulk_enrich` or `Master API key`\n\n**OAuth scopes:** `organizations_bulk_enrich`\n\n**Free account access:** Requires an Apollo account registered with a work email address. Paid accounts aren't affected.\n\n**Credit usage:** `1 credit per organization` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/33699917233293-Enrichment-Overview\" target=\"_blank\">Enrichment</a> is when you refresh existing records so your prospecting data is up-to-date.<br><br>Use the Bulk Organization Enrichment endpoint to enrich data for up to ten companies with a single API call. To enrich data for a single company, use the <a href=\"https://docs.apollo.io/reference/organization-enrichment\">Organization Enrichment endpoint</a> instead.<br><br>You can identify the companies to enrich by providing a list of domains via the <code>domains[]</code> query parameter, or by providing a <code>details</code> array in the request body where each company can be matched by any combination of domain, LinkedIn URL, name, and website.<br><br>Enriched data potentially includes industry information, revenue, employee counts, funding round details, corporate phone numbers, locations, language counts, retail-location counts, and organization hierarchy data. The <code>owned_by_organization</code> field identifies the immediate parent, <code>owned_by_chain</code> lists parent organization IDs from the immediate parent to the ultimate parent, and <code>ultimate_parent_organization</code> identifies the topmost parent. Each result also includes <code>num_suborganizations</code> and <code>subsidiary_rollups</code> with the total estimated subsidiary employee count and distinct subsidiary countries and industries.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations",
+                "bulk_enrich"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "domains[]",
+                  "value": "<string>",
+                  "description": "The domain of each company that you want to enrich. Do not include `www.`, the `@` symbol, or similar. <br><br>Use this parameter to match companies by domain only. To match by LinkedIn URL, name, or website in addition to domain, use the `details` array in the request body instead. <br><br>This parameter is required unless you provide a `details` payload in the request body. <br><br>Example: `apollo.io` and `microsoft.com`"
+                },
+                {
+                  "disabled": false,
+                  "key": "domains[]",
+                  "value": "<string>",
+                  "description": "The domain of each company that you want to enrich. Do not include `www.`, the `@` symbol, or similar. <br><br>Use this parameter to match companies by domain only. To match by LinkedIn URL, name, or website in addition to domain, use the `details` array in the request body instead. <br><br>This parameter is required unless you provide a `details` payload in the request body. <br><br>Example: `apollo.io` and `microsoft.com`"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"details\": [\n    {\n      \"domain\": \"<string>\",\n      \"linkedin_url\": \"<string>\",\n      \"name\": \"<string>\",\n      \"website\": \"<string>\"\n    },\n    {\n      \"domain\": \"<string>\",\n      \"linkedin_url\": \"<string>\",\n      \"name\": \"<string>\",\n      \"website\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7f9d31d1-1cef-4ee4-8d0e-2a7fcdd49947",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    "bulk_enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domains[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "domains[]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"details\": [\n    {\n      \"domain\": \"apollo.io\"\n    },\n    {\n      \"domain\": \"microsoft.com\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"error_code\": null,\n  \"error_message\": null,\n  \"total_requested_records\": null,\n  \"total_requested_domains\": 4,\n  \"unique_domains\": 4,\n  \"unique_records\": null,\n  \"unique_enriched_records\": 4,\n  \"missing_records\": 0,\n  \"organizations\": [\n    {\n      \"id\": \"5e66b6381e05b4008c8331b8\",\n      \"name\": \"Apollo.io\",\n      \"website_url\": \"http://www.apollo.io\",\n      \"blog_url\": null,\n      \"angellist_url\": null,\n      \"linkedin_url\": \"http://www.linkedin.com/company/apolloio\",\n      \"twitter_url\": \"https://twitter.com/meetapollo/\",\n      \"facebook_url\": \"https://www.facebook.com/MeetApollo\",\n      \"primary_phone\": {},\n      \"languages\": [],\n      \"num_languages\": 0,\n      \"alexa_ranking\": 3514,\n      \"phone\": null,\n      \"linkedin_uid\": \"18511550\",\n      \"founded_year\": 2015,\n      \"publicly_traded_symbol\": null,\n      \"publicly_traded_exchange\": null,\n      \"logo_url\": \"https://zenprospect-production.s3.amazonaws.com/uploads/pictures/79049be00ff8e398b5935de8/picture\",\n      \"crunchbase_url\": null,\n      \"primary_domain\": \"apollo.io\",\n      \"industry\": \"information technology & services\",\n      \"keywords\": [\n        \"sales engagement\",\n        \"lead generation\",\n        \"predictive analytics\",\n        \"lead scoring\",\n        \"sales strategy\",\n        \"conversation intelligence\",\n        \"sales enablement\",\n        \"lead routing\",\n        \"sales development\",\n        \"email engagement\",\n        \"revenue intelligence\",\n        \"sales operations\",\n        \"sales intelligence\",\n        \"lead intelligence\",\n        \"prospecting\",\n        \"b2b data\"\n      ],\n      \"estimated_num_employees\": 1600,\n      \"industries\": [\n        \"information technology & services\"\n      ],\n      \"secondary_industries\": [],\n      \"snippets_loaded\": true,\n      \"industry_tag_id\": \"5567cd4773696439b10b0000\",\n      \"industry_tag_hash\": {\n        \"information technology & services\": \"5567cd4773696439b10b0000\"\n      },\n      \"retail_location_count\": 0,\n      \"num_retail_locations\": 0,\n      \"raw_address\": \"415 mission st, floor 37, san francisco, california 94105, us\",\n      \"street_address\": \"415 Mission St\",\n      \"city\": \"San Francisco\",\n      \"state\": \"California\",\n      \"country\": \"United States\",\n      \"postal_code\": \"94105-2301\",\n      \"owned_by_organization_id\": null,\n      \"num_suborganizations\": 0,\n      \"subsidiary_rollups\": {\n        \"total_estimated_employee_count\": 0,\n        \"countries\": [],\n        \"industries\": []\n      },\n      \"seo_description\": \"Search, engage, and convert over 240 million contacts at over 30 million companies with Apollo's sales intelligence and engagement platform.\",\n      \"short_description\": \"Apollo.io combines a buyer database of over 270M contacts and powerful sales engagement and automation tools in one, easy to use platform. Trusted by over 160,000 companies including Autodesk, Rippling, Deel, Jasper.ai, Divvy, and Heap, Apollo has more than one million users globally. By helping sales professionals find their ideal buyers and intelligently automate outreach, Apollo helps go-to-market teams sell anything.\\n\\nCelebrating a $100M Series D Funding Round 🦄\",\n      \"account_id\": \"63f53afe4ceeca00016bdd37\",\n      \"account\": {\n        \"id\": \"63f53afe4ceeca00016bdd37\",\n        \"domain\": \"apollo.io\",\n        \"name\": \"Apollo\",\n        \"team_id\": \"6095a710bd01d100a506d4ac\",\n        \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n        \"account_stage_id\": null,\n        \"source\": \"salesforce\",\n        \"original_source\": \"salesforce\",\n        \"creator_id\": null,\n        \"owner_id\": \"60affe7d6e270a00f5db6fe4\",\n        \"created_at\": \"2023-02-21T21:43:26.351Z\",\n        \"phone\": \"+1(202) 555-0114\",\n        \"phone_status\": \"no_status\",\n        \"hubspot_id\": null,\n        \"salesforce_id\": null,\n        \"crm_owner_id\": null,\n        \"parent_account_id\": null,\n        \"linkedin_url\": null,\n        \"sanitized_phone\": \"+12025550114\",\n        \"account_playbook_statuses\": [],\n        \"account_rule_config_statuses\": [],\n        \"existence_level\": \"full\",\n        \"label_ids\": [\n          \"6504905b21ba8e00a334eb0f\"\n        ],\n        \"typed_custom_fields\": {},\n        \"custom_field_errors\": null,\n        \"modality\": \"account\",\n        \"source_display_name\": \"Imported from Salesforce\",\n        \"crm_record_url\": null,\n        \"show_intent\": false,\n        \"has_intent_signal_account\": false,\n        \"intent_signal_account\": null\n      },\n      \"departmental_head_count\": {\n        \"engineering\": 228,\n        \"operations\": 28,\n        \"support\": 30,\n        \"marketing\": 36,\n        \"human_resources\": 29,\n        \"sales\": 177,\n        \"finance\": 8,\n        \"consulting\": 8,\n        \"legal\": 5,\n        \"arts_and_design\": 27,\n        \"accounting\": 3,\n        \"business_development\": 14,\n        \"information_technology\": 8,\n        \"education\": 6,\n        \"media_and_commmunication\": 3,\n        \"product_management\": 16,\n        \"entrepreneurship\": 3,\n        \"data_science\": 6,\n        \"administrative\": 3\n      },\n      \"show_intent\": false,\n      \"has_intent_signal_account\": false,\n      \"intent_signal_account\": null,\n      \"organization_headcount_six_month_growth\": 12.3,\n      \"organization_headcount_twelve_month_growth\": 24.6,\n      \"organization_headcount_twenty_four_month_growth\": 48.9\n    },\n    {\n      \"id\": \"62337760d02af100a5ca2468\",\n      \"name\": \"Microsoft\",\n      \"website_url\": \"http://www.microsoft.com\",\n      \"blog_url\": null,\n      \"angellist_url\": null,\n      \"linkedin_url\": \"http://www.linkedin.com/company/microsoft\",\n      \"twitter_url\": \"https://twitter.com/microsoftindia\",\n      \"facebook_url\": \"https://facebook.com/MicrosoftIndia\",\n      \"primary_phone\": {\n        \"number\": \"+1 800-555-0199\",\n        \"source\": \"Scraped\",\n        \"sanitized_number\": \"+18005550199\"\n      },\n      \"languages\": [\n        \"English\"\n      ],\n      \"alexa_ranking\": 32,\n      \"phone\": \"+1 800-555-0199\",\n      \"linkedin_uid\": \"1035\",\n      \"founded_year\": 1975,\n      \"publicly_traded_symbol\": \"MSFT\",\n      \"publicly_traded_exchange\": \"nasdaq\",\n      \"logo_url\": \"https://zenprospect-production.s3.amazonaws.com/uploads/pictures/31940bbec6ef79ed1d50a150/picture\",\n      \"crunchbase_url\": null,\n      \"primary_domain\": \"microsoft.com\",\n      \"sanitized_phone\": \"+18005550199\",\n      \"market_cap\": \"3100.6B\",\n      \"industry\": \"information technology & services\",\n      \"keywords\": [\n        \"digital marketing\",\n        \"business software\",\n        \"developer tools\",\n        \"home\",\n        \"educational software\",\n        \"tablets\",\n        \"search\",\n        \"advertising\",\n        \"servers\",\n        \"windows operating system\",\n        \"windows applications\",\n        \"platforms\",\n        \"smartphones\",\n        \"cloud computing\",\n        \"quantum computing\",\n        \"future of work\",\n        \"productivity\",\n        \"ai\",\n        \"artificial intelligence\",\n        \"machine learning\",\n        \"laptops\",\n        \"mixed reality\",\n        \"virtual reality\",\n        \"gaming\",\n        \"developers\",\n        \"it professional\",\n        \"computers\",\n        \"electronics\",\n        \"mobile phones\",\n        \"shopping\"\n      ],\n      \"estimated_num_employees\": 245000,\n      \"industries\": [\n        \"information technology & services\",\n        \"internet\"\n      ],\n      \"secondary_industries\": [\n        \"internet\"\n      ],\n      \"snippets_loaded\": true,\n      \"industry_tag_id\": \"5567cd4773696439b10b0000\",\n      \"industry_tag_hash\": {\n        \"information technology & services\": \"5567cd4773696439b10b0000\",\n        \"internet\": \"5567cd4d736964397e020000\"\n      },\n      \"retail_location_count\": 96,\n      \"raw_address\": \"1 microsoft way, redmond, washington 98052, us\",\n      \"street_address\": \"1 Microsoft Way\",\n      \"city\": \"Redmond\",\n      \"state\": \"Washington\",\n      \"country\": \"United States\",\n      \"postal_code\": \"98052\",\n      \"owned_by_organization_id\": null,\n      \"seo_description\": \"Sign in to your Outlook.com, Hotmail.com, MSN.com or Live.com account. Download the free desktop and mobile app to connect all your email accounts, including Gmail, Yahoo, and iCloud, in one place.\",\n      \"short_description\": \"Every company has a mission. What's ours? To empower every person and every organization to achieve more. We believe technology can and should be a force for good and that meaningful innovation contributes to a brighter world in the future and today. Our culture doesn't just encourage curiosity; it embraces it. Each day we make progress together by showing up as our authentic selves. We show up with a learn-it-all mentality. We show up cheering on others, knowing their success doesn't diminish our own. We show up every day open to learning our own biases, changing our behavior, and inviting in differences. Because impact matters. \\n\\nMicrosoft operates in 190 countries and is made up of approximately 228,000 passionate employees worldwide.\",\n      \"account_id\": \"6658955677a2f20001c64787\",\n      \"account\": {\n        \"id\": \"6658955677a2f20001c64787\",\n        \"domain\": \"microsoft.com\",\n        \"name\": \"Microsoft\",\n        \"team_id\": \"6095a710bd01d100a506d4ac\",\n        \"organization_id\": \"62337760d02af100a5ca2468\",\n        \"account_stage_id\": \"6095a710bd01d100a506d4b7\",\n        \"source\": \"crm\",\n        \"original_source\": \"crm\",\n        \"creator_id\": null,\n        \"owner_id\": null,\n        \"created_at\": \"2024-05-30T15:03:50.069Z\",\n        \"phone\": null,\n        \"phone_status\": \"no_status\",\n        \"hubspot_id\": null,\n        \"salesforce_id\": null,\n        \"crm_owner_id\": null,\n        \"parent_account_id\": null,\n        \"linkedin_url\": null,\n        \"account_playbook_statuses\": [],\n        \"account_rule_config_statuses\": [],\n        \"existence_level\": \"full\",\n        \"label_ids\": [],\n        \"typed_custom_fields\": {},\n        \"custom_field_errors\": null,\n        \"modality\": \"account\",\n        \"source_display_name\": \"Imported from CRM\",\n        \"crm_record_url\": null,\n        \"show_intent\": false,\n        \"has_intent_signal_account\": false,\n        \"intent_signal_account\": null\n      },\n      \"departmental_head_count\": {\n        \"engineering\": 41862,\n        \"sales\": 7633,\n        \"support\": 8019,\n        \"marketing\": 3671,\n        \"human_resources\": 2898,\n        \"education\": 13257,\n        \"media_and_commmunication\": 1167,\n        \"consulting\": 2616,\n        \"operations\": 2611,\n        \"finance\": 2335,\n        \"product_management\": 6637,\n        \"business_development\": 5768,\n        \"information_technology\": 2591,\n        \"data_science\": 1732,\n        \"arts_and_design\": 1398,\n        \"entrepreneurship\": 88,\n        \"administrative\": 281,\n        \"legal\": 662,\n        \"accounting\": 169\n      },\n      \"show_intent\": false,\n      \"has_intent_signal_account\": false,\n      \"intent_signal_account\": null,\n      \"organization_headcount_six_month_growth\": null,\n      \"organization_headcount_twelve_month_growth\": null,\n      \"organization_headcount_twenty_four_month_growth\": null\n    },\n    {\n      \"id\": \"5fc93db64c38d300d6aa24e6\",\n      \"name\": \"Google\",\n      \"website_url\": \"http://www.google.com\",\n      \"blog_url\": null,\n      \"angellist_url\": \"http://angel.co/category-five\",\n      \"linkedin_url\": \"http://www.linkedin.com/company/google\",\n      \"twitter_url\": \"http://twitter.com/Cat5BoatShoes.com\",\n      \"facebook_url\": \"https://facebook.com/Google\",\n      \"primary_phone\": {\n        \"number\": \"+1 650-555-0129\",\n        \"source\": \"Owler\",\n        \"sanitized_number\": \"+16505550129\"\n      },\n      \"languages\": [],\n      \"alexa_ranking\": 9,\n      \"phone\": \"+1 650-555-0129\",\n      \"linkedin_uid\": \"1441\",\n      \"founded_year\": 1998,\n      \"publicly_traded_symbol\": \"GOOGL\",\n      \"publicly_traded_exchange\": \"nasdaq\",\n      \"logo_url\": \"https://zenprospect-production.s3.amazonaws.com/uploads/pictures/61d5c2cb5de61cabcb0795b5/picture\",\n      \"crunchbase_url\": null,\n      \"primary_domain\": \"google.com\",\n      \"sanitized_phone\": \"+16505550129\",\n      \"market_cap\": \"652.3B\",\n      \"industry\": \"information technology & services\",\n      \"keywords\": [\n        \"e-commerce\",\n        \"fashion\",\n        \"retail\",\n        \"social commerce\",\n        \"consumer internet\",\n        \"internet\",\n        \"information technology\",\n        \"search\",\n        \"ads\",\n        \"mobile\",\n        \"android\",\n        \"online video\",\n        \"apps\",\n        \"machine learning\",\n        \"virtual reality\",\n        \"cloud\",\n        \"hardware\",\n        \"artificial intelligence\",\n        \"youtube\",\n        \"software\"\n      ],\n      \"estimated_num_employees\": 300000,\n      \"industries\": [\n        \"information technology & services\",\n        \"internet\",\n        \"computer software\"\n      ],\n      \"secondary_industries\": [\n        \"internet\",\n        \"computer software\"\n      ],\n      \"snippets_loaded\": true,\n      \"industry_tag_id\": \"5567cd4773696439b10b0000\",\n      \"industry_tag_hash\": {\n        \"information technology & services\": \"5567cd4773696439b10b0000\",\n        \"internet\": \"5567cd4d736964397e020000\",\n        \"computer software\": \"5567cd4e7369643b70010000\"\n      },\n      \"retail_location_count\": 0,\n      \"raw_address\": \"1600 amphitheatre parkway, mountain view, ca 94043, us\",\n      \"street_address\": \"1600 Amphitheatre Parkway\",\n      \"city\": \"Mountain View\",\n      \"state\": \"California\",\n      \"country\": \"United States\",\n      \"postal_code\": \"94043\",\n      \"owned_by_organization_id\": \"57c4a824a6da98411e7df3eb\",\n      \"owned_by_organization\": {\n        \"id\": \"57c4a824a6da98411e7df3eb\",\n        \"name\": \"Alphabet Inc.\",\n        \"website_url\": \"http://www.abc.xyz\"\n      },\n      \"owned_by_chain\": [\n        \"57c4a824a6da98411e7df3eb\"\n      ],\n      \"ultimate_parent_organization\": {\n        \"id\": \"57c4a824a6da98411e7df3eb\",\n        \"name\": \"Alphabet Inc.\",\n        \"website_url\": \"http://www.abc.xyz\"\n      },\n      \"seo_description\": \"\",\n      \"short_description\": \"Google is a California-based multinational technology company that offers internet-related services such as a search engine, online advertising and cloud computing.\",\n      \"account_id\": \"665c3308da53130001240992\",\n      \"account\": {\n        \"id\": \"665c3308da53130001240992\",\n        \"domain\": \"google.com\",\n        \"name\": \"Google\",\n        \"team_id\": \"6095a710bd01d100a506d4ac\",\n        \"organization_id\": \"5fc93db64c38d300d6aa24e6\",\n        \"account_stage_id\": \"6095a710bd01d100a506d4b7\",\n        \"source\": \"crm\",\n        \"original_source\": \"crm\",\n        \"creator_id\": null,\n        \"owner_id\": null,\n        \"created_at\": \"2024-06-02T08:53:28.090Z\",\n        \"phone\": null,\n        \"phone_status\": \"no_status\",\n        \"hubspot_id\": null,\n        \"salesforce_id\": null,\n        \"crm_owner_id\": null,\n        \"parent_account_id\": null,\n        \"linkedin_url\": null,\n        \"account_playbook_statuses\": [],\n        \"account_rule_config_statuses\": [],\n        \"existence_level\": \"full\",\n        \"label_ids\": [],\n        \"typed_custom_fields\": {},\n        \"custom_field_errors\": null,\n        \"modality\": \"account\",\n        \"source_display_name\": \"Imported from CRM\",\n        \"crm_record_url\": null,\n        \"show_intent\": false,\n        \"has_intent_signal_account\": false,\n        \"intent_signal_account\": null\n      },\n      \"departmental_head_count\": {\n        \"engineering\": 47305,\n        \"finance\": 1664,\n        \"marketing\": 4714,\n        \"human_resources\": 2428,\n        \"business_development\": 4166,\n        \"operations\": 4771,\n        \"education\": 1510,\n        \"consulting\": 2033,\n        \"sales\": 6025,\n        \"legal\": 1075,\n        \"information_technology\": 970,\n        \"arts_and_design\": 1717,\n        \"product_management\": 3743,\n        \"administrative\": 695,\n        \"support\": 778,\n        \"media_and_commmunication\": 1358,\n        \"entrepreneurship\": 135,\n        \"data_science\": 1663,\n        \"accounting\": 280\n      },\n      \"show_intent\": false,\n      \"has_intent_signal_account\": false,\n      \"intent_signal_account\": null,\n      \"organization_headcount_six_month_growth\": null,\n      \"organization_headcount_twelve_month_growth\": null,\n      \"organization_headcount_twenty_four_month_growth\": null\n    },\n    {\n      \"id\": \"5da2e6a3f978a8000177e831\",\n      \"name\": \"Goldman Sachs\",\n      \"website_url\": \"http://www.goldmansachs.com\",\n      \"blog_url\": null,\n      \"angellist_url\": null,\n      \"linkedin_url\": \"http://www.linkedin.com/company/goldman-sachs\",\n      \"twitter_url\": \"https://twitter.com/goldmansachs\",\n      \"facebook_url\": \"https://facebook.com/goldmansachs/\",\n      \"primary_phone\": {\n        \"number\": \"+1 212-555-0185\",\n        \"source\": \"Owler\",\n        \"sanitized_number\": \"+12125550185\"\n      },\n      \"languages\": [\n        \"English\"\n      ],\n      \"alexa_ranking\": 36319,\n      \"phone\": \"+1 212-555-0185\",\n      \"linkedin_uid\": \"1382\",\n      \"founded_year\": 1869,\n      \"publicly_traded_symbol\": \"GS\",\n      \"publicly_traded_exchange\": \"nasdaq\",\n      \"logo_url\": \"https://zenprospect-production.s3.amazonaws.com/uploads/pictures/b59fae1dca26f50164e6f897/picture\",\n      \"crunchbase_url\": null,\n      \"primary_domain\": \"goldmansachs.com\",\n      \"sanitized_phone\": \"+12125550185\",\n      \"market_cap\": \"161.1B\",\n      \"industry\": \"financial services\",\n      \"keywords\": [\n        \"financial services\",\n        \"finance technology\",\n        \"payments\",\n        \"consumer internet\",\n        \"finance\",\n        \"internet\",\n        \"information technology\"\n      ],\n      \"estimated_num_employees\": 56000,\n      \"industries\": [\n        \"financial services\"\n      ],\n      \"secondary_industries\": [],\n      \"snippets_loaded\": true,\n      \"industry_tag_id\": \"5567cdd67369643e64020000\",\n      \"industry_tag_hash\": {\n        \"financial services\": \"5567cdd67369643e64020000\"\n      },\n      \"retail_location_count\": 0,\n      \"raw_address\": \"200 west street, new york, new york, united states\",\n      \"street_address\": \"200 West Street\",\n      \"city\": \"New York\",\n      \"state\": \"New York\",\n      \"country\": \"United States\",\n      \"postal_code\": \"10282\",\n      \"owned_by_organization_id\": null,\n      \"seo_description\": \"Využijte naší lokální expertízy a vyberte si z široké nabídky podílových fondů v české koruně i cizích měnách.\",\n      \"short_description\": \"At Goldman Sachs, we believe progress is everyone's business. That's why we commit our people, capital and ideas to help our clients, shareholders and the communities we serve to grow.\\nFounded in 1869, Goldman Sachs is a leading global investment banking, securities and investment management firm. Headquartered in New York, we maintain offices in all major financial centers around the world. \\n\\nMore about our company can be found at www.goldmansachs.com\\n\\nFor insights on developments currently shaping markets, industries and the global economy, subscribe to BRIEFINGS, a weekly email from Goldman Sachs. Copy and paste this link into your browser to sign up: http://link.gs.com/Qxf3\\n\\ngs.com/social-media-disclosures\",\n      \"account_id\": \"6598a1d4d229e900012160ea\",\n      \"account\": {\n        \"id\": \"6598a1d4d229e900012160ea\",\n        \"domain\": \"goldmansachs.com\",\n        \"name\": \"Goldman Sachs\",\n        \"team_id\": \"6095a710bd01d100a506d4ac\",\n        \"organization_id\": \"5da2e6a3f978a8000177e831\",\n        \"account_stage_id\": \"6095a710bd01d100a506d4b7\",\n        \"source\": \"deployment\",\n        \"original_source\": \"deployment\",\n        \"creator_id\": \"60affe7d6e270a00f5db6fe4\",\n        \"owner_id\": null,\n        \"created_at\": \"2024-01-06T00:41:56.898Z\",\n        \"phone\": \"+18555550155\",\n        \"phone_status\": \"no_status\",\n        \"hubspot_id\": null,\n        \"salesforce_id\": null,\n        \"crm_owner_id\": null,\n        \"parent_account_id\": null,\n        \"linkedin_url\": null,\n        \"sanitized_phone\": \"+18555550155\",\n        \"account_playbook_statuses\": [],\n        \"account_rule_config_statuses\": [\n          {\n            \"_id\": \"664f9ea3d0ff61000146a48d\",\n            \"created_at\": null,\n            \"rule_action_config_id\": \"65735e0ea63d2700faba5c6e\",\n            \"rule_config_id\": \"65735e0ea63d2700faba5c6f\",\n            \"status_cd\": \"completed\",\n            \"updated_at\": null,\n            \"id\": \"664f9ea3d0ff61000146a48d\",\n            \"key\": \"664f9ea3d0ff61000146a48d\"\n          }\n        ],\n        \"existence_level\": \"full\",\n        \"label_ids\": [],\n        \"typed_custom_fields\": {},\n        \"custom_field_errors\": null,\n        \"modality\": \"account\",\n        \"source_display_name\": \"Requested from Apollo\",\n        \"crm_record_url\": null,\n        \"show_intent\": false,\n        \"has_intent_signal_account\": false,\n        \"intent_signal_account\": null\n      },\n      \"departmental_head_count\": {\n        \"human_resources\": 577,\n        \"engineering\": 4332,\n        \"business_development\": 667,\n        \"arts_and_design\": 88,\n        \"operations\": 1186,\n        \"sales\": 786,\n        \"finance\": 1816,\n        \"product_management\": 324,\n        \"information_technology\": 249,\n        \"marketing\": 229,\n        \"administrative\": 297,\n        \"accounting\": 109,\n        \"legal\": 500,\n        \"data_science\": 329,\n        \"consulting\": 258,\n        \"education\": 51,\n        \"media_and_commmunication\": 109,\n        \"support\": 173,\n        \"entrepreneurship\": 15\n      },\n      \"show_intent\": false,\n      \"has_intent_signal_account\": false,\n      \"intent_signal_account\": null,\n      \"organization_headcount_six_month_growth\": null,\n      \"organization_headcount_twelve_month_growth\": null,\n      \"organization_headcount_twenty_four_month_growth\": null\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0a0cec2-9099-4355-ac1a-2a27432ed50e",
+              "name": "400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    "bulk_enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domains[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "domains[]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"details\": [\n    {\n      \"domain\": \"apollo.io\"\n    },\n    {\n      \"domain\": \"microsoft.com\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"status\\\": \\\"failed\\\",\\n  \\\"error_code\\\": \\\"RECORD_LIMIT_EXCEEDED\\\",\\n  \\\"error_message\\\": \\\"domain count cannot be more than 10\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ebd3bd4-ee18-417c-8ee2-c457bff9354a",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    "bulk_enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domains[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "domains[]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"details\": [\n    {\n      \"domain\": \"apollo.io\"\n    },\n    {\n      \"domain\": \"microsoft.com\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9adb675a-d5e6-4ba4-9f96-fb6da3801859",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    "bulk_enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domains[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "domains[]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"details\": [\n    {\n      \"domain\": \"apollo.io\"\n    },\n    {\n      \"domain\": \"microsoft.com\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"This API key is not authorized to access api/v1/organizations/bulk_enrich. Request an API key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\": \"API_INACCESSIBLE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bda4ac8a-0e7b-49ce-b6e3-c156a9012db7",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    "bulk_enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domains[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "domains[]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"details\": [\n    {\n      \"domain\": \"apollo.io\"\n    },\n    {\n      \"domain\": \"microsoft.com\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"failed\",\n  \"error_code\": \"UNKNOWN_ERROR\",\n  \"error_message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4498be6-ea50-4758-8fd6-996e95887e41",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    "bulk_enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domains[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "domains[]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"details\": [\n    {\n      \"domain\": \"apollo.io\"\n    },\n    {\n      \"domain\": \"microsoft.com\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/organizations/bulk_enrich is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.apollo.io/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1bc4db5d-812f-46a5-8c2e-2c3947fb3c23",
+    "name": "Apollo API — Enrichment",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Apollo API provides programmatic access to [Apollo](https://www.apollo.io/), the all-in-one sales intelligence and engagement platform. Use it to enrich people and company data (individually or in bulk), search Apollo's database of over 240 million contacts and 30 million companies, and manage accounts, contacts, deals, sequences, tasks, calls, and conversations in your go-to-market workflows.\n\n## Base URL\n\nAll API requests are made to `https://api.apollo.io/api/v1`.\n\n## Authentication\n\n- **Apollo users** authenticate with an API key passed in the `x-api-key` request header. See [Create API Keys](https://docs.apollo.io/docs/create-api-key).\n- **Apollo partners** building integrations on behalf of mutual users authenticate with the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).\n\n## Rate limits & credits\n\nRate limits and credit consumption depend on your [Apollo pricing plan](https://docs.apollo.io/docs/api-pricing). Check your current limits and usage with the [View API Usage Stats and Rate Limits](https://docs.apollo.io/reference/view-api-usage-stats) endpoint. For more details, see [Rate Limits](https://docs.apollo.io/reference/rate-limits) and the [API FAQs](https://docs.apollo.io/docs/apollo-api-faqs).\n\nNew to the API? Start with the [Apollo API overview](https://docs.apollo.io/reference/apollo-api).\n\nContact Support:\n Name: Apollo API Support",
+      "type": "text/plain"
+    }
+  }
+}

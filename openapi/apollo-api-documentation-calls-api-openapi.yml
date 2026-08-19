@@ -1,0 +1,1438 @@
+openapi: 3.1.0
+info:
+  title: Apollo API — Calls
+  summary: Programmatic access to Apollo's sales intelligence and engagement platform — data enrichment, prospect and company
+    search, and go-to-market workflow management.
+  description: 'The Apollo API provides programmatic access to [Apollo](https://www.apollo.io/), the all-in-one sales intelligence
+    and engagement platform. Use it to enrich people and company data (individually or in bulk), search Apollo''s database
+    of over 240 million contacts and 30 million companies, and manage accounts, contacts, deals, sequences, tasks, calls,
+    and conversations in your go-to-market workflows.
+
+
+    ## Base URL
+
+
+    All API requests are made to `https://api.apollo.io/api/v1`.
+
+
+    ## Authentication
+
+
+    - **Apollo users** authenticate with an API key passed in the `x-api-key` request header. See [Create API Keys](https://docs.apollo.io/docs/create-api-key).
+
+    - **Apollo partners** building integrations on behalf of mutual users authenticate with the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).
+
+
+    ## Rate limits & credits
+
+
+    Rate limits and credit consumption depend on your [Apollo pricing plan](https://docs.apollo.io/docs/api-pricing). Check
+    your current limits and usage with the [View API Usage Stats and Rate Limits](https://docs.apollo.io/reference/view-api-usage-stats)
+    endpoint. For more details, see [Rate Limits](https://docs.apollo.io/reference/rate-limits) and the [API FAQs](https://docs.apollo.io/docs/apollo-api-faqs).
+
+
+    New to the API? Start with the [Apollo API overview](https://docs.apollo.io/reference/apollo-api).'
+  termsOfService: https://www.apollo.io/terms/api
+  contact:
+    name: Apollo API Support
+    url: https://docs.apollo.io/
+  version: '1.0'
+servers:
+- url: https://api.apollo.io/api/v1
+tags:
+- name: Calls
+  description: Log and update call records made inside or outside Apollo.
+security:
+- apiKey: []
+- bearerAuth: []
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: '[Recommended] API key, passed in the `x-api-key` request header.
+
+        See [Create API Keys](https://docs.apollo.io/docs/create-api-key).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'OAuth 2.0 access token, used by Apollo partners building integrations.
+
+        See the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).'
+paths:
+  /phone_calls/search:
+    get:
+      summary: Search for Calls
+      description: '## Endpoint essentials
+
+
+        **API key access:** `Master API key`
+
+
+        **OAuth scopes:** `phone_call_search`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        Use the Search for Calls endpoint to find calls that your team has made or  received using <a href="https://knowledge.apollo.io/hc/en-us/articles/4409140527757-Dialer-Overview"
+        target="_blank">the dialer</a> on Apollo.'
+      tags:
+      - Calls
+      operationId: get_phone_callssearch
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                OK:
+                  value: "{\n  \"pagination\": {\n    \"page\": \"1\",\n    \"per_page\": \"5\",\n    \"total_entries\": 17,\n\
+                    \    \"total_pages\": 4\n  },\n  \"breadcrumbs\": [\n    {\n      \"label\": \"Date\",\n      \"signal_field_name\"\
+                    : \"date_range\",\n      \"value\": \"2025-04-01\",\n      \"display_name\": \"After Tue, Apr 01\"\n \
+                    \   },\n    {\n      \"label\": \"Date\",\n      \"signal_field_name\": \"date_range\",\n      \"value\"\
+                    : \"2025-06-12\",\n      \"display_name\": \"Before Today\"\n    }\n  ],\n  \"phone_calls\": [\n    {\n\
+                    \      \"id\": \"684b5631a57ddb0021985250\",\n      \"user_id\": \"66302798d03b9601c7934ebf\",\n     \
+                    \ \"account_id\": \"6518c6184f20350001a0b9c0\",\n      \"contact_id\": \"657a43dd324b9902d0c4dd37\",\n\
+                    \      \"voice_setting_id\": \"684b5618cea999001da519c6\",\n      \"phone_call_outcome_id\": null,\n \
+                    \     \"phone_call_purpose_id\": null,\n      \"recording_url\": null,\n      \"twilio_call_sid\": \"\
+                    CA218198b1015dd6db8d790275bfd4550e\",\n      \"call_identifier\": \"ad2c1a48-23fc-4a2d-96a9-c0ad8a95c01d\"\
+                    ,\n      \"agent_call_sid\": null,\n      \"inbound\": false,\n      \"from_number\": \"+15735550189\"\
+                    ,\n      \"to_number\": \"+14155550181\",\n      \"start_time\": \"2025-06-12T22:35:29.000+00:00\",\n\
+                    \      \"end_time\": \"2025-06-12T22:35:35.000+00:00\",\n      \"transcription_too_long\": null,\n   \
+                    \   \"twilio_recording_sid\": null,\n      \"need_recording_upload\": true,\n      \"logged\": false,\n\
+                    \      \"note\": null,\n      \"status\": \"no-answer\",\n      \"outreach_task_id\": null,\n      \"\
+                    salesforce_id\": null,\n      \"hubspot_id\": null,\n      \"conference_id\": null,\n      \"opportunity_id\"\
+                    : null,\n      \"voicemail_dropped\": false,\n      \"parallel_dial_item_id\": null,\n      \"transcribed\"\
+                    : false,\n      \"transcribing\": false,\n      \"transcription_progress\": 0,\n      \"note_text\": \"\
+                    \",\n      \"contact\": {\n        \"organization_logo_url\": \"https://zenprospect-production.s3.amazonaws.com/uploads/pictures/b1bdd6009b1611149b56f0bc/picture\"\
+                    ,\n        \"contact_roles\": [],\n        \"id\": \"657a43dd324b9902d0c4dd37\",\n        \"first_name\"\
+                    : \"Marcus\",\n        \"last_name\": \"Hale\",\n        \"name\": \"Marcus Hale\",\n        \"linkedin_url\"\
+                    : null,\n        \"title\": null,\n        \"contact_stage_id\": \"6095a710bd01d100a506d4af\",\n     \
+                    \   \"owner_id\": \"66302798d03b9601c7934ec2\",\n        \"creator_id\": \"60affe7d6e270a00f5db6fe4\"\
+                    ,\n        \"person_id\": null,\n        \"email_needs_tickling\": null,\n        \"organization_name\"\
+                    : \"Apollo.io\",\n        \"source\": \"meetings_scheduled_in_app\",\n        \"original_source\": \"\
+                    meetings_scheduled_in_app\",\n        \"organization_id\": \"5e66b6381e05b4008c8331b8\",\n        \"headline\"\
+                    : null,\n        \"photo_url\": null,\n        \"present_raw_address\": null,\n        \"linkedin_uid\"\
+                    : null,\n        \"extrapolated_email_confidence\": null,\n        \"salesforce_id\": \"003TE0k3i0Ln1ORd2n\"\
+                    ,\n        \"salesforce_lead_id\": null,\n        \"salesforce_contact_id\": \"003TE0k3i0Ln1ORd2n\",\n\
+                    \        \"salesforce_account_id\": \"0017ntaJPTvuIbOUVM\",\n        \"crm_owner_id\": \"005dK4PthD6owdyIkD\"\
+                    ,\n        \"created_at\": \"2023-12-13T23:53:01.613Z\",\n        \"emailer_campaign_ids\": [],\n    \
+                    \    \"direct_dial_status\": null,\n        \"direct_dial_enrichment_failed_at\": null,\n        \"city\"\
+                    : null,\n        \"country\": null,\n        \"state\": null,\n        \"email_status\": \"verified\"\
+                    ,\n        \"email_source\": null,\n        \"account_id\": \"6518c6184f20350001a0b9c0\",\n        \"\
+                    last_activity_date\": \"2025-03-14T16:23:29.000+00:00\",\n        \"hubspot_vid\": null,\n        \"hubspot_company_id\"\
+                    : null,\n        \"crm_id\": \"003TE0k3i0Ln1ORd2n\",\n        \"sanitized_phone\": \"+14155550181\",\n\
+                    \        \"merged_crm_ids\": null,\n        \"updated_at\": \"2025-06-12T20:48:47.840Z\",\n        \"\
+                    queued_for_crm_push\": false,\n        \"suggested_from_rule_engine_config_id\": null,\n        \"email_unsubscribed\"\
+                    : null,\n        \"person_deleted\": null,\n        \"call_opted_out\": null,\n        \"label_ids\":\
+                    \ [],\n        \"has_pending_email_arcgate_request\": false,\n        \"has_email_arcgate_request\": false,\n\
+                    \        \"existence_level\": \"full\",\n        \"email\": \"marcus.hale@apollo.io\",\n        \"email_from_customer\"\
+                    : true,\n        \"typed_custom_fields\": {},\n        \"custom_field_errors\": null,\n        \"salesforce_record_url\"\
+                    : \"https://orgfarm-1a2b3c4d5e-dev-ed.develop.my.salesforce.com/003TE0k3i0Ln1ORd2n\",\n        \"crm_record_url\"\
+                    : null,\n        \"email_status_unavailable_reason\": null,\n        \"email_true_status\": \"User Managed\"\
+                    ,\n        \"updated_email_true_status\": true,\n        \"source_display_name\": \"Added from Meetings\
+                    \ Scheduling\",\n        \"twitter_url\": null,\n        \"facebook_url\": null,\n        \"contact_emails\"\
+                    : [\n          {\n            \"email_md5\": \"ae850a27907a25093bbc837c210ae5a3\",\n            \"email_sha256\"\
+                    : \"125671f13e9632a503bb5aa9b928c8105c044901c4f13a21818f9da209fc87a4\",\n            \"email_status\"\
+                    : \"verified\",\n            \"extrapolated_email_confidence\": null,\n            \"position\": 0,\n\
+                    \            \"email\": \"marcus.hale@apollo.io\",\n            \"free_domain\": false,\n            \"\
+                    source\": \"User Managed\",\n            \"third_party_vendor_name\": null,\n            \"vendor_validation_statuses\"\
+                    : [],\n            \"email_needs_tickling\": null,\n            \"email_true_status\": \"User Managed\"\
+                    ,\n            \"email_status_unavailable_reason\": null\n          }\n        ],\n        \"show_intent\"\
+                    : false,\n        \"phone_numbers\": [\n          {\n            \"raw_number\": \"+1 415-555-0181\",\n\
+                    \            \"sanitized_number\": \"+14155550181\",\n            \"type\": \"work_hq\",\n           \
+                    \ \"position\": 0,\n            \"status\": \"no_status\",\n            \"dnc_status\": null,\n      \
+                    \      \"dnc_other_info\": {},\n            \"dialer_flags\": null,\n            \"source_name\": \"Apollo\"\
+                    ,\n            \"vendor_validation_statuses\": [],\n            \"third_party_vendor_name\": null\n  \
+                    \        }\n        ],\n        \"account_phone_note\": null,\n        \"free_domain\": false,\n     \
+                    \   \"email_domain_catchall\": false\n      },\n      \"duration\": 0,\n      \"conversation_id\": null\n\
+                    \    },\n    {\n      \"id\": \"683dd5ebeff21a000d3b59b1\",\n      \"user_id\": \"66302798d03b9601c7934ebc\"\
+                    ,\n      \"account_id\": null,\n      \"contact_id\": null,\n      \"voice_setting_id\": \"66423383e444d7043a550a93\"\
+                    ,\n      \"phone_call_outcome_id\": null,\n      \"phone_call_purpose_id\": null,\n      \"recording_url\"\
+                    : \"https://api.twilio.com/2010-04-01/Accounts/REDACTED_TWILIO_ACCOUNT_SID/Recordings/RE7f322dec3b25154e4a05751f802a3a85\"\
+                    ,\n      \"twilio_call_sid\": \"CAe13f2421ccd41b3593ca65eaf5d930f8\",\n      \"call_identifier\": null,\n\
+                    \      \"agent_call_sid\": \"CAc1f591997d5dba2b1c26e9d6dfd3d614\",\n      \"inbound\": true,\n      \"\
+                    from_number\": \"+19515550199\",\n      \"to_number\": \"+15625550183\",\n      \"start_time\": \"2025-06-02T16:48:43.000+00:00\"\
+                    ,\n      \"end_time\": \"2025-06-02T16:48:46.000+00:00\",\n      \"transcription_too_long\": null,\n \
+                    \     \"twilio_recording_sid\": \"RE7f322dec3b25154e4a05751f802a3a85\",\n      \"need_recording_upload\"\
+                    : true,\n      \"logged\": false,\n      \"note\": null,\n      \"status\": \"completed\",\n      \"outreach_task_id\"\
+                    : null,\n      \"salesforce_id\": null,\n      \"hubspot_id\": null,\n      \"conference_id\": null,\n\
+                    \      \"opportunity_id\": null,\n      \"voicemail_dropped\": false,\n      \"parallel_dial_item_id\"\
+                    : null,\n      \"transcribed\": false,\n      \"transcribing\": false,\n      \"transcription_progress\"\
+                    : 0,\n      \"note_text\": \"\",\n      \"duration\": 3,\n      \"conversation_id\": null\n    },\n  \
+                    \  {\n      \"id\": \"6839d628897392000d8c3e75\",\n      \"user_id\": \"66302798d03b9601c7934ebc\",\n\
+                    \      \"account_id\": null,\n      \"contact_id\": null,\n      \"voice_setting_id\": \"66423383e444d7043a550a93\"\
+                    ,\n      \"phone_call_outcome_id\": null,\n      \"phone_call_purpose_id\": null,\n      \"recording_url\"\
+                    : \"https://api.twilio.com/2010-04-01/Accounts/REDACTED_TWILIO_ACCOUNT_SID/Recordings/REca35d88c03f7d3dfa111701454a4f0cc\"\
+                    ,\n      \"twilio_call_sid\": \"CA1e9460d41ae47a0174b5b2e7c85f1656\",\n      \"call_identifier\": null,\n\
+                    \      \"agent_call_sid\": \"CA3b3d89be17ba26ae5f706a4c5b9ac799\",\n      \"inbound\": true,\n      \"\
+                    from_number\": \"+19515550199\",\n      \"to_number\": \"+15625550183\",\n      \"start_time\": \"2025-05-30T16:00:40.000+00:00\"\
+                    ,\n      \"end_time\": \"2025-05-30T16:00:44.000+00:00\",\n      \"transcription_too_long\": null,\n \
+                    \     \"twilio_recording_sid\": \"REca35d88c03f7d3dfa111701454a4f0cc\",\n      \"need_recording_upload\"\
+                    : true,\n      \"logged\": false,\n      \"note\": null,\n      \"status\": \"completed\",\n      \"outreach_task_id\"\
+                    : null,\n      \"salesforce_id\": null,\n      \"hubspot_id\": null,\n      \"conference_id\": null,\n\
+                    \      \"opportunity_id\": null,\n      \"voicemail_dropped\": false,\n      \"parallel_dial_item_id\"\
+                    : null,\n      \"transcribed\": false,\n      \"transcribing\": false,\n      \"transcription_progress\"\
+                    : 0,\n      \"note_text\": \"\",\n      \"duration\": 4,\n      \"conversation_id\": null\n    },\n  \
+                    \  {\n      \"id\": \"683760e6aac06700213aa9d5\",\n      \"user_id\": \"66302798d03b9601c7934ebc\",\n\
+                    \      \"account_id\": null,\n      \"contact_id\": null,\n      \"voice_setting_id\": \"66423383e444d7043a550a93\"\
+                    ,\n      \"phone_call_outcome_id\": null,\n      \"phone_call_purpose_id\": null,\n      \"recording_url\"\
+                    : \"https://api.twilio.com/2010-04-01/Accounts/REDACTED_TWILIO_ACCOUNT_SID/Recordings/RE25b1312a9ccf9836c8936f16707ee88c\"\
+                    ,\n      \"twilio_call_sid\": \"CA6a3674fe3760608ef64c0601f0410487\",\n      \"call_identifier\": null,\n\
+                    \      \"agent_call_sid\": \"CAcd8eb6f71a1ee1092197626db6d8bd68\",\n      \"inbound\": true,\n      \"\
+                    from_number\": \"+19515550199\",\n      \"to_number\": \"+15625550183\",\n      \"start_time\": \"2025-05-28T19:15:50.000+00:00\"\
+                    ,\n      \"end_time\": \"2025-05-28T19:16:10.000+00:00\",\n      \"transcription_too_long\": null,\n \
+                    \     \"twilio_recording_sid\": \"RE25b1312a9ccf9836c8936f16707ee88c\",\n      \"need_recording_upload\"\
+                    : true,\n      \"logged\": false,\n      \"note\": null,\n      \"status\": \"completed\",\n      \"outreach_task_id\"\
+                    : null,\n      \"salesforce_id\": null,\n      \"hubspot_id\": null,\n      \"conference_id\": null,\n\
+                    \      \"opportunity_id\": null,\n      \"voicemail_dropped\": false,\n      \"parallel_dial_item_id\"\
+                    : null,\n      \"transcribed\": false,\n      \"transcribing\": false,\n      \"transcription_progress\"\
+                    : 0,\n      \"note_text\": \"\",\n      \"duration\": 20,\n      \"conversation_id\": null\n    },\n \
+                    \   {\n      \"id\": \"68373d81b6ef6b001dc9b7aa\",\n      \"user_id\": \"66302798d03b9601c7934ebc\",\n\
+                    \      \"account_id\": null,\n      \"contact_id\": null,\n      \"voice_setting_id\": \"66423383e444d7043a550a93\"\
+                    ,\n      \"phone_call_outcome_id\": null,\n      \"phone_call_purpose_id\": null,\n      \"recording_url\"\
+                    : \"https://api.twilio.com/2010-04-01/Accounts/REDACTED_TWILIO_ACCOUNT_SID/Recordings/RE8a53d661e9eae6724d41923212c3ad9a\"\
+                    ,\n      \"twilio_call_sid\": \"CA07d7bf8c756999217998e8bae0f18479\",\n      \"call_identifier\": null,\n\
+                    \      \"agent_call_sid\": \"CA667d80530c73a64fc09ec76b040063df\",\n      \"inbound\": true,\n      \"\
+                    from_number\": \"+19515550199\",\n      \"to_number\": \"+15625550183\",\n      \"start_time\": \"2025-05-28T16:44:49.000+00:00\"\
+                    ,\n      \"end_time\": \"2025-05-28T16:45:10.000+00:00\",\n      \"transcription_too_long\": null,\n \
+                    \     \"twilio_recording_sid\": \"RE8a53d661e9eae6724d41923212c3ad9a\",\n      \"need_recording_upload\"\
+                    : true,\n      \"logged\": false,\n      \"note\": null,\n      \"status\": \"completed\",\n      \"outreach_task_id\"\
+                    : null,\n      \"salesforce_id\": null,\n      \"hubspot_id\": null,\n      \"conference_id\": null,\n\
+                    \      \"opportunity_id\": null,\n      \"voicemail_dropped\": false,\n      \"parallel_dial_item_id\"\
+                    : null,\n      \"transcribed\": false,\n      \"transcribing\": false,\n      \"transcription_progress\"\
+                    : 0,\n      \"note_text\": \"\",\n      \"duration\": 21,\n      \"conversation_id\": null\n    }\n  ],\n\
+                    \  \"faceting\": {\n    \"phone_call_stats_facets\": [\n      {\n        \"value\": \"active\",\n    \
+                    \    \"display_name\": \"Active Calls\",\n        \"count\": 0\n      },\n      {\n        \"value\":\
+                    \ \"6095a710bd01d100a506d4c5\",\n        \"display_name\": \"Left Voicemail\",\n        \"count\": 1\n\
+                    \      },\n      {\n        \"value\": \"other\",\n        \"display_name\": \"No Disposition\",\n   \
+                    \     \"count\": 15\n      },\n      {\n        \"value\": \"6095a710bd01d100a506d4ca\",\n        \"display_name\"\
+                    : \"Connected - Positive\",\n        \"count\": 1\n      }\n    ]\n  },\n  \"pipeline_total\": 17,\n \
+                    \ \"num_fetch_result\": null\n}"
+                  summary: OK
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                Need Master API Key:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/phone_calls/search. Request an\
+                    \ API key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\"\
+                    : \"API_INACCESSIBLE\"\n}"
+                  summary: Need Master API Key
+      parameters:
+      - name: date_range[max]
+        in: query
+        required: false
+        description: 'Set the upper bound of the date range you want to search. <br><br>Use this parameter in combination
+          with the `date_range[min]` parameter. This date should fall after the `date_range[min]` date. <br><br>The date should
+          be formatted as `YYYY-MM-DD`. <br><br>Example: `2025-06-12`'
+        schema:
+          type: string
+          format: date
+          default: ''
+      - name: date_range[min]
+        in: query
+        required: false
+        description: 'Set the lower bound of the date range you want to search. <br><br>Use this parameter in combination
+          with the `date_range[max]` parameter. This date should fall before the `date_range[max]` date. <br><br>The date
+          should be formatted as `YYYY-MM-DD`. <br><br>Example: `2025-04-01`'
+        schema:
+          type: string
+          format: date
+          default: ''
+      - name: duration[max]
+        in: query
+        required: false
+        description: 'Set the upper bound for the call duration you want to search. The duration should be seconds, not minutes
+          or hours. <br><br>Use this parameter in combination with the `duration[min]` parameter. This number should be larger
+          than `duration[min]`. <br><br>Example: `180`'
+        schema:
+          type: integer
+          default: ''
+      - name: duration[min]
+        in: query
+        required: false
+        description: 'Set the lower bound for the call duration you want to search. The duration should be seconds, not minutes
+          or hours. <br><br>Use this parameter in combination with the `duration[max]` parameter. This number should be smallerr
+          than `duration[min]`. <br><br>Example: `30`'
+        schema:
+          type: integer
+          default: ''
+      - name: inbound
+        in: query
+        required: false
+        description: Search for calls based on whether they were `incoming` (the prospect called your team) or `outgoing`
+          (your team called the prospect).
+        schema:
+          type: string
+          default: ''
+      - name: user_ids[]
+        in: query
+        required: false
+        description: 'Find calls that included specific users in your team''s Apollo account. You can add multiple users.
+          <br><br>Use the <a href="https://docs.apollo.io/reference/get-a-list-of-users" target="_blank">Get a List of Users
+          endpoint</a> to retrieve IDs for all of the users within your Apollo account. <br><br>Example: `67e33d527de088000daa60c4`'
+        schema:
+          type: array
+          default: ''
+          items:
+            type: string
+      - name: contact_label_ids[]
+        in: query
+        required: false
+        description: 'Find calls that included specific contacts. You can add multiple contacts. <br><br>In Apollo terminology,
+          a contact is a person that your team has explicitly added to your database. <br><br>Use the <a href="https://docs.apollo.io/reference/get-a-list-of-users"
+          target="_blank">Get a List of Users endpoint</a> to retrieve IDs for all of the users within your Apollo account.
+          <br><br>Example: `67e33d527de088000daa60c4` 6708415f59d9c70001b2f852'
+        schema:
+          type: array
+          default: ''
+          items:
+            type: string
+      - name: phone_call_purpose_ids[]
+        in: query
+        required: false
+        description: 'Filter calls based on their purpose. <br><br>Call purposes are unique to your team''s Apollo account.
+          When you use the <b>Purpose</b> search filter for calls in the Apollo product, you can find the corresponding call
+          purpose ID in the URL. <br><br>Example: `6095a710bd01d100a506d4cf`'
+        schema:
+          type: array
+          default: ''
+          items:
+            type: string
+      - name: phone_call_outcome_ids[]
+        in: query
+        required: false
+        description: 'Filter calls based on their outcome. <br><br>Call outcomes are unique to your team''s Apollo account.
+          When you use the <b>Disposition</b> search filter for calls in the Apollo product, you can find the corresponding
+          call outcome ID in the URL. <br><br>Example: `6095a710bd01d100a506d4c5`'
+        schema:
+          type: array
+          default: ''
+          items:
+            type: string
+      - name: q_keywords
+        in: query
+        required: false
+        description: 'Add keywords to narrow the search of the calls in your team''s Apollo account. <br><br>Example: `marketing
+          conference attendees`'
+        schema:
+          type: string
+          default: ''
+      - name: page
+        in: query
+        required: false
+        description: 'The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination
+          with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint.
+          <br><br>Example: `4`'
+        schema:
+          type: string
+          default: ''
+      - name: per_page
+        in: query
+        required: false
+        description: 'The number of search results that should be returned for each page. Limiting the number of results per
+          page improves the endpoint''s performance. <br><br>Use the page parameter to search the different pages of data.
+          <br><br>Example: `10`'
+        schema:
+          type: string
+          default: ''
+  /phone_calls:
+    post:
+      summary: Create Call Records
+      description: '## Endpoint essentials
+
+
+        **API key access:** `Master API key`
+
+
+        **OAuth scopes:** `phone_call_write`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        Use the Create Call Records endpoint to log calls in Apollo that were made using outside systems such as Orum or Nooks.
+        This endpoint can only be used create call records, not to dial prospects.'
+      tags:
+      - Calls
+      operationId: phonecalls_create
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              examples:
+                OK:
+                  summary: OK
+                  value:
+                    phone_call:
+                      id: 6859b021b2d6e700212eaf3f
+                      user_id: 67e33d527de088000daa60c4
+                      account_id: 6518c6184f20350001a0b9c0
+                      contact_id: 6601a68fca35d8000718d42b
+                      voice_setting_id: null
+                      phone_call_outcome_id: 6095a710bd01d100a506d4c5
+                      phone_call_purpose_id: 6095a710bd01d100a506d4cd
+                      recording_url: null
+                      twilio_call_sid: null
+                      call_identifier: null
+                      agent_call_sid: null
+                      inbound: false
+                      from_number: null
+                      to_number: null
+                      start_time: '2025-06-23T19:50:57.292+00:00'
+                      end_time: '2025-06-23T19:50:57.292+00:00'
+                      transcription_too_long: null
+                      twilio_recording_sid: null
+                      need_recording_upload: true
+                      logged: true
+                      note: null
+                      status: completed
+                      outreach_task_id: null
+                      salesforce_id: null
+                      hubspot_id: null
+                      conference_id: null
+                      opportunity_id: null
+                      voicemail_dropped: false
+                      parallel_dial_item_id: null
+                      transcribed: false
+                      transcribing: false
+                      transcription_progress: 0
+                      note_text: ''
+                      contact:
+                        contact_roles: []
+                        id: 6601a68fca35d8000718d42b
+                        first_name: Wesley
+                        last_name: Tran
+                        name: Wesley Tran
+                        linkedin_url: http://www.linkedin.com/in/wesley-tran-5a9c3e74
+                        title: Technical Support
+                        contact_stage_id: 6095a710bd01d100a506d4af
+                        owner_id: null
+                        creator_id: 60affe7d6e270a00f5db6fe4
+                        person_id: 66f0b509f10e970001a0b1b0
+                        email_needs_tickling: false
+                        organization_name: Apollo.io
+                        source: search
+                        original_source: email_import
+                        organization_id: 5e66b6381e05b4008c8331b8
+                        headline: Technical support
+                        photo_url: null
+                        present_raw_address: Portland, Oregon, United States
+                        linkedin_uid: null
+                        extrapolated_email_confidence: null
+                        salesforce_id: null
+                        salesforce_lead_id: null
+                        salesforce_contact_id: null
+                        salesforce_account_id: null
+                        crm_owner_id: null
+                        created_at: '2024-03-25T16:30:07.555Z'
+                        emailer_campaign_ids:
+                        - 66a97236a8759801b5417678
+                        - 6567758e12b81a0264ab0bb1
+                        - 67be333b81ca47000d1cfb9f
+                        - 684b215edf80730019db612c
+                        direct_dial_status: enrichment_failed
+                        direct_dial_enrichment_failed_at: '2025-02-27T15:16:57.036+00:00'
+                        city: Portland
+                        country: United States
+                        state: Oregon
+                        email_status: verified
+                        email_source: crm
+                        account_id: 6518c6184f20350001a0b9c0
+                        last_activity_date: '2025-06-23T19:50:57.000+00:00'
+                        hubspot_vid: null
+                        hubspot_company_id: null
+                        crm_id: null
+                        sanitized_phone: '+14155550181'
+                        merged_crm_ids: null
+                        updated_at: '2025-06-23T19:50:57.325Z'
+                        queued_for_crm_push: false
+                        suggested_from_rule_engine_config_id: null
+                        email_unsubscribed: null
+                        person_deleted: null
+                        call_opted_out: null
+                        label_ids:
+                        - 66a96f0cb2ef9801b486f3fd
+                        has_pending_email_arcgate_request: false
+                        has_email_arcgate_request: false
+                        existence_level: full
+                        email: wesley.t@example.com
+                        email_from_customer: null
+                        typed_custom_fields:
+                          677c0c4f451bfb02cf105e01: 'Hi Justin,
+
+
+                            Technical writing requires precision and insight. At Apollo.io, we understand the challenges of
+                            creating impactful documentation that stands out in a competitive landscape.
+
+
+                            Our platform helps technical writers like you gain visibility, track performance metrics, and
+                            showcase your expertise across professional networks, potentially elevating your professional
+                            profile.
+
+
+                            Would you be open to a 15-minute call to explore how we can support your professional growth and
+                            recognition?
+
+
+                            Sunny'
+                        custom_field_errors: null
+                        crm_record_url: null
+                        email_status_unavailable_reason: null
+                        email_true_status: Verified
+                        updated_email_true_status: true
+                        source_display_name: Requested from Apollo
+                        twitter_url: null
+                        facebook_url: null
+                        contact_emails:
+                        - email_md5: 210b056db397b0a452dbd967d19f9cb5
+                          email_sha256: a6ec970636a0a3c3fda95094cc2bb23a580ed900d7e96a517ad7694f657d8012
+                          email_status: verified
+                          extrapolated_email_confidence: null
+                          position: 0
+                          email: wesley.t@example.com
+                          free_domain: false
+                          source: Apollo
+                          third_party_vendor_name: null
+                          vendor_validation_statuses: []
+                          email_needs_tickling: false
+                          email_true_status: Verified
+                          email_status_unavailable_reason: null
+                        time_zone: America/Los_Angeles
+                        show_intent: false
+                        phone_numbers:
+                        - raw_number: +1 555-555-0164
+                          sanitized_number: '+15555550164'
+                          type: work_hq
+                          position: 0
+                          status: no_status
+                          dnc_status: null
+                          dnc_other_info: {}
+                          dialer_flags: null
+                          source_name: Apollo
+                          vendor_validation_statuses: []
+                          third_party_vendor_name: null
+                        account_phone_note: null
+                        free_domain: false
+                        email_domain_catchall: false
+                      account:
+                        raw_address: 535 mission st, san francisco, california, united states, 94105
+                        street_address: 535 Mission Street
+                        city: San Francisco
+                        state: California
+                        country: United States
+                        postal_code: '94105'
+                        id: 6518c6184f20350001a0b9c0
+                        domain: apollo.io
+                        name: Apollo.io
+                        team_id: 6095a710bd01d100a506d4ac
+                        organization_id: 5e66b6381e05b4008c8331b8
+                        account_stage_id: 6095a710bd01d100a506d4b9
+                        source: job_change
+                        original_source: job_change
+                        creator_id: 60affe7d6e270a00f5db6fe4
+                        owner_id: 66302798d03b9601c7934ec2
+                        created_at: '2023-10-01T01:06:32.057Z'
+                        phone: +1 415-555-0181
+                        phone_status: no_status
+                        hubspot_id: null
+                        salesforce_id: 0017ntaJPTvuIbOUVM
+                        crm_owner_id: 005dK4PthD6owdyIkD
+                        parent_account_id: null
+                        linkedin_url: null
+                        sanitized_phone: '+15555550164'
+                        account_playbook_statuses: []
+                        existence_level: full
+                        label_ids:
+                        - 6504905b21ba8e00a334eb0f
+                        typed_custom_fields:
+                          671932d76c03c402d0528199:
+                          - 671932d76c03c402d0528195
+                        custom_field_errors: {}
+                        modality: account
+                        source_display_name: Job Change
+                        salesforce_record_url: https://orgfarm-1a2b3c4d5e-dev-ed.develop.my.salesforce.com/0017ntaJPTvuIbOUVM
+                        crm_record_url: null
+                        twitter_url: null
+                        facebook_url: null
+                        show_intent: false
+                        organization_headcount_six_month_growth: null
+                        organization_headcount_twelve_month_growth: null
+                        organization_headcount_twenty_four_month_growth: null
+                      duration: 45
+                    contact:
+                      contact_roles: []
+                      id: 6601a68fca35d8000718d42b
+                      first_name: Wesley
+                      last_name: Tran
+                      name: Wesley Tran
+                      linkedin_url: http://www.linkedin.com/in/wesley-tran-5a9c3e74
+                      title: Technical Support
+                      contact_stage_id: 6095a710bd01d100a506d4af
+                      owner_id: null
+                      creator_id: 60affe7d6e270a00f5db6fe4
+                      person_id: 66f0b509f10e970001a0b1b0
+                      email_needs_tickling: false
+                      organization_name: Apollo.io
+                      source: search
+                      original_source: email_import
+                      organization_id: 5e66b6381e05b4008c8331b8
+                      headline: Technical support
+                      photo_url: null
+                      present_raw_address: Portland, Oregon, United States
+                      linkedin_uid: null
+                      extrapolated_email_confidence: null
+                      salesforce_id: null
+                      salesforce_lead_id: null
+                      salesforce_contact_id: null
+                      salesforce_account_id: null
+                      crm_owner_id: null
+                      created_at: '2024-03-25T16:30:07.555Z'
+                      emailer_campaign_ids:
+                      - 66a97236a8759801b5417678
+                      - 6567758e12b81a0264ab0bb1
+                      - 67be333b81ca47000d1cfb9f
+                      - 684b215edf80730019db612c
+                      direct_dial_status: enrichment_failed
+                      direct_dial_enrichment_failed_at: '2025-02-27T15:16:57.036+00:00'
+                      city: Portland
+                      country: United States
+                      state: Oregon
+                      email_status: verified
+                      email_source: crm
+                      account_id: 6518c6184f20350001a0b9c0
+                      last_activity_date: '2025-06-23T19:50:57.000+00:00'
+                      hubspot_vid: null
+                      hubspot_company_id: null
+                      crm_id: null
+                      sanitized_phone: '+15555550164'
+                      merged_crm_ids: null
+                      updated_at: '2025-06-23T19:50:57.325Z'
+                      queued_for_crm_push: false
+                      suggested_from_rule_engine_config_id: null
+                      email_unsubscribed: null
+                      person_deleted: null
+                      call_opted_out: null
+                      label_ids:
+                      - 66a96f0cb2ef9801b486f3fd
+                      has_pending_email_arcgate_request: false
+                      has_email_arcgate_request: false
+                      existence_level: full
+                      email: wesley.t@example.com
+                      email_from_customer: null
+                      typed_custom_fields:
+                        677c0c4f451bfb02cf105e01: 'Hi Justin,
+
+
+                          Technical writing requires precision and insight. At Apollo.io, we understand the challenges of
+                          creating impactful documentation that stands out in a competitive landscape.
+
+
+                          Our platform helps technical writers like you gain visibility, track performance metrics, and showcase
+                          your expertise across professional networks, potentially elevating your professional profile.
+
+
+                          Would you be open to a 15-minute call to explore how we can support your professional growth and
+                          recognition?
+
+
+                          Sunny'
+                      custom_field_errors: null
+                      crm_record_url: null
+                      email_status_unavailable_reason: null
+                      email_true_status: Verified
+                      updated_email_true_status: true
+                      source_display_name: Requested from Apollo
+                      twitter_url: null
+                      facebook_url: null
+                      contact_campaign_statuses:
+                      - id: 66a977e82a86cb000139ceff
+                        emailer_campaign_id: 66a97236a8759801b5417678
+                        send_email_from_user_id: 66a3d80d4238fe02d2baaaaf
+                        inactive_reason: replied
+                        status: finished
+                        added_at: '2024-07-30T23:31:51.991+00:00'
+                        added_by_user_id: 66a3d80d4238fe02d2baaaaf
+                        finished_at: '2024-10-08T16:51:24.185+00:00'
+                        paused_at: null
+                        auto_unpause_at: null
+                        send_email_from_email_address: priya.nadkarni@apollomail.io
+                        send_email_from_email_account_id: 66a423655825e8019ae89db6
+                        manually_set_unpause: null
+                        failure_reason: null
+                        current_step_id: 66a97236a8759801b541767d
+                        in_response_to_emailer_message_id: null
+                        cc_emails: null
+                        bcc_emails: null
+                        to_emails: null
+                        current_step_position: 3
+                      - id: 6708721db13a0a000190999c
+                        emailer_campaign_id: 6567758e12b81a0264ab0bb1
+                        send_email_from_user_id: 66a3d80d4238fe02d2baaaaf
+                        inactive_reason: User deleted
+                        status: failed
+                        added_at: '2024-10-11T00:32:29.857+00:00'
+                        added_by_user_id: 60affe7d6e270a00f5db6fe4
+                        finished_at: null
+                        paused_at: null
+                        auto_unpause_at: null
+                        send_email_from_email_address: priya.nadkarni@apollomail.io
+                        send_email_from_email_account_id: 66a423655825e8019ae89db6
+                        manually_set_unpause: null
+                        failure_reason: user_deleted
+                        current_step_id: null
+                        in_response_to_emailer_message_id: null
+                        cc_emails: null
+                        bcc_emails: null
+                        to_emails: null
+                        current_step_position: null
+                      - id: 680bd68fbfaec40015b9b32b
+                        emailer_campaign_id: 67be333b81ca47000d1cfb9f
+                        send_email_from_user_id: 66302798d03b9601c7934ebf
+                        inactive_reason: null
+                        status: active
+                        added_at: '2025-04-25T18:38:07.090+00:00'
+                        added_by_user_id: 66302798d03b9601c7934ebf
+                        finished_at: null
+                        paused_at: null
+                        auto_unpause_at: null
+                        send_email_from_email_address: test.marcus.hale@apollomail.io
+                        send_email_from_email_account_id: 6633baaece5fbd01c791d7ca
+                        manually_set_unpause: null
+                        failure_reason: null
+                        current_step_id: 67be333b81ca47000d1cfba0
+                        in_response_to_emailer_message_id: null
+                        cc_emails: null
+                        bcc_emails: null
+                        to_emails: null
+                        current_step_position: 2
+                      - id: 684b21d0de0df60015d2218d
+                        emailer_campaign_id: 684b215edf80730019db612c
+                        send_email_from_user_id: 66302798d03b9601c7934ebf
+                        inactive_reason: Completed last step
+                        status: finished
+                        added_at: '2025-06-12T18:52:00.914+00:00'
+                        added_by_user_id: 66302798d03b9601c7934ebf
+                        finished_at: '2025-06-12T21:34:16.705+00:00'
+                        paused_at: null
+                        auto_unpause_at: null
+                        send_email_from_email_address: test.marcus.hale@apollomail.io
+                        send_email_from_email_account_id: 6633baaece5fbd01c791d7ca
+                        manually_set_unpause: null
+                        failure_reason: contact_stage_safeguard
+                        current_step_id: 684b216ec95a4f001d968d19
+                        in_response_to_emailer_message_id: null
+                        cc_emails: null
+                        bcc_emails: null
+                        to_emails: null
+                        current_step_position: 1
+                      contact_emails:
+                      - email_md5: 210b056db397b0a452dbd967d19f9cb5
+                        email_sha256: a6ec970636a0a3c3fda95094cc2bb23a580ed900d7e96a517ad7694f657d8012
+                        email_status: verified
+                        extrapolated_email_confidence: null
+                        position: 0
+                        email: wesley.t@example.com
+                        free_domain: false
+                        source: Apollo
+                        third_party_vendor_name: null
+                        vendor_validation_statuses: []
+                        email_needs_tickling: false
+                        email_true_status: Verified
+                        email_status_unavailable_reason: null
+                      time_zone: America/Los_Angeles
+                      show_intent: false
+                      phone_numbers:
+                      - raw_number: +1 555-555-0164
+                        sanitized_number: '+15555550164'
+                        type: work_hq
+                        position: 0
+                        status: no_status
+                        dnc_status: null
+                        dnc_other_info: {}
+                        dialer_flags: null
+                        source_name: Apollo
+                        vendor_validation_statuses: []
+                        third_party_vendor_name: null
+                      account_phone_note: null
+                      free_domain: false
+                      email_domain_catchall: false
+                    team:
+                      id: 6095a710bd01d100a506d4ac
+                      phone_calls_finder_empty: false
+        '401':
+          description: Unauthorized
+          content:
+            text/plain:
+              examples:
+                Check API Key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+                  summary: Check API Key
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                Need Master API Key:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/usage_stats/api_usage_stats. Request\
+                    \ an API key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\"\
+                    : \"API_INACCESSIBLE\"\n}"
+                  summary: Need Master API Key
+      parameters:
+      - name: logged
+        in: query
+        required: false
+        description: Set to `true` if you want to create an individual record for the phone call in Apollo.
+        schema:
+          type: boolean
+          default: ''
+      - name: user_id[]
+        in: query
+        required: false
+        description: 'Designate the caller in your team''s Apollo account. <br><br>Use the <a href="https://docs.apollo.io/reference/get-a-list-of-users"
+          target="_blank">Get a List of Users endpoint</a> to retrieve IDs for all of the users within your Apollo account.
+          <br><br>Example: `67e33d527de088000daa60c4`'
+        schema:
+          type: array
+          default: ''
+          items:
+            type: string
+      - name: contact_id
+        in: query
+        required: false
+        description: 'Designate the contact that was called. <br><br>Use the <a href="https://docs.apollo.io/reference/search-for-contacts#/"
+          target="_blank">Search for Contacts endpoint</a> to retrieve IDs for all of the contacts within your Apollo account.
+          <br><br>Example: `66e34b81740c50074e3d1bd4`'
+        schema:
+          type: string
+          default: ''
+      - name: account_id
+        in: query
+        required: false
+        description: 'Associate the call with an account. <br><br>Use the <a href="https://docs.apollo.io/reference/search-for-accounts#/"
+          target="_blank">Search for Accounts endpoint</a> to retrieve IDs for all of the accounts within your Apollo account.
+          <br><br>Example: `66e9abf95ac32901b20d1a0d`'
+        schema:
+          type: string
+          default: ''
+      - name: to_number
+        in: query
+        required: false
+        description: 'The phone number that you dialed. <br><br>Example: `5555550164`'
+        schema:
+          type: string
+          default: ''
+      - name: from_number
+        in: query
+        required: false
+        description: 'The phone number that dialed you. <br><br>Example: `5555550164`'
+        schema:
+          type: string
+          default: ''
+      - name: status
+        in: query
+        required: false
+        description: 'The status of the phone call. Possible values include: <ul> <li>`queued`</li> <li>`ringing`</li> <li>`in-progress`</li>
+          <li>`completed`</li> <li>`no_answer`</li> <li>`failed`</li> <li>`busy`</li></ul>'
+        schema:
+          type: string
+          default: ''
+      - name: start_time
+        in: query
+        required: false
+        description: 'The time when the call started. <br><br>Your entry should adhere to the ISO 8601 date-time format. Apollo
+          uses Greenwich Mean Time (GMT) by default. If you do not account for time zone differences, you could add a start
+          time that falls on a different day than you intended. <br><br>The value you enter can either adhere to GMT, or you
+          can adjust the time manually by specifiying in hours and minutes how much you want to offset GMT. <br><br>Example:
+          `2025-02-15T08:10:30Z`; `2025-03-25T10:15:30+05:00Z`'
+        schema:
+          type: string
+          format: date-time
+          default: ''
+      - name: end_time
+        in: query
+        required: false
+        description: 'The time when the call ended. <br><br>Your entry should adhere to the ISO 8601 date-time format. Apollo
+          uses Greenwich Mean Time (GMT) by default. If you do not account for time zone differences, you could add a end
+          time that falls on a different day than you intended. <br><br>The value you enter can either adhere to GMT, or you
+          can adjust the time manually by specifiying in hours and minutes how much you want to offset GMT. <br><br>Example:
+          `2025-05-15T08:10:30Z`; `2025-05-25T10:15:30+05:00Z`'
+        schema:
+          type: string
+          format: date-time
+          default: ''
+      - name: duration
+        in: query
+        required: false
+        description: 'The duration of the call in seconds. Do not enter minutes. <br><br>Examples: `120`; `205`'
+        schema:
+          type: integer
+          default: ''
+      - name: phone_call_purpose_id
+        in: query
+        required: false
+        description: 'Assign a call purpose to the record. <br><br>Call purposes are unique to your team''s Apollo account.
+          When you use the <b>Purpose</b> search filter for calls in the Apollo product, you can find the corresponding call
+          purpose ID in the URL. <br><br>Examples: `6095a710bd01d100a506d4cd`'
+        schema:
+          type: string
+          default: ''
+      - name: phone_call_outcome_id
+        in: query
+        required: false
+        description: 'Assign a call outcome to the record. <br><br>Call outcomes are unique to your team''s Apollo account.
+          When you use the <b>Disposition</b> search filter for calls in the Apollo product, you can find the corresponding
+          call outcome ID in the URL. <br><br>Examples: `6095a710bd01d100a506d4c5`'
+        schema:
+          type: string
+          default: ''
+      - name: note
+        in: query
+        required: false
+        description: 'Add a note to the call record. <br><br>Example: `This lead is interested in learning more about our
+          new product line.`'
+        schema:
+          type: string
+          default: ''
+  /phone_calls/{id}:
+    put:
+      summary: Update Call Records
+      description: '## Endpoint essentials
+
+
+        **API key access:** `Master API key`
+
+
+        **OAuth scopes:** `phone_call_update`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        Use the Update Call Records endpoint to update your team''s call records in Apollo.'
+      tags:
+      - Calls
+      operationId: put_phone_callsupdate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                OK:
+                  value:
+                    phone_call:
+                      id: 6859b0dd828b270021e69648
+                      user_id: 66302798d03b9601c7934ebf
+                      account_id: 6518c6184f20350001a0b9c0
+                      contact_id: 6601a68fca35d8000718d42b
+                      voice_setting_id: null
+                      phone_call_outcome_id: 6095a710bd01d100a506d4c5
+                      phone_call_purpose_id: 6095a710bd01d100a506d4cd
+                      recording_url: null
+                      twilio_call_sid: null
+                      call_identifier: null
+                      agent_call_sid: null
+                      inbound: false
+                      from_number: null
+                      to_number: null
+                      start_time: '2025-06-23T19:54:05.190+00:00'
+                      end_time: '2025-06-23T19:54:05.190+00:00'
+                      transcription_too_long: null
+                      twilio_recording_sid: null
+                      need_recording_upload: true
+                      logged: true
+                      note: I forgot to add a note about this contact's desire to discuss APIs.
+                      status: completed
+                      outreach_task_id: null
+                      salesforce_id: null
+                      hubspot_id: null
+                      conference_id: null
+                      opportunity_id: null
+                      voicemail_dropped: false
+                      parallel_dial_item_id: null
+                      transcribed: false
+                      transcribing: false
+                      transcription_progress: 0
+                      note_text: I forgot to add a note about this contact's desire to discuss APIs.
+                      contact:
+                        contact_roles: []
+                        id: 6601a68fca35d8000718d42b
+                        first_name: Wesley
+                        last_name: Tran
+                        name: Wesley Tran
+                        linkedin_url: http://www.linkedin.com/in/wesley-tran-5a9c3e74
+                        title: Technical Writer II
+                        contact_stage_id: 6095a710bd01d100a506d4af
+                        owner_id: null
+                        creator_id: 60affe7d6e270a00f5db6fe4
+                        person_id: 66f0b509f10e970001a0b1b0
+                        email_needs_tickling: false
+                        organization_name: Apollo.io
+                        source: search
+                        original_source: email_import
+                        organization_id: 5e66b6381e05b4008c8331b8
+                        headline: Technical writer
+                        photo_url: null
+                        present_raw_address: Portland, Oregon, United States
+                        linkedin_uid: null
+                        extrapolated_email_confidence: null
+                        salesforce_id: null
+                        salesforce_lead_id: null
+                        salesforce_contact_id: null
+                        salesforce_account_id: null
+                        crm_owner_id: null
+                        created_at: '2024-03-25T16:30:07.555Z'
+                        emailer_campaign_ids:
+                        - 66a97236a8759801b5417678
+                        - 6567758e12b81a0264ab0bb1
+                        - 67be333b81ca47000d1cfb9f
+                        - 684b215edf80730019db612c
+                        direct_dial_status: enrichment_failed
+                        direct_dial_enrichment_failed_at: '2025-02-27T15:16:57.036+00:00'
+                        city: Portland
+                        country: United States
+                        state: Oregon
+                        email_status: verified
+                        email_source: crm
+                        account_id: 6518c6184f20350001a0b9c0
+                        last_activity_date: '2025-06-23T19:54:36.000+00:00'
+                        hubspot_vid: null
+                        hubspot_company_id: null
+                        crm_id: null
+                        sanitized_phone: '+14155550181'
+                        merged_crm_ids: null
+                        updated_at: '2025-06-23T19:54:36.183Z'
+                        queued_for_crm_push: false
+                        suggested_from_rule_engine_config_id: null
+                        email_unsubscribed: null
+                        person_deleted: null
+                        call_opted_out: null
+                        label_ids:
+                        - 66a96f0cb2ef9801b486f3fd
+                        has_pending_email_arcgate_request: false
+                        has_email_arcgate_request: false
+                        existence_level: full
+                        email: wesley.t@example.com
+                        email_from_customer: null
+                        typed_custom_fields: {}
+                        custom_field_errors: {}
+                        crm_record_url: null
+                        email_status_unavailable_reason: null
+                        email_true_status: Verified
+                        updated_email_true_status: true
+                        source_display_name: Requested from Apollo
+                        twitter_url: null
+                        facebook_url: null
+                        contact_emails:
+                        - email_md5: 210b056db397b0a452dbd967d19f9cb5
+                          email_sha256: a6ec970636a0a3c3fda95094cc2bb23a580ed900d7e96a517ad7694f657d8012
+                          email_status: verified
+                          extrapolated_email_confidence: null
+                          position: 0
+                          email: wesley.t@example.com
+                          free_domain: false
+                          source: Apollo
+                          third_party_vendor_name: null
+                          vendor_validation_statuses: []
+                          email_needs_tickling: false
+                          email_true_status: Verified
+                          email_status_unavailable_reason: null
+                        time_zone: America/Los_Angeles
+                        show_intent: false
+                        phone_numbers:
+                        - raw_number: +1 415-555-0181
+                          sanitized_number: '+14155550181'
+                          type: work_hq
+                          position: 0
+                          status: no_status
+                          dnc_status: null
+                          dnc_other_info: {}
+                          dialer_flags: null
+                          source_name: Apollo
+                          vendor_validation_statuses: []
+                          third_party_vendor_name: null
+                        account_phone_note: null
+                        free_domain: false
+                        email_domain_catchall: false
+                      account:
+                        raw_address: 535 mission st, san francisco, california, united states, 94105
+                        street_address: 535 Mission Street
+                        city: San Francisco
+                        state: California
+                        country: United States
+                        postal_code: '94105'
+                        id: 6518c6184f20350001a0b9c0
+                        domain: apollo.io
+                        name: Apollo.io
+                        team_id: 6095a710bd01d100a506d4ac
+                        organization_id: 5e66b6381e05b4008c8331b8
+                        account_stage_id: 6095a710bd01d100a506d4b9
+                        source: job_change
+                        original_source: job_change
+                        creator_id: 60affe7d6e270a00f5db6fe4
+                        owner_id: 66302798d03b9601c7934ec2
+                        created_at: '2023-10-01T01:06:32.057Z'
+                        phone: +1 415-555-0181
+                        phone_status: no_status
+                        hubspot_id: null
+                        salesforce_id: 0017ntaJPTvuIbOUVM
+                        crm_owner_id: 005dK4PthD6owdyIkD
+                        parent_account_id: null
+                        linkedin_url: null
+                        sanitized_phone: '+14155550181'
+                        account_playbook_statuses: []
+                        existence_level: full
+                        label_ids:
+                        - 6504905b21ba8e00a334eb0f
+                        typed_custom_fields:
+                          671932d76c03c402d0528199:
+                          - 671932d76c03c402d0528195
+                        custom_field_errors: {}
+                        modality: account
+                        source_display_name: Job Change
+                        salesforce_record_url: https://orgfarm-1a2b3c4d5e-dev-ed.develop.my.salesforce.com/0017ntaJPTvuIbOUVM
+                        crm_record_url: null
+                        twitter_url: null
+                        facebook_url: null
+                        show_intent: false
+                        organization_headcount_six_month_growth: null
+                        organization_headcount_twelve_month_growth: null
+                        organization_headcount_twenty_four_month_growth: null
+                      duration: 150
+                    contact:
+                      id: 6601a68fca35d8000718d42b
+                      contact_roles: []
+                      first_name: Wesley
+                      last_name: Tran
+                      name: Wesley Tran
+                      linkedin_url: http://www.linkedin.com/in/wesley-tran-5a9c3e74
+                      title: Technical Writer II
+                      contact_stage_id: 6095a710bd01d100a506d4af
+                      owner_id: null
+                      creator_id: 60affe7d6e270a00f5db6fe4
+                      person_id: 66f0b509f10e970001a0b1b0
+                      email_needs_tickling: false
+                      organization_name: Apollo.io
+                      source: search
+                      original_source: email_import
+                      organization_id: 5e66b6381e05b4008c8331b8
+                      headline: Technical writer
+                      photo_url: null
+                      present_raw_address: Portland, Oregon, United States
+                      linkedin_uid: null
+                      extrapolated_email_confidence: null
+                      salesforce_id: null
+                      salesforce_lead_id: null
+                      salesforce_contact_id: null
+                      salesforce_account_id: null
+                      crm_owner_id: null
+                      created_at: '2024-03-25T16:30:07.555Z'
+                      emailer_campaign_ids:
+                      - 66a97236a8759801b5417678
+                      - 6567758e12b81a0264ab0bb1
+                      - 67be333b81ca47000d1cfb9f
+                      - 684b215edf80730019db612c
+                      direct_dial_status: enrichment_failed
+                      direct_dial_enrichment_failed_at: '2025-02-27T15:16:57.036+00:00'
+                      city: Portland
+                      country: United States
+                      state: Oregon
+                      email_status: verified
+                      email_source: crm
+                      account_id: 6518c6184f20350001a0b9c0
+                      last_activity_date: '2025-06-23T19:54:36.000+00:00'
+                      hubspot_vid: null
+                      hubspot_company_id: null
+                      crm_id: null
+                      sanitized_phone: '+14155550181'
+                      merged_crm_ids: null
+                      updated_at: '2025-06-23T19:54:36.183Z'
+                      queued_for_crm_push: false
+                      suggested_from_rule_engine_config_id: null
+                      email_unsubscribed: null
+                      person_deleted: null
+                      call_opted_out: null
+                      label_ids:
+                      - 66a96f0cb2ef9801b486f3fd
+                      has_pending_email_arcgate_request: false
+                      has_email_arcgate_request: false
+                      existence_level: full
+                      email: dwesley.t@example.com
+                      email_from_customer: null
+                      typed_custom_fields: {}
+                      custom_field_errors: {}
+                      crm_record_url: null
+                      email_status_unavailable_reason: null
+                      email_true_status: Verified
+                      updated_email_true_status: true
+                      source_display_name: Requested from Apollo
+                      twitter_url: null
+                      facebook_url: null
+                      contact_campaign_statuses:
+                      - id: 66a977e82a86cb000139ceff
+                        emailer_campaign_id: 66a97236a8759801b5417678
+                        send_email_from_user_id: 66a3d80d4238fe02d2baaaaf
+                        inactive_reason: replied
+                        status: finished
+                        added_at: '2024-07-30T23:31:51.991+00:00'
+                        added_by_user_id: 66a3d80d4238fe02d2baaaaf
+                        finished_at: '2024-10-08T16:51:24.185+00:00'
+                        paused_at: null
+                        auto_unpause_at: null
+                        send_email_from_email_address: priya.nadkarni@apollomail.io
+                        send_email_from_email_account_id: 66a423655825e8019ae89db6
+                        manually_set_unpause: null
+                        failure_reason: null
+                        current_step_id: 66a97236a8759801b541767d
+                        in_response_to_emailer_message_id: null
+                        cc_emails: null
+                        bcc_emails: null
+                        to_emails: null
+                        current_step_position: 3
+                      - id: 6708721db13a0a000190999c
+                        emailer_campaign_id: 6567758e12b81a0264ab0bb1
+                        send_email_from_user_id: 66a3d80d4238fe02d2baaaaf
+                        inactive_reason: User deleted
+                        status: failed
+                        added_at: '2024-10-11T00:32:29.857+00:00'
+                        added_by_user_id: 60affe7d6e270a00f5db6fe4
+                        finished_at: null
+                        paused_at: null
+                        auto_unpause_at: null
+                        send_email_from_email_address: priya.nadkarni@apollomail.io
+                        send_email_from_email_account_id: 66a423655825e8019ae89db6
+                        manually_set_unpause: null
+                        failure_reason: user_deleted
+                        current_step_id: null
+                        in_response_to_emailer_message_id: null
+                        cc_emails: null
+                        bcc_emails: null
+                        to_emails: null
+                        current_step_position: null
+                      - id: 680bd68fbfaec40015b9b32b
+                        emailer_campaign_id: 67be333b81ca47000d1cfb9f
+                        send_email_from_user_id: 66302798d03b9601c7934ebf
+                        inactive_reason: null
+                        status: active
+                        added_at: '2025-04-25T18:38:07.090+00:00'
+                        added_by_user_id: 66302798d03b9601c7934ebf
+                        finished_at: null
+                        paused_at: null
+                        auto_unpause_at: null
+                        send_email_from_email_address: test.marcus.hale@apollomail.io
+                        send_email_from_email_account_id: 6633baaece5fbd01c791d7ca
+                        manually_set_unpause: null
+                        failure_reason: null
+                        current_step_id: 67be333b81ca47000d1cfba0
+                        in_response_to_emailer_message_id: null
+                        cc_emails: null
+                        bcc_emails: null
+                        to_emails: null
+                        current_step_position: 2
+                      - id: 684b21d0de0df60015d2218d
+                        emailer_campaign_id: 684b215edf80730019db612c
+                        send_email_from_user_id: 66302798d03b9601c7934ebf
+                        inactive_reason: Completed last step
+                        status: finished
+                        added_at: '2025-06-12T18:52:00.914+00:00'
+                        added_by_user_id: 66302798d03b9601c7934ebf
+                        finished_at: '2025-06-12T21:34:16.705+00:00'
+                        paused_at: null
+                        auto_unpause_at: null
+                        send_email_from_email_address: test.marcus.hale@apollomail.io
+                        send_email_from_email_account_id: 6633baaece5fbd01c791d7ca
+                        manually_set_unpause: null
+                        failure_reason: contact_stage_safeguard
+                        current_step_id: 684b216ec95a4f001d968d19
+                        in_response_to_emailer_message_id: null
+                        cc_emails: null
+                        bcc_emails: null
+                        to_emails: null
+                        current_step_position: 1
+                      contact_emails:
+                      - email_md5: 210b056db397b0a452dbd967d19f9cb5
+                        email_sha256: a6ec970636a0a3c3fda95094cc2bb23a580ed900d7e96a517ad7694f657d8012
+                        email_status: verified
+                        extrapolated_email_confidence: null
+                        position: 0
+                        email: wesley.t@example.com
+                        free_domain: false
+                        source: Apollo
+                        third_party_vendor_name: null
+                        vendor_validation_statuses: []
+                        email_needs_tickling: false
+                        email_true_status: Verified
+                        email_status_unavailable_reason: null
+                      time_zone: America/Los_Angeles
+                      show_intent: false
+                      phone_numbers:
+                      - raw_number: +1 415-555-0181
+                        sanitized_number: '+14155550181'
+                        type: work_hq
+                        position: 0
+                        status: no_status
+                        dnc_status: null
+                        dnc_other_info: {}
+                        dialer_flags: null
+                        source_name: Apollo
+                        vendor_validation_statuses: []
+                        third_party_vendor_name: null
+                      account_phone_note: null
+                      free_domain: false
+                      email_domain_catchall: false
+        '401':
+          description: Unauthorized
+          content:
+            text/plain:
+              examples:
+                Check API Key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+                  summary: Check API Key
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                Need Master API Key:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/usage_stats/api_usage_stats. Request\
+                    \ an API key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\"\
+                    : \"API_INACCESSIBLE\"\n}"
+                  summary: Need Master API Key
+      parameters:
+      - name: logged
+        in: query
+        required: false
+        description: Set to `true` if you want to create an individual record for the phone call in Apollo.
+        schema:
+          type: boolean
+          default: ''
+      - name: user_id[]
+        in: query
+        required: false
+        description: 'Designate the caller in your team''s Apollo account. <br><br>Use the <a href="https://docs.apollo.io/reference/get-a-list-of-users"
+          target="_blank">Get a List of Users endpoint</a> to retrieve IDs for all of the users within your Apollo account.
+          <br><br>Example: `67e33d527de088000daa60c4`'
+        schema:
+          type: array
+          default: ''
+          items:
+            type: string
+      - name: contact_id
+        in: query
+        required: false
+        description: 'Designate the contact that was called. <br><br>Use the <a href="https://docs.apollo.io/reference/search-for-contacts#/"
+          target="_blank">Search for Contacts endpoint</a> to retrieve IDs for all of the contacts within your Apollo account.
+          <br><br>Example: `66e34b81740c50074e3d1bd4`'
+        schema:
+          type: string
+          default: ''
+      - name: account_id
+        in: query
+        required: false
+        description: 'Associate the call with an account. <br><br>Use the <a href="https://docs.apollo.io/reference/search-for-accounts#/"
+          target="_blank">Search for Accounts endpoint</a> to retrieve IDs for all of the accounts within your Apollo account.
+          <br><br>Example: `66e9abf95ac32901b20d1a0d`'
+        schema:
+          type: string
+          default: ''
+      - name: to_number
+        in: query
+        required: false
+        description: 'The phone number that you dialed. <br><br>Example: `5555550164`'
+        schema:
+          type: string
+          default: ''
+      - name: from_number
+        in: query
+        required: false
+        description: 'The phone number that dialed you. <br><br>Example: `5555550164`'
+        schema:
+          type: string
+          default: ''
+      - name: status
+        in: query
+        required: false
+        description: 'The status of the phone call. Possible values include: <ul> <li>`queued`</li> <li>`ringing`</li> <li>`in-progress`</li>
+          <li>`completed`</li> <li>`no_answer`</li> <li>`failed`</li> <li>`busy`</li></ul>'
+        schema:
+          type: string
+          default: ''
+      - name: start_time
+        in: query
+        required: false
+        description: 'The time when the call started. <br><br>Your entry should adhere to the ISO 8601 date-time format. Apollo
+          uses Greenwich Mean Time (GMT) by default. If you do not account for time zone differences, you could add a start
+          time that falls on a different day than you intended. <br><br>The value you enter can either adhere to GMT, or you
+          can adjust the time manually by specifiying in hours and minutes how much you want to offset GMT. <br><br>Example:
+          `2025-02-15T08:10:30Z`; `2025-03-25T10:15:30+05:00Z`'
+        schema:
+          type: string
+          format: date-time
+          default: ''
+      - name: end_time
+        in: query
+        required: false
+        description: 'The time when the call ended. <br><br>Your entry should adhere to the ISO 8601 date-time format. Apollo
+          uses Greenwich Mean Time (GMT) by default. If you do not account for time zone differences, you could add a end
+          time that falls on a different day than you intended. <br><br>The value you enter can either adhere to GMT, or you
+          can adjust the time manually by specifiying in hours and minutes how much you want to offset GMT. <br><br>Example:
+          `2025-05-15T08:10:30Z`; `2025-05-25T10:15:30+05:00Z`'
+        schema:
+          type: string
+          format: date-time
+          default: ''
+      - name: duration
+        in: query
+        required: false
+        description: 'The duration of the call in seconds. Do not enter minutes. <br><br>Examples: `120`; `205`'
+        schema:
+          type: integer
+          default: ''
+      - name: phone_call_purpose_id
+        in: query
+        required: false
+        description: 'Assign a call purpose to the record. <br><br>Call purposes are unique to your team''s Apollo account.
+          When you use the <b>Purpose</b> search filter for calls in the Apollo product, you can find the corresponding call
+          purpose ID in the URL. <br><br>Examples: `6095a710bd01d100a506d4cd`'
+        schema:
+          type: string
+          default: ''
+      - name: phone_call_outcome_id
+        in: query
+        required: false
+        description: 'Assign a call outcome to the record. <br><br>Call outcomes are unique to your team''s Apollo account.
+          When you use the <b>Disposition</b> search filter for calls in the Apollo product, you can find the corresponding
+          call outcome ID in the URL. <br><br>Examples: `6095a710bd01d100a506d4c5`'
+        schema:
+          type: string
+          default: ''
+      - name: note
+        in: query
+        required: false
+        description: 'Add a note to the call record. <br><br>Example: `This lead is interested in learning more about our
+          new product line.`'
+        schema:
+          type: string
+          default: ''
+      - in: path
+        name: id
+        description: 'The Apollo ID for the call record that you want to update. <br><br>To find call record IDs, call the
+          <a href="https://docs.apollo.io/reference/search-for-calls#/" target="_blank">Search for Calls endpoint</a> and
+          identify the `id` value for the call record. <br><br>Example: `6859b0dd828b270021e69648`'
+        schema:
+          type: string
+        required: true

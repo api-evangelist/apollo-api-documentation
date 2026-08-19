@@ -1,0 +1,70 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://docs.apollo.io/docs/enrich-phone-and-email-using-data-waterfall,
+  https://docs.apollo.io/reference/poll-webhook-result, plus the webhook_url parameter and Webhook
+  Requirements sections in openapi/_original/apollo-api-documentation-apollo-rest-api-openapi.json
+provider: Apollo API Documentation
+providerId: apollo-api-documentation
+description: >-
+  Apollo's event surface. Apollo publishes NO AsyncAPI document and NO general event/streaming API — there is
+  no subscription model, no event catalogue, no signature verification scheme, and no webhook management
+  endpoints. What exists is a single request-scoped callback: waterfall enrichment. The caller passes a
+  webhook_url on an enrichment request and Apollo POSTs the completed result back to it. This artifact
+  records that surface honestly rather than inventing an AsyncAPI for it.
+asyncapi_published: false
+asyncapi_probed:
+  - {url: 'https://docs.apollo.io/asyncapi.yaml', status: 404}
+  - {url: 'https://api.apollo.io/asyncapi.yaml', status: 404}
+event_catalog_published: false
+webhook_management_api: false
+subscription_model: none
+signature_verification:
+  documented: false
+  note: >-
+    Apollo publishes no HMAC signature header or shared-secret verification scheme for its callbacks. A
+    receiver's only defences are HTTPS and an unguessable webhook_url.
+webhook_count: 1
+webhooks:
+  - name: waterfall-enrichment-result
+    trigger: >-
+      A people-enrichment or bulk-people-enrichment request made with run_waterfall_email=true and/or
+      run_waterfall_phone=true and a valid webhook_url.
+    direction: apollo-to-consumer
+    transport: HTTPS POST
+    operations:
+      - {operationId: people-enrichment, path: /people/match, method: post}
+      - {operationId: bulk-people-enrichment, path: /people/bulk_match, method: post}
+    request_parameters:
+      - {name: webhook_url, in: query, required_for: waterfall, note: Must be a publicly accessible HTTPS endpoint.}
+      - {name: run_waterfall_email, in: query, type: boolean}
+      - {name: run_waterfall_phone, in: query, type: boolean}
+    synchronous_response:
+      contains: [demographic and firmographic data, waterfall request status, request id, validation errors, unprocessable attributes]
+      statuses: [accepted]
+    asynchronous_delivery:
+      target: the caller's webhook_url
+      contains: final enriched email and/or phone results
+    consumer_requirements:
+      - HTTPS required — the endpoint must be publicly accessible over HTTPS.
+      - Rate limiting — the endpoint must handle the volume of webhook traffic Apollo sends.
+      - Idempotency — Apollo may retry webhook calls; the endpoint must tolerate duplicate payloads safely.
+    fallback:
+      operationId: poll-webhook-result
+      path: /webhook_result/{request_id}
+      method: get
+      scope: webhook_result_read
+      note: Pull-based retrieval of an asynchronous result when the callback was missed or not configured.
+    prerequisites:
+      - An Apollo admin must configure waterfall enrichment and select the team's data sources.
+      - Credit consumption depends on the vendors in the waterfall configuration; some charge per lookup even on a miss.
+    docs: https://docs.apollo.io/docs/enrich-phone-and-email-using-data-waterfall
+gaps:
+  - No AsyncAPI specification.
+  - No CRM-change events (no contact.created, deal.updated, sequence.completed or similar).
+  - No webhook registration, listing, or replay API.
+  - No delivery-attempt log or dead-letter surface.
+  - No signature header for verifying that a callback came from Apollo.
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com

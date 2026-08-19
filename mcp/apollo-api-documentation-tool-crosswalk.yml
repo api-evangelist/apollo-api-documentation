@@ -1,0 +1,162 @@
+generated: '2026-08-14'
+method: derived
+source: >-
+  mcp/apollo-api-documentation-mcp.yml (52 documented MCP actions) bound against
+  openapi/_original/apollo-api-documentation-apollo-rest-api-openapi.json (80 operations)
+provider: Apollo API Documentation
+providerId: apollo-api-documentation
+description: >-
+  Binds each documented Apollo MCP action to the REST operationId(s) that back it, so an agent can read the
+  real parameters and request bodies for a tool whose live inputSchema is OAuth-gated. Confidence is honest:
+  `high` where the action name and the operation summary are the same phrase, `medium` where the mapping is
+  semantic, `low` where several operations could serve the action. Nothing here was invented — every `rest`
+  value is an operationId that exists in the published spec.
+surfaces:
+  openapi:
+    url: openapi/_original/apollo-api-documentation-apollo-rest-api-openapi.json
+    published: https://docs.apollo.io/openapi/apollo-rest-api.json
+    server: https://api.apollo.io/api/v1
+    gated: false
+    operations: 80
+  mcp:
+    url: https://mcp.apollo.io/mcp
+    gated: true
+    gate: OAuth 2.0 — anonymous tools/list returns HTTP 401
+    actions: 52
+  graphql: null
+coverage:
+  mcp_actions: 52
+  mapped_to_rest: 40
+  mcp_only: 12
+  rest_operations: 80
+  rest_only: 30
+crosswalk:
+  - {tool: People enrichment, category: enrichment, rest: [people-enrichment], binding: direct, confidence: high}
+  - {tool: Bulk people enrichment, category: enrichment, rest: [bulk-people-enrichment], binding: direct, confidence: high}
+  - {tool: Company enrichment, category: enrichment, rest: [organization-enrichment], binding: direct, confidence: high}
+  - {tool: Bulk company enrichment, category: enrichment, rest: [bulk-organization-enrichment], binding: direct, confidence: high}
+  - {tool: Company job postings, category: search, rest: [organization-jobs-postings], binding: direct, confidence: high}
+  - {tool: Search for companies, category: search, rest: [organization-search], binding: direct, confidence: high}
+  - {tool: Search for people, category: search, rest: [people-api-search], binding: direct, confidence: high}
+  - tool: Search for contacts
+    category: contacts
+    rest: [search-for-contacts]
+    binding: direct
+    confidence: high
+  - {tool: Create a contact, category: contacts, rest: [create-a-contact], binding: direct, confidence: high}
+  - {tool: Bulk create contacts, category: contacts, rest: [bulk-create-contacts], binding: direct, confidence: high}
+  - tool: Update a contact
+    category: contacts
+    rest: [update-a-contact, bulk-update-contacts, update-contact-stage, update-contact-ownership]
+    binding: composite
+    confidence: medium
+    note: One MCP action fronts four REST update paths (single, bulk, stage, owner).
+  - {tool: Create an account, category: accounts, rest: [create-an-account], binding: direct, confidence: high}
+  - {tool: Bulk create accounts, category: accounts, rest: [bulk-create-accounts], binding: direct, confidence: high}
+  - tool: Update an account
+    category: accounts
+    rest: [update-an-account, bulk-update-accounts, update-account-ownership]
+    binding: composite
+    confidence: medium
+  - {tool: Search for deals, category: deals, rest: [list-all-deals], binding: direct, confidence: high}
+  - {tool: Create a deal, category: deals, rest: [create-deal], binding: direct, confidence: high}
+  - {tool: View deal details, category: deals, rest: [view-deal], binding: direct, confidence: high}
+  - {tool: Search conversations, category: conversations, rest: [search-conversations], binding: direct, confidence: high}
+  - tool: Get conversation insights
+    category: conversations
+    rest: [get-conversations-info]
+    binding: direct
+    confidence: medium
+    note: The insights, transcript and recording-link actions all read the same conversation record endpoint.
+  - {tool: Get conversation transcript, category: conversations, rest: [get-conversations-info], binding: direct, confidence: medium}
+  - {tool: Get conversation recording link, category: conversations, rest: [get-conversations-info], binding: direct, confidence: medium}
+  - {tool: Search for lists, category: lists, rest: [get-a-list-of-all-lists], binding: direct, confidence: high}
+  - {tool: Create a list, category: lists, rest: [create-a-list], binding: direct, confidence: high}
+  - {tool: Update a list, category: lists, rest: [update-a-list], binding: direct, confidence: high}
+  - {tool: Add records to lists, category: lists, rest: [add-records-to-a-list], binding: direct, confidence: high}
+  - {tool: Remove records from lists, category: lists, rest: [remove-records-from-a-list], binding: direct, confidence: high}
+  - tool: Create or manage labels
+    category: lists
+    rest: [create-a-list, update-a-list, add-records-to-a-list, remove-records-from-a-list]
+    binding: composite
+    confidence: medium
+    note: Apollo lists are implemented as /labels in the REST API.
+  - tool: Create or update a sequence
+    category: sequences
+    rest: [create-sequence, update-sequence, approve-sequence, abort-sequence, archive-sequence]
+    binding: composite
+    confidence: medium
+  - {tool: Add contacts to a sequence, category: sequences, rest: [add-contacts-to-sequence], binding: direct, confidence: high}
+  - {tool: Remove contacts from sequences, category: sequences, rest: [update-contact-status-sequence], binding: direct, confidence: high}
+  - {tool: Search for sequences, category: sequences, rest: [search-for-sequences], binding: direct, confidence: high}
+  - {tool: Get a list of email accounts, category: email, rest: [get-a-list-of-email-accounts], binding: direct, confidence: high}
+  - tool: Send one-off emails
+    category: email
+    rest: [create-an-email-draft, send-email-now, check-email-send-status]
+    binding: composite
+    confidence: medium
+    note: Draft then send is two REST calls behind one MCP action.
+  - tool: Search email campaigns
+    category: email
+    rest: ['emailer_messages/search', get-email-content, get_emailstats]
+    binding: composite
+    confidence: medium
+  - {tool: Search tasks, category: tasks, rest: [search-tasks], binding: direct, confidence: high}
+  - {tool: Show task details, category: tasks, rest: [get-a-task], binding: direct, confidence: high}
+  - {tool: Create tasks, category: tasks, rest: [create-a-task, bulk-create-tasks], binding: composite, confidence: high}
+  - {tool: Complete or skip tasks, category: tasks, rest: [complete-a-task, skip-a-task], binding: composite, confidence: high}
+  - {tool: Query analytics data, category: analytics, rest: [sync-report], binding: direct, confidence: high}
+  - tool: Get API usage and credit stats
+    category: operations
+    rest: [post_apiusage, view-credit-usage-stats]
+    binding: composite
+    confidence: high
+  - {tool: Get user profile, category: operations, rest: [get-current-user-profile], binding: direct, confidence: high}
+  - {tool: Poll webhook result, category: operations, rest: [poll-webhook-result], binding: direct, confidence: high}
+mcp_only:
+  - {tool: Search custom object records, reason: No public REST operation for custom object records; only /fields and /typed_custom_fields are published.}
+  - {tool: Create a custom object, reason: No public REST operation; the REST surface publishes custom FIELDS, not custom OBJECTS.}
+  - {tool: View a custom object, reason: No public REST operation.}
+  - {tool: Connect a data source, reason: No public REST operation for external data-source connections.}
+  - {tool: Import data from a data source, reason: No public REST operation.}
+  - {tool: Purchase or browse sending domains, reason: 'No public REST operation; OAuth scopes domain_purchase_list / domain_purchase_create exist but no documented endpoint.'}
+  - {tool: Purchase or browse email accounts, reason: 'No public REST operation; scopes email_account_purchase_list / email_account_purchase_create exist but no documented endpoint.'}
+  - {tool: Check email domain authentication, reason: 'No public REST operation; scope domain_authentication_status exists but no documented endpoint.'}
+  - {tool: Track website visitors, reason: 'No public REST operation; scopes website_visitors_read / website_visitor_domain_tracker_* exist but no documented endpoint.'}
+  - {tool: Send feedback, reason: MCP-native product-feedback channel, not an Apollo API resource.}
+  - {tool: Get conversation transcript, reason: 'Transcript may be a projection of get-conversations-info rather than its own operation; mapped above at medium confidence and listed here as ambiguous.'}
+  - {tool: Get conversation recording link, reason: Same ambiguity as transcript.}
+rest_only:
+  - {operationId: list-account-stages, note: Reference data — account stages.}
+  - {operationId: search-for-accounts, note: Account search has no dedicated MCP action.}
+  - {operationId: 'get_accounts{id}', note: View a single account.}
+  - {operationId: list-contact-stages}
+  - {operationId: view-a-contact}
+  - {operationId: view-associated-deals}
+  - {operationId: update-deal}
+  - {operationId: list-deal-stages}
+  - {operationId: export-conversations}
+  - {operationId: get-conversations-export}
+  - {operationId: news_articles_search, note: News search is a REST-only credit-consuming endpoint.}
+  - {operationId: 'get_organizations{id}'}
+  - {operationId: 'get_people{id}'}
+  - {operationId: get-a-list-of-notes}
+  - {operationId: get-a-list-of-fields}
+  - {operationId: create-a-custom-field}
+  - {operationId: update-a-custom-field}
+  - {operationId: get-a-list-of-all-custom-fields, note: Marked deprecated in the spec.}
+  - {operationId: get-a-list-of-users}
+  - {operationId: phonecalls_create, note: Call logging is REST-only — no MCP call action.}
+  - {operationId: get_phone_callssearch}
+  - {operationId: put_phone_callsupdate}
+  - {operationId: list-email-schedules}
+  - {operationId: get-contact-sequence-activity}
+  - {operationId: update-a-task}
+  - {operationId: create-an-email-draft, note: Also reachable through the composite one-off-email action.}
+  - {operationId: send-email-now}
+  - {operationId: check-email-send-status}
+  - {operationId: get-email-content}
+  - {operationId: get_emailstats}
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com

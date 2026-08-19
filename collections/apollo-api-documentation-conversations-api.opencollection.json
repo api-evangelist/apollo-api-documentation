@@ -1,0 +1,94 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apollo API — Conversations",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Conversations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Conversations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/conversations/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/conversations/search` or `Master API key`\n\n**OAuth scopes:** `conversations_search`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/45998035787533-Use-Conversations\">Conversations</a> are prospect video meetings stored in Apollo.<br><br>Use the Search Conversations endpoint to find a list of conversations. Several filter"
+        },
+        {
+          "info": {
+            "name": "Get Conversations Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/conversations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The conversation ID. Supports an optional share ID in the format <code>id_shareid</code>"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/conversations/show` or `Master API key`\n\n**OAuth scopes:** `conversations_show`\n\n**Credit usage:** `0–1 credit per conversation`\n\nThis endpoint consumes 1 Apollo credit per conversation if the conversation has AI insights. Conversations without AI insights consume 0 credits. Learn more about [API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/45998035787533-Use-Conversation"
+        },
+        {
+          "info": {
+            "name": "Export Conversations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/conversations/export",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/conversations/export` or `Master API key`\n\n**OAuth scopes:** `conversations_export`\n\n**Credit usage:** `0–1 credit per conversation`\n\nThis endpoint consumes 1 Apollo credit per conversation if the conversation has AI insights. Conversations without AI insights consume 0 credits. Learn more about [API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/45998035787533-Use-Conversa"
+        },
+        {
+          "info": {
+            "name": "Get Conversations Export",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/conversations/export/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The export ID returned by the Export Conversations endpoint."
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/conversations/find_export` or `Master API key`\n\n**OAuth scopes:** `conversations_find_export`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/45998035787533-Use-Conversations\">Conversations</a> are prospect video meetings stored in Apollo.<br><br>Use the Get Conversations Export endpoint to retrieve a download URL for yo"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

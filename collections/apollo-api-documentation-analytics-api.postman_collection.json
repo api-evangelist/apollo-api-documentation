@@ -1,0 +1,358 @@
+{
+  "item": [
+    {
+      "id": "2dca9182-5531-4aa2-b5bc-a9858663a667",
+      "name": "Analytics",
+      "description": {
+        "content": "Query saved analytics reports.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0affd28c-4f52-4c11-8469-d06c33043378",
+          "name": "Query Analytics Report",
+          "request": {
+            "name": "Query Analytics Report",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/reports/sync_report` or `Master API key`\n\n**OAuth scopes:** `report_sync`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the Query Analytics Report endpoint to programmatically query <a href=\"https://knowledge.apollo.io/hc/en-us/articles/33574373762317-Analytics-Overview\" target=\"_blank\">Apollo analytics</a> and retrieve aggregated sales activity data for your team.<br><br>This endpoint accepts a flexible payload specifying which metrics to measure, how to group and filter results, and which date range to apply — returning the same data that powers Apollo's built-in Analytics dashboards. <br><br>Three query modes are supported: flat totals (no <code>group_by</code>), grouped by one dimension such as user or sequence, and pivot cross-tab (one <code>group_by</code> dimension as rows + one <code>pivot_group_by</code> dimension as columns). Each array supports a maximum of one entry.<br><br>\n<strong>Authentication:</strong> Requires an Apollo API key with access to the <code>api/v1/reports/sync_report</code> API. When creating or editing an API key in Apollo Settings, open the <strong>APIs</strong> tab and select <code>api/v1/reports/sync_report</code> from the list. Check out <a href=\"https://docs.apollo.io/docs/create-api-key\">Create an API Key</a> for detailed instructions.<br><br><strong>Tip:</strong> The easiest way to discover valid metric and group_by combinations is to build a report interactively at <a href=\"https://app.apollo.io/#/analytics/reports/new\" target=\"_blank\">Apollo Analytics → Start from scratch</a>, then replicate that configuration in your API request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "sync_report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"metrics\": [\n    {\n      \"value\": \"<string>\",\n      \"smart_datetime_reference\": \"<string>\",\n      \"smart_user_id_reference\": \"<string>\",\n      \"display_name\": \"<string>\"\n    },\n    {\n      \"value\": \"<string>\",\n      \"smart_datetime_reference\": \"<string>\",\n      \"smart_user_id_reference\": \"<string>\",\n      \"display_name\": \"<string>\"\n    }\n  ],\n  \"group_by\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<integer>\"\n    }\n  ],\n  \"sorts\": [\n    {\n      \"asc\": \"<boolean>\",\n      \"metric\": {\n        \"value\": \"<string>\",\n        \"smart_datetime_reference\": \"<string>\",\n        \"smart_user_id_reference\": \"<string>\"\n      }\n    },\n    {\n      \"asc\": \"<boolean>\",\n      \"metric\": {\n        \"value\": \"<string>\",\n        \"smart_datetime_reference\": \"<string>\",\n        \"smart_user_id_reference\": \"<string>\"\n      }\n    }\n  ],\n  \"filters\": {\n    \"smart_user_id\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"smart_subteam_id\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"emailer_campaign_ids\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"contact_stage_ids\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"account_stage_ids\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"opportunity_stage_ids\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"email_account_ids\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"smart_datetime_range\": {\n      \"min\": \"<string>\",\n      \"max\": \"<string>\"\n    }\n  },\n  \"group_by_totals_selected\": \"<boolean>\",\n  \"pivot_group_by_totals_selected\": \"<boolean>\",\n  \"date_ranges\": [\n    {\n      \"modality\": \"<string>\"\n    }\n  ],\n  \"pivot_group_by\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<integer>\"\n    }\n  ],\n  \"skip_group_by_values\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"min_ratio_denominator\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "755f0cc1-46d7-484e-bceb-e4fa598b388d",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "sync_report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"metrics\": [\n    {\n      \"value\": \"num_emails_sent\",\n      \"smart_datetime_reference\": \"activity_datetime\",\n      \"smart_user_id_reference\": \"user_id\"\n    },\n    {\n      \"value\": \"num_emails_opened\",\n      \"smart_datetime_reference\": \"activity_datetime\",\n      \"smart_user_id_reference\": \"user_id\"\n    },\n    {\n      \"value\": \"percent_emails_opened_tracked\",\n      \"smart_datetime_reference\": \"activity_datetime\",\n      \"smart_user_id_reference\": \"user_id\"\n    }\n  ],\n  \"group_by\": [],\n  \"pivot_group_by\": [],\n  \"sorts\": [],\n  \"filters\": {},\n  \"group_by_totals_selected\": false,\n  \"pivot_group_by_totals_selected\": false,\n  \"date_ranges\": [\n    {\n      \"modality\": \"last_30_days\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"table_response\": {\n      \"num_emails_sent\": 1240,\n      \"num_emails_opened\": 410,\n      \"percent_emails_opened_tracked\": 0.331,\n      \"percent_emails_opened_tracked_denominator\": 1240\n    },\n    \"group_by_total_response\": {},\n    \"pivot_group_by_total_response\": {}\n  },\n  \"incompatible_filters\": {},\n  \"goals\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e70b78b-1edb-4aef-b04a-02d2e7d1c1bc",
+              "name": "400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "sync_report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"metrics\": [\n    {\n      \"value\": \"num_emails_sent\",\n      \"smart_datetime_reference\": \"activity_datetime\",\n      \"smart_user_id_reference\": \"user_id\"\n    },\n    {\n      \"value\": \"num_emails_opened\",\n      \"smart_datetime_reference\": \"activity_datetime\",\n      \"smart_user_id_reference\": \"user_id\"\n    },\n    {\n      \"value\": \"percent_emails_opened_tracked\",\n      \"smart_datetime_reference\": \"activity_datetime\",\n      \"smart_user_id_reference\": \"user_id\"\n    }\n  ],\n  \"group_by\": [],\n  \"pivot_group_by\": [],\n  \"sorts\": [],\n  \"filters\": {},\n  \"group_by_totals_selected\": false,\n  \"pivot_group_by_totals_selected\": false,\n  \"date_ranges\": [\n    {\n      \"modality\": \"last_30_days\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"param is missing or the value is empty: metrics\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8131073a-9750-4aee-83f3-68492f76f2b4",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "sync_report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"metrics\": [\n    {\n      \"value\": \"num_emails_sent\",\n      \"smart_datetime_reference\": \"activity_datetime\",\n      \"smart_user_id_reference\": \"user_id\"\n    },\n    {\n      \"value\": \"num_emails_opened\",\n      \"smart_datetime_reference\": \"activity_datetime\",\n      \"smart_user_id_reference\": \"user_id\"\n    },\n    {\n      \"value\": \"percent_emails_opened_tracked\",\n      \"smart_datetime_reference\": \"activity_datetime\",\n      \"smart_user_id_reference\": \"user_id\"\n    }\n  ],\n  \"group_by\": [],\n  \"pivot_group_by\": [],\n  \"sorts\": [],\n  \"filters\": {},\n  \"group_by_totals_selected\": false,\n  \"pivot_group_by_totals_selected\": false,\n  \"date_ranges\": [\n    {\n      \"modality\": \"last_30_days\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cc779d58-387c-4bf1-84bd-a695ae23f2ab",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "sync_report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"metrics\": [\n    {\n      \"value\": \"num_emails_sent\",\n      \"smart_datetime_reference\": \"activity_datetime\",\n      \"smart_user_id_reference\": \"user_id\"\n    },\n    {\n      \"value\": \"num_emails_opened\",\n      \"smart_datetime_reference\": \"activity_datetime\",\n      \"smart_user_id_reference\": \"user_id\"\n    },\n    {\n      \"value\": \"percent_emails_opened_tracked\",\n      \"smart_datetime_reference\": \"activity_datetime\",\n      \"smart_user_id_reference\": \"user_id\"\n    }\n  ],\n  \"group_by\": [],\n  \"pivot_group_by\": [],\n  \"sorts\": [],\n  \"filters\": {},\n  \"group_by_totals_selected\": false,\n  \"pivot_group_by_totals_selected\": false,\n  \"date_ranges\": [\n    {\n      \"modality\": \"last_30_days\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"This API key is not authorized to access api/v1/reports/sync_report. Request an API key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\": \"API_INACCESSIBLE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a406dd1-8c39-4462-a3bb-9b1113136006",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "sync_report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"metrics\": [\n    {\n      \"value\": \"num_emails_sent\",\n      \"smart_datetime_reference\": \"activity_datetime\",\n      \"smart_user_id_reference\": \"user_id\"\n    },\n    {\n      \"value\": \"num_emails_opened\",\n      \"smart_datetime_reference\": \"activity_datetime\",\n      \"smart_user_id_reference\": \"user_id\"\n    },\n    {\n      \"value\": \"percent_emails_opened_tracked\",\n      \"smart_datetime_reference\": \"activity_datetime\",\n      \"smart_user_id_reference\": \"user_id\"\n    }\n  ],\n  \"group_by\": [],\n  \"pivot_group_by\": [],\n  \"sorts\": [],\n  \"filters\": {},\n  \"group_by_totals_selected\": false,\n  \"pivot_group_by_totals_selected\": false,\n  \"date_ranges\": [\n    {\n      \"modality\": \"last_30_days\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The maximum number of api calls allowed for api/v1/reports/sync_report is 200 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.apollo.io/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "62e98d84-7bdb-43f7-b3d5-cadffc223705",
+    "name": "Apollo API — Analytics",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Apollo API provides programmatic access to [Apollo](https://www.apollo.io/), the all-in-one sales intelligence and engagement platform. Use it to enrich people and company data (individually or in bulk), search Apollo's database of over 240 million contacts and 30 million companies, and manage accounts, contacts, deals, sequences, tasks, calls, and conversations in your go-to-market workflows.\n\n## Base URL\n\nAll API requests are made to `https://api.apollo.io/api/v1`.\n\n## Authentication\n\n- **Apollo users** authenticate with an API key passed in the `x-api-key` request header. See [Create API Keys](https://docs.apollo.io/docs/create-api-key).\n- **Apollo partners** building integrations on behalf of mutual users authenticate with the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).\n\n## Rate limits & credits\n\nRate limits and credit consumption depend on your [Apollo pricing plan](https://docs.apollo.io/docs/api-pricing). Check your current limits and usage with the [View API Usage Stats and Rate Limits](https://docs.apollo.io/reference/view-api-usage-stats) endpoint. For more details, see [Rate Limits](https://docs.apollo.io/reference/rate-limits) and the [API FAQs](https://docs.apollo.io/docs/apollo-api-faqs).\n\nNew to the API? Start with the [Apollo API overview](https://docs.apollo.io/reference/apollo-api).\n\nContact Support:\n Name: Apollo API Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+generated: '2026-08-14'
+method: generated
+source: >-
+  openapi/_original/apollo-api-documentation-apollo-rest-api-openapi.json plus the Apollo docs pages cited in
+  each skill. Every operationId referenced was grepped out of the published spec; none were invented.
+provider: Apollo API Documentation
+providerId: apollo-api-documentation
+description: >-
+  Packaged Agent Skills for the Apollo API — one per marquee flow, grounded in real operationIds and in
+  Apollo's own published conventions (credit costs, per-endpoint rate limits, the acting-user rule, and the
+  absence of an idempotency key). Apollo publishes no AGENTS.md or first-party skill pack; these are
+  API Evangelist generations, not provider artifacts.
+provider_published_skills: false
+provider_probed:
+  - {url: 'https://docs.apollo.io/AGENTS.md', status: 404}
+  - {url: 'https://docs.apollo.io/llms.txt', status: 200, note: 'Real docs index, but a page list — not a skill pack.'}
+skill_count: 3
+skills:
+  - name: apollo-enrich-and-save-a-prospect
+    file: skills/apollo-enrich-and-save-a-prospect.md
+    summary: Search, enrich, then convert to a saved Contact so the workspace stops paying credits for the same person.
+    operations: [people-api-search, people-enrichment, create-a-contact, search-for-contacts, view-credit-usage-stats]
+    risk: spends-credits
+  - name: apollo-enroll-contacts-in-a-sequence
+    file: skills/apollo-enroll-contacts-in-a-sequence.md
+    summary: Find or create a sequence, choose the sending mailbox, enroll contacts, monitor activity, stop on reply.
+    operations: [search-for-sequences, create-sequence, get-a-list-of-email-accounts, add-contacts-to-sequence, get-contact-sequence-activity, update-contact-status-sequence, approve-sequence, abort-sequence]
+    risk: sends-email-to-real-people
+  - name: apollo-check-budget-before-a-bulk-job
+    file: skills/apollo-check-budget-before-a-bulk-job.md
+    summary: Read the two independent budgets — per-endpoint rate limits and credits — before running anything at volume.
+    operations: [get-current-user-profile, post_apiusage, view-credit-usage-stats, bulk-people-enrichment, bulk-organization-enrichment]
+    risk: read-only
+shared_context:
+  base_url: https://api.apollo.io/api/v1
+  auth: x-api-key header (users) or OAuth 2.0 bearer token (partners)
+  idempotency: none — Apollo publishes no client idempotency key; do not blind-retry writes
+  rate_limit_headers: [x-rate-limit-minute, x-rate-limit-hourly, x-rate-limit-24-hour, retry-after]
+  errors: errors/apollo-api-documentation-problem-types.yml
+  conventions: conventions/apollo-api-documentation-conventions.yml
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com

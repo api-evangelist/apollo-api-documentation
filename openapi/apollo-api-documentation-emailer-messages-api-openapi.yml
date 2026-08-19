@@ -1,0 +1,1173 @@
+openapi: 3.1.0
+info:
+  title: Apollo API — Emailer Messages
+  summary: Programmatic access to Apollo's sales intelligence and engagement platform — data enrichment, prospect and company
+    search, and go-to-market workflow management.
+  description: 'The Apollo API provides programmatic access to [Apollo](https://www.apollo.io/), the all-in-one sales intelligence
+    and engagement platform. Use it to enrich people and company data (individually or in bulk), search Apollo''s database
+    of over 240 million contacts and 30 million companies, and manage accounts, contacts, deals, sequences, tasks, calls,
+    and conversations in your go-to-market workflows.
+
+
+    ## Base URL
+
+
+    All API requests are made to `https://api.apollo.io/api/v1`.
+
+
+    ## Authentication
+
+
+    - **Apollo users** authenticate with an API key passed in the `x-api-key` request header. See [Create API Keys](https://docs.apollo.io/docs/create-api-key).
+
+    - **Apollo partners** building integrations on behalf of mutual users authenticate with the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).
+
+
+    ## Rate limits & credits
+
+
+    Rate limits and credit consumption depend on your [Apollo pricing plan](https://docs.apollo.io/docs/api-pricing). Check
+    your current limits and usage with the [View API Usage Stats and Rate Limits](https://docs.apollo.io/reference/view-api-usage-stats)
+    endpoint. For more details, see [Rate Limits](https://docs.apollo.io/reference/rate-limits) and the [API FAQs](https://docs.apollo.io/docs/apollo-api-faqs).
+
+
+    New to the API? Start with the [Apollo API overview](https://docs.apollo.io/reference/apollo-api).'
+  termsOfService: https://www.apollo.io/terms/api
+  contact:
+    name: Apollo API Support
+    url: https://docs.apollo.io/
+  version: '1.0'
+servers:
+- url: https://api.apollo.io/api/v1
+tags:
+- name: Emailer Messages
+security:
+- apiKey: []
+- bearerAuth: []
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: '[Recommended] API key, passed in the `x-api-key` request header.
+
+        See [Create API Keys](https://docs.apollo.io/docs/create-api-key).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'OAuth 2.0 access token, used by Apollo partners building integrations.
+
+        See the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).'
+paths:
+  /emailer_messages:
+    post:
+      summary: Create an Email Draft
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/emailer_messages/create` or `Master API key`
+
+
+        **OAuth scopes:** `emailer_messages_create`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        Use the Create an Email Draft endpoint to create a single, unsent email message (an email draft) for a contact. The
+        draft is created with a `drafted` status — this endpoint doesn''t send the email.<br><br>To send the draft after creating
+        it, call the <a href="https://docs.apollo.io/reference/send-email-now">Send Email Now endpoint</a> with the `id` returned
+        in the response.<br><br>You must provide a `contact_id` so Apollo knows who the email is for. Alternatively, to draft
+        a reply within an existing email thread, provide `in_response_to_emailer_message_id` instead and Apollo infers the
+        contact and recipients from the parent message.<br><br>The email is drafted from the user that owns the API key. That
+        user must have permission to email the contact (like by owning the contact or its account), and the contact must not
+        be blocked by any do not contact settings.<br><br>This endpoint returns the created `emailer_message` object. If the
+        draft is linked to an outreach task, a `task` object is also returned.'
+      tags:
+      - Emailer Messages
+      operationId: create-an-email-draft
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - contact_id
+              properties:
+                contact_id:
+                  type: string
+                  description: 'The Apollo ID for the contact that will receive the email. <br><br>This is required unless
+                    you provide `in_response_to_emailer_message_id`, in which case the contact is inferred from the parent
+                    message. <br><br>To find contact IDs, call the <a href="https://docs.apollo.io/reference/search-for-contacts"
+                    target="_blank">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example:
+                    `66e34b81740c50074e3d1bd4`'
+                subject:
+                  type: string
+                  description: 'The subject line of the email. <br><br>Example: `Quick question about your team''s workflow`'
+                body_html:
+                  type: string
+                  description: 'The body of the email as HTML. The content is sanitized by Apollo before it is saved. <br><br>Example:
+                    `<p>Hi there, I wanted to reach out about...</p>`'
+                recipients:
+                  type: array
+                  description: The list of recipients for the email. Use this to set the `to`, `cc`, and `bcc` recipients.
+                    If you do not provide a `to` recipient, Apollo keeps the existing `to` recipients (if any). <br><br>All
+                    recipient emails must be valid, otherwise the request fails and the email is not saved.
+                  items:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        description: 'The email address of the recipient. <br><br>Example: `ava.ruiz@sumware.com`'
+                      contact_id:
+                        type: string
+                        description: 'The Apollo ID for the contact associated with this recipient. <br><br>Example: `66e34b81740c50074e3d1bd4`'
+                      recipient_type_cd:
+                        type: string
+                        description: The type of recipient. <ul> <li> `to` </li> <li> `cc` </li> <li> `bcc` </li> </ul>
+                in_response_to_emailer_message_id:
+                  type: string
+                  description: 'The Apollo ID of an existing email message that this draft is replying to. When provided,
+                    Apollo infers the contact and builds the recipients from the parent message, so you do not need to provide
+                    `contact_id`. <br><br>Example: `66e8cc45028aed019c25d724`'
+                emailer_template_id:
+                  type: string
+                  description: 'The Apollo ID of an email template to associate with the draft. <br><br>Example: `66e8cc45028aed019c25d725`'
+                attachment_ids:
+                  type: array
+                  items:
+                    type: string
+                  description: The Apollo IDs of the attachments to include with the email.
+                enable_tracking:
+                  type: boolean
+                  description: 'Set to `true` to enable open and click tracking for the email. This is only applied if your
+                    team is permitted to track emails. <br><br>Example: `true`'
+                outreach_task_id:
+                  type: string
+                  description: 'The Apollo ID of an outreach task to associate with the draft. If a drafted email already
+                    exists for this task, Apollo links to that draft instead of creating a new one. <br><br>Example: `66e8cc45028aed019c25d726`'
+            examples:
+              Create an email draft for a contact:
+                value:
+                  contact_id: 66e34b81740c50074e3d1bd4
+                  subject: Quick question about your team's workflow
+                  body_html: <p>Hi Ava, I wanted to reach out about how Apollo can help your team.</p>
+                  recipients:
+                  - email: ava.ruiz@sumware.com
+                    contact_id: 66e34b81740c50074e3d1bd4
+                    recipient_type_cd: to
+                  enable_tracking: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  emailer_message:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 66e8cc45028aed019c25d724
+                      user_id:
+                        type: string
+                        example: 66a3d80d4238fe02d2baaaaf
+                      status:
+                        type: string
+                        example: drafted
+                      time_zone: {}
+                      provider_message_id: {}
+                      to_name:
+                        type: string
+                        example: Ava Ruiz
+                      due_at: {}
+                      completed_at: {}
+                      emailer_touch_id: {}
+                      emailer_campaign_id: {}
+                      emailer_step_id: {}
+                      failed_at: {}
+                      failure_reason: {}
+                      attachment_ids:
+                        type: array
+                      enable_tracking:
+                        type: boolean
+                        example: true
+                      type:
+                        type: string
+                        example: outreach_manual_email
+                      contact_id:
+                        type: string
+                        example: 66e34b81740c50074e3d1bd4
+                      provider_thread_id: {}
+                      schedule_delayed_reason: {}
+                      demoed: {}
+                      email_account_id:
+                        type: string
+                        example: 66e8c4567f32a501b2605004
+                      due_at_manually_changed: {}
+                      not_sent_reason: {}
+                      bounce: {}
+                      spam_blocked: {}
+                      tracking_disabled_reason: {}
+                      created_at:
+                        type: string
+                        example: '2025-02-03T15:30:00.000Z'
+                      async_sending: {}
+                      due_at_source: {}
+                      crm_id: {}
+                      replied: {}
+                      needs_dynamic_assemble: {}
+                      personalized_opener: {}
+                      reply_class: {}
+                      schedule_delayed_limit_reason: {}
+                      schedule_delayed_reason_details: {}
+                      sensitive_info_redacted: {}
+                      account_id:
+                        type: string
+                        example: 612f9d6cd26c290001d9bda0
+                      conversation_id: {}
+                      click_tracking_enabled:
+                        type: boolean
+                        example: true
+                      open_tracking_enabled:
+                        type: boolean
+                        example: true
+                      ai_variables_status: {}
+                      recipients:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            email:
+                              type: string
+                              example: ava.ruiz@sumware.com
+                            raw_name:
+                              type: string
+                              example: Ava Ruiz
+                            recipient_type_cd:
+                              type: string
+                              example: to
+                            contact_id:
+                              type: string
+                              example: 66e34b81740c50074e3d1bd4
+                            user_id: {}
+                      send_from:
+                        type: object
+                        properties:
+                          email:
+                            type: string
+                            example: someemail@apollo.io
+                          raw_name: {}
+                          recipient_type_cd: {}
+                          contact_id: {}
+                          user_id:
+                            type: string
+                            example: 66a3d80d4238fe02d2baaaaf
+                      from_email:
+                        type: string
+                        example: someemail@apollo.io
+                      to_email:
+                        type: string
+                        example: ava.ruiz@sumware.com
+                      from_name: {}
+                      bcc_emails:
+                        type: array
+                      cc_emails:
+                        type: array
+                      send_from_info:
+                        type: string
+                        example: 66e8c4567f32a501b2605004***someemail@apollo.io
+                      body_text:
+                        type: string
+                        example: Hi Ava, I wanted to reach out about how Apollo can help your team.
+                      body_html:
+                        type: string
+                        example: <p>Hi Ava, I wanted to reach out about how Apollo can help your team.</p>
+                      body_html_loaded:
+                        type: boolean
+                        example: true
+                      subject:
+                        type: string
+                        example: Quick question about your team's workflow
+                      contact:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: 66e34b81740c50074e3d1bd4
+                          first_name:
+                            type: string
+                            example: Ava
+                          last_name:
+                            type: string
+                            example: Ruiz
+                          name:
+                            type: string
+                            example: Ava Ruiz
+                          email:
+                            type: string
+                            example: ava.ruiz@sumware.com
+                          title:
+                            type: string
+                            example: Founder & CEO
+                          organization_name:
+                            type: string
+                            example: Sumware Software
+                          account_id:
+                            type: string
+                            example: 612f9d6cd26c290001d9bda0
+                          owner_id:
+                            type: string
+                            example: 66302798d03b9601c7934ebf
+                          email_status:
+                            type: string
+                            example: verified
+                task:
+                  type: object
+                  description: The outreach task linked to this email message. Only returned when the message is associated
+                    with an outreach task (for example, when `outreach_task_id` is provided). <br><br>A condensed set of fields
+                    is shown below. For the full task object and all available fields, see the <a href="https://docs.apollo.io/reference/search-tasks"
+                    target="_blank">Search for Tasks endpoint</a>.
+                  properties:
+                    id:
+                      type: string
+                      example: 66e8cc45028aed019c25d724
+                    user_id:
+                      type: string
+                      example: 66a3d80d4238fe02d2baaaaf
+                    status:
+                      type: string
+                      example: scheduled
+                    type:
+                      type: string
+                      example: action_item
+                    priority:
+                      type: string
+                      example: medium
+                    due_at:
+                      type: string
+                      example: '2024-09-21T00:00:00.000+00:00'
+                    completed_at: {}
+                    title:
+                      type: string
+                      example: Reminder - Schedule Demo Call
+                    subject: {}
+                    contact_id:
+                      type: string
+                      example: 66e34b81740c50074e3d1bd4
+                    account_id: {}
+                    opportunity_id: {}
+                    emailer_campaign_id: {}
+                    created_at:
+                      type: string
+                      example: '2024-09-17T00:24:37.436Z'
+              examples:
+                Result:
+                  value:
+                    emailer_message:
+                      id: 66e8cc45028aed019c25d724
+                      user_id: 66a3d80d4238fe02d2baaaaf
+                      status: drafted
+                      to_name: Ava Ruiz
+                      due_at: null
+                      completed_at: null
+                      emailer_campaign_id: null
+                      attachment_ids: []
+                      enable_tracking: true
+                      type: outreach_manual_email
+                      contact_id: 66e34b81740c50074e3d1bd4
+                      email_account_id: 66e8c4567f32a501b2605004
+                      created_at: '2025-02-03T15:30:00.000Z'
+                      account_id: 612f9d6cd26c290001d9bda0
+                      click_tracking_enabled: true
+                      open_tracking_enabled: true
+                      recipients:
+                      - email: ava.ruiz@sumware.com
+                        raw_name: Ava Ruiz
+                        recipient_type_cd: to
+                        contact_id: 66e34b81740c50074e3d1bd4
+                      send_from:
+                        email: someemail@apollo.io
+                        user_id: 66a3d80d4238fe02d2baaaaf
+                      from_email: someemail@apollo.io
+                      to_email: ava.ruiz@sumware.com
+                      bcc_emails: []
+                      cc_emails: []
+                      send_from_info: 66e8c4567f32a501b2605004***someemail@apollo.io
+                      body_text: Hi Ava, I wanted to reach out about how Apollo can help your team.
+                      body_html: <p>Hi Ava, I wanted to reach out about how Apollo can help your team.</p>
+                      body_html_loaded: true
+                      subject: Quick question about your team's workflow
+                      contact:
+                        id: 66e34b81740c50074e3d1bd4
+                        first_name: Ava
+                        last_name: Ruiz
+                        name: Ava Ruiz
+                        email: ava.ruiz@sumware.com
+                        title: Founder & CEO
+                        organization_name: Sumware Software
+                        account_id: 612f9d6cd26c290001d9bda0
+                        owner_id: 66302798d03b9601c7934ebf
+                        email_status: verified
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Contact does not exist:
+                  value: "{\n  \"error\": \"Contact does not exist\"\n}"
+                No permission to email contact:
+                  value: "{\n  \"error\": \"You do not have permission to email Ava Ruiz. You are not the owner of this contact\
+                    \ or account.\"\n}"
+                Blocked by DNC enforcement:
+                  value: "{\n  \"error\": \"Cannot be emailed under your team's DNC enforcement settings\",\n  \"error_code\"\
+                    : \"DNC_ENFORCEMENT_BLOCKED\"\n}"
+                Invalid recipient emails:
+                  value: "{\n  \"error\": \"ERROR! Email is NOT SAVED. Invalid recipient emails: [\\\"person@\\\"]\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  error_code:
+                    type: string
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n  \"message\": \"The maximum number of api calls allowed for api/v1/emailer_messages/create is\
+                    \ 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n\
+                    }"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of api calls allowed for api/v1/emailer_messages/create is 600 times per hour.
+                      Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+      deprecated: false
+  /emailer_messages/{id}/send_now:
+    post:
+      summary: Send Email Now
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/emailer_messages/send_now` or `Master API key`
+
+
+        **OAuth scopes:** `emailer_messages_send_now`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        Use the Send Email Now endpoint to immediately send an existing email message.This works for emails that are currently
+        in a `drafted`, `scheduled`, or `failed` state. Apollo schedules the email to be sent right away and processes it
+        asynchronously. <br><br>To first create an email draft, use the <a href="https://docs.apollo.io/reference/create-an-email-draft">Create
+        an Email Draft</a> endpoint and pass the returned `id` to this endpoint. <br><br>The email is sent from the user that
+        owns the API key. That user must have a linked email account on the message, must have permission to send from that
+        email account, and must have permission to email the contact. The contact must also not be blocked by any do not contact
+        settings, and the user must not have exceeded their daily email sending limit. <br><br>Because sending is processed
+        asynchronously, a successful `200` response means the email has been queued for sending — not that it''s been delivered.
+        To check whether the email was delivered, poll the <a href="https://docs.apollo.io/reference/check-email-send-status">Check
+        Email Send Status</a> endpoint using the message `id`.<br><br>This endpoint returns the `emailer_message` object.
+        If the message is linked to an outreach task, a `task` object is also returned.'
+      tags:
+      - Emailer Messages
+      operationId: send-email-now
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: 'The Apollo ID of the email message to send. This is the `id` returned when you create an email draft.
+          <br><br>Example: `66e8cc45028aed019c25d724`'
+        schema:
+          type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                surface:
+                  type: string
+                  description: 'Optional. The surface within Apollo that the send is initiated from. Used for internal attribution
+                    and analytics. <br><br>Example: `emails`'
+            examples:
+              Send an existing email immediately:
+                value:
+                  surface: emails
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  emailer_message:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 66e8cc45028aed019c25d724
+                      user_id:
+                        type: string
+                        example: 66a3d80d4238fe02d2baaaaf
+                      status:
+                        type: string
+                        example: scheduled
+                      to_name:
+                        type: string
+                        example: Ava Ruiz
+                      due_at:
+                        type: string
+                        example: '2025-02-03T15:30:00.000+00:00'
+                      completed_at: {}
+                      emailer_campaign_id: {}
+                      attachment_ids:
+                        type: array
+                      enable_tracking:
+                        type: boolean
+                        example: true
+                      type:
+                        type: string
+                        example: outreach_manual_email
+                      contact_id:
+                        type: string
+                        example: 66e34b81740c50074e3d1bd4
+                      email_account_id:
+                        type: string
+                        example: 66e8c4567f32a501b2605004
+                      due_at_manually_changed:
+                        type: boolean
+                        example: true
+                      due_at_source:
+                        type: string
+                        example: Email was sent using Send Now action
+                      async_sending:
+                        type: boolean
+                        example: true
+                      created_at:
+                        type: string
+                        example: '2025-02-03T15:30:00.000Z'
+                      account_id:
+                        type: string
+                        example: 612f9d6cd26c290001d9bda0
+                      click_tracking_enabled:
+                        type: boolean
+                        example: true
+                      open_tracking_enabled:
+                        type: boolean
+                        example: true
+                      recipients:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            email:
+                              type: string
+                              example: ava.ruiz@sumware.com
+                            raw_name:
+                              type: string
+                              example: Ava Ruiz
+                            recipient_type_cd:
+                              type: string
+                              example: to
+                            contact_id:
+                              type: string
+                              example: 66e34b81740c50074e3d1bd4
+                            user_id: {}
+                      send_from:
+                        type: object
+                        properties:
+                          email:
+                            type: string
+                            example: someemail@apollo.io
+                          raw_name: {}
+                          recipient_type_cd: {}
+                          contact_id: {}
+                          user_id:
+                            type: string
+                            example: 66a3d80d4238fe02d2baaaaf
+                      from_email:
+                        type: string
+                        example: someemail@apollo.io
+                      to_email:
+                        type: string
+                        example: ava.ruiz@sumware.com
+                      from_name: {}
+                      bcc_emails:
+                        type: array
+                      cc_emails:
+                        type: array
+                      send_from_info:
+                        type: string
+                        example: 66e8c4567f32a501b2605004***someemail@apollo.io
+                      body_text:
+                        type: string
+                        example: Hi Ava, I wanted to reach out about how Apollo can help your team.
+                      body_html:
+                        type: string
+                        example: <p>Hi Ava, I wanted to reach out about how Apollo can help your team.</p>
+                      body_html_loaded:
+                        type: boolean
+                        example: true
+                      subject:
+                        type: string
+                        example: Quick question about your team's workflow
+                      contact:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: 66e34b81740c50074e3d1bd4
+                          first_name:
+                            type: string
+                            example: Ava
+                          last_name:
+                            type: string
+                            example: Ruiz
+                          name:
+                            type: string
+                            example: Ava Ruiz
+                          email:
+                            type: string
+                            example: ava.ruiz@sumware.com
+                          title:
+                            type: string
+                            example: Founder & CEO
+                          organization_name:
+                            type: string
+                            example: Sumware Software
+                          account_id:
+                            type: string
+                            example: 612f9d6cd26c290001d9bda0
+                          owner_id:
+                            type: string
+                            example: 66302798d03b9601c7934ebf
+                          email_status:
+                            type: string
+                            example: verified
+                task:
+                  type: object
+                  description: The outreach task linked to this email message. Only returned when the message is associated
+                    with an outreach task (for example, when `outreach_task_id` is provided). <br><br>A condensed set of fields
+                    is shown below. For the full task object and all available fields, see the <a href="https://docs.apollo.io/reference/search-tasks"
+                    target="_blank">Search for Tasks endpoint</a>.
+                  properties:
+                    id:
+                      type: string
+                      example: 66e8cc45028aed019c25d724
+                    user_id:
+                      type: string
+                      example: 66a3d80d4238fe02d2baaaaf
+                    status:
+                      type: string
+                      example: scheduled
+                    type:
+                      type: string
+                      example: action_item
+                    priority:
+                      type: string
+                      example: medium
+                    due_at:
+                      type: string
+                      example: '2024-09-21T00:00:00.000+00:00'
+                    completed_at: {}
+                    title:
+                      type: string
+                      example: Reminder - Schedule Demo Call
+                    subject: {}
+                    contact_id:
+                      type: string
+                      example: 66e34b81740c50074e3d1bd4
+                    account_id: {}
+                    opportunity_id: {}
+                    emailer_campaign_id: {}
+                    created_at:
+                      type: string
+                      example: '2024-09-17T00:24:37.436Z'
+              examples:
+                Result:
+                  value:
+                    emailer_message:
+                      id: 66e8cc45028aed019c25d724
+                      user_id: 66a3d80d4238fe02d2baaaaf
+                      status: scheduled
+                      to_name: Ava Ruiz
+                      due_at: '2025-02-03T15:30:00.000+00:00'
+                      completed_at: null
+                      emailer_campaign_id: null
+                      attachment_ids: []
+                      enable_tracking: true
+                      type: outreach_manual_email
+                      contact_id: 66e34b81740c50074e3d1bd4
+                      email_account_id: 66e8c4567f32a501b2605004
+                      due_at_manually_changed: true
+                      due_at_source: Email was sent using Send Now action
+                      async_sending: true
+                      created_at: '2025-02-03T15:30:00.000Z'
+                      account_id: 612f9d6cd26c290001d9bda0
+                      click_tracking_enabled: true
+                      open_tracking_enabled: true
+                      recipients:
+                      - email: ava.ruiz@sumware.com
+                        raw_name: Ava Ruiz
+                        recipient_type_cd: to
+                        contact_id: 66e34b81740c50074e3d1bd4
+                      send_from:
+                        email: someemail@apollo.io
+                        user_id: 66a3d80d4238fe02d2baaaaf
+                      from_email: someemail@apollo.io
+                      to_email: ava.ruiz@sumware.com
+                      bcc_emails: []
+                      cc_emails: []
+                      send_from_info: 66e8c4567f32a501b2605004***someemail@apollo.io
+                      body_text: Hi Ava, I wanted to reach out about how Apollo can help your team.
+                      body_html: <p>Hi Ava, I wanted to reach out about how Apollo can help your team.</p>
+                      body_html_loaded: true
+                      subject: Quick question about your team's workflow
+                      contact:
+                        id: 66e34b81740c50074e3d1bd4
+                        first_name: Ava
+                        last_name: Ruiz
+                        name: Ava Ruiz
+                        email: ava.ruiz@sumware.com
+                        title: Founder & CEO
+                        organization_name: Sumware Software
+                        account_id: 612f9d6cd26c290001d9bda0
+                        owner_id: 66302798d03b9601c7934ebf
+                        email_status: verified
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Email not found or deleted:
+                  value: "{\n  \"error\": \"This email has already been deleted. Please refresh the page.\"\n}"
+                Message belongs to another team:
+                  value: "{\n  \"error\": \"Could not find message to send.\"\n}"
+                No email account linked:
+                  value: "{\n  \"error\": \"Please specify where to send the email from!\"\n}"
+                No permission to send from email account:
+                  value: "{\n  \"error\": \"You do not have permission to send from this email account\"\n}"
+                Daily sending limit reached:
+                  value: "{\n  \"error\": \"You have reached your daily email sending limit. Contact your admin to adjust\
+                    \ your sending limits.\",\n  \"error_code\": \"SEND_NOW_LIMIT_EXCEEDED\"\n}"
+                Daily sending limit reached (seller limit):
+                  value: "{\n  \"error\": \"Failed to send as maximum # of emails for Call Assistant to send per day for the\
+                    \ sequence is low\",\n  \"error_code\": \"SELLER_EMAIL_LIMIT_EXCEEDED\"\n}"
+                No permission to email contact:
+                  value: "{\n  \"error\": \"You do not have permission to email Ava Ruiz. You are not the owner of this contact\
+                    \ or account.\"\n}"
+                Blocked by DNC enforcement:
+                  value: "{\n  \"error\": \"Cannot be emailed under your team's DNC enforcement settings\",\n  \"error_code\"\
+                    : \"DNC_ENFORCEMENT_BLOCKED\"\n}"
+                Email task belongs to another user:
+                  value: "{\n  \"error\": \"You can not send this email. Email task is assigned to another user.\"\n}"
+                Email already sent:
+                  value: "{\n  \"error\": \"This email has already been sent!\"\n}"
+                Email currently being sent:
+                  value: "{\n  \"error\": \"This email is currently being sent already! Wait up to 20 seconds and refresh\
+                    \ this page.\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  error_code:
+                    type: string
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n  \"message\": \"The maximum number of api calls allowed for api/v1/emailer_messages/send_now\
+                    \ is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\
+                    \n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of api calls allowed for api/v1/emailer_messages/send_now is 600 times per
+                      hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+      deprecated: false
+  /emailer_messages/get_content:
+    post:
+      summary: Get Email Content
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/emailer_messages/get_content` or `Master API key`
+
+
+        **OAuth scopes:** `emailer_messages_get_content`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        Use the Get Email Content endpoint to retrieve the subject line, body, and recipients of emails that your team has
+        already sent. Provide up to 10 email message IDs in a single request, and choose whether each body is returned as
+        plain text or as the original HTML.<br><br>This endpoint only returns emails that your team sent and that Apollo has
+        finished sending. Drafted, scheduled, and failed emails are never returned, and neither are replies or other inbound
+        emails.<br><br>Any ID that doesn''t match one of your team''s sent emails is left out of the response instead of causing
+        an error. This applies to unknown IDs, malformed IDs, IDs that belong to another team, and IDs for emails that aren''t
+        sent outreach emails. Because of this, always match the results back to your request using the `id` field, and treat
+        a missing `id` as "no sent email available" rather than a failure.<br><br>To find email message IDs, call the <a href="https://docs.apollo.io/reference/search-for-outreach-emails">Search
+        for Outreach Emails endpoint</a> and identify the `id` value for each email.'
+      tags:
+      - Emailer Messages
+      operationId: get-email-content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - ids
+              properties:
+                ids:
+                  type: array
+                  description: 'The Apollo IDs of the sent emails whose content you want to retrieve. <br><br>Include a maximum
+                    of 10 IDs per request. If you provide more than 10, Apollo uses the first 10 IDs and ignores the rest
+                    without returning an error. <br><br>To find email message IDs, call the <a href="https://docs.apollo.io/reference/search-for-outreach-emails">Search
+                    for Outreach Emails endpoint</a> and identify the `id` value for each email. <br><br>Example: `["66e8cc45028aed019c25d724",
+                    "66e8cc45028aed019c25d725"]`'
+                  items:
+                    type: string
+                body_format:
+                  type: string
+                  description: 'The format used to return the body of each email. <ul> <li> `plain` (default): the body is
+                    returned as plain text, with the HTML tags removed. </li> <li> `html`: the body is returned as the original
+                    HTML. </li> </ul>This value is case-sensitive. Any other value, including `HTML`, is treated as `plain`.
+                    <br><br>Example: `html`'
+                  enum:
+                  - plain
+                  - html
+                  default: plain
+            examples:
+              Plain text body:
+                value:
+                  ids:
+                  - 66e8cc45028aed019c25d724
+              HTML body, multiple emails:
+                value:
+                  ids:
+                  - 66e8cc45028aed019c25d724
+                  - 66e8cc45028aed019c25d725
+                  body_format: html
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                OK:
+                  value:
+                    emailer_messages:
+                    - id: 66e8cc45028aed019c25d724
+                      subject: Quick idea for Sumware
+                      body: Hi Ava, great chatting yesterday.
+                      body_format: plain
+                      status: completed
+                      sent_at: '2026-07-20T10:30:00+00:00'
+                      recipients:
+                      - email: ava.ruiz@sumware.com
+                        type: to
+                      - email: dev.patel@sumware.com
+                        type: cc
+                No matching sent emails:
+                  value:
+                    emailer_messages: []
+              schema:
+                type: object
+                properties:
+                  emailer_messages:
+                    type: array
+                    description: The sent emails that matched the IDs in your request, returned in the same order as the `ids`
+                      array. IDs that don't match one of your team's sent emails are omitted, so this array can be shorter
+                      than the `ids` array, or empty.
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The Apollo ID of the email.
+                        subject:
+                          type:
+                          - string
+                          - 'null'
+                          description: The subject line of the email. This is `null` if the email has no subject line.
+                        body:
+                          type:
+                          - string
+                          - 'null'
+                          description: The body of the email, in the format given by `body_format`. If Apollo has no stored
+                            body for the email, this is `null` when `body_format` is `html`, and an empty string when `body_format`
+                            is `plain`.
+                        body_format:
+                          type: string
+                          description: The format of the `body` value. This matches the `body_format` that Apollo applied
+                            to your request.
+                          enum:
+                          - plain
+                          - html
+                        status:
+                          type: string
+                          description: The send status of the email. This is always `completed`, because the endpoint only
+                            returns emails that Apollo has finished sending.
+                          example: completed
+                        sent_at:
+                          type:
+                          - string
+                          - 'null'
+                          description: The ISO 8601 timestamp for when Apollo finished sending the email. This is `null` if
+                            no send-completion time was recorded for the email.
+                        recipients:
+                          type: array
+                          description: The recipients of the email.
+                          items:
+                            type: object
+                            properties:
+                              email:
+                                type: string
+                                description: The email address of the recipient.
+                              type:
+                                type: string
+                                description: The recipient type.
+                                enum:
+                                - to
+                                - cc
+                                - bcc
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Endpoint not in API key scope:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/emailer_messages/get_content.\
+                    \ Request an API key from your administrator that includes this endpoint in its configured scope.\",\n\
+                    \  \"error_code\": \"API_INACCESSIBLE\"\n}"
+              schema:
+                title: Endpoint not in API key scope
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: This API key is not authorized to access api/v1/emailer_messages/get_content. Request an API
+                      key from your administrator that includes this endpoint in its configured scope.
+                  error_code:
+                    type: string
+                    example: API_INACCESSIBLE
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Missing ids:
+                  value: '{"error": "Missing required parameter: ids"}'
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/emailer_messages/get_content\
+                    \ is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\
+                    \n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of api calls allowed for api/v1/emailer_messages/get_content is 600 times
+                      per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+      deprecated: false
+  /emailer_messages/email_send_status:
+    post:
+      summary: Check Email Send Status
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/emailer_messages/email_send_status` or `Master API key`
+
+
+        **OAuth scopes:** `emailer_messages_email_send_status`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        Use the Check Email Send Status endpoint to check the current delivery status of an email message. This is typically
+        used after calling the <a href="https://docs.apollo.io/reference/send-email-now">Send Email Now endpoint</a>, since
+        emails are sent asynchronously and a successful send response only means the email was queued. <br><br>You must provide
+        the `id` of the email message. The message must belong to your team, otherwise a `404` is returned.<br><br>The response
+        always includes the message `id`, its current `status`, and a human-readable `message`. The remaining fields depend
+        on the status:<ul><li>If the email was delivered (`completed`), a `completed_at` timestamp is included.</li><li>If
+        the email failed (`failed`), a `not_sent_reason`, `failure_reason`, and `failed_at` timestamp may be included.</li><li>If
+        the email is still being processed (like `drafted` or `scheduled`), a `retry_after_seconds` value is included to indicate
+        how long to wait before checking again.</li></ul>'
+      tags:
+      - Emailer Messages
+      operationId: check-email-send-status
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - id
+              properties:
+                id:
+                  type: string
+                  description: 'The Apollo ID of the email message to check. This is the `id` returned when you create an
+                    email draft or send an email. <br><br>Example: `66e8cc45028aed019c25d724`'
+            examples:
+              Check the status of an email:
+                value:
+                  id: 66e8cc45028aed019c25d724
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 66e8cc45028aed019c25d724
+                  status:
+                    type: string
+                    example: completed
+                  message:
+                    type: string
+                    example: Email delivered successfully.
+                  completed_at:
+                    type: string
+                    format: date-time
+                    example: '2025-02-03T15:30:00Z'
+                  not_sent_reason:
+                    type: string
+                    example: no_active_email_account
+                  failure_reason:
+                    type: string
+                    example: Mailbox disconnected
+                  failed_at:
+                    type: string
+                    format: date-time
+                    example: '2025-02-03T15:30:00Z'
+                  retry_after_seconds:
+                    type: integer
+                    example: 10
+              examples:
+                Email delivered:
+                  value:
+                    id: 66e8cc45028aed019c25d724
+                    status: completed
+                    message: Email delivered successfully.
+                    completed_at: '2025-02-03T15:30:00Z'
+                Email failed:
+                  value:
+                    id: 66e8cc45028aed019c25d724
+                    status: failed
+                    message: Email failed to send.
+                    not_sent_reason: no_active_email_account
+                    failure_reason: Mailbox disconnected
+                    failed_at: '2025-02-03T15:30:00Z'
+                Email still being processed:
+                  value:
+                    id: 66e8cc45028aed019c25d724
+                    status: scheduled
+                    message: Email is still being processed. Try again in 10-20 seconds.
+                    retry_after_seconds: 10
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                Email message not found:
+                  value: "{\n  \"error\": \"Email message not found\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Email message not found
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Missing required parameter:
+                  value: "{\n  \"error\": \"Missing required parameter: id\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: 'Missing required parameter: id'
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n  \"message\": \"The maximum number of api calls allowed for api/v1/emailer_messages/email_send_status\
+                    \ is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\
+                    \n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of api calls allowed for api/v1/emailer_messages/email_send_status is 600
+                      times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+      deprecated: false

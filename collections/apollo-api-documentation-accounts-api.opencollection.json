@@ -1,0 +1,164 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apollo API — Accounts",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/accounts/create` or `Master API key`\n\n**OAuth scopes:** `account_write`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nAn <a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995865049229-View-and-Edit-Accounts\" target=\"_blank\">account</a> is a company saved in Apollo.<br><br>Use the Create an Account endpoint to add a new account to your team's Apollo account.<br><br>Ap"
+        },
+        {
+          "info": {
+            "name": "Update an Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.apollo.io/api/v1/accounts/:account_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The Apollo ID for the account that you want to update. <br><br>To find account IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-accounts\" target=\"_blank\">Search for Accounts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e9abf95ac32901b20d1a0d`"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/accounts/update` or `Master API key`\n\n**OAuth scopes:** `account_update`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n An <a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995865049229-View-and-Edit-Accounts\" target=\"_blank\">account</a> is a company saved in Apollo.<br><br>Use the Update an Account endpoint to update existing accounts in your team's Apollo account.<"
+        },
+        {
+          "info": {
+            "name": "Search for Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/accounts/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/accounts/search` or `Master API key`\n\n**OAuth scopes:** `accounts_search`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n An <a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995865049229-View-and-Edit-Accounts\" target=\"_blank\">account</a> is a company saved in Apollo.<br><br>Use the Search for Accounts endpoint to search for an account that has been saved to Apollo.<"
+        },
+        {
+          "info": {
+            "name": "Bulk Create Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/accounts/bulk_create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/accounts/bulk_create` or `Master API key`\n\n**OAuth scopes:** `account_bulk_create`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nAn <a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995865049229-View-and-Edit-Accounts\" target=\"_blank\">account</a> is a company saved in Apollo.<br><br>Use the bulk create accounts endpoint to create up to one hundred accounts in a singl"
+        },
+        {
+          "info": {
+            "name": "Bulk Update Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/accounts/bulk_update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/accounts/bulk_update` or `Master API key`\n\n**OAuth scopes:** `account_stages_update`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nAn <a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995865049229-View-and-Edit-Accounts\" target=\"_blank\">account</a> is a company saved in Apollo.<br><br>Use the Bulk Update Accounts endpoint to simultaneously update multiple accounts in"
+        },
+        {
+          "info": {
+            "name": "Update Account Owner for Multiple Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/accounts/update_owners",
+            "params": [
+              {
+                "name": "account_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "The Apollo IDs for the account that you want to assign to an owner. <br><br>To find account IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-accounts\" target=\"_blank\">Search for Accounts endpoint</a> and identify the `id` value for the account. <br><br>Example: `66e9abf95ac32901b20d1a0d`"
+              },
+              {
+                "name": "owner_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID for the account owner within your team's Apollo account. This user will be assigned ownership of the accounts. <br><br>Use the <a href=\"https://docs.apollo.io/reference/get-a-list-of-users\" target=\"_blank\">Get a List of Users endpoint</a> to retrieve IDs for all of the users within your Apollo account. <br><br>Example: `66302798d03b9601c7934ebf`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/accounts/update_owners` or `Master API key`\n\n**OAuth scopes:** `account_owners_update`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/5631686093069-Edit-a-Contact-or-Account-Owner\" target=\"_blank\">Account owners</a> manage saved accounts in Apollo.<br><br>Use the Update Account Owner for Multiple Accounts endpoint to as"
+        },
+        {
+          "info": {
+            "name": "List Account Stages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/account_stages"
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/account_stages/index` or `Master API key`\n\n**OAuth scopes:** `account_stages_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4410623601165-Contact-and-Account-Stages-Overview\" target=\"_blank\">Account stages</a> help you track progress on sales and marketing pipelines.<br><br>Use the List Accounts Stages endpoint to"
+        },
+        {
+          "info": {
+            "name": "View an Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/accounts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Apollo ID for the account that you want to retrieve. <br><br>To find account IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-accounts#/\" target=\"_blank\">Search for Accounts endpoint</a> and identify the `id` value for the account. <br><br>Example: `6518c6184f20350001a0b9c0`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/accounts/show` or `Master API key`\n\n**OAuth scopes:** `account_read`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nAn <a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995865049229-View-and-Edit-Accounts\" target=\"_blank\">account</a> is a company saved in Apollo.<br><br>Use the View an Account endpoint to retrieve details for an existing account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

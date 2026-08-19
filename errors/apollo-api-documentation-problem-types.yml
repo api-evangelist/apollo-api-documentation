@@ -1,0 +1,85 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://docs.apollo.io/reference/status-codes (error table), enriched by the 4xx/5xx responses declared in
+  openapi/_original/apollo-api-documentation-apollo-rest-api-openapi.json
+provider: Apollo API Documentation
+providerId: apollo-api-documentation
+format: custom-json
+rfc9457: false
+description: >-
+  Apollo's error catalogue. Apollo does NOT use RFC 9457 problem+json — every error response in the published
+  OpenAPI is declared as application/json with an endpoint-specific body shape, and Apollo's own status-codes
+  page says "the exact shape varies by endpoint". Some errors carry a machine-readable `error_code` string;
+  most carry only a human-readable message. Apollo states plainly that not all API status codes are
+  documented, so this catalogue is the documented subset, not the complete set.
+envelope:
+  content_type: application/json
+  fields:
+    - {name: error_code, type: string, required: false, note: 'Present on some errors only, e.g. INVALID_ACCESS_TOKEN, API_INACCESSIBLE.'}
+    - {name: error, type: string, required: false, note: Human-readable message. Field name varies by endpoint.}
+    - {name: message, type: string, required: false, note: Human-readable message on other endpoints.}
+  note: >-
+    There is no single documented envelope. Treat the body as endpoint-specific and read the Response examples
+    on each reference page.
+problem_count: 6
+problems:
+  - status: 401
+    title: Unauthorized
+    error_code: INVALID_ACCESS_TOKEN
+    error_code_note: Returned for OAuth access tokens; API-key failures return 401 without this code.
+    cause: The API key or access token is missing or invalid, or the account is no longer active.
+    remediation: >-
+      Confirm the key is sent in the x-api-key HEADER (not as a Bearer token — that combination returns
+      "401 Invalid API key"). OAuth clients send the access token as a Bearer token.
+    docs: https://docs.apollo.io/reference/authentication
+    operations_declaring: 76
+  - status: 403
+    title: Forbidden
+    error_code: API_INACCESSIBLE
+    cause: The plan does not include API access, or the endpoint is not available through the public API for these credentials.
+    remediation: >-
+      Check the plan and the key's configured scopes. A 403 on an imported OpenAPI collection means the
+      endpoint is outside the plan or key scope, not a broken import. Contact Apollo if unexpected.
+    operations_declaring: 56
+  - status: 404
+    title: Not found
+    cause: The requested record does not exist or is not accessible with these credentials.
+    remediation: Verify the ID in the request path.
+    operations_declaring: 9
+  - status: 422
+    title: Unprocessable entity
+    error_code: varies by endpoint
+    cause: >-
+      The request was received but could not be processed — usually a validation error or an invalid or
+      missing parameter.
+    remediation: >-
+      Read the response body for the specific issue. A common concrete case: passing free-text industry
+      names to people/company search filters that expect Apollo industry tag IDs returns 422.
+    operations_declaring: 51
+  - status: 429
+    title: Too many requests
+    cause: An endpoint's per-minute, per-hour or per-day rate limit was exhausted.
+    remediation: >-
+      Read the retry-after response header for the seconds until the exhausted window resets, then retry.
+      x-rate-limit-* and x-*-requests-left headers report the applicable limits and remaining budget.
+    docs: https://docs.apollo.io/reference/rate-limits
+    example_message: >-
+      The maximum number of api calls allowed for api/v1/people/match is 600 times per hour. Please upgrade
+      your plan from https://app.apollo.io/#/settings/plans/upgrade.
+    operations_declaring: 62
+  - status: 500
+    title: Internal server error
+    cause: An unexpected error on Apollo's side.
+    remediation: Retry the request; contact Apollo if it persists.
+    operations_declaring: 2
+other_declared_statuses:
+  - {status: 400, operations_declaring: 5, note: Declared in the spec on 5 operations but absent from the published status-codes table.}
+  - {status: 410, operations_declaring: 1, note: Declared on a single operation; not documented in the status-codes table.}
+gaps:
+  - No RFC 9457 application/problem+json media type on any of the 80 operations.
+  - No stable machine-readable error code on 401 (API key), 404, 422, 429 or 500.
+  - Apollo explicitly states the documented list is incomplete.
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com

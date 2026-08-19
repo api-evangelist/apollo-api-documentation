@@ -1,0 +1,286 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apollo API — Miscellaneous",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Miscellaneous",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a List of Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/users/search",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint. <br><br>Example: `4`"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of search results that should be returned for each page. Limiting the number of results per page improves the endpoint's performance. <br><br>Use the `page` parameter to search the different pages of data. <br><br>Example: `10`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/users/search` or `Master API key`\n\n**OAuth scopes:** `users_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409130537101-Add-Manage-and-Deactivate-Users\" target=\"_blank\">Users</a> are the people who use your Apollo workspace.<br><br>Use the Get a List of Users endpoint to retrieve the IDs for all of the users in y"
+        },
+        {
+          "info": {
+            "name": "Get Current User Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/users/api_profile",
+            "params": [
+              {
+                "name": "include_credit_usage",
+                "value": "",
+                "type": "query",
+                "description": "Set to `true` to include credit usage and remaining credit details (lead, direct dial, export, AI, and power-up credits) in the response. Accepts boolean (`true`/`false`) or string (`\"true\"`/`\"false\"`) values. Defaults to `false`. <br><br>Example: `true`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/users/api_profile` or `Master API key`\n\n**OAuth scopes:** `read_user_profile`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n**Authentication note:** Default scope — granted automatically on every OAuth token.\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409130537101-Add-Manage-and-Deactivate-Users\" target=\"_blank\">Users</a> are the people who use your Apollo wo"
+        },
+        {
+          "info": {
+            "name": "Get a List of Email Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/email_accounts"
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/email_accounts/index` or `Master API key`\n\n**OAuth scopes:** `email_accounts_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nYou can <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409127806093-Link-Your-Mailbox-to-Apollo\" target=\"_blank\">link mailboxes to Apollo</a>, and use them for prospect outreach.<br><br>Use the Get a List of Email Accounts endpoint to re"
+        },
+        {
+          "info": {
+            "name": "Get a List of All Lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/labels"
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/labels/index` or `Master API key`\n\n**OAuth scopes:** `tags_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the Get a List of All Lists endpoint to retrieve information about every <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409728608525-Create-and-Use-a-List\" target=\"_blank\">list</a> that has been created in your Apollo account. This endpoint can be use"
+        },
+        {
+          "info": {
+            "name": "Create a List",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/labels",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/labels/create` or `Master API key`\n\n**OAuth scopes:** `lists_create`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nA <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409728608525-Create-and-Use-a-List\" target=\"_blank\">list</a> is a saved group of contacts or accounts in Apollo that you can organize, action, and track together.<br><br>Use the Create a List endpoint t"
+        },
+        {
+          "info": {
+            "name": "Update a List",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.apollo.io/api/v1/labels/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Apollo ID for the list you want to update.<br><br>To find list IDs, call the <a href=\"https://docs.apollo.io/reference/get-a-list-of-all-lists\">Get a List of All Lists endpoint</a> and identify the `id` value.<br><br>Example: `6612a4b7c8d9e0f123456789`"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/labels/update` or `Master API key`\n\n**OAuth scopes:** `lists_update`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nA <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409728608525-Create-and-Use-a-List\" target=\"_blank\">list</a> is a saved group of contacts or accounts in Apollo that you can organize, action, and track together.<br><br>Use the Update a List endpoint t"
+        },
+        {
+          "info": {
+            "name": "Add Records to a List",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/labels/add_entity_ids_to_label_names",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/labels/add_entity_ids_to_label_names` or `Master API key`\n\n**OAuth scopes:** `lists_add_entities`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nA <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409728608525-Create-and-Use-a-List\" target=\"_blank\">list</a> is a saved group of contacts or accounts in Apollo that you can organize, action, and track together.<br><br>Use"
+        },
+        {
+          "info": {
+            "name": "Remove Records from a List",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/labels/remove_entity_ids_from_label_names",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/labels/remove_entity_ids_from_label_names` or `Master API key`\n\n**OAuth scopes:** `lists_remove_entities`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nA <a href=\"https://knowledge.apollo.io/hc/en-us/articles/4409728608525-Create-and-Use-a-List\" target=\"_blank\">list</a> is a saved group of contacts or accounts in Apollo that you can organize, action, and track together.<br"
+        },
+        {
+          "info": {
+            "name": "Poll Webhook Result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/webhook_result/:request_id",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "The <code>request_id</code> returned when the original enrichment request was submitted. This value is a signed 64-bit integer and can be positive or negative. <br><br>Example: <code>1039995589705121900</code>"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/webhook_result/show` or `Master API key`\n\n**OAuth scopes:** `webhook_result_read`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the Poll Webhook Result endpoint to retrieve webhook results from Apollo. This endpoint enables you to poll for the webhook payload if you didn't receive the original webhook callback.<br><br>To use this endpoint, you need the <code>request_id"
+        },
+        {
+          "info": {
+            "name": "View Credit Usage Stats",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/usage_stats/credit_usage_stats"
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/usage_stats/credit_usage_stats` or `Master API key`\n\n**OAuth scopes:** `credit_usage_stats_read`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the View Credit Usage Stats endpoint to monitor your team's credit balance across every credit type in the current billing cycle.\n\nFor each credit type, the response returns the `limit` (your team's allowance for the cycle), `co"
+        },
+        {
+          "info": {
+            "name": "View API Usage Stats and Rate Limits",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/usage_stats/api_usage_stats"
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/usage_stats/api_usage_stats` or `Master API key`\n\n**OAuth scopes:** `api_usage_stats_read`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the View API Usage Stats endpoint to view your team's usage of Apollo API and your rate limit for API endpoints.<br><br>Each endpoint has a rate limit per minute, hour, and day. Your <a href=\"https://docs.apollo.io/docs/api-pricing\">A"
+        },
+        {
+          "info": {
+            "name": "Get a List of Notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/notes",
+            "params": [
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the contact whose notes you want to retrieve. <br><br>Example: `60a5c0b8e4b0c7001c4f1234`"
+              },
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the account whose notes you want to retrieve. <br><br>Example: `60a5c0b8e4b0c7001c4f5678`"
+              },
+              {
+                "name": "opportunity_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the opportunity whose notes you want to retrieve. <br><br>Example: `60a5c0b8e4b0c7001c4f9012`"
+              },
+              {
+                "name": "calendar_event_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the calendar event whose notes you want to retrieve. <br><br>Example: `60a5c0b8e4b0c7001c4f3456`"
+              },
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the conversation whose notes you want to retrieve. <br><br>Example: `60a5c0b8e4b0c7001c4f7890`"
+              },
+              {
+                "name": "conversation_ids",
+                "value": "",
+                "type": "query",
+                "description": "An array of conversation IDs to filter notes by multiple conversations."
+              },
+              {
+                "name": "contact_ids",
+                "value": "",
+                "type": "query",
+                "description": "An array of contact IDs to filter notes by multiple contacts."
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter notes created on or after this date. Must be a valid date string. <br><br>Example: `2024-01-01`"
+              },
+              {
+                "name": "sort_by_field",
+                "value": "",
+                "type": "query",
+                "description": "The field to sort results by. Defaults to `created_at`."
+              },
+              {
+                "name": "sort_direction",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort results. Defaults to `desc`."
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "The number of notes to skip for pagination. Must be a non-negative integer. Defaults to `0`."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of notes to return per request. Defaults to `25`. Maximum value is `100`."
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `meetings/api/v1/notes/index` or `Master API key`\n\n**OAuth scopes:** `notes_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/28746467476365-Notes-Overview\" target=\"_blank\">Notes</a> on Apollo let you keep track of info directly on prospect profiles.<br><br>The Get a List of Notes endpoint retrieves notes associated with a s"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

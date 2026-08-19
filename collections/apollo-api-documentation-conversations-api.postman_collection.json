@@ -1,0 +1,758 @@
+{
+  "item": [
+    {
+      "id": "9ed0f7ae-5044-4f88-9543-248c7304640e",
+      "name": "Conversations",
+      "description": {
+        "content": "Search, export, and retrieve recorded conversations.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8004fbfe-df07-4d9d-8b01-e7d1c1c2b6bc",
+          "name": "Search Conversations",
+          "request": {
+            "name": "Search Conversations",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/conversations/search` or `Master API key`\n\n**OAuth scopes:** `conversations_search`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/45998035787533-Use-Conversations\">Conversations</a> are prospect video meetings stored in Apollo.<br><br>Use the Search Conversations endpoint to find a list of conversations. Several filters are available to help narrow your search, including by type, account, contact, date range, and more. Each result includes a summary of the conversation.<br><br>This endpoint doesn't include transcripts or recording URLs. Use the conversation ID retrieved from your search to request full details using <a href=\"https://docs.apollo.io/docs/get-conversations-info\">Get Conversations Info</a>.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "conversations",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"page\": \"<integer>\",\n  \"num_fetch_result\": \"<integer>\",\n  \"conversation_type\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"contact_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tag_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tracker_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"organization_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"date_range\": {\n    \"start\": \"<string>\",\n    \"end\": \"<string>\"\n  },\n  \"scorecard_template_id\": \"<string>\",\n  \"scorecard_max_rating\": \"<number>\",\n  \"sort_by_field\": \"<string>\",\n  \"enforce_contact_boundary\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0dcd4e52-15b4-4291-9763-401ac5e20e48",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "conversations",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"page\": 1,\n  \"num_fetch_result\": 25\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"per_page\": 25,\n    \"total_entries\": 2,\n    \"total_pages\": 1\n  },\n  \"breadcrumbs\": {},\n  \"num_fetch_result\": 25,\n  \"playlist_clip_ids\": [],\n  \"conversations\": [\n    {\n      \"id\": \"64a1b2c3d4e5f6a7b8c9d0e1\",\n      \"topic\": \"Q3 Sales Review\",\n      \"start_time\": \"2024-03-15T14:00:00Z\",\n      \"duration\": 3600,\n      \"state\": \"insights_generated\",\n      \"host\": \"Alice Smith\",\n      \"host_id\": \"60a5c0b8e4b0c7001c4f1234\",\n      \"is_private\": false,\n      \"conversation_type\": \"phone_call\",\n      \"can_access_conversation\": true,\n      \"label_id_names\": {\n        \"5f9a1b2c3d4e5f6a7b8c9d0e\": \"Follow-up\"\n      },\n      \"participant_names\": [\n        \"Alice Smith\",\n        \"Bob Jones\"\n      ],\n      \"comment_count\": 3,\n      \"account_names\": [\n        \"Acme Corp\"\n      ],\n      \"account_ids\": [\n        \"64a1b2c3d4e5f6a7b8c9d0f2\"\n      ],\n      \"participants_info\": [],\n      \"thumbnail_url\": \"https://storage.apollo.io/thumbnails/64a1b2c3d4e5f6a7b8c9d0e1.jpg\",\n      \"is_internal\": false,\n      \"deals\": [\n        {\n          \"id\": \"64a1b2c3d4e5f6a7b8c9d0e3\",\n          \"account_name\": \"Acme Corp\",\n          \"name\": \"Acme Corp - Enterprise Deal\",\n          \"opportunity_stage_id\": \"5f9a1b2c3d4e5f6a7b8c9d1f\"\n        }\n      ]\n    },\n    {\n      \"id\": \"64a1b2c3d4e5f6a7b8c9d0e2\",\n      \"topic\": \"Product Demo\",\n      \"start_time\": \"2024-03-16T10:00:00Z\",\n      \"duration\": 1800,\n      \"state\": \"insights_generated\",\n      \"host\": \"Bob Jones\",\n      \"host_id\": \"60a5c0b8e4b0c7001c4f5678\",\n      \"is_private\": false,\n      \"conversation_type\": \"phone_call\",\n      \"can_access_conversation\": true,\n      \"label_id_names\": {},\n      \"participant_names\": [\n        \"Bob Jones\",\n        \"Carol Lee\"\n      ],\n      \"comment_count\": 0,\n      \"account_names\": [\n        \"Globex Corp\"\n      ],\n      \"account_ids\": [\n        \"64a1b2c3d4e5f6a7b8c9d0f3\"\n      ],\n      \"participants_info\": [],\n      \"thumbnail_url\": \"https://storage.apollo.io/thumbnails/64a1b2c3d4e5f6a7b8c9d0e2.jpg\",\n      \"is_internal\": false,\n      \"deals\": []\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "669260e6-3735-44aa-995d-24d1d645ca55",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "conversations",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"page\": 1,\n  \"num_fetch_result\": 25\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Access denied.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ed6665a7-f60f-4ce9-89a5-60307b6e750c",
+          "name": "Get Conversations Info",
+          "request": {
+            "name": "Get Conversations Info",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/conversations/show` or `Master API key`\n\n**OAuth scopes:** `conversations_show`\n\n**Credit usage:** `0–1 credit per conversation`\n\nThis endpoint consumes 1 Apollo credit per conversation if the conversation has AI insights. Conversations without AI insights consume 0 credits. Learn more about [API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/45998035787533-Use-Conversations\">Conversations</a> are prospect video meetings stored in Apollo.<br><br>Use the Get Conversation Info endpoint to retrieve the full details of a single conversation by its ID.<br><br>To get a conversation's ID, refer to <a href=\"https://docs.apollo.io/docs/search-conversations\">Search Conversations</a>.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "conversations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The conversation ID. Supports an optional share ID in the format <code>id_shareid</code>"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e229160b-419e-4220-b378-1f613fdaa616",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "conversations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The conversation ID. Supports an optional share ID in the format <code>id_shareid</code>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"64a1b2c3d4e5f6a7b8c9d0e1\",\n  \"topic\": \"30 Minute Meeting - Sarah Chen and Marcus Webb\",\n  \"start_time\": \"2025-03-15T14:00:00.000+00:00\",\n  \"duration\": 289,\n  \"state\": \"insights_generated\",\n  \"host\": \"Sarah Chen\",\n  \"host_id\": \"60a5c0b8e4b0c7001c4f1234\",\n  \"is_private\": false,\n  \"pushed_to_crm\": false,\n  \"account_ids\": [\n    \"64a1b2c3d4e5f6a7b8c9d0f2\"\n  ],\n  \"label_id_names\": [],\n  \"is_shared_conversation\": false,\n  \"opportunity_ids\": [\n    \"64a1b2c3d4e5f6a7b8c9d0e3\"\n  ],\n  \"comment_count\": 0,\n  \"failure_code\": null,\n  \"bot_call_ended_reason\": \"timeout_exceeded_everyone_left\",\n  \"conversation_type\": \"video_conference\",\n  \"is_clip\": false,\n  \"video_recording\": {\n    \"type_cd\": \"video\",\n    \"url\": \"https://storage.googleapis.com/apollo-recordings/64a1b2c3d4e5f6a7b8c9d0e1/64a1b2c3d4e5f6a7b8c9d0e1_video.mp4\",\n    \"state_cd\": \"created\"\n  },\n  \"transcript\": [\n    {\n      \"id\": \"64a1b2c3d4e5f6a7b8c9d0f3\",\n      \"start_time\": 20880,\n      \"end_time\": 21760,\n      \"spoken_sentence\": \"Hello? Hello? Hello.\",\n      \"words\": [\n        [\n          \"Hello?\",\n          20880,\n          21120\n        ],\n        [\n          \"Hello?\",\n          21120,\n          21400\n        ],\n        [\n          \"Hello.\",\n          21400,\n          21760\n        ]\n      ],\n      \"participant_id\": \"64a1b2c3d4e5f6a7b8c9d0f4\",\n      \"participant_name\": \"Sarah Chen\"\n    },\n    {\n      \"id\": \"64a1b2c3d4e5f6a7b8c9d0f5\",\n      \"start_time\": 41050,\n      \"end_time\": 42650,\n      \"spoken_sentence\": \"Yeah, that works. Let's do it.\",\n      \"words\": [\n        [\n          \"Yeah,\",\n          41050,\n          41450\n        ],\n        [\n          \"that\",\n          41450,\n          41649\n        ],\n        [\n          \"works.\",\n          41649,\n          42010\n        ],\n        [\n          \"Let's\",\n          42010,\n          42250\n        ],\n        [\n          \"do\",\n          42250,\n          42370\n        ],\n        [\n          \"it.\",\n          42370,\n          42650\n        ]\n      ],\n      \"participant_id\": \"64a1b2c3d4e5f6a7b8c9d0f6\",\n      \"participant_name\": \"Marcus Webb\"\n    }\n  ],\n  \"participants\": {\n    \"internal\": [],\n    \"external\": {\n      \"others\": [\n        {\n          \"id\": \"64a1b2c3d4e5f6a7b8c9d0f4\",\n          \"name\": \"Sarah Chen\",\n          \"email\": \"sarah.chen@example.com\",\n          \"account_id\": null,\n          \"organization_id\": null,\n          \"is_organization\": true,\n          \"account_name\": null,\n          \"contact_id\": \"64a1b2c3d4e5f6a7b8c9d0f8\",\n          \"title\": null,\n          \"account_stage\": null,\n          \"account_arr\": null,\n          \"account_arr_printed\": null\n        },\n        {\n          \"id\": \"64a1b2c3d4e5f6a7b8c9d0f6\",\n          \"name\": \"Marcus Webb\",\n          \"email\": null,\n          \"account_id\": null,\n          \"organization_id\": null,\n          \"is_organization\": true,\n          \"account_name\": null,\n          \"contact_id\": null,\n          \"title\": null,\n          \"account_stage\": null,\n          \"account_arr\": null,\n          \"account_arr_printed\": null\n        }\n      ]\n    }\n  },\n  \"opportunities\": [\n    {\n      \"id\": \"64a1b2c3d4e5f6a7b8c9d0e3\",\n      \"name\": \"Acme Corp - Enterprise Deal\",\n      \"amount\": 6000,\n      \"closed_date\": \"2025-06-30T00:00:00.000+00:00\",\n      \"created_at\": \"2025-03-01T10:00:00.000Z\",\n      \"last_sync\": null,\n      \"account\": {\n        \"id\": \"64a1b2c3d4e5f6a7b8c9d0f2\",\n        \"name\": \"Acme Corp\"\n      },\n      \"crm_record_url\": null,\n      \"opportunity_crm_id\": null,\n      \"opportunity_stage_id\": \"64a1b2c3d4e5f6a7b8c9d0f7\",\n      \"stage_name\": \"Lead\",\n      \"owner_id\": \"60a5c0b8e4b0c7001c4f1234\",\n      \"initial_opportunity_stage_id\": null\n    }\n  ],\n  \"playlist_clip_ids\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37f116f5-67f1-4909-b450-f27d3469bcc9",
+              "name": "404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "conversations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The conversation ID. Supports an optional share ID in the format <code>id_shareid</code>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Conversation not found or access denied.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f847172a-2e55-498b-ac9c-504463c4a47d",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "conversations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The conversation ID. Supports an optional share ID in the format <code>id_shareid</code>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Insufficient credits. Please upgrade your plan.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "757014e9-e1a1-4c83-a3ba-bcff2886c34b",
+          "name": "Export Conversations",
+          "request": {
+            "name": "Export Conversations",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/conversations/export` or `Master API key`\n\n**OAuth scopes:** `conversations_export`\n\n**Credit usage:** `0–1 credit per conversation`\n\nThis endpoint consumes 1 Apollo credit per conversation if the conversation has AI insights. Conversations without AI insights consume 0 credits. Learn more about [API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/45998035787533-Use-Conversations\">Conversations</a> are prospect video meetings stored in Apollo.<br><br>Use the Export Conversations endpoint to export conversations within a time range. Exports are processed asynchronously and delivered as a gzipped JSON file. A notification email is sent to the specified team member when the export is ready.<br><br>To get the download URL once the export is ready, refer to <a href=\"https://docs.apollo.io/docs/get-conversations-export\">Get Export</a>.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "conversations",
+                "export"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"start_time\": \"<string>\",\n  \"end_time\": \"<string>\",\n  \"email\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dfae5c01-8215-4395-b715-216fa7ab19c0",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "conversations",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start_time\": \"2024-01-01T00:00:00Z\",\n  \"end_time\": \"2024-03-31T23:59:59Z\",\n  \"email\": \"alice@example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"export_url\": \"https://app.apollo.io/api/v1/conversations/export/6a060f34585b480015951efd\",\n  \"export_id\": \"6a060f34585b480015951efd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c719af0d-f8ae-484c-9f9f-d309dc07541d",
+              "name": "404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "conversations",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start_time\": \"2024-01-01T00:00:00Z\",\n  \"end_time\": \"2024-03-31T23:59:59Z\",\n  \"email\": \"alice@example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Unable to find conversations within the given time range.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c734611e-7fff-4a3c-934e-8fc3f35f32a8",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "conversations",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start_time\": \"2024-01-01T00:00:00Z\",\n  \"end_time\": \"2024-03-31T23:59:59Z\",\n  \"email\": \"alice@example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"start_time is not a valid ISO-8601 date.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3e00bdf0-5cf3-4b32-9e43-67270560242d",
+          "name": "Get Conversations Export",
+          "request": {
+            "name": "Get Conversations Export",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `api/v1/conversations/find_export` or `Master API key`\n\n**OAuth scopes:** `conversations_find_export`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/45998035787533-Use-Conversations\">Conversations</a> are prospect video meetings stored in Apollo.<br><br>Use the Get Conversations Export endpoint to retrieve a download URL for your exported conversations.<br><br>This endpoint is used as a follow-up to the <a href=\"https://docs.apollo.io/docs/export-conversations\">Export Conversations</a> endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "conversations",
+                "export",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The export ID returned by the Export Conversations endpoint."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f9c79ef7-1ace-4920-aadc-d379dfd420c7",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "conversations",
+                    "export",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The export ID returned by the Export Conversations endpoint."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"redirect_url\": \"https://storage.googleapis.com/apollo-exports/64a1b2c3d4e5f6a7b8c9d0e1.json.gz?X-Goog-Signature=abc123\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "842a82c7-2f37-4790-bb0e-d3b199dd2693",
+              "name": "404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "conversations",
+                    "export",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The export ID returned by the Export Conversations endpoint."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Export not found or access denied.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.apollo.io/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4b5025c3-aa31-454a-b69b-e7094924c399",
+    "name": "Apollo API — Conversations",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Apollo API provides programmatic access to [Apollo](https://www.apollo.io/), the all-in-one sales intelligence and engagement platform. Use it to enrich people and company data (individually or in bulk), search Apollo's database of over 240 million contacts and 30 million companies, and manage accounts, contacts, deals, sequences, tasks, calls, and conversations in your go-to-market workflows.\n\n## Base URL\n\nAll API requests are made to `https://api.apollo.io/api/v1`.\n\n## Authentication\n\n- **Apollo users** authenticate with an API key passed in the `x-api-key` request header. See [Create API Keys](https://docs.apollo.io/docs/create-api-key).\n- **Apollo partners** building integrations on behalf of mutual users authenticate with the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).\n\n## Rate limits & credits\n\nRate limits and credit consumption depend on your [Apollo pricing plan](https://docs.apollo.io/docs/api-pricing). Check your current limits and usage with the [View API Usage Stats and Rate Limits](https://docs.apollo.io/reference/view-api-usage-stats) endpoint. For more details, see [Rate Limits](https://docs.apollo.io/reference/rate-limits) and the [API FAQs](https://docs.apollo.io/docs/apollo-api-faqs).\n\nNew to the API? Start with the [Apollo API overview](https://docs.apollo.io/reference/apollo-api).\n\nContact Support:\n Name: Apollo API Support",
+      "type": "text/plain"
+    }
+  }
+}

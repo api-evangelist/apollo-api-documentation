@@ -1,0 +1,1555 @@
+{
+  "item": [
+    {
+      "id": "10f1140a-369b-4d09-a1f6-c142e2b2e2e3",
+      "name": "Deals",
+      "description": {
+        "content": "Create, update, and track deals in your pipeline.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "32957ab2-ef8b-4a82-be1d-cca2f5e954b3",
+          "name": "Create Deal",
+          "request": {
+            "name": "Create Deal",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `deals/api/v1/opportunities/create` or `Master API key`\n\n**OAuth scopes:** `opportunity_write`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4415062467725-Deals-Overview\" target=\"_blank\">Deals</a> on Apollo help you track sales opportunities.<br><br>Use the Create Deal endpoint to create new deals for an Apollo account.<br><br>To update existing deals in your Apollo account, use the <a href=\"https://docs.apollo.io/reference/update-deal\">Update Deal endpoint</a> instead.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "opportunities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"owner_id\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"opportunity_stage_id\": \"<string>\",\n  \"closed_date\": \"<date>\",\n  \"typed_custom_fields\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "96c1ff11-4a69-496c-8da9-69fccc5d0f01",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"owner_id\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"opportunity_stage_id\": \"<string>\",\n  \"closed_date\": \"<date>\",\n  \"typed_custom_fields\": {\n    \"60c39ed82bd02f01154c470a\": \"2025-08-07\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"opportunity\": {\n    \"id\": \"66e09ea8e3cfcf01b2208ec7\",\n    \"team_id\": \"6095a710bd01d100a506d4ac\",\n    \"owner_id\": \"66302798d03b9601c7934ebf\",\n    \"salesforce_owner_id\": null,\n    \"amount\": 99999999,\n    \"closed_date\": null,\n    \"account_id\": \"55e16cfbf3e5bb66cf0026f3\",\n    \"description\": null,\n    \"is_closed\": false,\n    \"is_won\": false,\n    \"name\": \"Massive Space Deal\",\n    \"stage_name\": null,\n    \"opportunity_stage_id\": \"6095a710bd01d100a506d4bd\",\n    \"source\": \"api\",\n    \"salesforce_id\": null,\n    \"created_at\": \"2024-09-10T19:31:52.436Z\",\n    \"actual_close_date\": null,\n    \"next_step\": null,\n    \"next_step_date\": null,\n    \"closed_lost_reason\": null,\n    \"closed_won_reason\": null,\n    \"forecast_category\": \"pipeline\",\n    \"deal_probability\": 10,\n    \"created_by_id\": \"60affe7d6e270a00f5db6fe4\",\n    \"current_solutions\": null,\n    \"deal_source\": null,\n    \"manually_updated_probability\": null,\n    \"manually_updated_forecast\": null,\n    \"crm_id\": null,\n    \"crm_record_url\": null,\n    \"crm_owner_id\": null,\n    \"probability\": null,\n    \"opportunity_pipeline_id\": \"654b989fcb2a5200010a90db\",\n    \"stage_updated_at\": \"2024-09-10T19:31:52.436+00:00\",\n    \"next_step_last_updated_at\": null,\n    \"exchange_rate_code\": \"USD\",\n    \"exchange_rate_value\": 1,\n    \"amount_in_team_currency\": 99999999,\n    \"forecasted_revenue\": 9999999.9,\n    \"last_activity_date\": \"2024-09-10T19:31:52.436Z\",\n    \"existence_level\": \"none\",\n    \"opportunity_rule_config_statuses\": [],\n    \"opportunity_contact_roles\": [],\n    \"currency\": {\n      \"name\": \"US Dollar\",\n      \"iso_code\": \"USD\",\n      \"symbol\": \"$\"\n    },\n    \"typed_custom_fields\": {\n      \"5b75f1c11dc2727d43ae3bb9\": \"test\",\n      \"5c4296857f799409361890ea\": \"test2\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "350ae1ca-299c-4aeb-9565-d00561ae6bba",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"owner_id\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"opportunity_stage_id\": \"<string>\",\n  \"closed_date\": \"<date>\",\n  \"typed_custom_fields\": {\n    \"60c39ed82bd02f01154c470a\": \"2025-08-07\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ff0b91b6-ef80-4444-83a0-38f92fe33341",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"owner_id\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"opportunity_stage_id\": \"<string>\",\n  \"closed_date\": \"<date>\",\n  \"typed_custom_fields\": {\n    \"60c39ed82bd02f01154c470a\": \"2025-08-07\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"This API key is not authorized to access deals/api/v1/opportunities/create. Request an API key from your administrator that includes this endpoint in its configured scope.\\\",\\n  \\\"error_code\\\": \\\"API_INACCESSIBLE\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "178d0708-1fa6-4daf-b199-21030d630b97",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"owner_id\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"opportunity_stage_id\": \"<string>\",\n  \"closed_date\": \"<date>\",\n  \"typed_custom_fields\": {\n    \"60c39ed82bd02f01154c470a\": \"2025-08-07\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"Name is required\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a78c5a9f-ec65-4b3e-a597-ba9f0e882a8c",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"owner_id\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"opportunity_stage_id\": \"<string>\",\n  \"closed_date\": \"<date>\",\n  \"typed_custom_fields\": {\n    \"60c39ed82bd02f01154c470a\": \"2025-08-07\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/opportunities is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "12e240fd-6003-48bb-92d5-8efb969e41db",
+          "name": "List All Deals",
+          "request": {
+            "name": "List All Deals",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `deals/api/v1/opportunities/search` or `Master API key`\n\n**OAuth scopes:** `opportunities_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4415062467725-Deals-Overview\" target=\"_blank\">Deals</a> on Apollo help you track sales opportunities.<br><br>Use the List All Deals endpoint to retrieve every deal that has been created for your team's Apollo account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "opportunities",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "sort_by_field",
+                  "value": "<string>",
+                  "description": "Sort the tasks by 1 of the following options:    <ul> <li> `amount`: The largest deal values first. </li> <li> `is_closed`: Deals that have been closed first. </li> <li> `is_won`: Deals that have been won first. </li> </ul>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint. <br><br>Example: `4`"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<integer>",
+                  "description": "The number of search results that should be returned for each page. Limiting the number of results per page improves the endpoint's performance. <br><br>Use the `page` parameter to search the different pages of data. <br><br>Example: `10`"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c2021e79-26ef-44b6-b8c5-0af333be378a",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sort_by_field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"breadcrumbs\\\": [],\\n  \\\"opportunities\\\": [\\n    {\\n      \\\"id\\\": \\\"66e09ea8e3cfcf01b2208ec7\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"owner_id\\\": \\\"66302798d03b9601c7934ebf\\\",\\n      \\\"salesforce_owner_id\\\": null,\\n      \\\"amount\\\": 9999999999,\\n      \\\"closed_date\\\": \\\"2026-10-15T00:00:00.000+00:00\\\",\\n      \\\"account_id\\\": \\\"60afffecbff6de00a4b82be7\\\",\\n      \\\"description\\\": null,\\n      \\\"is_closed\\\": false,\\n      \\\"is_won\\\": false,\\n      \\\"name\\\": \\\"Ridiculously Massive Space Deal\\\",\\n      \\\"stage_name\\\": null,\\n      \\\"opportunity_stage_id\\\": \\\"66bb94fbc1695c00017fba5f\\\",\\n      \\\"source\\\": \\\"api\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"created_at\\\": \\\"2024-09-10T19:31:52.436Z\\\",\\n      \\\"actual_close_date\\\": null,\\n      \\\"next_step\\\": null,\\n      \\\"next_step_date\\\": null,\\n      \\\"closed_lost_reason\\\": null,\\n      \\\"closed_won_reason\\\": null,\\n      \\\"forecast_category\\\": \\\"pipeline\\\",\\n      \\\"deal_probability\\\": 25,\\n      \\\"created_by_id\\\": \\\"60affe7d6e270a00f5db6fe4\\\",\\n      \\\"current_solutions\\\": null,\\n      \\\"deal_source\\\": null,\\n      \\\"manually_updated_probability\\\": null,\\n      \\\"manually_updated_forecast\\\": null,\\n      \\\"crm_id\\\": null,\\n      \\\"crm_record_url\\\": null,\\n      \\\"crm_owner_id\\\": null,\\n      \\\"probability\\\": null,\\n      \\\"opportunity_pipeline_id\\\": null,\\n      \\\"stage_updated_at\\\": \\\"2024-09-10T21:50:18.113+00:00\\\",\\n      \\\"next_step_last_updated_at\\\": null,\\n      \\\"exchange_rate_code\\\": \\\"USD\\\",\\n      \\\"exchange_rate_value\\\": 1,\\n      \\\"amount_in_team_currency\\\": 9999999999,\\n      \\\"forecasted_revenue\\\": 2499999999.75,\\n      \\\"last_activity_date\\\": \\\"2024-09-10T21:50:18.113Z\\\",\\n      \\\"existence_level\\\": \\\"full\\\",\\n      \\\"typed_custom_fields\\\": {},\\n      \\\"opportunity_rule_config_statuses\\\": [],\\n      \\\"opportunity_contact_roles\\\": [],\\n      \\\"currency\\\": {\\n        \\\"name\\\": \\\"US Dollar\\\",\\n        \\\"iso_code\\\": \\\"USD\\\",\\n        \\\"symbol\\\": \\\"$\\\"\\n      },\\n      \\\"account\\\": {\\n        \\\"id\\\": \\\"60afffecbff6de00a4b82be7\\\",\\n        \\\"name\\\": \\\"NASA - National Aeronautics and Space Administration\\\",\\n        \\\"website_url\\\": \\\"http://www.nasa.gov\\\",\\n        \\\"blog_url\\\": null,\\n        \\\"angellist_url\\\": null,\\n        \\\"linkedin_url\\\": \\\"http://www.linkedin.com/company/nasa\\\",\\n        \\\"twitter_url\\\": \\\"https://twitter.com/NASA\\\",\\n        \\\"facebook_url\\\": \\\"http://www.facebook.com/NASAJPL\\\",\\n        \\\"primary_phone\\\": {\\n          \\\"number\\\": \\\"+1 202-555-0117\\\",\\n          \\\"source\\\": \\\"Owler\\\",\\n          \\\"sanitized_number\\\": \\\"+12025550117\\\"\\n        },\\n        \\\"languages\\\": [\\n          \\\"English\\\"\\n        ],\\n        \\\"alexa_ranking\\\": 1751,\\n        \\\"phone\\\": \\\"+1 202-555-0117\\\",\\n        \\\"linkedin_uid\\\": \\\"2003\\\",\\n        \\\"founded_year\\\": 1958,\\n        \\\"publicly_traded_symbol\\\": null,\\n        \\\"publicly_traded_exchange\\\": \\\"nyse\\\",\\n        \\\"logo_url\\\": \\\"https://zenprospect-production.s3.amazonaws.com/uploads/pictures/139afb7258561417c1d70d4c/picture\\\",\\n        \\\"crunchbase_url\\\": null,\\n        \\\"primary_domain\\\": \\\"nasa.gov\\\",\\n        \\\"sanitized_phone\\\": \\\"+12025550117\\\",\\n        \\\"domain\\\": \\\"nasa.gov\\\",\\n        \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n        \\\"organization_id\\\": \\\"55e16cfbf3e5bb66cf0026f3\\\",\\n        \\\"account_stage_id\\\": \\\"6095a710bd01d100a506d4b9\\\",\\n        \\\"source\\\": \\\"deployment\\\",\\n        \\\"original_source\\\": \\\"deployment\\\",\\n        \\\"creator_id\\\": null,\\n        \\\"owner_id\\\": null,\\n        \\\"created_at\\\": \\\"2021-05-27T20:24:12.644Z\\\",\\n        \\\"phone_status\\\": \\\"no_status\\\",\\n        \\\"hubspot_id\\\": null,\\n        \\\"salesforce_id\\\": null,\\n        \\\"crm_owner_id\\\": null,\\n        \\\"parent_account_id\\\": null,\\n        \\\"account_playbook_statuses\\\": [],\\n        \\\"account_rule_config_statuses\\\": [\\n          {\\n            \\\"_id\\\": \\\"6466e8047759270001e53509\\\",\\n            \\\"created_at\\\": null,\\n            \\\"rule_action_config_id\\\": \\\"64650edd434f8f00a3b13938\\\",\\n            \\\"rule_config_id\\\": \\\"64650edd434f8f00a3b13939\\\",\\n            \\\"status_cd\\\": \\\"completed\\\",\\n            \\\"updated_at\\\": null,\\n            \\\"id\\\": \\\"6466e8047759270001e53509\\\",\\n            \\\"key\\\": \\\"6466e8047759270001e53509\\\"\\n          },\\n          {\\n            \\\"_id\\\": \\\"664f9e867bc0ad0001bd4230\\\",\\n            \\\"created_at\\\": null,\\n            \\\"rule_action_config_id\\\": \\\"65735e0ea63d2700faba5c6e\\\",\\n            \\\"rule_config_id\\\": \\\"65735e0ea63d2700faba5c6f\\\",\\n            \\\"status_cd\\\": \\\"completed\\\",\\n            \\\"updated_at\\\": null,\\n            \\\"id\\\": \\\"664f9e867bc0ad0001bd4230\\\",\\n            \\\"key\\\": \\\"664f9e867bc0ad0001bd4230\\\"\\n          }\\n        ],\\n        \\\"existence_level\\\": \\\"full\\\",\\n        \\\"label_ids\\\": [\\n          \\\"6466e8261e13be000133f25d\\\"\\n        ],\\n        \\\"typed_custom_fields\\\": {},\\n        \\\"custom_field_errors\\\": null,\\n        \\\"modality\\\": \\\"account\\\",\\n        \\\"source_display_name\\\": \\\"Requested from Apollo\\\",\\n        \\\"crm_record_url\\\": null,\\n        \\\"contact_emailer_campaign_ids\\\": [],\\n        \\\"contact_campaign_status_tally\\\": {},\\n        \\\"num_contacts\\\": 2,\\n        \\\"last_activity_date\\\": null\\n      }\\n    },\\n    {\\n      \\\"id\\\": \\\"66e0ab918c3aab02d0fc1484\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"owner_id\\\": \\\"66302798d03b9601c7934ebf\\\",\\n      \\\"salesforce_owner_id\\\": null,\\n      \\\"amount\\\": 3543535353,\\n      \\\"closed_date\\\": \\\"2025-01-24T00:00:00.000+00:00\\\",\\n      \\\"account_id\\\": \\\"6598a1ff9998b100011e62e8\\\",\\n      \\\"description\\\": null,\\n      \\\"is_closed\\\": false,\\n      \\\"is_won\\\": false,\\n      \\\"name\\\": \\\"Massive Big Deal\\\",\\n      \\\"stage_name\\\": null,\\n      \\\"opportunity_stage_id\\\": \\\"6095a710bd01d100a506d4bd\\\",\\n      \\\"source\\\": \\\"ui_form\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"created_at\\\": \\\"2024-09-10T20:26:57.250Z\\\",\\n      \\\"actual_close_date\\\": null,\\n      \\\"next_step\\\": null,\\n      \\\"next_step_date\\\": null,\\n      \\\"closed_lost_reason\\\": null,\\n      \\\"closed_won_reason\\\": null,\\n      \\\"forecast_category\\\": \\\"pipeline\\\",\\n      \\\"deal_probability\\\": 10,\\n      \\\"created_by_id\\\": \\\"66302798d03b9601c7934ebf\\\",\\n      \\\"current_solutions\\\": null,\\n      \\\"deal_source\\\": null,\\n      \\\"manually_updated_probability\\\": null,\\n      \\\"manually_updated_forecast\\\": null,\\n      \\\"crm_id\\\": null,\\n      \\\"crm_record_url\\\": null,\\n      \\\"crm_owner_id\\\": null,\\n      \\\"probability\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"654b989fcb2a5200010a90db\\\",\\n      \\\"stage_updated_at\\\": \\\"2024-09-10T20:26:57.250+00:00\\\",\\n      \\\"next_step_last_updated_at\\\": null,\\n      \\\"exchange_rate_code\\\": \\\"USD\\\",\\n      \\\"exchange_rate_value\\\": 1,\\n      \\\"amount_in_team_currency\\\": 3543535353,\\n      \\\"forecasted_revenue\\\": 354353535.3,\\n      \\\"last_activity_date\\\": \\\"2024-09-10T20:27:04.893Z\\\",\\n      \\\"existence_level\\\": \\\"full\\\",\\n      \\\"typed_custom_fields\\\": {},\\n      \\\"opportunity_rule_config_statuses\\\": [],\\n      \\\"opportunity_contact_roles\\\": [],\\n      \\\"currency\\\": {\\n        \\\"name\\\": \\\"US Dollar\\\",\\n        \\\"iso_code\\\": \\\"USD\\\",\\n        \\\"symbol\\\": \\\"$\\\"\\n      },\\n      \\\"account\\\": {\\n        \\\"id\\\": \\\"6598a1ff9998b100011e62e8\\\",\\n        \\\"name\\\": \\\"NVIDIA\\\",\\n        \\\"website_url\\\": \\\"http://www.nvidia.com\\\",\\n        \\\"blog_url\\\": null,\\n        \\\"angellist_url\\\": null,\\n        \\\"linkedin_url\\\": \\\"http://www.linkedin.com/company/nvidia\\\",\\n        \\\"twitter_url\\\": \\\"https://twitter.com/NVIDIANetworkng\\\",\\n        \\\"facebook_url\\\": \\\"https://www.facebook.com/NVIDIANetworking\\\",\\n        \\\"primary_phone\\\": {\\n          \\\"number\\\": \\\"+1 408-555-0142\\\",\\n          \\\"source\\\": \\\"Owler\\\",\\n          \\\"sanitized_number\\\": \\\"+14085550142\\\"\\n        },\\n        \\\"languages\\\": [],\\n        \\\"alexa_ranking\\\": 256,\\n        \\\"phone\\\": \\\"+1-408-555-0142\\\",\\n        \\\"linkedin_uid\\\": \\\"3608\\\",\\n        \\\"founded_year\\\": 1993,\\n        \\\"publicly_traded_symbol\\\": \\\"NVDA\\\",\\n        \\\"publicly_traded_exchange\\\": \\\"nasdaq\\\",\\n        \\\"logo_url\\\": \\\"https://zenprospect-production.s3.amazonaws.com/uploads/pictures/07f1389988fefd17c25c9b4e/picture\\\",\\n        \\\"crunchbase_url\\\": null,\\n        \\\"primary_domain\\\": \\\"nvidia.com\\\",\\n        \\\"sanitized_phone\\\": \\\"+14085550142\\\",\\n        \\\"market_cap\\\": \\\"2921.5B\\\",\\n        \\\"domain\\\": \\\"nvidia.com\\\",\\n        \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n        \\\"organization_id\\\": \\\"5f50a22da4560d00e3eddf31\\\",\\n        \\\"account_stage_id\\\": \\\"6095a710bd01d100a506d4b7\\\",\\n        \\\"source\\\": \\\"deployment\\\",\\n        \\\"original_source\\\": \\\"deployment\\\",\\n        \\\"creator_id\\\": \\\"60affe7d6e270a00f5db6fe4\\\",\\n        \\\"owner_id\\\": null,\\n        \\\"created_at\\\": \\\"2024-01-06T00:42:39.874Z\\\",\\n        \\\"phone_status\\\": \\\"no_status\\\",\\n        \\\"hubspot_id\\\": null,\\n        \\\"salesforce_id\\\": null,\\n        \\\"crm_owner_id\\\": null,\\n        \\\"parent_account_id\\\": null,\\n        \\\"account_playbook_statuses\\\": [],\\n        \\\"account_rule_config_statuses\\\": [\\n          {\\n            \\\"_id\\\": \\\"664f9ea42bd8b70001d5125f\\\",\\n            \\\"created_at\\\": null,\\n            \\\"rule_action_config_id\\\": \\\"65735e0ea63d2700faba5c6e\\\",\\n            \\\"rule_config_id\\\": \\\"65735e0ea63d2700faba5c6f\\\",\\n            \\\"status_cd\\\": \\\"completed\\\",\\n            \\\"updated_at\\\": null,\\n            \\\"id\\\": \\\"664f9ea42bd8b70001d5125f\\\",\\n            \\\"key\\\": \\\"664f9ea42bd8b70001d5125f\\\"\\n          },\\n          {\\n            \\\"_id\\\": \\\"666599704a8c4e0001eb707a\\\",\\n            \\\"created_at\\\": null,\\n            \\\"rule_action_config_id\\\": \\\"64650edd434f8f00a3b13938\\\",\\n            \\\"rule_config_id\\\": \\\"64650edd434f8f00a3b13939\\\",\\n            \\\"status_cd\\\": \\\"failed\\\",\\n            \\\"updated_at\\\": null,\\n            \\\"id\\\": \\\"666599704a8c4e0001eb707a\\\",\\n            \\\"key\\\": \\\"666599704a8c4e0001eb707a\\\"\\n          }\\n        ],\\n        \\\"existence_level\\\": \\\"full\\\",\\n        \\\"label_ids\\\": [\\n          \\\"6466e8261e13be000133f25d\\\"\\n        ],\\n        \\\"typed_custom_fields\\\": {},\\n        \\\"custom_field_errors\\\": null,\\n        \\\"modality\\\": \\\"account\\\",\\n        \\\"source_display_name\\\": \\\"Requested from Apollo\\\",\\n        \\\"crm_record_url\\\": null,\\n        \\\"contact_emailer_campaign_ids\\\": [],\\n        \\\"contact_campaign_status_tally\\\": {},\\n        \\\"num_contacts\\\": 287,\\n        \\\"last_activity_date\\\": null\\n      }\\n    },\\n    {\\n      \\\"id\\\": \\\"64e4d9d3f1b93a00b6e9afcd\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"owner_id\\\": \\\"60affe7d6e270a00f5db6fe4\\\",\\n      \\\"salesforce_owner_id\\\": null,\\n      \\\"amount\\\": 20000000,\\n      \\\"closed_date\\\": \\\"2024-01-31T00:00:00.000+00:00\\\",\\n      \\\"account_id\\\": \\\"62c5b05b09b10900cb37616a\\\",\\n      \\\"description\\\": null,\\n      \\\"is_closed\\\": false,\\n      \\\"is_won\\\": false,\\n      \\\"name\\\": \\\"Huge Deal\\\",\\n      \\\"stage_name\\\": null,\\n      \\\"opportunity_stage_id\\\": \\\"6153414bc0559d00016ce5fe\\\",\\n      \\\"source\\\": \\\"ui_form\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"created_at\\\": \\\"2023-08-22T15:52:51.142Z\\\",\\n      \\\"actual_close_date\\\": null,\\n      \\\"next_step\\\": null,\\n      \\\"next_step_date\\\": null,\\n      \\\"closed_lost_reason\\\": null,\\n      \\\"closed_won_reason\\\": null,\\n      \\\"forecast_category\\\": \\\"pipeline\\\",\\n      \\\"deal_probability\\\": 10,\\n      \\\"created_by_id\\\": \\\"60affe7d6e270a00f5db6fe4\\\",\\n      \\\"current_solutions\\\": null,\\n      \\\"deal_source\\\": null,\\n      \\\"manually_updated_probability\\\": null,\\n      \\\"manually_updated_forecast\\\": null,\\n      \\\"crm_id\\\": null,\\n      \\\"crm_record_url\\\": null,\\n      \\\"crm_owner_id\\\": null,\\n      \\\"probability\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"654b989fcb2a5200010a90db\\\",\\n      \\\"stage_updated_at\\\": null,\\n      \\\"next_step_last_updated_at\\\": null,\\n      \\\"exchange_rate_code\\\": \\\"USD\\\",\\n      \\\"exchange_rate_value\\\": 1,\\n      \\\"amount_in_team_currency\\\": 20000000,\\n      \\\"forecasted_revenue\\\": 2000000,\\n      \\\"last_activity_date\\\": \\\"2023-11-09T02:06:28.283Z\\\",\\n      \\\"existence_level\\\": \\\"full\\\",\\n      \\\"typed_custom_fields\\\": {},\\n      \\\"opportunity_rule_config_statuses\\\": [],\\n      \\\"opportunity_contact_roles\\\": [],\\n      \\\"currency\\\": {\\n        \\\"name\\\": \\\"US Dollar\\\",\\n        \\\"iso_code\\\": \\\"USD\\\",\\n        \\\"symbol\\\": \\\"$\\\"\\n      },\\n      \\\"account\\\": {\\n        \\\"id\\\": \\\"62c5b05b09b10900cb37616a\\\",\\n        \\\"name\\\": \\\"Amazon\\\",\\n        \\\"website_url\\\": \\\"http://www.amazon.com\\\",\\n        \\\"blog_url\\\": null,\\n        \\\"angellist_url\\\": null,\\n        \\\"linkedin_url\\\": \\\"http://www.linkedin.com/company/amazon\\\",\\n        \\\"twitter_url\\\": \\\"https://twitter.com/amazon\\\",\\n        \\\"facebook_url\\\": \\\"https://facebook.com/Amazon/\\\",\\n        \\\"primary_phone\\\": {\\n          \\\"number\\\": \\\"+1 206-555-0108\\\",\\n          \\\"source\\\": \\\"Owler\\\",\\n          \\\"sanitized_number\\\": \\\"+12065550108\\\"\\n        },\\n        \\\"languages\\\": [],\\n        \\\"alexa_ranking\\\": 18,\\n        \\\"phone\\\": \\\"+1 206-555-0108\\\",\\n        \\\"linkedin_uid\\\": \\\"1586\\\",\\n        \\\"founded_year\\\": 1994,\\n        \\\"publicly_traded_symbol\\\": \\\"AMZN\\\",\\n        \\\"publicly_traded_exchange\\\": \\\"nasdaq\\\",\\n        \\\"logo_url\\\": \\\"https://zenprospect-production.s3.amazonaws.com/uploads/pictures/4b090fa1d16c355d80faff04/picture\\\",\\n        \\\"crunchbase_url\\\": null,\\n        \\\"primary_domain\\\": \\\"amazon.com\\\",\\n        \\\"sanitized_phone\\\": \\\"+12065550108\\\",\\n        \\\"market_cap\\\": \\\"1957.3B\\\",\\n        \\\"domain\\\": \\\"amazon.com\\\",\\n        \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n        \\\"organization_id\\\": \\\"5f2a39cb77a7440112460cf5\\\",\\n        \\\"account_stage_id\\\": \\\"6095a710bd01d100a506d4b7\\\",\\n        \\\"source\\\": \\\"deployment\\\",\\n        \\\"original_source\\\": \\\"deployment\\\",\\n        \\\"creator_id\\\": null,\\n        \\\"owner_id\\\": null,\\n        \\\"created_at\\\": \\\"2022-07-06T15:55:07.205Z\\\",\\n        \\\"phone_status\\\": \\\"no_status\\\",\\n        \\\"hubspot_id\\\": null,\\n        \\\"salesforce_id\\\": null,\\n        \\\"crm_owner_id\\\": null,\\n        \\\"parent_account_id\\\": null,\\n        \\\"account_playbook_statuses\\\": [\\n          {\\n            \\\"_id\\\": \\\"6360ba2b7eb0be00cbea1356\\\",\\n            \\\"added_by_id\\\": \\\"60affe7d6e270a00f5db6fe4\\\",\\n            \\\"added_on\\\": \\\"2022-11-01T06:18:19.578+00:00\\\",\\n            \\\"completed_step_ids\\\": [],\\n            \\\"created_at\\\": null,\\n            \\\"current_step_id\\\": \\\"6360b83b3f99e300a3d3d20e\\\",\\n            \\\"finished_reason_cd\\\": null,\\n            \\\"paused_reason_cd\\\": 0,\\n            \\\"playbook_id\\\": \\\"634832438e3ac500cc66265b\\\",\\n            \\\"position\\\": 1,\\n            \\\"status_cd\\\": \\\"paused\\\",\\n            \\\"updated_at\\\": null,\\n            \\\"id\\\": \\\"6360ba2b7eb0be00cbea1356\\\",\\n            \\\"key\\\": \\\"6360ba2b7eb0be00cbea1356\\\"\\n          }\\n        ],\\n        \\\"account_rule_config_statuses\\\": [\\n          {\\n            \\\"_id\\\": \\\"6466e8047759270001e53509\\\",\\n            \\\"created_at\\\": null,\\n            \\\"rule_action_config_id\\\": \\\"64650edd434f8f00a3b13938\\\",\\n            \\\"rule_config_id\\\": \\\"64650edd434f8f00a3b13939\\\",\\n            \\\"status_cd\\\": \\\"completed\\\",\\n            \\\"updated_at\\\": null,\\n            \\\"id\\\": \\\"6466e8047759270001e53509\\\",\\n            \\\"key\\\": \\\"6466e8047759270001e53509\\\"\\n          },\\n          {\\n            \\\"_id\\\": \\\"658118c6b2714c0001e4efe5\\\",\\n            \\\"created_at\\\": null,\\n            \\\"rule_action_config_id\\\": \\\"6580939a36272f01c6eda909\\\",\\n            \\\"rule_config_id\\\": \\\"6580939a36272f01c6eda90b\\\",\\n            \\\"status_cd\\\": \\\"completed\\\",\\n            \\\"updated_at\\\": null,\\n            \\\"id\\\": \\\"658118c6b2714c0001e4efe5\\\",\\n            \\\"key\\\": \\\"658118c6b2714c0001e4efe5\\\"\\n          },\\n          {\\n            \\\"_id\\\": \\\"662698e8b5d78e0007897f55\\\",\\n            \\\"created_at\\\": null,\\n            \\\"rule_action_config_id\\\": \\\"66268d54ce4494030093b962\\\",\\n            \\\"rule_config_id\\\": \\\"66268d54ce4494030093b963\\\",\\n            \\\"status_cd\\\": \\\"active\\\",\\n            \\\"updated_at\\\": null,\\n            \\\"id\\\": \\\"662698e8b5d78e0007897f55\\\",\\n            \\\"key\\\": \\\"662698e8b5d78e0007897f55\\\"\\n          },\\n          {\\n            \\\"_id\\\": \\\"664f9e7887829d0001373206\\\",\\n            \\\"created_at\\\": null,\\n            \\\"rule_action_config_id\\\": \\\"65735e0ea63d2700faba5c6e\\\",\\n            \\\"rule_config_id\\\": \\\"65735e0ea63d2700faba5c6f\\\",\\n            \\\"status_cd\\\": \\\"completed\\\",\\n            \\\"updated_at\\\": null,\\n            \\\"id\\\": \\\"664f9e7887829d0001373206\\\",\\n            \\\"key\\\": \\\"664f9e7887829d0001373206\\\"\\n          }\\n        ],\\n        \\\"existence_level\\\": \\\"full\\\",\\n        \\\"label_ids\\\": [\\n          \\\"6466e8261e13be000133f25d\\\"\\n        ],\\n        \\\"typed_custom_fields\\\": {},\\n        \\\"custom_field_errors\\\": null,\\n        \\\"modality\\\": \\\"account\\\",\\n        \\\"source_display_name\\\": \\\"Requested from Apollo\\\",\\n        \\\"crm_record_url\\\": null,\\n        \\\"contact_emailer_campaign_ids\\\": [],\\n        \\\"contact_campaign_status_tally\\\": {},\\n        \\\"num_contacts\\\": 11,\\n        \\\"last_activity_date\\\": null\\n      }\\n    }\\n  ],\\n  \\\"salesforce_users\\\": [],\\n  \\\"partial_results_only\\\": false,\\n  \\\"has_join\\\": false,\\n  \\\"disable_eu_prospecting\\\": false,\\n  \\\"partial_results_limit\\\": 10000,\\n  \\\"pagination\\\": {\\n    \\\"page\\\": 1,\\n    \\\"per_page\\\": 3,\\n    \\\"total_entries\\\": 35,\\n    \\\"total_pages\\\": 12\\n  },\\n  \\\"num_fetch_result\\\": null\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9f27f2b-bf05-4d29-9055-4198884155ca",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sort_by_field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1ff00a6e-bc6e-4d37-b737-8d790face709",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sort_by_field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"This API key is not authorized to access deals/api/v1/opportunities/search. Request an API key from your administrator that includes this endpoint in its configured scope.\\\",\\n  \\\"error_code\\\": \\\"API_INACCESSIBLE\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a8cd1f4-46bd-469d-9a43-3ec11e0f3596",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sort_by_field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/opportunities/search is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "845aecf5-c8c8-4e45-bab4-aa015d95add1",
+          "name": "View Deal",
+          "request": {
+            "name": "View Deal",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `deals/api/v1/opportunities/show` or `Master API key`\n\n**OAuth scopes:** `opportunity_read`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4415062467725-Deals-Overview\" target=\"_blank\">Deals</a> on Apollo help you track sales opportunities.<br><br>Use the View Deal endpoint to retrieve complete details about a deal within your team's Apollo account.<br><br>Deal information can include the ID of the deal owner, the monetary value of the deal, the deal stage, and general details about the account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "opportunities",
+                ":opportunity_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "opportunity_id",
+                  "description": "(Required) The ID for the deal you want to view. <br><br>Each deal in the Apollo database is assigned a unique ID. To find deal IDs, call the <a href=\"https://docs.apollo.io/reference/list-all-deals\" target=\"_blank\">List All Deals endpoint</a> and identify the value for `id` for the desired deal. <br><br>Example: `66e09ea8e3cfcf01b2208ec7`"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e46442d6-c513-49d0-b0fd-55d659da05c5",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunity_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "opportunity_id",
+                      "description": "(Required) The ID for the deal you want to view. <br><br>Each deal in the Apollo database is assigned a unique ID. To find deal IDs, call the <a href=\"https://docs.apollo.io/reference/list-all-deals\" target=\"_blank\">List All Deals endpoint</a> and identify the value for `id` for the desired deal. <br><br>Example: `66e09ea8e3cfcf01b2208ec7`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"opportunity\\\": {\\n    \\\"id\\\": \\\"66e09ea8e3cfcf01b2208ec7\\\",\\n    \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n    \\\"owner_id\\\": \\\"66302798d03b9601c7934ebf\\\",\\n    \\\"salesforce_owner_id\\\": null,\\n    \\\"amount\\\": 99999999,\\n    \\\"closed_date\\\": null,\\n    \\\"account_id\\\": \\\"60afffecbff6de00a4b82be7\\\",\\n    \\\"description\\\": null,\\n    \\\"is_closed\\\": false,\\n    \\\"is_won\\\": false,\\n    \\\"name\\\": \\\"Massive Space Deal\\\",\\n    \\\"stage_name\\\": null,\\n    \\\"opportunity_stage_id\\\": \\\"6095a710bd01d100a506d4bd\\\",\\n    \\\"source\\\": \\\"api\\\",\\n    \\\"salesforce_id\\\": null,\\n    \\\"created_at\\\": \\\"2024-09-10T19:31:52.436Z\\\",\\n    \\\"actual_close_date\\\": null,\\n    \\\"next_step\\\": null,\\n    \\\"next_step_date\\\": null,\\n    \\\"closed_lost_reason\\\": null,\\n    \\\"closed_won_reason\\\": null,\\n    \\\"forecast_category\\\": \\\"pipeline\\\",\\n    \\\"deal_probability\\\": 10,\\n    \\\"created_by_id\\\": \\\"60affe7d6e270a00f5db6fe4\\\",\\n    \\\"current_solutions\\\": null,\\n    \\\"deal_source\\\": null,\\n    \\\"manually_updated_probability\\\": null,\\n    \\\"manually_updated_forecast\\\": null,\\n    \\\"crm_id\\\": null,\\n    \\\"crm_record_url\\\": null,\\n    \\\"crm_owner_id\\\": null,\\n    \\\"probability\\\": null,\\n    \\\"opportunity_pipeline_id\\\": \\\"654b989fcb2a5200010a90db\\\",\\n    \\\"stage_updated_at\\\": \\\"2024-09-10T19:33:40.529+00:00\\\",\\n    \\\"next_step_last_updated_at\\\": null,\\n    \\\"exchange_rate_code\\\": \\\"USD\\\",\\n    \\\"exchange_rate_value\\\": 1,\\n    \\\"amount_in_team_currency\\\": 99999999,\\n    \\\"forecasted_revenue\\\": 9999999.9,\\n    \\\"last_activity_date\\\": \\\"2024-09-10T19:33:40.529Z\\\",\\n    \\\"existence_level\\\": \\\"full\\\",\\n    \\\"typed_custom_fields\\\": {},\\n    \\\"opportunity_rule_config_statuses\\\": [],\\n    \\\"opportunity_contact_roles\\\": [],\\n    \\\"currency\\\": {\\n      \\\"name\\\": \\\"US Dollar\\\",\\n      \\\"iso_code\\\": \\\"USD\\\",\\n      \\\"symbol\\\": \\\"$\\\"\\n    },\\n    \\\"num_contacts\\\": 0,\\n    \\\"account\\\": {\\n      \\\"id\\\": \\\"60afffecbff6de00a4b82be7\\\",\\n      \\\"domain\\\": \\\"nasa.gov\\\",\\n      \\\"name\\\": \\\"NASA - National Aeronautics and Space Administration\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"organization_id\\\": \\\"55e16cfbf3e5bb66cf0026f3\\\",\\n      \\\"account_stage_id\\\": \\\"6095a710bd01d100a506d4b9\\\",\\n      \\\"source\\\": \\\"deployment\\\",\\n      \\\"original_source\\\": \\\"deployment\\\",\\n      \\\"creator_id\\\": null,\\n      \\\"owner_id\\\": null,\\n      \\\"created_at\\\": \\\"2021-05-27T20:24:12.644Z\\\",\\n      \\\"phone\\\": \\\"+1 202-555-0117\\\",\\n      \\\"phone_status\\\": \\\"no_status\\\",\\n      \\\"hubspot_id\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"crm_owner_id\\\": null,\\n      \\\"parent_account_id\\\": null,\\n      \\\"linkedin_url\\\": null,\\n      \\\"sanitized_phone\\\": \\\"+12025550117\\\",\\n      \\\"account_playbook_statuses\\\": [],\\n      \\\"account_rule_config_statuses\\\": [\\n        {\\n          \\\"_id\\\": \\\"6466e8047759270001e53509\\\",\\n          \\\"created_at\\\": null,\\n          \\\"rule_action_config_id\\\": \\\"64650edd434f8f00a3b13938\\\",\\n          \\\"rule_config_id\\\": \\\"64650edd434f8f00a3b13939\\\",\\n          \\\"status_cd\\\": \\\"completed\\\",\\n          \\\"updated_at\\\": null,\\n          \\\"id\\\": \\\"6466e8047759270001e53509\\\",\\n          \\\"key\\\": \\\"6466e8047759270001e53509\\\"\\n        },\\n        {\\n          \\\"_id\\\": \\\"664f9e867bc0ad0001bd4230\\\",\\n          \\\"created_at\\\": null,\\n          \\\"rule_action_config_id\\\": \\\"65735e0ea63d2700faba5c6e\\\",\\n          \\\"rule_config_id\\\": \\\"65735e0ea63d2700faba5c6f\\\",\\n          \\\"status_cd\\\": \\\"completed\\\",\\n          \\\"updated_at\\\": null,\\n          \\\"id\\\": \\\"664f9e867bc0ad0001bd4230\\\",\\n          \\\"key\\\": \\\"664f9e867bc0ad0001bd4230\\\"\\n        }\\n      ],\\n      \\\"existence_level\\\": \\\"full\\\",\\n      \\\"label_ids\\\": [\\n        \\\"6466e8261e13be000133f25d\\\"\\n      ],\\n      \\\"typed_custom_fields\\\": {},\\n      \\\"custom_field_errors\\\": null,\\n      \\\"modality\\\": \\\"account\\\",\\n      \\\"source_display_name\\\": \\\"Requested from Apollo\\\",\\n      \\\"crm_record_url\\\": null,\\n      \\\"contact_emailer_campaign_ids\\\": [],\\n      \\\"contact_campaign_status_tally\\\": {},\\n      \\\"num_contacts\\\": 0,\\n      \\\"last_activity_date\\\": null\\n    }\\n  }\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb23abe3-d670-4a6d-ab22-1c544a2add3a",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunity_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "opportunity_id",
+                      "description": "(Required) The ID for the deal you want to view. <br><br>Each deal in the Apollo database is assigned a unique ID. To find deal IDs, call the <a href=\"https://docs.apollo.io/reference/list-all-deals\" target=\"_blank\">List All Deals endpoint</a> and identify the value for `id` for the desired deal. <br><br>Example: `66e09ea8e3cfcf01b2208ec7`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fa9c70b8-6f4c-443a-b4a3-7e90be7e9f5c",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunity_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "opportunity_id",
+                      "description": "(Required) The ID for the deal you want to view. <br><br>Each deal in the Apollo database is assigned a unique ID. To find deal IDs, call the <a href=\"https://docs.apollo.io/reference/list-all-deals\" target=\"_blank\">List All Deals endpoint</a> and identify the value for `id` for the desired deal. <br><br>Example: `66e09ea8e3cfcf01b2208ec7`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"This API key is not authorized to access deals/api/v1/opportunities/show. Request an API key from your administrator that includes this endpoint in its configured scope.\\\",\\n  \\\"error_code\\\": \\\"API_INACCESSIBLE\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca84237d-c4e7-41c7-9fb4-87f53d5ee47e",
+              "name": "404",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunity_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "opportunity_id",
+                      "description": "(Required) The ID for the deal you want to view. <br><br>Each deal in the Apollo database is assigned a unique ID. To find deal IDs, call the <a href=\"https://docs.apollo.io/reference/list-all-deals\" target=\"_blank\">List All Deals endpoint</a> and identify the value for `id` for the desired deal. <br><br>Example: `66e09ea8e3cfcf01b2208ec7`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"status\\\": 404,\\n  \\\"error\\\": \\\"Not Found\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af8b6d82-4509-473c-b933-2528c5da1661",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunity_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "opportunity_id",
+                      "description": "(Required) The ID for the deal you want to view. <br><br>Each deal in the Apollo database is assigned a unique ID. To find deal IDs, call the <a href=\"https://docs.apollo.io/reference/list-all-deals\" target=\"_blank\">List All Deals endpoint</a> and identify the value for `id` for the desired deal. <br><br>Example: `66e09ea8e3cfcf01b2208ec7`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"Parameters misconfigured. opportunity_id is not a valid ID\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf89be74-73a2-4a78-89d4-563188797d4c",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunity_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "opportunity_id",
+                      "description": "(Required) The ID for the deal you want to view. <br><br>Each deal in the Apollo database is assigned a unique ID. To find deal IDs, call the <a href=\"https://docs.apollo.io/reference/list-all-deals\" target=\"_blank\">List All Deals endpoint</a> and identify the value for `id` for the desired deal. <br><br>Example: `66e09ea8e3cfcf01b2208ec7`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/opportunities/{opportunity_id} is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b38ebcd3-3d37-404c-909a-7d6b4622eaaa",
+          "name": "Update Deal",
+          "request": {
+            "name": "Update Deal",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `deals/api/v1/opportunities/update` or `Master API key`\n\n**OAuth scopes:** `opportunity_update`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4415062467725-Deals-Overview\" target=\"_blank\">Deals</a> on Apollo help you track sales opportunities.<br><br>Use the Update Deal endpoint to update the details of existing deals within your team's Apollo account.<br><br>To create new deals in your Apollo account, use the <a href=\"https://docs.apollo.io/reference/create-deal\">Create Deal endpoint</a> instead.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "opportunities",
+                ":opportunity_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "opportunity_id",
+                  "description": "(Required) The ID for the deal you want to update. <br><br>Each deal in the Apollo database is assigned a unique ID. To find deal IDs, call the <a href=\"https://docs.apollo.io/reference/list-all-deals\" target=\"_blank\">List All Deals endpoint</a> and identify the value for `id` for the desired deal. <br><br>Example: `66e09ea8e3cfcf01b2208ec7`"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"owner_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"opportunity_stage_id\": \"<string>\",\n  \"closed_date\": \"<date>\",\n  \"typed_custom_fields\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6d76f736-bb56-4e19-9948-1aea66757acd",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunity_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "opportunity_id",
+                      "description": "(Required) The ID for the deal you want to update. <br><br>Each deal in the Apollo database is assigned a unique ID. To find deal IDs, call the <a href=\"https://docs.apollo.io/reference/list-all-deals\" target=\"_blank\">List All Deals endpoint</a> and identify the value for `id` for the desired deal. <br><br>Example: `66e09ea8e3cfcf01b2208ec7`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"opportunity_stage_id\": \"<string>\",\n  \"closed_date\": \"<date>\",\n  \"typed_custom_fields\": {\n    \"60c39ed82bd02f01154c470a\": \"2025-08-07\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"opportunity\": {\n    \"id\": \"66e09ea8e3cfcf01b2208ec7\",\n    \"team_id\": \"6095a710bd01d100a506d4ac\",\n    \"owner_id\": \"66302798d03b9601c7934ebf\",\n    \"salesforce_owner_id\": null,\n    \"amount\": 999999999999,\n    \"closed_date\": \"2026-10-15T00:00:00.000+00:00\",\n    \"account_id\": \"60afffecbff6de00a4b82be7\",\n    \"description\": null,\n    \"is_closed\": false,\n    \"is_won\": false,\n    \"name\": \"Ridiculously Massive Space Deal\",\n    \"stage_name\": null,\n    \"opportunity_stage_id\": \"66bb94fbc1695c00017fba5f\",\n    \"source\": \"api\",\n    \"salesforce_id\": null,\n    \"created_at\": \"2024-09-10T19:31:52.436Z\",\n    \"actual_close_date\": null,\n    \"next_step\": null,\n    \"next_step_date\": null,\n    \"closed_lost_reason\": null,\n    \"closed_won_reason\": null,\n    \"forecast_category\": \"pipeline\",\n    \"deal_probability\": 25,\n    \"created_by_id\": \"60affe7d6e270a00f5db6fe4\",\n    \"current_solutions\": null,\n    \"deal_source\": null,\n    \"manually_updated_probability\": null,\n    \"manually_updated_forecast\": null,\n    \"crm_id\": null,\n    \"crm_record_url\": null,\n    \"crm_owner_id\": null,\n    \"probability\": null,\n    \"opportunity_pipeline_id\": null,\n    \"stage_updated_at\": \"2024-09-10T21:31:53.640+00:00\",\n    \"next_step_last_updated_at\": null,\n    \"exchange_rate_code\": \"USD\",\n    \"exchange_rate_value\": 1,\n    \"amount_in_team_currency\": 999999999999,\n    \"forecasted_revenue\": 249999999999.75,\n    \"last_activity_date\": \"2024-09-10T21:30:04.809Z\",\n    \"existence_level\": \"full\",\n    \"opportunity_rule_config_statuses\": [],\n    \"opportunity_contact_roles\": [],\n    \"currency\": {\n      \"name\": \"US Dollar\",\n      \"iso_code\": \"USD\",\n      \"symbol\": \"$\"\n    },\n    \"typed_custom_fields\": {\n      \"5b75f1c11dc2727d43ae3bb9\": \"test\",\n      \"5c4296857f799409361890ea\": \"test2\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5b294f8-e0eb-414d-9c42-0c9f4b8792c7",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunity_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "opportunity_id",
+                      "description": "(Required) The ID for the deal you want to update. <br><br>Each deal in the Apollo database is assigned a unique ID. To find deal IDs, call the <a href=\"https://docs.apollo.io/reference/list-all-deals\" target=\"_blank\">List All Deals endpoint</a> and identify the value for `id` for the desired deal. <br><br>Example: `66e09ea8e3cfcf01b2208ec7`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"opportunity_stage_id\": \"<string>\",\n  \"closed_date\": \"<date>\",\n  \"typed_custom_fields\": {\n    \"60c39ed82bd02f01154c470a\": \"2025-08-07\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5bf76e6a-c2c1-4482-b57c-62a3e6c5e342",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunity_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "opportunity_id",
+                      "description": "(Required) The ID for the deal you want to update. <br><br>Each deal in the Apollo database is assigned a unique ID. To find deal IDs, call the <a href=\"https://docs.apollo.io/reference/list-all-deals\" target=\"_blank\">List All Deals endpoint</a> and identify the value for `id` for the desired deal. <br><br>Example: `66e09ea8e3cfcf01b2208ec7`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"opportunity_stage_id\": \"<string>\",\n  \"closed_date\": \"<date>\",\n  \"typed_custom_fields\": {\n    \"60c39ed82bd02f01154c470a\": \"2025-08-07\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"This API key is not authorized to access deals/api/v1/opportunities/update. Request an API key from your administrator that includes this endpoint in its configured scope.\\\",\\n  \\\"error_code\\\": \\\"API_INACCESSIBLE\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04c6c50b-f726-4cc1-a03e-8041e9670943",
+              "name": "422",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunity_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "opportunity_id",
+                      "description": "(Required) The ID for the deal you want to update. <br><br>Each deal in the Apollo database is assigned a unique ID. To find deal IDs, call the <a href=\"https://docs.apollo.io/reference/list-all-deals\" target=\"_blank\">List All Deals endpoint</a> and identify the value for `id` for the desired deal. <br><br>Example: `66e09ea8e3cfcf01b2208ec7`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"opportunity_stage_id\": \"<string>\",\n  \"closed_date\": \"<date>\",\n  \"typed_custom_fields\": {\n    \"60c39ed82bd02f01154c470a\": \"2025-08-07\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"Opportunity does not exist.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "728b0f2d-a516-4b93-a964-48db8d9b88b6",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunity_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "opportunity_id",
+                      "description": "(Required) The ID for the deal you want to update. <br><br>Each deal in the Apollo database is assigned a unique ID. To find deal IDs, call the <a href=\"https://docs.apollo.io/reference/list-all-deals\" target=\"_blank\">List All Deals endpoint</a> and identify the value for `id` for the desired deal. <br><br>Example: `66e09ea8e3cfcf01b2208ec7`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"opportunity_stage_id\": \"<string>\",\n  \"closed_date\": \"<date>\",\n  \"typed_custom_fields\": {\n    \"60c39ed82bd02f01154c470a\": \"2025-08-07\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/opportunities/{opportunity_id} is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e4b2760c-7422-4c76-9a26-0eef877a6f4d",
+          "name": "List Deal Stages",
+          "request": {
+            "name": "List Deal Stages",
+            "description": {
+              "content": "## Endpoint essentials\n\n**API key access:** `deals/api/v1/opportunity_stages/index` or `Master API key`\n\n**OAuth scopes:** `opportunity_stages_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4415062467725-Deals-Overview\" target=\"_blank\">Deals</a> on Apollo help you track sales opportunities.<br><br>Use the List Deal Stages endpoint to retrieve information about every deal stage that's available in your team's Apollo account.<br><br>The `id` value for each deal stage can be used to set the stage when <a href=\"https://docs.apollo.io/reference/create-deal\">creating a deal</a> or <a href=\"https://docs.apollo.io/reference/update-deal\">updating a deal</a> via the Apollo API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "opportunity_stages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "942502ff-93ee-4ddd-b94a-270e989f209e",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunity_stages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"opportunity_stages\\\": [\\n    {\\n      \\\"id\\\": \\\"6095a710bd01d100a506d4bd\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Qualify\\\",\\n      \\\"display_order\\\": 0,\\n      \\\"forecast_category_cd\\\": \\\"Pipeline\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 10,\\n      \\\"description\\\": \\\"Very first interaction with the AE on the account to determine their pain and fit for sales enablement in their business. This is the discovery phase where we ask questions to uncover need. This is more focused on their bsuiness and their workflow than our solution.\\\",\\n      \\\"salesforce_id\\\": \\\"01J8jXTZaxnljrDxwv\\\",\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"654b989fcb2a5200010a90db\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66bb94fbc1695c00017fba5f\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Meet & Present\\\",\\n      \\\"display_order\\\": 1,\\n      \\\"forecast_category_cd\\\": \\\"Pipeline\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 25,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": \\\"01JqvNlB1DidltWun5\\\",\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": null,\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66bb94fbc1695c00017fba60\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Propose\\\",\\n      \\\"display_order\\\": 2,\\n      \\\"forecast_category_cd\\\": \\\"Pipeline\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 50,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": \\\"01JPihF5IsBmhrBPcs\\\",\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": null,\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66bb94fbc1695c00017fba61\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Negotiate\\\",\\n      \\\"display_order\\\": 3,\\n      \\\"forecast_category_cd\\\": \\\"Pipeline\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 75,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": \\\"01JRJRsXzbxjuBVqK1\\\",\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": null,\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"660abf69d8358b01ae3c214e\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Won\\\",\\n      \\\"display_order\\\": 4,\\n      \\\"forecast_category_cd\\\": \\\"Closed\\\",\\n      \\\"is_won\\\": true,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 100,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": \\\"01Jth7NCQeSgkAM2TZ\\\",\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6579e5ff75a5170001f03d38\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Won\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"660abf69d8358b01ae3c214f\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Lost\\\",\\n      \\\"display_order\\\": 5,\\n      \\\"forecast_category_cd\\\": \\\"Omitted\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 0,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": \\\"01Jyg7och9mJ35AhLf\\\",\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6579e5ff75a5170001f03d38\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Lost\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6153414bc0559d00016ce5fd\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Prospecting\\\",\\n      \\\"display_order\\\": 6,\\n      \\\"forecast_category_cd\\\": \\\"Closed\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 10,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": \\\"01JxhZCvoQar5TgwoX\\\",\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"654b989fcb2a5200010a90db\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6153414bc0559d00016ce5fe\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Qualification\\\",\\n      \\\"display_order\\\": 7,\\n      \\\"forecast_category_cd\\\": \\\"Closed\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 10,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": \\\"01JRnbtEO24H0zPfvk\\\",\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"654b989fcb2a5200010a90db\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6153414bc0559d00016ce602\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Needs Analysis\\\",\\n      \\\"display_order\\\": 8,\\n      \\\"forecast_category_cd\\\": \\\"Closed\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 20,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": \\\"01JrhaqFgAQqadu5Z4\\\",\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"654b989fcb2a5200010a90db\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6153414bc0559d00016ce600\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Value Proposition\\\",\\n      \\\"display_order\\\": 9,\\n      \\\"forecast_category_cd\\\": \\\"Closed\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 50,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": \\\"01JUVUaCnbatpVOesu\\\",\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"654b989fcb2a5200010a90db\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6153414bc0559d00016ce601\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Id. Decision Makers\\\",\\n      \\\"display_order\\\": 10,\\n      \\\"forecast_category_cd\\\": \\\"Closed\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 60,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": \\\"01JhGUWMlcArXkTfBQ\\\",\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"654b989fcb2a5200010a90db\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6153414bc0559d00016ce604\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Perception Analysis\\\",\\n      \\\"display_order\\\": 11,\\n      \\\"forecast_category_cd\\\": \\\"Closed\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 70,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": \\\"01Jb33q1pf4bk0GDR8\\\",\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"654b989fcb2a5200010a90db\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6153414bc0559d00016ce5ff\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Proposal/Price Quote\\\",\\n      \\\"display_order\\\": 12,\\n      \\\"forecast_category_cd\\\": \\\"Closed\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 75,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": \\\"01Jn27tQqVmJHNLcSc\\\",\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"654b989fcb2a5200010a90db\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6153414bc0559d00016ce603\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Negotiation/Review\\\",\\n      \\\"display_order\\\": 13,\\n      \\\"forecast_category_cd\\\": \\\"Closed\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 90,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": \\\"01JvlPzLZvqeGQfeO7\\\",\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"654b989fcb2a5200010a90db\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66a7e9f49e70bf03f06da684\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Appointment Scheduled\\\",\\n      \\\"display_order\\\": 14,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 20,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66a7e9f49e70bf03f06da682\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66a7e9f49e70bf03f06da685\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Qualified To Buy\\\",\\n      \\\"display_order\\\": 15,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 40,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66a7e9f49e70bf03f06da682\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66a7e9f49e70bf03f06da686\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Presentation Scheduled\\\",\\n      \\\"display_order\\\": 16,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 60,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66a7e9f49e70bf03f06da682\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66a7e9f49e70bf03f06da687\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Decision Maker Bought-In\\\",\\n      \\\"display_order\\\": 17,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 80,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66a7e9f49e70bf03f06da682\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66a7e9f49e70bf03f06da688\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Contract Sent\\\",\\n      \\\"display_order\\\": 18,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 90,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66a7e9f49e70bf03f06da682\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66a7e9f49e70bf03f06da689\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Won\\\",\\n      \\\"display_order\\\": 19,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": true,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 100,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66a7e9f49e70bf03f06da682\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Won\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66a7e9f49e70bf03f06da68a\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Lost\\\",\\n      \\\"display_order\\\": 20,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 0,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66a7e9f49e70bf03f06da682\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Lost\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6696b1d5159edf027a5d644e\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Initial outreach\\\",\\n      \\\"display_order\\\": 21,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 10,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6696b1d5159edf027a5d644c\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6696b1d5159edf027a5d644f\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Needs assessment\\\",\\n      \\\"display_order\\\": 22,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 30,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6696b1d5159edf027a5d644c\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6696b1d5159edf027a5d6450\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Solution proposal\\\",\\n      \\\"display_order\\\": 23,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 40,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6696b1d5159edf027a5d644c\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6696b1d5159edf027a5d6451\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Solution presentation\\\",\\n      \\\"display_order\\\": 24,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 60,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6696b1d5159edf027a5d644c\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6696b1d5159edf027a5d6452\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Objection handling\\\",\\n      \\\"display_order\\\": 25,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 80,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6696b1d5159edf027a5d644c\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6696b1d5159edf027a5d6453\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Finalizing terms\\\",\\n      \\\"display_order\\\": 26,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 90,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6696b1d5159edf027a5d644c\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6696b1d5159edf027a5d6454\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed won\\\",\\n      \\\"display_order\\\": 27,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": true,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 100,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6696b1d5159edf027a5d644c\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Won\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6696b1d5159edf027a5d6455\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed lost\\\",\\n      \\\"display_order\\\": 28,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 0,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6696b1d5159edf027a5d644c\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Lost\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"668edd9c30f28303b85d6ccd\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Appointment Scheduled\\\",\\n      \\\"display_order\\\": 29,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 20,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"668edd9c30f28303b85d6ccb\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"668edd9c30f28303b85d6cce\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Qualified To Buy\\\",\\n      \\\"display_order\\\": 30,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 40,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"668edd9c30f28303b85d6ccb\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"668edd9c30f28303b85d6ccf\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Presentation Scheduled\\\",\\n      \\\"display_order\\\": 31,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 60,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"668edd9c30f28303b85d6ccb\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"668edd9c30f28303b85d6cd0\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Decision Maker Bought-In\\\",\\n      \\\"display_order\\\": 32,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 80,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"668edd9c30f28303b85d6ccb\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"668edd9c30f28303b85d6cd1\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Contract Sent\\\",\\n      \\\"display_order\\\": 33,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 90,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"668edd9c30f28303b85d6ccb\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"668edd9c30f28303b85d6cd2\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Won\\\",\\n      \\\"display_order\\\": 34,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": true,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 100,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"668edd9c30f28303b85d6ccb\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Won\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"668edd9c30f28303b85d6cd3\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Lost\\\",\\n      \\\"display_order\\\": 35,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 0,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"668edd9c30f28303b85d6ccb\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Lost\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66758ba7f51546038c4067e1\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Appointment Scheduled\\\",\\n      \\\"display_order\\\": 36,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 20,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66758ba7f51546038c4067e2\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Qualified To Buy\\\",\\n      \\\"display_order\\\": 37,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 40,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66758ba7f51546038c4067e3\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Presentation Scheduled\\\",\\n      \\\"display_order\\\": 38,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 60,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66758ba7f51546038c4067e4\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Decision Maker Bought-In\\\",\\n      \\\"display_order\\\": 39,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 80,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66758ba7f51546038c4067e5\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Contract Sent\\\",\\n      \\\"display_order\\\": 40,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 90,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66758ba7f51546038c4067e6\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Won\\\",\\n      \\\"display_order\\\": 41,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": true,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 100,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Won\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66758ba7f51546038c4067e7\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Lost\\\",\\n      \\\"display_order\\\": 42,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 0,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Lost\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"666885736b643603a2ec5c99\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Appointment Scheduled\\\",\\n      \\\"display_order\\\": 43,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 20,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6668ad252e6e0803a154baf3\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Lead\\\",\\n      \\\"display_order\\\": 44,\\n      \\\"forecast_category_cd\\\": \\\"Omitted\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 0,\\n      \\\"description\\\": \\\"A potential prospect who could be interested and a good fit to partner with.\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6668ad252e6e0803a154baf1\\\",\\n      \\\"is_editable\\\": true,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6668ad252e6e0803a154baf4\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Sales Qualified\\\",\\n      \\\"display_order\\\": 45,\\n      \\\"forecast_category_cd\\\": \\\"Pipeline\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 10,\\n      \\\"description\\\": \\\"Determined that the prospect fits our ideal customer profile and to begin the sales process with.\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6668ad252e6e0803a154baf1\\\",\\n      \\\"is_editable\\\": true,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"666885736b643603a2ec5c9a\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Qualified To Buy\\\",\\n      \\\"display_order\\\": 46,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 40,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"666885736b643603a2ec5c9b\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Presentation Scheduled\\\",\\n      \\\"display_order\\\": 47,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 60,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6668ad252e6e0803a154baf5\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Meeting Booked\\\",\\n      \\\"display_order\\\": 48,\\n      \\\"forecast_category_cd\\\": \\\"Pipeline\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 20,\\n      \\\"description\\\": \\\"The initial meeting happened and it’s the discovery phase where we ask questions to uncover need. This is more focused on seeing if there is a mutual fit to partner and better understanding the prospect’s challenges.\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6668ad252e6e0803a154baf1\\\",\\n      \\\"is_editable\\\": true,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"666885736b643603a2ec5c9c\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Decision Maker Bought-In\\\",\\n      \\\"display_order\\\": 49,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 80,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6668ad252e6e0803a154baf6\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Negotiation\\\",\\n      \\\"display_order\\\": 50,\\n      \\\"forecast_category_cd\\\": \\\"Best Case\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 40,\\n      \\\"description\\\": \\\"The prospect has narrowed their choices down to a few options (or chosen us). This is where we would get into a negotiation on closing the deal.\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6668ad252e6e0803a154baf1\\\",\\n      \\\"is_editable\\\": true,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"666885736b643603a2ec5c9d\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Contract Sent\\\",\\n      \\\"display_order\\\": 51,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 90,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6668ad252e6e0803a154baf7\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Contract Sent\\\",\\n      \\\"display_order\\\": 52,\\n      \\\"forecast_category_cd\\\": \\\"Best Case\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 70,\\n      \\\"description\\\": \\\"User has delivered a proposal to the prospect with pricing as well as any required documentation that we need them to sign.\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6668ad252e6e0803a154baf1\\\",\\n      \\\"is_editable\\\": true,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6668ad252e6e0803a154baf8\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Won\\\",\\n      \\\"display_order\\\": 53,\\n      \\\"forecast_category_cd\\\": \\\"Closed\\\",\\n      \\\"is_won\\\": true,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 100,\\n      \\\"description\\\": \\\"Self-explanatory\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6668ad252e6e0803a154baf1\\\",\\n      \\\"is_editable\\\": false,\\n      \\\"type\\\": \\\"Closed/Won\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"666885736b643603a2ec5c9e\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Won\\\",\\n      \\\"display_order\\\": 54,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": true,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 100,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Won\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6668ad252e6e0803a154baf9\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Lost\\\",\\n      \\\"display_order\\\": 55,\\n      \\\"forecast_category_cd\\\": \\\"Closed\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 0,\\n      \\\"description\\\": \\\"Self-explanatory\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6668ad252e6e0803a154baf1\\\",\\n      \\\"is_editable\\\": false,\\n      \\\"type\\\": \\\"Closed/Lost\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"666885736b643603a2ec5c9f\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Lost\\\",\\n      \\\"display_order\\\": 56,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 0,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Lost\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66607cea0b124603a2a7a598\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Appointment Scheduled\\\",\\n      \\\"display_order\\\": 57,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 20,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6656268b92b588034a119415\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Appointment Scheduled\\\",\\n      \\\"display_order\\\": 58,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 20,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6656268b92b588034a119413\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66607cea0b124603a2a7a599\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Qualified To Buy\\\",\\n      \\\"display_order\\\": 59,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 40,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6656268b92b588034a119416\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Qualified To Buy\\\",\\n      \\\"display_order\\\": 60,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 40,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6656268b92b588034a119413\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66607cea0b124603a2a7a59a\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Presentation Scheduled\\\",\\n      \\\"display_order\\\": 61,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 60,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6656268b92b588034a119417\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Presentation Scheduled\\\",\\n      \\\"display_order\\\": 62,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 60,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6656268b92b588034a119413\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6656268b92b588034a119418\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Decision Maker Bought-In\\\",\\n      \\\"display_order\\\": 63,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 80,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6656268b92b588034a119413\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66607cea0b124603a2a7a59b\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Decision Maker Bought-In\\\",\\n      \\\"display_order\\\": 64,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 80,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6656268b92b588034a119419\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Contract Sent\\\",\\n      \\\"display_order\\\": 65,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 90,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6656268b92b588034a119413\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66607cea0b124603a2a7a59c\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Contract Sent\\\",\\n      \\\"display_order\\\": 66,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 90,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66607cea0b124603a2a7a59d\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Won\\\",\\n      \\\"display_order\\\": 67,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": true,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 100,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Won\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"660abf69d8358b01ae3c2149\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Appointment Scheduled\\\",\\n      \\\"display_order\\\": 68,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 20,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6579e5ff75a5170001f03d38\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"660abf69d8358b01ae3c214a\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Qualified To Buy\\\",\\n      \\\"display_order\\\": 69,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 40,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6579e5ff75a5170001f03d38\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6656268b92b588034a11941a\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Won\\\",\\n      \\\"display_order\\\": 70,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": true,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 100,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6656268b92b588034a119413\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Won\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"660abf69d8358b01ae3c214c\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Decision Maker Bought-In\\\",\\n      \\\"display_order\\\": 71,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 80,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6579e5ff75a5170001f03d38\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6656268b92b588034a11941b\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Lost\\\",\\n      \\\"display_order\\\": 72,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 0,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6656268b92b588034a119413\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Lost\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"66607cea0b124603a2a7a59e\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Lost\\\",\\n      \\\"display_order\\\": 73,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 0,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"66607ce90b124603a2a7a596\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Lost\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"660abf69d8358b01ae3c214b\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Presentation Scheduled\\\",\\n      \\\"display_order\\\": 74,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 60,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6579e5ff75a5170001f03d38\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"660abf69d8358b01ae3c214d\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Contract Sent\\\",\\n      \\\"display_order\\\": 75,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 90,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6579e5ff75a5170001f03d38\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"65f9dd436c96a4043b9858c3\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Lead\\\",\\n      \\\"display_order\\\": 76,\\n      \\\"forecast_category_cd\\\": \\\"Omitted\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 0,\\n      \\\"description\\\": \\\"A potential prospect who could be interested and a good fit to partner with.\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"65f9dd436c96a4043b9858c1\\\",\\n      \\\"is_editable\\\": true,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"65f9dd436c96a4043b9858c4\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Sales Qualified\\\",\\n      \\\"display_order\\\": 77,\\n      \\\"forecast_category_cd\\\": \\\"Pipeline\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 10,\\n      \\\"description\\\": \\\"Determined that the prospect fits our ideal customer profile and to begin the sales process with.\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"65f9dd436c96a4043b9858c1\\\",\\n      \\\"is_editable\\\": true,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6579e60075a5170001f03d6c\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Appointment Scheduled\\\",\\n      \\\"display_order\\\": 78,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 20,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6579e5ff75a5170001f03d38\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6579e60075a5170001f03d6d\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Qualified To Buy\\\",\\n      \\\"display_order\\\": 79,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 40,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6579e5ff75a5170001f03d38\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"65f9dd436c96a4043b9858c5\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Meeting Booked\\\",\\n      \\\"display_order\\\": 80,\\n      \\\"forecast_category_cd\\\": \\\"Pipeline\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 20,\\n      \\\"description\\\": \\\"The initial meeting happened and it’s the discovery phase where we ask questions to uncover need. This is more focused on seeing if there is a mutual fit to partner and better understanding the prospect’s challenges.\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"65f9dd436c96a4043b9858c1\\\",\\n      \\\"is_editable\\\": true,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"65f9dd436c96a4043b9858c6\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Negotiation\\\",\\n      \\\"display_order\\\": 81,\\n      \\\"forecast_category_cd\\\": \\\"Best Case\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 40,\\n      \\\"description\\\": \\\"The prospect has narrowed their choices down to a few options (or chosen us). This is where we would get into a negotiation on closing the deal.\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"65f9dd436c96a4043b9858c1\\\",\\n      \\\"is_editable\\\": true,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6579e60075a5170001f03d6e\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Presentation Scheduled\\\",\\n      \\\"display_order\\\": 82,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 60,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6579e5ff75a5170001f03d38\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6579e60075a5170001f03d6f\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Decision Maker Bought-In\\\",\\n      \\\"display_order\\\": 83,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 80,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6579e5ff75a5170001f03d38\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"65f9dd436c96a4043b9858c7\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Contract Sent\\\",\\n      \\\"display_order\\\": 84,\\n      \\\"forecast_category_cd\\\": \\\"Best Case\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 70,\\n      \\\"description\\\": \\\"User has delivered a proposal to the prospect with pricing as well as any required documentation that we need them to sign.\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"65f9dd436c96a4043b9858c1\\\",\\n      \\\"is_editable\\\": true,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6579e60075a5170001f03d70\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Contract Sent\\\",\\n      \\\"display_order\\\": 85,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 90,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6579e5ff75a5170001f03d38\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"65f9dd436c96a4043b9858c8\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Won\\\",\\n      \\\"display_order\\\": 86,\\n      \\\"forecast_category_cd\\\": \\\"Closed\\\",\\n      \\\"is_won\\\": true,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 100,\\n      \\\"description\\\": \\\"Self-explanatory\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"65f9dd436c96a4043b9858c1\\\",\\n      \\\"is_editable\\\": false,\\n      \\\"type\\\": \\\"Closed/Won\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6579e60075a5170001f03d71\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Won\\\",\\n      \\\"display_order\\\": 87,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": true,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 100,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6579e5ff75a5170001f03d38\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Won\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"65f9dd436c96a4043b9858c9\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Lost\\\",\\n      \\\"display_order\\\": 88,\\n      \\\"forecast_category_cd\\\": \\\"Closed\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 0,\\n      \\\"description\\\": \\\"Self-explanatory\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"65f9dd436c96a4043b9858c1\\\",\\n      \\\"is_editable\\\": false,\\n      \\\"type\\\": \\\"Closed/Lost\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6579e60075a5170001f03d72\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Lost\\\",\\n      \\\"display_order\\\": 89,\\n      \\\"forecast_category_cd\\\": null,\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 0,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6579e5ff75a5170001f03d38\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Lost\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6095a710bd01d100a506d4c2\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Won\\\",\\n      \\\"display_order\\\": 90,\\n      \\\"forecast_category_cd\\\": \\\"Closed\\\",\\n      \\\"is_won\\\": true,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 100,\\n      \\\"description\\\": \\\"Self-explanatory\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"654b989fcb2a5200010a90db\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Won\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6095a710bd01d100a506d4c3\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Closed Lost\\\",\\n      \\\"display_order\\\": 91,\\n      \\\"forecast_category_cd\\\": \\\"Omitted\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 0,\\n      \\\"description\\\": \\\"Self-explanatory\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"654b989fcb2a5200010a90db\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Lost\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6095a710bd01d100a506d4bc\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Omitted\\\",\\n      \\\"display_order\\\": 92,\\n      \\\"forecast_category_cd\\\": \\\"Omitted\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 0,\\n      \\\"description\\\": \\\"Not a qualified opportunity to include in opportunity forecasting reports. This is a meeting to determine if there is an opportunity for us to engage in a sales cycle.\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"654b989fcb2a5200010a90db\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6095a710bd01d100a506d4be\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Educate\\\",\\n      \\\"display_order\\\": 93,\\n      \\\"forecast_category_cd\\\": \\\"Pipeline\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 20,\\n      \\\"description\\\": \\\"This is where we start to inform/ educate the buyer(s) on what sales enablement can do for their business by asking leading questions to start quantifying the need into busness impact and quantify the amount of time and money they waste on their current proces This is where we take the info we gathered from the discovery call and craft a specific pitch and customized demo based on their workflow and use case.\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"654b989fcb2a5200010a90db\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6095a710bd01d100a506d4bf\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Validate\\\",\\n      \\\"display_order\\\": 94,\\n      \\\"forecast_category_cd\\\": \\\"Best Case\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 40,\\n      \\\"description\\\": \\\"When the prospect has seen our demo and now goes through the process of owning how us would be used inside their organization. This is their internal validation process and should be an opportunity for us to help them justify from a business perspective with information we've gathered in the discovery phase how it would help them save money or make money.\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"654b989fcb2a5200010a90db\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6095a710bd01d100a506d4c0\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Proposal\\\",\\n      \\\"display_order\\\": 95,\\n      \\\"forecast_category_cd\\\": \\\"Best Case\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 70,\\n      \\\"description\\\": \\\"The prospect has narrowed their choices down to a few options (or chosen us). This is where we would get into a negotiation on closing the deal. We will have delivered a proposal to them with pricing, users and start date as well as any required documentation that we need them to sign.\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"654b989fcb2a5200010a90db\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6095a710bd01d100a506d4c1\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Commit\\\",\\n      \\\"display_order\\\": 96,\\n      \\\"forecast_category_cd\\\": \\\"Committed\\\",\\n      \\\"is_won\\\": false,\\n      \\\"is_closed\\\": false,\\n      \\\"probability\\\": 90,\\n      \\\"description\\\": \\\"Self-explanatory\\\",\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"654b989fcb2a5200010a90db\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Open\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6668adfa2e6e0803a154bd77\\\",\\n      \\\"team_id\\\": \\\"6095a710bd01d100a506d4ac\\\",\\n      \\\"name\\\": \\\"Contract sent\\\",\\n      \\\"display_order\\\": 97,\\n      \\\"forecast_category_cd\\\": \\\"Omitted\\\",\\n      \\\"is_won\\\": true,\\n      \\\"is_closed\\\": true,\\n      \\\"probability\\\": 95,\\n      \\\"description\\\": null,\\n      \\\"salesforce_id\\\": null,\\n      \\\"is_meeting_set\\\": null,\\n      \\\"opportunity_pipeline_id\\\": \\\"6668ad252e6e0803a154baf1\\\",\\n      \\\"is_editable\\\": null,\\n      \\\"type\\\": \\\"Closed/Won\\\"\\n    }\\n  ]\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b80eb4e8-41fd-48ca-9157-4563c6f37a10",
+              "name": "401",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunity_stages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7c9b79d2-25b8-43f6-a9d7-7974aacc16da",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunity_stages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": \\\"This API key is not authorized to access deals/api/v1/opportunity_stages/index. Request an API key from your administrator that includes this endpoint in its configured scope.\\\",\\n  \\\"error_code\\\": \\\"API_INACCESSIBLE\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd23b889-d602-4328-b44b-24e9994b9849",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunity_stages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"message\\\": \\\"The maximum number of api calls allowed for api/v1/opportunity_stages is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.apollo.io/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "22a8671e-3b16-4975-a4a3-6f0603f1acd7",
+    "name": "Apollo API — Deals",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Apollo API provides programmatic access to [Apollo](https://www.apollo.io/), the all-in-one sales intelligence and engagement platform. Use it to enrich people and company data (individually or in bulk), search Apollo's database of over 240 million contacts and 30 million companies, and manage accounts, contacts, deals, sequences, tasks, calls, and conversations in your go-to-market workflows.\n\n## Base URL\n\nAll API requests are made to `https://api.apollo.io/api/v1`.\n\n## Authentication\n\n- **Apollo users** authenticate with an API key passed in the `x-api-key` request header. See [Create API Keys](https://docs.apollo.io/docs/create-api-key).\n- **Apollo partners** building integrations on behalf of mutual users authenticate with the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).\n\n## Rate limits & credits\n\nRate limits and credit consumption depend on your [Apollo pricing plan](https://docs.apollo.io/docs/api-pricing). Check your current limits and usage with the [View API Usage Stats and Rate Limits](https://docs.apollo.io/reference/view-api-usage-stats) endpoint. For more details, see [Rate Limits](https://docs.apollo.io/reference/rate-limits) and the [API FAQs](https://docs.apollo.io/docs/apollo-api-faqs).\n\nNew to the API? Start with the [Apollo API overview](https://docs.apollo.io/reference/apollo-api).\n\nContact Support:\n Name: Apollo API Support",
+      "type": "text/plain"
+    }
+  }
+}

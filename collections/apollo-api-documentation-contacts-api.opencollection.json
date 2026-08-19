@@ -1,0 +1,212 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apollo API — Contacts",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Contacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a Contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/contacts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/contacts/create` or `Master API key`\n\n**OAuth scopes:** `contact_write`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995459280525-View-and-Edit-Contacts\" target=\"_blank\">Contacts</a> are people saved in Apollo.<br><br>Use the Create a Contact endpoint to add a new contact to your team's Apollo  account.<br><br>By def"
+        },
+        {
+          "info": {
+            "name": "View a Contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/contacts/:contact_id",
+            "params": [
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path",
+                "description": "The Apollo ID for the contact that you want to view. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/contacts/show` or `Master API key`\n\n**OAuth scopes:** `contact_read`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995459280525-View-and-Edit-Contacts\" target=\"_blank\">Contacts</a> are people saved in Apollo.<br><br>Use the View a Contact endpoint to retrieve details for an existing contact in your team's Apollo datab"
+        },
+        {
+          "info": {
+            "name": "Update a Contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.apollo.io/api/v1/contacts/:contact_id",
+            "params": [
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path",
+                "description": "The Apollo ID for the contact that you want to update. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/contacts/update` or `Master API key`\n\n**OAuth scopes:** `contact_update`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995459280525-View-and-Edit-Contacts\" target=\"_blank\">Contacts</a> are people saved in Apollo.<br><br>Use the Update a Contact endpoint to update existing contacts in your team's Apollo account.<br><br"
+        },
+        {
+          "info": {
+            "name": "View Associated Deals",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/contacts/:contact_id/opportunities",
+            "params": [
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID for the contact whose associated deals you want to retrieve. <br><br>Example: <code>64a7ff0cc4dfae00013df1a5</code>"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `deals/api/v1/opportunities/search` or `Master API key`\n\n**OAuth scopes:** `opportunities_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4415062467725-Deals-Overview\" target=\"_blank\">Deals</a> on Apollo help you track sales opportunities.<br><br>Use the View Associated Deals endpoint to retrieve the deals associated with "
+        },
+        {
+          "info": {
+            "name": "Search for Contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/contacts/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/contacts/search` or `Master API key`\n\n**OAuth scopes:** `contacts_search`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995459280525-View-and-Edit-Contacts\" target=\"_blank\">Contacts</a> are people saved in Apollo.<br><br>Use the Search for Contacts endpoint to search for the contacts that have been added to your team'"
+        },
+        {
+          "info": {
+            "name": "Update Contact Stage for Multiple Contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/contacts/update_stages",
+            "params": [
+              {
+                "name": "contact_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "The Apollo IDs for the contacts that you want to update. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+              },
+              {
+                "name": "contact_stage_id",
+                "value": "",
+                "type": "query",
+                "description": "The Apollo ID for the contact stage to which you want to assign the contacts. Call the <a href=\"https://docs.apollo.io/reference/list-contact-stages\" target=\"_blank\">List Contact Stages endpoint</a> to retrieve a list of all the contact stage IDs available in your Apollo account. <br><br>Example: `6095a710bd01d100a506d4af`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/contacts/update_stages` or `Master API key`\n\n**OAuth scopes:** `contact_stages_update`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4410623601165-Contact-and-Account-Stages-Overview\" target=\"_blank\">Contact stages</a> help you track progress on sales and marketing pipelines.<br><br>Use the Update Contact Stage for Mul"
+        },
+        {
+          "info": {
+            "name": "Update Contact Owner for Multiple Contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/contacts/update_owners",
+            "params": [
+              {
+                "name": "contact_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "The Apollo IDs for the contacts that you want assign to an owner. <br><br>To find contact IDs, call the <a href=\"https://docs.apollo.io/reference/search-for-contacts\" target=\"_blank\">Search for Contacts endpoint</a> and identify the `id` value for the contact. <br><br>Example: `66e34b81740c50074e3d1bd4`"
+              },
+              {
+                "name": "owner_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID for the contact owner within your team's Apollo account. This user will be assigned ownership of the contacts. <br><br>Use the <a href=\"https://docs.apollo.io/reference/get-a-list-of-users\" target=\"_blank\">Get a List of Users endpoint</a> endpoint to retrieve IDs for all of the users within your Apollo account. <br><br>Example: `66302798d03b9601c7934ebf`"
+              }
+            ]
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/contacts/update_owners` or `Master API key`\n\n**OAuth scopes:** `contact_owners_update`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/5631686093069-Edit-a-Contact-or-Account-Owner\" target=\"_blank\">Contact owners</a> manage specific contacts in Apollo.<br><br>Use the Update Contact Owner for Multiple Contacts endpoint to"
+        },
+        {
+          "info": {
+            "name": "Bulk Create Contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/contacts/bulk_create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/contacts/bulk_create` or `Master API key`\n\n**OAuth scopes:** `contacts_bulk_create`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995459280525-View-and-Edit-Contacts\" target=\"_blank\">Contacts</a> are people saved in Apollo.<br><br>Use the Bulk Create Contacts endpoint to create up to 100 contacts in a single API reque"
+        },
+        {
+          "info": {
+            "name": "Bulk Update Contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/contacts/bulk_update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/contacts/bulk_update` or `Master API key`\n\n**OAuth scopes:** `contacts_bulk_update`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/5995459280525-View-and-Edit-Contacts\" target=\"_blank\">Contacts</a> are people saved in Apollo.<br><br>Use the Bulk Update Contacts endpoint to update multiple contacts in your team's Apollo "
+        },
+        {
+          "info": {
+            "name": "List Contact Stages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apollo.io/api/v1/contact_stages"
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/contact_stages/index` or `Master API key`\n\n**OAuth scopes:** `contact_stages_list`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\n<a href=\"https://knowledge.apollo.io/hc/en-us/articles/4410623601165-Contact-and-Account-Stages-Overview\" target=\"_blank\">Contact stages</a> help you track progress on sales and marketing pipelines.<br><br>Use the List Contact Stages endpoint to "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

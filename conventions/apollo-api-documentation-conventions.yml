@@ -1,0 +1,131 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://docs.apollo.io/reference/authentication, https://docs.apollo.io/reference/rate-limits,
+  https://docs.apollo.io/reference/status-codes, https://docs.apollo.io/docs/build-with-apollo,
+  https://docs.apollo.io/docs/enrich-phone-and-email-using-data-waterfall, plus parameter shapes derived from
+  openapi/_original/apollo-api-documentation-apollo-rest-api-openapi.json
+provider: Apollo API Documentation
+providerId: apollo-api-documentation
+description: >-
+  Cross-cutting request/response semantics for the Apollo API — what an agent or client needs to know that is
+  not attached to any single operation. Recorded honestly: Apollo has strong runtime rate-limit signalling
+  and a clear auth story, but NO client idempotency contract, NO request-id tracing header, NO cursor
+  pagination, and NO standard error envelope.
+authentication:
+  primary:
+    style: api-key-header
+    header: x-api-key
+    audience: Apollo users
+    key_types: [standard, master]
+    master_key_note: Some endpoints (e.g. get-a-list-of-users) require a master key, which grants access to all endpoints.
+    warning: >-
+      Sending an Apollo API key as a Bearer token returns "401 Invalid API key". The key goes in x-api-key.
+  secondary:
+    style: oauth2-bearer
+    scheme: http bearer (JWT)
+    audience: Apollo partners acting on behalf of mutual users
+    authorize: https://app.apollo.io/#/oauth/authorize
+    token: https://mcp.apollo.io/api/v1/oauth/token
+    pkce: S256
+    scopes: scopes/apollo-api-documentation-scopes.yml
+  acting_user:
+    api_key: >-
+      A key identifies the WORKSPACE, not a person. Every API-key request acts as the workspace's
+      longest-standing active admin, and records created are owned by that user.
+    oauth: Tokens are issued to a person; requests act as the user who granted the token.
+    check: GET /users/api_profile (get-current-user-profile) returns the acting user id.
+    override: Some endpoints accept an explicit owner field (owner_id on create-an-account, user_id on update-sequence).
+  surfaces:
+    - {surface: Apollo API, api_key: true, oauth: true}
+    - {surface: Apollo MCP, api_key: false, oauth: true}
+    - {surface: Apollo CLI, api_key: false, oauth: true}
+  artifact: authentication/apollo-api-documentation-authentication.yml
+idempotency:
+  supported: false
+  client_key_header: null
+  note: >-
+    Apollo publishes NO client-side idempotency key. The only use of the word "idempotency" in the entire
+    OpenAPI is a requirement placed on the CONSUMER's webhook endpoint ("Apollo may retry webhook calls; your
+    endpoint should be idempotent to handle duplicate payloads safely"). Retrying a create call is not safe:
+    Apollo's own MCP guidance is to search for an existing contact before creating one. No Idempotency
+    pointer is emitted for this provider.
+  consumer_requirement:
+    applies_to: [people-enrichment, bulk-people-enrichment]
+    rule: Waterfall enrichment webhooks may be retried; the receiving endpoint must tolerate duplicates.
+pagination:
+  style: page-number
+  params:
+    - {name: page, in: query, type: integer, note: 1-indexed page number.}
+    - {name: per_page, in: query, type: integer, note: Page size. Caps differ by endpoint — 100 for organization search, 25 for news search, 10,000 for job postings.}
+  response_fields: [pagination]
+  cursor: false
+  next_link: false
+  note: >-
+    Search and list responses carry a `pagination` object alongside the record array. There is no cursor and
+    no next-page URL — a client increments `page`. Credit-consuming endpoints charge PER PAGE, so paging
+    through a large result set multiplies credit spend.
+field_selection:
+  expansion: false
+  sparse_fieldsets: false
+  note: No expand[] or fields[] convention. Response shape is fixed per endpoint.
+custom_fields:
+  supported: true
+  operations: [get-a-list-of-fields, create-a-custom-field, update-a-custom-field, get-a-list-of-all-custom-fields]
+  note: Workspace-defined custom fields are managed through /fields; /typed_custom_fields is deprecated.
+request_tracing:
+  request_id_header: null
+  note: >-
+    Apollo returns no request-id header. The CLI offers a global --add-header flag so callers can inject
+    their own correlation header (documented example: `apollo --add-header x-request-id:abc123 ...`), but the
+    API does not generate or echo one.
+  async_request_id:
+    note: >-
+      Asynchronous waterfall enrichment DOES return a request id in the synchronous response body, which is
+      then used with poll-webhook-result (GET /webhook_result/{request_id}).
+versioning:
+  style: uri-path
+  current: /api/v1
+  artifact: lifecycle/apollo-api-documentation-lifecycle.yml
+error_envelope:
+  standard: false
+  media_type: application/json
+  rfc9457: false
+  note: >-
+    "The response body describes the specific issue; the exact shape varies by endpoint." Some errors carry
+    error_code (INVALID_ACCESS_TOKEN, API_INACCESSIBLE); most do not.
+  artifact: errors/apollo-api-documentation-problem-types.yml
+rate_limit_signaling:
+  headers_returned: true
+  limit: [x-rate-limit-minute, x-rate-limit-hourly, x-rate-limit-24-hour]
+  usage: [x-minute-usage, x-hourly-usage, x-24-hour-usage]
+  remaining: [x-minute-requests-left, x-hourly-requests-left, x-24-hour-requests-left]
+  retry_after: retry-after
+  exhaustion_status: 429
+  caveat: >-
+    Headers appear only AFTER auth/authz succeed. Unlimited windows return an empty x-rate-limit-* header and
+    no usage headers. Apollo MCP returns none of these.
+  artifact: rate-limits/apollo-api-documentation-rate-limits.yml
+metering:
+  unit: credit
+  note: >-
+    Rate limits and credits are two independent budgets. An enrichment call can be within its 1,000/minute
+    limit and still fail commercially by exhausting credits. Read both with post_apiusage and
+    view-credit-usage-stats.
+  artifact: plans/apollo-api-documentation-plans-pricing.yml
+async:
+  pattern: webhook-callback-plus-poll
+  note: >-
+    Waterfall enrichment is the one asynchronous flow. The caller supplies webhook_url on the enrichment
+    request; Apollo answers synchronously with available data and a status, then POSTs the final result to
+    the webhook. poll-webhook-result is the pull-based fallback.
+  artifact: asyncapi/apollo-api-documentation-webhooks.yml
+content_type:
+  request: application/json
+  response: application/json
+  array_params: >-
+    Repeated bracket-suffixed query parameters (e.g. organization_ids[], contact_email_status[]) and bracketed
+    range parameters (date_range[min], date_range[max], duration[max]).
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com

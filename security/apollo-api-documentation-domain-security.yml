@@ -1,4 +1,4 @@
-generated: '2026-07-11'
+generated: '2026-08-14'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
@@ -11,18 +11,23 @@ hosts:
 - host: api.apollo.io
   https: true
   tls_version: TLSv1.3
-  cert_expires: Sep 11 12:03:29 2026 GMT
+  cert_expires: Nov  9 12:24:25 2026 GMT
+  hsts: null
+- host: mcp.apollo.io
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov  9 12:24:25 2026 GMT
   hsts: null
 domains:
 - domain: apollo.io
   dnssec: false
   caa:
+  - 0 issuewild "pki.goog; cansignhttpexchanges=yes"
+  - 0 issuewild "ssl.com"
+  - 0 issue "comodoca.com"
   - 0 issue "digicert.com; cansignhttpexchanges=yes"
   - 0 issue "letsencrypt.org"
   - 0 issue "pki.goog; cansignhttpexchanges=yes"
-  - 0 issue "ssl.com"
-  - 0 issuewild "comodoca.com"
-  - 0 issuewild "digicert.com; cansignhttpexchanges=yes"
   spf: true
   dmarc: true
-  dmarc_policy: reject
+  dmarc_policy: quarantine

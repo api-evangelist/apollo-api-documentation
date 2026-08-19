@@ -1,0 +1,94 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apollo API — Emailer Messages",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Emailer Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an Email Draft",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/emailer_messages",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/emailer_messages/create` or `Master API key`\n\n**OAuth scopes:** `emailer_messages_create`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the Create an Email Draft endpoint to create a single, unsent email message (an email draft) for a contact. The draft is created with a `drafted` status — this endpoint doesn't send the email.<br><br>To send the draft after creating it"
+        },
+        {
+          "info": {
+            "name": "Send Email Now",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/emailer_messages/:id/send_now",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Apollo ID of the email message to send. This is the `id` returned when you create an email draft. <br><br>Example: `66e8cc45028aed019c25d724`"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/emailer_messages/send_now` or `Master API key`\n\n**OAuth scopes:** `emailer_messages_send_now`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the Send Email Now endpoint to immediately send an existing email message.This works for emails that are currently in a `drafted`, `scheduled`, or `failed` state. Apollo schedules the email to be sent right away and processes it as"
+        },
+        {
+          "info": {
+            "name": "Get Email Content",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/emailer_messages/get_content",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/emailer_messages/get_content` or `Master API key`\n\n**OAuth scopes:** `emailer_messages_get_content`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the Get Email Content endpoint to retrieve the subject line, body, and recipients of emails that your team has already sent. Provide up to 10 email message IDs in a single request, and choose whether each body is returned as "
+        },
+        {
+          "info": {
+            "name": "Check Email Send Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apollo.io/api/v1/emailer_messages/email_send_status",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## Endpoint essentials\n\n**API key access:** `api/v1/emailer_messages/email_send_status` or `Master API key`\n\n**OAuth scopes:** `emailer_messages_email_send_status`\n\n**Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).\n\nUse the Check Email Send Status endpoint to check the current delivery status of an email message. This is typically used after calling the <a href=\"https://docs.apollo.io/reference/send-email-now\">Send Email Now endp"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

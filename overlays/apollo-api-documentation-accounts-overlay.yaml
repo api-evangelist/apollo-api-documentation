@@ -1,0 +1,39 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Apollo API — Accounts
+  version: 1.0.0
+extends: openapi/apollo-api-documentation-accounts-api-openapi.yml
+x-generated: '2026-08-14'
+x-method: generated
+x-source: Derived from the Apollo-published OpenAPI at https://docs.apollo.io/openapi/apollo-rest-api.json. This overlay
+  records API Evangelist enrichment only; the harvested spec is never mutated.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: apollo-api-documentation
+    x-apievangelist-harvested: '2026-08-14'
+    x-apievangelist-source: https://docs.apollo.io/openapi/apollo-rest-api.json
+    x-apievangelist-discovery: https://docs.apollo.io/.well-known/api-catalog
+    x-apievangelist-artifacts:
+      authentication: authentication/apollo-api-documentation-authentication.yml
+      scopes: scopes/apollo-api-documentation-scopes.yml
+      conventions: conventions/apollo-api-documentation-conventions.yml
+      errors: errors/apollo-api-documentation-problem-types.yml
+      rate-limits: rate-limits/apollo-api-documentation-rate-limits.yml
+      plans: plans/apollo-api-documentation-plans-pricing.yml
+      lifecycle: lifecycle/apollo-api-documentation-lifecycle.yml
+      data-model: data-model/apollo-api-documentation-data-model.yml
+      mcp: mcp/apollo-api-documentation-mcp.yml
+      tool-crosswalk: mcp/apollo-api-documentation-tool-crosswalk.yml
+- target: $.info
+  update:
+    x-apievangelist-gaps:
+    - No components.schemas — every body is inlined, so no two operations share a type.
+    - No RFC 9457 problem+json on any error response.
+    - No client idempotency key.
+    - No published deprecation policy or changelog.
+- target: $.servers
+  update:
+  - url: https://api.apollo.io/api/v1
+    description: Production
+    x-apievangelist-verified: '2026-08-14'

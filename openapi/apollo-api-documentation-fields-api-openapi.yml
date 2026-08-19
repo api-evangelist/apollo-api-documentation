@@ -1,0 +1,954 @@
+openapi: 3.1.0
+info:
+  title: Apollo API — Fields
+  summary: Programmatic access to Apollo's sales intelligence and engagement platform — data enrichment, prospect and company
+    search, and go-to-market workflow management.
+  description: 'The Apollo API provides programmatic access to [Apollo](https://www.apollo.io/), the all-in-one sales intelligence
+    and engagement platform. Use it to enrich people and company data (individually or in bulk), search Apollo''s database
+    of over 240 million contacts and 30 million companies, and manage accounts, contacts, deals, sequences, tasks, calls,
+    and conversations in your go-to-market workflows.
+
+
+    ## Base URL
+
+
+    All API requests are made to `https://api.apollo.io/api/v1`.
+
+
+    ## Authentication
+
+
+    - **Apollo users** authenticate with an API key passed in the `x-api-key` request header. See [Create API Keys](https://docs.apollo.io/docs/create-api-key).
+
+    - **Apollo partners** building integrations on behalf of mutual users authenticate with the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).
+
+
+    ## Rate limits & credits
+
+
+    Rate limits and credit consumption depend on your [Apollo pricing plan](https://docs.apollo.io/docs/api-pricing). Check
+    your current limits and usage with the [View API Usage Stats and Rate Limits](https://docs.apollo.io/reference/view-api-usage-stats)
+    endpoint. For more details, see [Rate Limits](https://docs.apollo.io/reference/rate-limits) and the [API FAQs](https://docs.apollo.io/docs/apollo-api-faqs).
+
+
+    New to the API? Start with the [Apollo API overview](https://docs.apollo.io/reference/apollo-api).'
+  termsOfService: https://www.apollo.io/terms/api
+  contact:
+    name: Apollo API Support
+    url: https://docs.apollo.io/
+  version: '1.0'
+servers:
+- url: https://api.apollo.io/api/v1
+tags:
+- name: Fields
+  description: List, create, and update the fields and custom fields in your Apollo account.
+security:
+- apiKey: []
+- bearerAuth: []
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: '[Recommended] API key, passed in the `x-api-key` request header.
+
+        See [Create API Keys](https://docs.apollo.io/docs/create-api-key).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'OAuth 2.0 access token, used by Apollo partners building integrations.
+
+        See the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).'
+paths:
+  /fields:
+    get:
+      summary: Get a List of Fields
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/fields/index` or `Master API key`
+
+
+        **OAuth scopes:** `custom_fields_list`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        Use the Get a List of Fields endpoint to retrieve information about all of the fields that exist in your Apollo account.'
+      tags:
+      - Fields
+      operationId: get-a-list-of-fields
+      parameters:
+      - name: source
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - system
+          - custom
+          - crm_synced
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    fields:
+                    - id: contact.id
+                      category: person
+                      context:
+                      - finder
+                      - csv_export
+                      description: null
+                      editable: false
+                      example: 673c929202c6025d8bc4e680
+                      field_name: contact.id
+                      group: basic_info
+                      icon_class: user
+                      label: Identifier
+                      modality: contact
+                      parent: null
+                      source: system
+                      type: string
+                      finder_view_ids: []
+                      project_workspace_id: null
+                      finder_views: []
+                      is_local: false
+                    - id: contact.attr1
+                      category: person
+                      context:
+                      - finder
+                      - csv_export
+                      description: null
+                      editable: false
+                      example: Test Corp
+                      field_name: contact.attr1
+                      group: basic_info
+                      icon_class: company
+                      label: Person
+                      modality: contact
+                      parent: null
+                      source: system
+                      type: association
+                      finder_view_ids: []
+                      project_workspace_id: null
+                      finder_views: []
+                      is_local: false
+                    - id: contact.attr2
+                      category: person
+                      context:
+                      - prompt
+                      - formula
+                      - snippets
+                      - finder
+                      description: null
+                      editable: false
+                      example: John
+                      field_name: contact.attr2
+                      group: basic_info
+                      icon_class: user
+                      label: First name
+                      modality: contact
+                      parent: contact.name
+                      source: system
+                      type: string
+                      finder_view_ids: []
+                      project_workspace_id: null
+                      finder_views: []
+                      is_local: false
+                    - id: account.694095a80f1b6000110fc556
+                      category: company
+                      context:
+                      - csv_export
+                      - finder
+                      - prompt
+                      description: null
+                      editable: false
+                      example: null
+                      field_name: Custom field name
+                      group: null
+                      icon_class: null
+                      label: last name
+                      modality: account
+                      parent: account.other_custom_field
+                      source: custom
+                      type: string
+                      finder_view_ids: []
+                      project_workspace_id: null
+                      finder_views: []
+                      is_local: false
+                      created_at: '2025-12-15T23:11:36.084Z'
+              schema:
+                type: object
+                properties:
+                  fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        label:
+                          type: string
+                        modality:
+                          type: string
+                          description: Entity type this field belongs to (contact, account, opportunity, lead, custom_object)
+                        context:
+                          type: string
+                          description: High‑level context for the field (contact, account, opportunity, lead, custom_object)
+                        type:
+                          type: string
+                          description: Field data type (text, number, date, datetime, boolean, picklist, multi_select, url,
+                            email, phone, currency)
+                        source:
+                          type: string
+                          description: Field source (system, custom, crm_synced)
+                        project_workspace_id:
+                          type: string
+                        meta:
+                          type: object
+                          additionalProperties: true
+                          description: Extended configuration for the field
+                        created_at:
+                          type: string
+                          format: date-time
+                        updated_at:
+                          type: string
+                          format: date-time
+                      required:
+                      - id
+                      - label
+                      - modality
+                      - type
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Need master API key:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/fields/index. Request an API key\
+                    \ from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\": \"\
+                    API_INACCESSIBLE\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: This API key is not authorized to access api/v1/fields/index. Request an API key from your administrator
+                      that includes this endpoint in its configured scope.
+                  error_code:
+                    type: string
+                    example: API_INACCESSIBLE
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n    \"message\": \"The maximum number of API calls allowed for api/v1/fields is 600 times per\
+                    \ hour. To change your rate limit, upgrade your Apollo plan at https://app.apollo.io/#/settings/plans/upgrade.\"\
+                    \n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of API calls allowed for api/v1/fields is 600 times per hour. To change your
+                      rate limit, upgrade your Apollo plan at https://app.apollo.io/#/settings/plans/upgrade.
+    post:
+      summary: Create a Custom Field
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/fields/create` or `Master API key`
+
+
+        **OAuth scopes:** `custom_field_write`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        The Create a Custom Field endpoint lets you add custom fields to your Apollo account, helping your team capture unique
+        details with <a href="https://knowledge.apollo.io/hc/en-us/articles/4412498825869-Create-Custom-Contact-Fields" target="_blank">custom
+        contact</a>, <a href="https://knowledge.apollo.io/hc/en-us/articles/4412498754445-Create-Custom-Account-Fields" target="_blank">custom
+        account</a>, or <a href="https://knowledge.apollo.io/hc/en-us/articles/4415062486669-Create-a-Deal" target="_blank">custom
+        deal fields</a>.<br><br>Use these fields to enhance your sequences and deliver more personalized, relevant outreach.'
+      tags:
+      - Fields
+      operationId: create-a-custom-field
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  type: string
+                  description: 'Name of the custom field you want to create. Example: `Test Name`'
+                modality:
+                  type: string
+                  description: 'The modality of the custom field you want to create.  Example: `contact`'
+                  enum:
+                  - contact
+                  - account
+                  - opportunity
+                type:
+                  type: string
+                  description: 'What kind of custom field you want to create. Example: `textarea`'
+                  enum:
+                  - string
+                  - textarea
+                  - number
+                  - date
+                  - datetime
+                  - boolean
+                meta:
+                  type: object
+                  properties:
+                    max_length:
+                      type: number
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    typed_custom_fields:
+                    - id: 32d42c92-5be4-4ec4-96c7-f689b43ec8a8
+                      name: Test Name
+                      modality: contact
+                      text_field_max_length: 120
+              schema:
+                type: object
+                properties:
+                  typed_custom_fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 32d42c92-5be4-4ec4-96c7-f689b43ec8a8
+                        name:
+                          type: string
+                          example: Test Name
+                        modality:
+                          type: string
+                          example: contact
+                        text_field_max_length:
+                          type: number
+                          example: 120
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Need master API key:
+                  value: "{\n  \"error\": \"api/v1/fields this api_key\",\n  \"error_code\": \"API_INACCESSIBLE\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: This API key is not authorized to access api/v1/fields. Request an API key from your administrator
+                      that includes this endpoint in its configured scope.
+                  error_code:
+                    type: string
+                    example: API_INACCESSIBLE
+      deprecated: false
+    patch:
+      summary: Update a Custom Field
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/fields/update` or `Master API key`
+
+
+        **OAuth scopes:** `custom_field_write`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        Use the Update a Custom Field endpoint to change fields that already exist in your Apollo Workspace, such as renaming
+        a field, changing the maximum length of a text field, or updating the values available in a picklist.<br><br>Pass
+        the field under the `fields` array, where each object identifies the field by its unique `id`. To find field IDs,
+        call the <a href="https://docs.apollo.io/reference/get-a-list-of-fields">Get a List of Fields</a> endpoint with `source:
+        custom`. Update 1 field per request.<br><br>Only custom fields can be updated. System fields, and the child fields
+        of a JSON field, cannot be updated.<br><br>Apollo only changes the parameters you include in your request, so you
+        can omit any parameter that you want to leave as-is.<br><br><b>Updates overwrite the field''s current configuration.</b>
+        The values you send replace the field''s existing configuration for every record of that modality, and the change
+        cannot be cleanly undone. Removing or renaming picklist options in particular can drop or rewrite data already stored
+        on your records.<br><br><b>Picklist fields:</b> every update to a `picklist` or `multipicklist` field must include
+        the complete set of options you want to keep in `meta.picklist_values`, even when you are only renaming the field.'
+      tags:
+      - Fields
+      operationId: update-a-custom-field
+      requestBody:
+        required: true
+        content:
+          application/json:
+            examples:
+              Rename a field:
+                value:
+                  fields:
+                  - id: contact.694095a80f1b6000110fc556
+                    label: Renewal owner
+              Change the maximum length of a text field:
+                value:
+                  fields:
+                  - id: contact.694095a80f1b6000110fc556
+                    meta:
+                      max_length: 240
+              Add an option to a picklist field:
+                value:
+                  fields:
+                  - id: account.694095a80f1b6000110fc557
+                    meta:
+                      picklist_values:
+                      - id: 694095a80f1b6000110fc561
+                        name: Gold
+                      - id: 694095a80f1b6000110fc562
+                        name: Silver
+                      - name: Platinum
+              Rename a picklist option without losing stored values:
+                value:
+                  fields:
+                  - id: account.694095a80f1b6000110fc557
+                    meta:
+                      picklist_values:
+                      - id: 694095a80f1b6000110fc561
+                        name: VIP
+                      - id: 694095a80f1b6000110fc562
+                        name: Silver
+            schema:
+              type: object
+              required:
+              - fields
+              properties:
+                fields:
+                  type: array
+                  description: The field you want to update. Apollo only changes the parameters you include, so you can omit
+                    any parameter you want to leave as-is. Update 1 field per request.
+                  items:
+                    type: object
+                    required:
+                    - id
+                    properties:
+                      id:
+                        type: string
+                        description: 'The ID of the field you want to update, in `modality.field_id` format. <br><br>To find
+                          field IDs, call the <a href="https://docs.apollo.io/reference/get-a-list-of-fields">Get a List of
+                          Fields</a> endpoint with `source: custom` and use the `id` value of the field you want to change.
+                          <br><br>Only custom fields can be updated. System fields and child fields of a JSON field cannot
+                          be updated. <br><br>Example: `contact.694095a80f1b6000110fc556`'
+                      modality:
+                        type: string
+                        description: <b>Read-only. This parameter cannot be updated.</b> A field's modality is set when the
+                          field is created and is fixed for the life of the field. If you include `modality` in your request,
+                          Apollo ignores the value you send and keeps the field's existing modality, so the call succeeds
+                          but the modality does not change. <br><br>To capture the same data against a different modality,
+                          use the <a href="https://docs.apollo.io/reference/create-a-custom-field">Create a Custom Field</a>
+                          endpoint to create a new field instead.
+                      type:
+                        type: string
+                        description: <b>Read-only. This parameter cannot be updated.</b> A field's data type is set when the
+                          field is created. You can send `type` only if it matches the field's current type; sending a different
+                          type fails with `Cannot change field type after creation`. <br><br>To store the data as a different
+                          type, use the <a href="https://docs.apollo.io/reference/create-a-custom-field">Create a Custom Field</a>
+                          endpoint to create a new field instead.
+                      label:
+                        type: string
+                        description: 'A new name for the field, as it appears in Apollo. <br><br>Names that start with `powerup_`
+                          are reserved by Apollo and cause the request to fail. <br><br>Example: `Renewal owner`'
+                      field_group_id:
+                        type: string
+                        description: 'The ID of the field group, or folder, that you want to move this field into. <br><br>Example:
+                          `694095a80f1b6000110fc558`'
+                      autorun_downstream_enrichment:
+                        type: boolean
+                        description: 'When `true`, enrichment for this field re-runs automatically whenever the data it depends
+                          on changes. <br><br>Example: `true`'
+                      schedule:
+                        type: object
+                        description: The schedule Apollo uses to automatically re-run this field's enrichment. Only applies
+                          to enrichment columns that Apollo computes for you.
+                        properties:
+                          enabled:
+                            type: boolean
+                            description: Whether the schedule is active.
+                          schedule_type:
+                            type: string
+                            description: How often the schedule runs, such as daily, weekly, or monthly.
+                          schedule_timezone:
+                            type: string
+                            description: 'The timezone that Apollo evaluates the schedule in. <br><br>Example: `America/Los_Angeles`'
+                          run_limit:
+                            type: number
+                            description: The maximum number of records Apollo processes in a single scheduled run.
+                          max_executions:
+                            type: number
+                            description: The maximum number of times the schedule runs before it stops.
+                          end_date:
+                            type: string
+                            format: date
+                            description: 'The date when the schedule stops running. <br><br>Example: `2026-12-31`'
+                          reset_execution_count:
+                            type: boolean
+                            description: Set to `true` to reset the number of executions Apollo has counted against `max_executions`.
+                          schedule_config:
+                            type: object
+                            description: The specific time the schedule runs. Which parameters apply depends on `schedule_type`.
+                            properties:
+                              hour:
+                                type: number
+                                description: The hour of the day, from `0` to `23`.
+                              minute:
+                                type: number
+                                description: The minute of the hour, from `0` to `59`.
+                              day_of_week:
+                                type: number
+                                description: The day of the week, for weekly schedules.
+                              day_of_month:
+                                type: number
+                                description: The day of the month, for monthly schedules.
+                              interval:
+                                type: number
+                                description: How many units of `schedule_type` Apollo waits between runs.
+                      meta:
+                        type: object
+                        description: Additional configuration for the field. Which parameters apply depends on the field's
+                          `type`.
+                        properties:
+                          max_length:
+                            type: number
+                            description: 'The maximum number of characters the field accepts. Only applies to `string` and
+                              `textarea` fields. <br><br>Example: `240`'
+                          picklist_values:
+                            type: array
+                            description: The complete set of options for a `picklist` or `multipicklist` field. <br><br><b>Required
+                              for every update to a picklist field, including a change that only renames the field.</b> If
+                              you omit it, the request fails with `Picklist fields must have at least one option`. <br><br>This
+                              parameter replaces the field's options, so send every option you want to keep. Any option you
+                              leave out is removed from the field. <br><br>To rename or remap an existing option, include
+                              that option's existing `id`. An option sent without its `id` is deleted and recreated, which
+                              orphans the values already stored on your records.
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                  description: 'The option as it appears in Apollo. <br><br>Example: `Tier 1`'
+                                id:
+                                  type: string
+                                  description: 'The ID of an existing option, from the <a href="https://docs.apollo.io/reference/get-a-list-of-fields">Get
+                                    a List of Fields</a> endpoint. Include it to keep the option and rename it, so that values
+                                    already stored on your records are preserved. Omit it to add a new option. <br><br>Example:
+                                    `694095a80f1b6000110fc561`'
+                                mapped_crm_id:
+                                  type: string
+                                  description: The ID of the matching picklist value in your CRM.
+                                reassign_from:
+                                  type: array
+                                  description: The IDs of options that Apollo reassigns to this option. Use this to merge
+                                    options without losing the data on your records.
+                                  items:
+                                    type: string
+                          picklist_value_set_id:
+                            type: string
+                            description: The ID of an existing picklist value set to attach to this field. Only applies to
+                              `picklist` and `multipicklist` fields.
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    fields:
+                    - id: contact.694095a80f1b6000110fc556
+                      category: person
+                      context:
+                      - finder
+                      - csv_export
+                      description: null
+                      editable: true
+                      example: null
+                      field_name: Renewal owner
+                      group: null
+                      icon_class: null
+                      label: Renewal owner
+                      modality: contact
+                      parent: null
+                      source: custom
+                      type: string
+                      finder_view_ids: []
+                      project_workspace_id: null
+                      context_card_ids: []
+                      product_profile_ids: []
+                      is_system_field: false
+                      finder_views: []
+                      is_local: false
+                      created_at: '2025-12-15T23:11:36.084Z'
+                      meta:
+                        max_length: 240
+                        computed_type: manual
+                        visibility_status: active
+                    typed_custom_fields:
+                    - id: 694095a80f1b6000110fc556
+                      name: Renewal owner
+                      modality: contact
+                      text_field_max_length: 240
+              schema:
+                type: object
+                properties:
+                  fields:
+                    type: array
+                    description: The fields as they exist after the update. If updating a field caused Apollo to remove a
+                      child field, that child appears here as an object with `id` and `deleted` set to `true`.
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        label:
+                          type: string
+                        modality:
+                          type: string
+                          description: Entity type this field belongs to (contact, account, opportunity, lead, custom_object)
+                        type:
+                          type: string
+                        source:
+                          type: string
+                          description: Field source (system, custom, crm_synced)
+                        meta:
+                          type: object
+                          additionalProperties: true
+                          description: Extended configuration for the field
+                        deleted:
+                          type: boolean
+                          description: Only present, and always `true`, when Apollo removed this field as a result of the
+                            update.
+                        created_at:
+                          type: string
+                          format: date-time
+                      required:
+                      - id
+                  typed_custom_fields:
+                    type: array
+                    description: The underlying custom field records for the fields you updated. Only present when the update
+                      touched at least 1 custom field.
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        modality:
+                          type: string
+                        text_field_max_length:
+                          type: number
+                  field_groups:
+                    type: array
+                    description: The field groups associated with the fields you updated. Only present when the fields belong
+                      to at least 1 field group.
+                    items:
+                      type: object
+                      additionalProperties: true
+                  picklist_value_sets:
+                    type: array
+                    description: The picklist value sets for the fields you updated. Only present when the update touched
+                      a `picklist` or `multipicklist` field.
+                    items:
+                      type: object
+                      additionalProperties: true
+                  finder_views:
+                    type: array
+                    description: The saved views that the updated fields are local to. Only present when at least 1 updated
+                      field is local to a view.
+                    items:
+                      type: object
+                      additionalProperties: true
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Need master API key:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/fields/update. Request an API\
+                    \ key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\"\
+                    : \"API_INACCESSIBLE\"\n}"
+                CRM mapping is not available over the API:
+                  value: "{\n  \"error\": \"CRM Mapping cannot be configured using API Call\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: This API key is not authorized to access api/v1/fields/update. Request an API key from your administrator
+                      that includes this endpoint in its configured scope.
+                  error_code:
+                    type: string
+                    example: API_INACCESSIBLE
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Picklist update missing options:
+                  value: "{\n  \"error\": \"Picklist fields must have at least one option\"\n}"
+                Field type change attempted:
+                  value: "{\n  \"error\": \"Cannot change field type after creation\"\n}"
+                Child field targeted:
+                  value: "{\n  \"error\": \"Child fields cannot be updated directly\"\n}"
+                Field not found:
+                  value: "{\n  \"error\": \"Some fields could not be found\"\n}"
+                Reserved field name:
+                  value: "{\n  \"error\": \"Field name with prefix 'powerup_' is not allowed. Please use another name.\"\n\
+                    }"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Field name with prefix 'powerup_' is not allowed. Please use another name.
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n    \"message\": \"The maximum number of API calls allowed for api/v1/fields is 600 times per\
+                    \ hour. To change your rate limit, upgrade your Apollo plan at https://app.apollo.io/#/settings/plans/upgrade.\"\
+                    \n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of API calls allowed for api/v1/fields is 600 times per hour. To change your
+                      rate limit, upgrade your Apollo plan at https://app.apollo.io/#/settings/plans/upgrade.
+      deprecated: false
+  /typed_custom_fields:
+    get:
+      deprecated: true
+      summary: Get a List of All Custom Fields
+      description: '## Endpoint essentials
+
+
+        **API key access:** `api/v1/typed_custom_fields/index` or `Master API key`
+
+
+        **OAuth scopes:** `custom_fields_list`
+
+
+        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+
+
+        This endpoint is deprecated. To achieve the same result, use the <a href="https://docs.apollo.io/reference/get-a-list-of-fields">Fields
+        endpoint</a> (use `source: custom` to get custom fields only).<br><br> Use the Get a List of Custom Fields endpoint
+        to retrieve information about all of the custom fields that have been created in your Apollo account.<br><br>This
+        endpoint doesn''t require any parameters.'
+      tags:
+      - Fields
+      operationId: get-a-list-of-all-custom-fields
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"typed_custom_fields\": [\n    {\n      \"id\": \"60c39ed82bd02f01154c470a\",\n      \"modality\"\
+                    : \"contact\",\n      \"name\": \"New Product Launch Date\",\n      \"type\": \"datetime\",\n      \"\
+                    picklist_options\": [],\n      \"mapped_crm_field\": null,\n      \"additional_mapped_crm_field\": null,\n\
+                    \      \"is_readonly_mapped_crm_field\": null,\n      \"picklist_options_last_synced_at\": \"2021-06-11T17:35:12.000+00:00\"\
+                    ,\n      \"picklist_value_set_id\": null,\n      \"mirrored\": false,\n      \"system_name\": null,\n\
+                    \      \"text_field_max_length\": null,\n      \"finder_view_ids\": [],\n      \"is_local\": false\n \
+                    \   },\n    {\n      \"id\": \"617ff4041e711500a401c25e\",\n      \"modality\": \"contact\",\n      \"\
+                    name\": \"Customer Age\",\n      \"type\": \"picklist\",\n      \"picklist_options\": [],\n      \"mapped_crm_field\"\
+                    : null,\n      \"additional_mapped_crm_field\": null,\n      \"is_readonly_mapped_crm_field\": null,\n\
+                    \      \"picklist_options_last_synced_at\": \"2021-11-01T14:02:48.000+00:00\",\n      \"picklist_value_set_id\"\
+                    : \"61117d862f006400da5bf2e4\",\n      \"mirrored\": false,\n      \"system_name\": null,\n      \"text_field_max_length\"\
+                    : null,\n      \"finder_view_ids\": [],\n      \"is_local\": false,\n      \"picklist_values\": [\n  \
+                    \      {\n          \"_id\": \"617ff4041e711500a401c25f\",\n          \"mapped_crm_values\": {},\n   \
+                    \       \"name\": \"New Customer\",\n          \"id\": \"617ff4041e711500a401c25f\",\n          \"key\"\
+                    : \"617ff4041e711500a401c25f\"\n        },\n        {\n          \"_id\": \"617ff4041e711500a401c260\"\
+                    ,\n          \"mapped_crm_values\": {},\n          \"name\": \"1 year\",\n          \"id\": \"617ff4041e711500a401c260\"\
+                    ,\n          \"key\": \"617ff4041e711500a401c260\"\n        },\n        {\n          \"_id\": \"617ff4041e711500a401c261\"\
+                    ,\n          \"mapped_crm_values\": {},\n          \"name\": \"2 years\",\n          \"id\": \"617ff4041e711500a401c261\"\
+                    ,\n          \"key\": \"617ff4041e711500a401c261\"\n        },\n        {\n          \"_id\": \"617ff4041e711500a401c262\"\
+                    ,\n          \"mapped_crm_values\": {},\n          \"name\": \"3 years\",\n          \"id\": \"617ff4041e711500a401c262\"\
+                    ,\n          \"key\": \"617ff4041e711500a401c262\"\n        },\n        {\n          \"_id\": \"617ff4041e711500a401c263\"\
+                    ,\n          \"mapped_crm_values\": {},\n          \"name\": \"Longterm\",\n          \"id\": \"617ff4041e711500a401c263\"\
+                    ,\n          \"key\": \"617ff4041e711500a401c263\"\n        }\n      ]\n    },\n    {\n      \"id\": \"\
+                    6462b86c1a511900a3f3a30d\",\n      \"modality\": \"contact\",\n      \"name\": \"Lead Source\",\n    \
+                    \  \"type\": \"picklist\",\n      \"picklist_options\": [],\n      \"mapped_crm_field\": null,\n     \
+                    \ \"additional_mapped_crm_field\": null,\n      \"is_readonly_mapped_crm_field\": true,\n      \"picklist_options_last_synced_at\"\
+                    : \"2024-04-10T08:30:46.185+00:00\",\n      \"picklist_value_set_id\": \"6462b86c1a511900a3f3a317\",\n\
+                    \      \"mirrored\": false,\n      \"system_name\": null,\n      \"text_field_max_length\": null,\n  \
+                    \    \"finder_view_ids\": [],\n      \"is_local\": false,\n      \"picklist_values\": [\n        {\n \
+                    \         \"_id\": \"6462b86c1a511900a3f3a30e\",\n          \"mapped_crm_values\": {},\n          \"name\"\
+                    : \"Organic Search\",\n          \"id\": \"6462b86c1a511900a3f3a30e\",\n          \"key\": \"6462b86c1a511900a3f3a30e\"\
+                    \n        },\n        {\n          \"_id\": \"6462b86c1a511900a3f3a30f\",\n          \"mapped_crm_values\"\
+                    : {},\n          \"name\": \"Paid Search\",\n          \"id\": \"6462b86c1a511900a3f3a30f\",\n       \
+                    \   \"key\": \"6462b86c1a511900a3f3a30f\"\n        },\n        {\n          \"_id\": \"6462b86c1a511900a3f3a310\"\
+                    ,\n          \"mapped_crm_values\": {},\n          \"name\": \"Email Marketing\",\n          \"id\": \"\
+                    6462b86c1a511900a3f3a310\",\n          \"key\": \"6462b86c1a511900a3f3a310\"\n        },\n        {\n\
+                    \          \"_id\": \"6462b86c1a511900a3f3a311\",\n          \"mapped_crm_values\": {},\n          \"\
+                    name\": \"Organic Social\",\n          \"id\": \"6462b86c1a511900a3f3a311\",\n          \"key\": \"6462b86c1a511900a3f3a311\"\
+                    \n        },\n        {\n          \"_id\": \"6462b86c1a511900a3f3a312\",\n          \"mapped_crm_values\"\
+                    : {},\n          \"name\": \"Referrals\",\n          \"id\": \"6462b86c1a511900a3f3a312\",\n         \
+                    \ \"key\": \"6462b86c1a511900a3f3a312\"\n        },\n        {\n          \"_id\": \"6462b86c1a511900a3f3a313\"\
+                    ,\n          \"mapped_crm_values\": {},\n          \"name\": \"Other Campaigns\",\n          \"id\": \"\
+                    6462b86c1a511900a3f3a313\",\n          \"key\": \"6462b86c1a511900a3f3a313\"\n        },\n        {\n\
+                    \          \"_id\": \"6462b86c1a511900a3f3a314\",\n          \"mapped_crm_values\": {},\n          \"\
+                    name\": \"Direct Traffic\",\n          \"id\": \"6462b86c1a511900a3f3a314\",\n          \"key\": \"6462b86c1a511900a3f3a314\"\
+                    \n        },\n        {\n          \"_id\": \"6462b86c1a511900a3f3a315\",\n          \"mapped_crm_values\"\
+                    : {},\n          \"name\": \"Offline Sources\",\n          \"id\": \"6462b86c1a511900a3f3a315\",\n   \
+                    \       \"key\": \"6462b86c1a511900a3f3a315\"\n        },\n        {\n          \"_id\": \"6462b86c1a511900a3f3a316\"\
+                    ,\n          \"mapped_crm_values\": {},\n          \"name\": \"Paid Social\",\n          \"id\": \"6462b86c1a511900a3f3a316\"\
+                    ,\n          \"key\": \"6462b86c1a511900a3f3a316\"\n        },\n        {\n          \"_id\": \"6462b92fad39c900a3070100\"\
+                    ,\n          \"mapped_crm_values\": {},\n          \"name\": \"Inbound\",\n          \"id\": \"6462b92fad39c900a3070100\"\
+                    ,\n          \"key\": \"6462b92fad39c900a3070100\"\n        }\n      ]\n    },\n    {\n      \"id\": \"\
+                    64e3a392038e3000a3beebcf\",\n      \"modality\": \"contact\",\n      \"name\": \"Last Engagement Type\"\
+                    ,\n      \"type\": \"picklist\",\n      \"picklist_options\": [],\n      \"mapped_crm_field\": null,\n\
+                    \      \"additional_mapped_crm_field\": null,\n      \"is_readonly_mapped_crm_field\": true,\n      \"\
+                    picklist_options_last_synced_at\": \"2024-04-10T08:30:46.185+00:00\",\n      \"picklist_value_set_id\"\
+                    : \"64e3a392038e3000a3beebd8\",\n      \"mirrored\": false,\n      \"system_name\": null,\n      \"text_field_max_length\"\
+                    : null,\n      \"finder_view_ids\": [],\n      \"is_local\": false,\n      \"picklist_values\": [\n  \
+                    \      {\n          \"_id\": \"64e3a392038e3000a3beebd0\",\n          \"mapped_crm_values\": {},\n   \
+                    \       \"name\": \"Company Website Visit\",\n          \"id\": \"64e3a392038e3000a3beebd0\",\n      \
+                    \    \"key\": \"64e3a392038e3000a3beebd0\"\n        },\n        {\n          \"_id\": \"64e3a392038e3000a3beebd1\"\
+                    ,\n          \"mapped_crm_values\": {},\n          \"name\": \"Document View\",\n          \"id\": \"\
+                    64e3a392038e3000a3beebd1\",\n          \"key\": \"64e3a392038e3000a3beebd1\"\n        },\n        {\n\
+                    \          \"_id\": \"64e3a392038e3000a3beebd2\",\n          \"mapped_crm_values\": {},\n          \"\
+                    name\": \"Email Click\",\n          \"id\": \"64e3a392038e3000a3beebd2\",\n          \"key\": \"64e3a392038e3000a3beebd2\"\
+                    \n        },\n        {\n          \"_id\": \"64e3a392038e3000a3beebd3\",\n          \"mapped_crm_values\"\
+                    : {},\n          \"name\": \"Email Open\",\n          \"id\": \"64e3a392038e3000a3beebd3\",\n        \
+                    \  \"key\": \"64e3a392038e3000a3beebd3\"\n        },\n        {\n          \"_id\": \"64e3a392038e3000a3beebd4\"\
+                    ,\n          \"mapped_crm_values\": {},\n          \"name\": \"Email Reply\",\n          \"id\": \"64e3a392038e3000a3beebd4\"\
+                    ,\n          \"key\": \"64e3a392038e3000a3beebd4\"\n        },\n        {\n          \"_id\": \"64e3a392038e3000a3beebd5\"\
+                    ,\n          \"mapped_crm_values\": {},\n          \"name\": \"Form Submitted\",\n          \"id\": \"\
+                    64e3a392038e3000a3beebd5\",\n          \"key\": \"64e3a392038e3000a3beebd5\"\n        },\n        {\n\
+                    \          \"_id\": \"64e3a392038e3000a3beebd6\",\n          \"mapped_crm_values\": {},\n          \"\
+                    name\": \"Meeting Booked\",\n          \"id\": \"64e3a392038e3000a3beebd6\",\n          \"key\": \"64e3a392038e3000a3beebd6\"\
+                    \n        },\n        {\n          \"_id\": \"64e3a392038e3000a3beebd7\",\n          \"mapped_crm_values\"\
+                    : {},\n          \"name\": \"Website Visit\",\n          \"id\": \"64e3a392038e3000a3beebd7\",\n     \
+                    \     \"key\": \"64e3a392038e3000a3beebd7\"\n        }\n      ]\n    }\n  ]\n}"
+              schema:
+                type: object
+                properties:
+                  typed_custom_fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 60c39ed82bd02f01154c470a
+                        modality:
+                          type: string
+                          example: contact
+                        name:
+                          type: string
+                          example: New Product Launch Date
+                        type:
+                          type: string
+                          example: datetime
+                        picklist_options:
+                          type: array
+                        mapped_crm_field: {}
+                        additional_mapped_crm_field: {}
+                        is_readonly_mapped_crm_field: {}
+                        picklist_options_last_synced_at:
+                          type: string
+                          example: '2021-06-11T17:35:12.000+00:00'
+                        picklist_value_set_id: {}
+                        mirrored:
+                          type: boolean
+                          example: false
+                          default: true
+                        system_name: {}
+                        text_field_max_length: {}
+                        finder_view_ids:
+                          type: array
+                        is_local:
+                          type: boolean
+                          example: false
+                          default: true
+        '401':
+          description: '401'
+          content:
+            text/plain:
+              examples:
+                Check API key:
+                  value: Invalid API key. See https://docs.apollo.io/reference/authentication for how to authenticate.
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Need master API key:
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/typed_custom_fields/index. Request\
+                    \ an API key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\"\
+                    : \"API_INACCESSIBLE\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: This API key is not authorized to access api/v1/typed_custom_fields/index. Request an API key
+                      from your administrator that includes this endpoint in its configured scope.
+                  error_code:
+                    type: string
+                    example: API_INACCESSIBLE
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Too many requests:
+                  value: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/typed_custom_fields is\
+                    \ 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n\
+                    }"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: The maximum number of api calls allowed for api/v1/typed_custom_fields is 600 times per hour.
+                      Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
