@@ -45,6 +45,8 @@ apis:
   humanURL: https://docs.apollo.io/reference/apollo-api
   baseURL: https://api.apollo.io/api/v1
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -255,7 +257,8 @@ apis:
     OpenAPI 3.1 specification — 12 operation(s).
   humanURL: https://docs.apollo.io/reference/apollo-api
   baseURL: https://api.apollo.io/api/v1
-  tags:
+  tags: []
+  tags_raw:
   - Miscellaneous
   properties:
   - type: OpenAPI
@@ -322,6 +325,8 @@ apis:
   humanURL: https://docs.apollo.io/reference/apollo-api
   baseURL: https://api.apollo.io/api/v1
   tags:
+  - Task
+  tags_raw:
   - Tasks
   properties:
   - type: OpenAPI
@@ -345,6 +350,10 @@ apis:
   humanURL: https://docs.apollo.io/docs/apollo-mcp
   baseURL: https://mcp.apollo.io/mcp
   tags:
+  - MCP
+  - Agents
+  - Artificial Intelligence
+  tags_raw:
   - MCP
   - Agents
   - AI
