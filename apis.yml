@@ -7,6 +7,18 @@ description: Apollo.io is a sales intelligence and engagement platform. Its REST
   partners building on behalf of mutual users authenticate with OAuth 2.0. Apollo publishes a complete OpenAPI 3.1 specification,
   a hosted remote MCP server at mcp.apollo.io, and a first-party CLI.
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: unknown
