@@ -379,6 +379,8 @@ apis:
   - type: Authentication
     url: https://docs.apollo.io/reference/authentication
 common:
+- type: Website
+  url: https://www.apollo.io/
 - type: Authentication
   url: authentication/apollo-api-documentation-authentication.yml
 - type: AgenticAccess
