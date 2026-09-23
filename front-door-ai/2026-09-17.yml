@@ -1,0 +1,33 @@
+# Front Door AI Index — apollo-api-documentation — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: apollo-api-documentation
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.apollo.io
+  final_host: www.apollo.io
+  ownership: shared
+  owner: apollo
+  shares_host_with:
+  - apollo
+  - apollo-io
+  inherited_from: null
+  verdict: scored
+  score: null
+  host_score: 14
+  density: null
+  words: 1078
+  tiers:
+    agentic: 3
+    core: 9
+    model: 2
+  ambiguous: 10
+  top_terms:
+    AI: 9
+    agent: 6
+    intelligence: 4
+    agentic: 2
+    ChatGPT: 1
+    Claude: 1
+    prompts: 1

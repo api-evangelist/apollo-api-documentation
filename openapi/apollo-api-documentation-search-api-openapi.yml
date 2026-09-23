@@ -1,37 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Apollo API — Search
-  summary: Programmatic access to Apollo's sales intelligence and engagement platform — data enrichment, prospect and company
-    search, and go-to-market workflow management.
-  description: 'The Apollo API provides programmatic access to [Apollo](https://www.apollo.io/), the all-in-one sales intelligence
-    and engagement platform. Use it to enrich people and company data (individually or in bulk), search Apollo''s database
-    of over 240 million contacts and 30 million companies, and manage accounts, contacts, deals, sequences, tasks, calls,
-    and conversations in your go-to-market workflows.
-
-
-    ## Base URL
-
-
-    All API requests are made to `https://api.apollo.io/api/v1`.
-
-
-    ## Authentication
-
-
-    - **Apollo users** authenticate with an API key passed in the `x-api-key` request header. See [Create API Keys](https://docs.apollo.io/docs/create-api-key).
-
-    - **Apollo partners** building integrations on behalf of mutual users authenticate with the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).
-
-
-    ## Rate limits & credits
-
-
-    Rate limits and credit consumption depend on your [Apollo pricing plan](https://docs.apollo.io/docs/api-pricing). Check
-    your current limits and usage with the [View API Usage Stats and Rate Limits](https://docs.apollo.io/reference/view-api-usage-stats)
-    endpoint. For more details, see [Rate Limits](https://docs.apollo.io/reference/rate-limits) and the [API FAQs](https://docs.apollo.io/docs/apollo-api-faqs).
-
-
-    New to the API? Start with the [Apollo API overview](https://docs.apollo.io/reference/apollo-api).'
+  title: apollo-rest-api Search API
+  summary: Programmatic access to Apollo's sales intelligence and engagement platform — data enrichment, prospect and company search, and go-to-market workflow management.
+  description: The Apollo API provides programmatic access to Apollo, the all-in-one sales intelligence and engagement platform.
   termsOfService: https://www.apollo.io/terms/api
   contact:
     name: Apollo API Support
@@ -39,28 +10,12 @@ info:
   version: '1.0'
 servers:
 - url: https://api.apollo.io/api/v1
-tags:
-- name: Search
-  description: Search Apollo's database of people, companies, news articles, and job postings.
 security:
 - apiKey: []
 - bearerAuth: []
-components:
-  securitySchemes:
-    apiKey:
-      type: apiKey
-      in: header
-      name: x-api-key
-      description: '[Recommended] API key, passed in the `x-api-key` request header.
-
-        See [Create API Keys](https://docs.apollo.io/docs/create-api-key).'
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-      description: 'OAuth 2.0 access token, used by Apollo partners building integrations.
-
-        See the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).'
+tags:
+- name: Search
+  description: Search Apollo's database of people, companies, news articles, and job postings.
 paths:
   /mixed_people/api_search:
     post:
@@ -77,28 +32,23 @@ paths:
         **Free account access:** Requires an Apollo account registered with a work email address. Paid accounts aren''t affected.
 
 
-        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+        **Credit usage:** `0 credits` — Learn more about API pricing and credits.
 
 
-        <a href="https://knowledge.apollo.io/hc/en-us/articles/4412658716941-Search-for-People" target="_blank">People</a>
-        are net-new prospects you haven''t yet saved as contacts on Apollo.<br><br>Use the People API Search endpoint to find
-        new prospects. Several filters are available to help narrow your search. This endpoint doesn''t return email addresses
-        or phone numbers. Use the <a href="https://docs.apollo.io/reference/people-enrichment">People Enrichment</a> or <a
-        href="https://docs.apollo.io/reference/bulk-people-enrichment">Bulk People Enrichment</a> endpoints to enrich data.<br><br>To
-        protect Apollo''s performance for all users, this endpoint has a display limit of 50,000 records (100 records per
-        page, up to 500 pages). Add more filters to narrow your search results as much as possible.'
+        People are net-new prospects you haven''t yet saved as contacts on Apollo.
+
+
+        Use the People API Search endpoint to find new prospects. Several filters are available to help narrow your search. This endpoint doesn''t return email addresses or phone numbers. Use the People Enrichment or Bulk People Enrichment endpoints to enrich data.
+
+
+        To protect Apollo''s performance for all users, this endpoint has a display limit of 50,000 records (100 records per page, up to 500 pages). Add more filters to narrow your search results as much as possible.'
       tags:
       - Search
       operationId: people-api-search
       parameters:
       - name: person_titles[]
         in: query
-        description: 'Job titles held by the people you want to find. For a person to be included in search results, they
-          only need to match 1 of the job titles you add. Adding more job titles expands your search results. <br><br>Results
-          also include job titles with the same terms, even if they are not exact matches. For example, searching for `marketing
-          manager` might return people with the job title `content marketing manager`. <br><br>Use this parameter in combination
-          with the `person_seniorities[]` parameter to find people based on specific job functions and seniority levels. <br><br>Examples:
-          `sales development representative`; `marketing manager`; `research analyst`'
+        description: 'Job titles held by the people you want to find. For a person to be included in search results, they only need to match 1 of the job titles you add. Adding more job titles expands your search results. <br><br>Results also include job titles with the same terms, even if they are not exact matches. For example, searching for `marketing manager` might return people with the job title `content marketing manager`. <br><br>Use this parameter in combination with the `person_seniorities[]` parameter to find people based on specific job functions and seniority levels. <br><br>Examples: `sales development representative`; `marketing manager`; `research analyst`'
         schema:
           type: array
           items:
@@ -106,9 +56,7 @@ paths:
       - name: include_similar_titles
         in: query
         required: false
-        description: This parameter determines whether people with job titles similar to the titles you define in the `person_titles[]`
-          parameter are returned in the response. <br><br>Set this parameter to `false` when using `person_titles[]` to return
-          only strict matches for job titles.
+        description: This parameter determines whether people with job titles similar to the titles you define in the `person_titles[]` parameter are returned in the response. <br><br>Set this parameter to `false` when using `person_titles[]` to return only strict matches for job titles.
         schema:
           type: boolean
           example: 'true'
@@ -122,9 +70,7 @@ paths:
           default: ''
       - name: person_locations[]
         in: query
-        description: 'The location where people live. You can search across cities, US states, and countries. <br><br>To find
-          people based on the headquarters locations of their current employer, use the `organization_locations` parameter.
-          <br><br>Examples: `california`; `ireland`; `chicago`'
+        description: 'The location where people live. You can search across cities, US states, and countries. <br><br>To find people based on the headquarters locations of their current employer, use the `organization_locations` parameter. <br><br>Examples: `california`; `ireland`; `chicago`'
         schema:
           type: array
           items:
@@ -132,14 +78,7 @@ paths:
       - name: person_seniorities[]
         in: query
         required: false
-        description: 'The job seniority that people hold within their current employer. This enables you to find people that
-          currently hold positions at certain reporting levels, such as Director level or senior IC level. <br><br>For a person
-          to be included in search results, they only need to match 1 of the seniorities you add. Adding more seniorities
-          expands your search results. <br><br> Searches only return results based on their current job title, so searching
-          for Director-level employees only returns people that currently hold a Director-level title. If someone was previously
-          a Director, but is currently a VP, they would not be included in your search results. <br><br>Use this parameter
-          in combination with the `person_titles[]` parameter to find people based on specific job functions and seniority
-          levels. <br><br>The following options can be used for this parameter: <br><ul><li><code>owner</code></li><li><code>founder</code></li><li><code>c_suite</code></li><li><code>partner</code></li><li><code>vp</code></li><li><code>head</code></li><li><code>director</code></li><li><code>manager</code></li><li><code>senior</code></li><li><code>entry</code></li><li><code>intern</code></li></ul>'
+        description: 'The job seniority that people hold within their current employer. This enables you to find people that currently hold positions at certain reporting levels, such as Director level or senior IC level. <br><br>For a person to be included in search results, they only need to match 1 of the seniorities you add. Adding more seniorities expands your search results. <br><br> Searches only return results based on their current job title, so searching for Director-level employees only returns people that currently hold a Director-level title. If someone was previously a Director, but is currently a VP, they would not be included in your search results. <br><br>Use this parameter in combination with the `person_titles[]` parameter to find people based on specific job functions and seniority levels. <br><br>The following options can be used for this parameter: <br><ul><li><code>owner</code></li><li><code>founder</code></li><li><code>c_suite</code></li><li><code>partner</code></li><li><code>vp</code></li><li><code>head</code></li><li><code>director</code></li><li><code>manager</code></li><li><code>senior</code></li><li><code>entry</code></li><li><code>intern</code></li></ul>'
         schema:
           type: array
           default: ''
@@ -147,12 +86,7 @@ paths:
             type: string
       - name: organization_locations[]
         in: query
-        description: 'The location of the company headquarters for a person''s current employer. You can search across cities,
-          US states, and countries. <br><br>If a company has several office locations, results are still based on the headquarters
-          location. For example, if you search `chicago` but a company''s HQ location is in `boston`, people that work for
-          the Boston-based company will not appear in your results, even if they match other \parameters. <br><br>To find
-          people based on their personal location, use the `person_locations` parameter. <br><br>Examples: `texas`; `tokyo`;
-          `spain`'
+        description: 'The location of the company headquarters for a person''s current employer. You can search across cities, US states, and countries. <br><br>If a company has several office locations, results are still based on the headquarters location. For example, if you search `chicago` but a company''s HQ location is in `boston`, people that work for the Boston-based company will not appear in your results, even if they match other \parameters. <br><br>To find people based on their personal location, use the `person_locations` parameter. <br><br>Examples: `texas`; `tokyo`; `spain`'
         schema:
           type: array
           items:
@@ -160,9 +94,7 @@ paths:
       - name: q_organization_domains_list[]
         in: query
         required: false
-        description: 'The domain name for the person''s employer. This can be the current employer or a previous employer.
-          Do not include `www.`, the `@` symbol, or similar. <br><br>This parameter accepts up to 1,000 domains in a single
-          request. <br><br>Examples: `apollo.io`; `microsoft.com`'
+        description: 'The domain name for the person''s employer. This can be the current employer or a previous employer. Do not include `www.`, the `@` symbol, or similar. <br><br>This parameter accepts up to 1,000 domains in a single request. <br><br>Examples: `apollo.io`; `microsoft.com`'
         schema:
           type: array
           default: ''
@@ -170,29 +102,21 @@ paths:
             type: string
       - name: contact_email_status[]
         in: query
-        description: 'The email statuses for the people you want to find. You can add multiple statuses to expand your search.
-          <br><br>The statuses you can search include:  <ul> <li> <code>verified</code> </li> <li> <code>unverified</code>
-          </li> <li> <code>likely to engage</code> </li> <li> <code>unavailable</code> </li>  </ul>'
+        description: 'The email statuses for the people you want to find. You can add multiple statuses to expand your search. <br><br>The statuses you can search include:  <ul> <li> <code>verified</code> </li> <li> <code>unverified</code> </li> <li> <code>likely to engage</code> </li> <li> <code>unavailable</code> </li>  </ul>'
         schema:
           type: array
           items:
             type: string
       - name: organization_ids[]
         in: query
-        description: 'The Apollo IDs for the companies (employers) you want to include in your search results. Each company
-          in the Apollo database is assigned a unique ID. <br><br>To find IDs, call the <a href="https://docs.apollo.io/reference/organization-search"
-          target="_blank">Organization Search endpoint</a> and identify the values for `organization_id`.  <br><br>Example:
-          `5e66b6381e05b4008c8331b8`'
+        description: 'The Apollo IDs for the companies (employers) you want to include in your search results. Each company in the Apollo database is assigned a unique ID. <br><br>To find IDs, call the <a href="https://docs.apollo.io/reference/organization-search" target="_blank">Organization Search endpoint</a> and identify the values for `organization_id`.  <br><br>Example: `5e66b6381e05b4008c8331b8`'
         schema:
           type: array
           items:
             type: string
       - name: organization_num_employees_ranges[]
         in: query
-        description: 'The number range of employees working for the person''s current company. This enables you to find people
-          based on the headcount of their employer. You can add multiple ranges to expand your search results. <br><br>Each
-          range you add needs to be a string, with the upper and lower numbers of the range separated only by a comma. <br><br>Examples:
-          `1,10`; `250,500`; `10000,20000`'
+        description: 'The number range of employees working for the person''s current company. This enables you to find people based on the headcount of their employer. You can add multiple ranges to expand your search results. <br><br>Each range you add needs to be a string, with the upper and lower numbers of the range separated only by a comma. <br><br>Examples: `1,10`; `250,500`; `10000,20000`'
         schema:
           type: array
           items:
@@ -200,29 +124,21 @@ paths:
       - name: revenue_range[min]
         in: query
         required: false
-        description: 'The minimum revenue the person''s current employer generates. Use this parameter in combination with
-          `revenue_range[max]` to set a revenue range. <br><br>Do not enter currency symbols, commas, or decimal points in
-          the figure. <br><br>Examples: `500000`; `1500000`'
+        description: 'The minimum revenue the person''s current employer generates. Use this parameter in combination with `revenue_range[max]` to set a revenue range. <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `500000`; `1500000`'
         schema:
           type: integer
           default: ''
       - name: revenue_range[max]
         in: query
         required: false
-        description: 'The maximum revenue the person''s current employer generates. Use this parameter in combination with
-          `revenue_range[min]` to set a revenue range. <br><br>Do not enter currency symbols, commas, or decimal points in
-          the figure. <br><br>Examples: `500000`; `1500000`'
+        description: 'The maximum revenue the person''s current employer generates. Use this parameter in combination with `revenue_range[min]` to set a revenue range. <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `500000`; `1500000`'
         schema:
           type: integer
           default: ''
       - name: currently_using_all_of_technology_uids[]
         in: query
         required: false
-        description: 'Find people based on all of the technologies their current employer uses. Apollo supports filtering
-          by 1,500+ technologies. <br><br>Apollo calculates technologies data from multiple sources. This data is updated
-          regularly. Check out the full list of supported technologies by <a href="https://api.apollo.io/v1/auth/supported_technologies_csv"
-          target="_blank">downloading this CSV file</a>. <br><br>Use underscores (`_`) to replace spaces and periods for the
-          technologies listed in the CSV file. <br><br>Examples: `salesforce`; `google_analytics`; `wordpress_org`'
+        description: 'Find people based on all of the technologies their current employer uses. Apollo supports filtering by 1,500+ technologies. <br><br>Apollo calculates technologies data from multiple sources. This data is updated regularly. Check out the full list of supported technologies by <a href="https://api.apollo.io/v1/auth/supported_technologies_csv" target="_blank">downloading this CSV file</a>. <br><br>Use underscores (`_`) to replace spaces and periods for the technologies listed in the CSV file. <br><br>Examples: `salesforce`; `google_analytics`; `wordpress_org`'
         schema:
           type: array
           default: ''
@@ -231,11 +147,7 @@ paths:
       - name: currently_using_any_of_technology_uids[]
         in: query
         required: false
-        description: 'Find people based on any of the technologies their current employer uses. Apollo supports filtering
-          by 1,500+ technologies. <br><br>Apollo calculates technologies data from multiple sources. This data is updated
-          regularly. Check out the full list of supported technologies by <a href="https://api.apollo.io/v1/auth/supported_technologies_csv"
-          target="_blank">downloading this CSV file</a>. <br><br>Use underscores (`_`) to replace spaces and periods for the
-          technologies listed in the CSV file. <br><br>Examples: `salesforce`; `google_analytics`; `wordpress_org`'
+        description: 'Find people based on any of the technologies their current employer uses. Apollo supports filtering by 1,500+ technologies. <br><br>Apollo calculates technologies data from multiple sources. This data is updated regularly. Check out the full list of supported technologies by <a href="https://api.apollo.io/v1/auth/supported_technologies_csv" target="_blank">downloading this CSV file</a>. <br><br>Use underscores (`_`) to replace spaces and periods for the technologies listed in the CSV file. <br><br>Examples: `salesforce`; `google_analytics`; `wordpress_org`'
         schema:
           type: array
           default: ''
@@ -244,11 +156,7 @@ paths:
       - name: currently_not_using_any_of_technology_uids[]
         in: query
         required: false
-        description: 'Exclude people from your search based on any of the technologies their current employer uses. Apollo
-          supports filtering by 1,500+ technologies. <br><br>Apollo calculates technologies data from multiple sources. This
-          data is updated regularly. Check out the full list of supported technologies by <a href="https://api.apollo.io/v1/auth/supported_technologies_csv"
-          target="_blank">downloading this CSV file</a>. <br><br>Use underscores (`_`) to replace spaces and periods for the
-          technologies listed in the CSV file. <br><br>Examples: `salesforce`; `google_analytics`; `wordpress_org`'
+        description: 'Exclude people from your search based on any of the technologies their current employer uses. Apollo supports filtering by 1,500+ technologies. <br><br>Apollo calculates technologies data from multiple sources. This data is updated regularly. Check out the full list of supported technologies by <a href="https://api.apollo.io/v1/auth/supported_technologies_csv" target="_blank">downloading this CSV file</a>. <br><br>Use underscores (`_`) to replace spaces and periods for the technologies listed in the CSV file. <br><br>Examples: `salesforce`; `google_analytics`; `wordpress_org`'
         schema:
           type: array
           default: ''
@@ -257,8 +165,7 @@ paths:
       - name: q_organization_job_titles[]
         in: query
         required: false
-        description: 'The job titles that are listed in active job postings at the person''s current employer. <br><br>Examples:
-          `sales manager`; `research analyst`'
+        description: 'The job titles that are listed in active job postings at the person''s current employer. <br><br>Examples: `sales manager`; `research analyst`'
         schema:
           type: array
           default: ''
@@ -267,8 +174,7 @@ paths:
       - name: organization_job_locations[]
         in: query
         required: false
-        description: 'The locations of the jobs being actively recruited by the person''s employer. <br><br>Examples: `atlanta`;
-          `japan`'
+        description: 'The locations of the jobs being actively recruited by the person''s employer. <br><br>Examples: `atlanta`; `japan`'
         schema:
           type: array
           default: ''
@@ -277,24 +183,21 @@ paths:
       - name: organization_num_jobs_range[min]
         in: query
         required: false
-        description: 'The minimum number of job postings active at the person''s current empployer. Use this parameter in
-          combination with `organization_num_jobs_range[max]` to set a job postings range. <br><br>Examples: `50`; `500`'
+        description: 'The minimum number of job postings active at the person''s current empployer. Use this parameter in combination with `organization_num_jobs_range[max]` to set a job postings range. <br><br>Examples: `50`; `500`'
         schema:
           type: integer
           default: ''
       - name: organization_num_jobs_range[max]
         in: query
         required: false
-        description: 'The maximum number of job postings active at the person''s current empployer. Use this parameter in
-          combination with `organization_num_jobs_range[min]` to set a job postings range. <br><br>Examples: `50`; `500`'
+        description: 'The maximum number of job postings active at the person''s current empployer. Use this parameter in combination with `organization_num_jobs_range[min]` to set a job postings range. <br><br>Examples: `50`; `500`'
         schema:
           type: integer
           default: ''
       - name: organization_job_posted_at_range[min]
         in: query
         required: false
-        description: 'The earliest date when jobs were posted by the person''s current employer. Use this parameter in combination
-          with `organization_job_posted_at_range[max]` to set a date range for when jobs posted. <br><br>Example: `2025-07-25`'
+        description: 'The earliest date when jobs were posted by the person''s current employer. Use this parameter in combination with `organization_job_posted_at_range[max]` to set a date range for when jobs posted. <br><br>Example: `2025-07-25`'
         schema:
           type: string
           format: date
@@ -302,26 +205,21 @@ paths:
       - name: organization_job_posted_at_range[max]
         in: query
         required: false
-        description: 'The latest date when jobs were posted by the person''s current employer. Use this parameter in combination
-          with `organization_job_posted_at_range[min]` to set a date range for when jobs posted. <br><br>Example: `2025-09-25`'
+        description: 'The latest date when jobs were posted by the person''s current employer. Use this parameter in combination with `organization_job_posted_at_range[min]` to set a date range for when jobs posted. <br><br>Example: `2025-09-25`'
         schema:
           type: string
           format: date
           default: ''
       - name: page
         in: query
-        description: 'The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination
-          with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint.
-          <br><br>Example: `4`'
+        description: 'The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint. <br><br>Example: `4`'
         schema:
           type: integer
           format: int32
       - name: per_page
         in: query
         required: false
-        description: 'The number of search results that should be returned for each page. Limiting the number of results per
-          page improves the endpoint''s performance. <br><br>Use the `page` parameter to search the different pages of data.
-          <br><br>Example: `10`'
+        description: 'The number of search results that should be returned for each page. Limiting the number of results per page improves the endpoint''s performance. <br><br>Use the `page` parameter to search the different pages of data. <br><br>Example: `10`'
         schema:
           type: integer
           format: int32
@@ -559,8 +457,7 @@ paths:
                           example: John
                         last_name_obfuscated:
                           type: string
-                          description: The last name of the person with the middle characters obfuscated for privacy. The
-                            format shows the first 2 characters, followed by asterisks, and then the last character.
+                          description: The last name of the person with the middle characters obfuscated for privacy. The format shows the first 2 characters, followed by asterisks, and then the last character.
                           example: Do***e
                         title:
                           type:
@@ -591,8 +488,7 @@ paths:
                           example: true
                         has_direct_phone:
                           type: string
-                          description: 'Indicates whether Apollo has direct phone number data for this person. Returns `Yes`
-                            if available, or `Maybe: please request direct dial via people/bulk_match` if uncertain.'
+                          description: 'Indicates whether Apollo has direct phone number data for this person. Returns `Yes` if available, or `Maybe: please request direct dial via people/bulk_match` if uncertain.'
                           example: 'Yes'
                         organization:
                           type: object
@@ -648,16 +544,14 @@ paths:
               examples:
                 Need master API key:
                   value:
-                    error: This API key is not authorized to access api/v1/mixed_people/api_search. Request an API key from
-                      your administrator that includes this endpoint in its configured scope.
+                    error: This API key is not authorized to access api/v1/mixed_people/api_search. Request an API key from your administrator that includes this endpoint in its configured scope.
                     error_code: API_INACCESSIBLE
               schema:
                 type: object
                 properties:
                   error:
                     type: string
-                    example: This API key is not authorized to access api/v1/mixed_people/api_search. Request an API key from
-                      your administrator that includes this endpoint in its configured scope.
+                    example: This API key is not authorized to access api/v1/mixed_people/api_search. Request an API key from your administrator that includes this endpoint in its configured scope.
                   error_code:
                     type: string
                     example: API_INACCESSIBLE
@@ -682,16 +576,13 @@ paths:
               examples:
                 Too many requests:
                   value:
-                    message: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/mixed_people/api_search\
-                      \ is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\
-                      \n}"
+                    message: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/mixed_people/api_search is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n}"
               schema:
                 type: object
                 properties:
                   message:
                     type: string
-                    example: The maximum number of api calls allowed for api/v1/mixed_people/api_search is 600 times per hour.
-                      Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+                    example: The maximum number of api calls allowed for api/v1/mixed_people/api_search is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
       deprecated: false
   /mixed_companies/search:
     post:
@@ -711,15 +602,16 @@ paths:
         **Credit usage:** `1 credit per page`
 
 
-        This endpoint consumes 1 Apollo credit per page, with up to 100 results per page. Learn more about [API pricing and
-        credits](https://docs.apollo.io/docs/api-pricing).
+        This endpoint consumes 1 Apollo credit per page, with up to 100 results per page. Learn more about API pricing and credits.
 
 
-        <a href="https://knowledge.apollo.io/hc/en-us/articles/4412658766477-Search-for-Companies" target="_blank">Organizations</a>
-        are companies you haven''t yet saved as accounts on Apollo.<br><br>Use the Organization Search endpoint to find companies
-        in the Apollo database. Several filters are available to help narrow your search.<br><br>To protect Apollo''s performance
-        for all users, this endpoint has a display limit of 50,000 records (100 records per page, up to 500 pages). Add more
-        filters to narrow your search results as much as possible.'
+        Organizations are companies you haven''t yet saved as accounts on Apollo.
+
+
+        Use the Organization Search endpoint to find companies in the Apollo database. Several filters are available to help narrow your search.
+
+
+        To protect Apollo''s performance for all users, this endpoint has a display limit of 50,000 records (100 records per page, up to 500 pages). Add more filters to narrow your search results as much as possible.'
       tags:
       - Search
       operationId: organization-search
@@ -727,9 +619,7 @@ paths:
       - name: q_organization_domains_list[]
         in: query
         required: false
-        description: 'The domain name for the person''s employer. This can be the current employer or a previous employer.
-          Do not include `www.`, the `@` symbol, or similar. <br><br>This parameter accepts up to 1,000 domains in a single
-          request. <br><br>Examples: `apollo.io`; `microsoft.com`'
+        description: 'The domain name for the person''s employer. This can be the current employer or a previous employer. Do not include `www.`, the `@` symbol, or similar. <br><br>This parameter accepts up to 1,000 domains in a single request. <br><br>Examples: `apollo.io`; `microsoft.com`'
         schema:
           type: array
           default: ''
@@ -737,82 +627,57 @@ paths:
             type: string
       - name: organization_num_employees_ranges[]
         in: query
-        description: 'The number range of employees working for the company. This enables you to find companies based on headcount.
-          You can add multiple ranges to expand your search results. <br><br>Each range you add needs to be a string, with
-          the upper and lower numbers of the range separated only by a comma. <br><br>Examples: `1,10`; `250,500`; `10000,20000`'
+        description: 'The number range of employees working for the company. This enables you to find companies based on headcount. You can add multiple ranges to expand your search results. <br><br>Each range you add needs to be a string, with the upper and lower numbers of the range separated only by a comma. <br><br>Examples: `1,10`; `250,500`; `10000,20000`'
         schema:
           type: array
           items:
             type: string
       - name: organization_locations[]
         in: query
-        description: 'The location of the company headquarters. You can search across cities, US states, and countries. <br><br>If
-          a company has several office locations, results are still based on the headquarters location. For example, if you
-          search `chicago` but a company''s HQ location is in `boston`, any Boston-based companies will not appearch in your
-          search results, even if they match other parameters.. <br><br>To exclude companies based on location, use the `organization_not_locations`
-          parameter. <br><br>Examples: `texas`; `tokyo`; `spain`'
+        description: 'The location of the company headquarters. You can search across cities, US states, and countries. <br><br>If a company has several office locations, results are still based on the headquarters location. For example, if you search `chicago` but a company''s HQ location is in `boston`, any Boston-based companies will not appearch in your search results, even if they match other parameters.. <br><br>To exclude companies based on location, use the `organization_not_locations` parameter. <br><br>Examples: `texas`; `tokyo`; `spain`'
         schema:
           type: array
           items:
             type: string
       - name: organization_not_locations[]
         in: query
-        description: 'Exclude companies from search results based on the location of the company headquarters. You can use
-          cities, US states, and countries as locations to exclude. <br><br>This parameter is useful for ensuring you do not
-          prospect in an undesirable territory. For example, if you use `ireland` as a value, no Ireland-based companies will
-          appear in your search results. <br><br>Examples: `minnesota`; `ireland`; `seoul`'
+        description: 'Exclude companies from search results based on the location of the company headquarters. You can use cities, US states, and countries as locations to exclude. <br><br>This parameter is useful for ensuring you do not prospect in an undesirable territory. For example, if you use `ireland` as a value, no Ireland-based companies will appear in your search results. <br><br>Examples: `minnesota`; `ireland`; `seoul`'
         schema:
           type: array
           items:
             type: string
       - name: revenue_range[min]
         in: query
-        description: 'Search for organizations based on their revenue. <br><br>Use this parameter to set the lower range of
-          organization revenue. Use the `revenue_range[max]` parameter to set the upper range of revenue. <br><br>Do not enter
-          currency symbols, commas, or decimal points in the figure. <br><br>Example: `300000`'
+        description: 'Search for organizations based on their revenue. <br><br>Use this parameter to set the lower range of organization revenue. Use the `revenue_range[max]` parameter to set the upper range of revenue. <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Example: `300000`'
         schema:
           type: integer
       - name: revenue_range[max]
         in: query
-        description: 'Search for organizations based on their revenue. <br><br>Use this parameter to set the upper range of
-          organization revenue. Use the `revenue_range[min]` parameter to set the lower range of revenue. <br><br>Do not enter
-          currency symbols, commas, or decimal points in the figure. <br><br>Example: `50000000`'
+        description: 'Search for organizations based on their revenue. <br><br>Use this parameter to set the upper range of organization revenue. Use the `revenue_range[min]` parameter to set the lower range of revenue. <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Example: `50000000`'
         schema:
           type: integer
       - name: currently_using_any_of_technology_uids[]
         in: query
-        description: 'Find organizations based on the technologies they currently use. Apollo supports filtering by 1,500+
-          technologies. <br><br>Apollo calculates technologies data from multiple sources. This data is updated regularly.
-          Check out the full list of supported technologies by <a href="https://api.apollo.io/v1/auth/supported_technologies_csv"
-          target="_blank">downloading this CSV file</a>. <br><br>Use underscores (`_`) to replace spaces and periods for the
-          technologies listed in the CSV file. <br><br>Examples: `salesforce`; `google_analytics`; `wordpress_org`'
+        description: 'Find organizations based on the technologies they currently use. Apollo supports filtering by 1,500+ technologies. <br><br>Apollo calculates technologies data from multiple sources. This data is updated regularly. Check out the full list of supported technologies by <a href="https://api.apollo.io/v1/auth/supported_technologies_csv" target="_blank">downloading this CSV file</a>. <br><br>Use underscores (`_`) to replace spaces and periods for the technologies listed in the CSV file. <br><br>Examples: `salesforce`; `google_analytics`; `wordpress_org`'
         schema:
           type: array
           items:
             type: string
       - name: q_organization_keyword_tags[]
         in: query
-        description: 'Filter search results based on keywords associated with companies. For example, you can enter `mining`
-          as a value to return only companies that have an association with the mining industry. <br><br>Examples: `mining`;
-          `sales strategy`; `consulting`'
+        description: 'Filter search results based on keywords associated with companies. For example, you can enter `mining` as a value to return only companies that have an association with the mining industry. <br><br>Examples: `mining`; `sales strategy`; `consulting`'
         schema:
           type: array
           items:
             type: string
       - name: q_organization_name
         in: query
-        description: 'Filter search results to include a specific company name. <br><br>If the value you enter for this parameter
-          does not match with a company''s name, the company will not appear in search results, even if it matches other parameters.
-          Partial matches are accepted. For example, if you filter by the value `marketing`, a company called `NY Marketing
-          Unlimited` would still be eligible as a search result, but `NY Market Analysis` would not be eligible. <br><br>Example:
-          `apollo` or `mining`'
+        description: 'Filter search results to include a specific company name. <br><br>If the value you enter for this parameter does not match with a company''s name, the company will not appear in search results, even if it matches other parameters. Partial matches are accepted. For example, if you filter by the value `marketing`, a company called `NY Marketing Unlimited` would still be eligible as a search result, but `NY Market Analysis` would not be eligible. <br><br>Example: `apollo` or `mining`'
         schema:
           type: string
       - name: organization_ids[]
         in: query
-        description: 'The Apollo IDs for the companies you want to include in your search results. Each company in the Apollo
-          database is assigned a unique ID. <br><br>To find IDs, identify the values for `organization_id` when you call this
-          endpoint. <br><br>Example: `5e66b6381e05b4008c8331b8`'
+        description: 'The Apollo IDs for the companies you want to include in your search results. Each company in the Apollo database is assigned a unique ID. <br><br>To find IDs, identify the values for `organization_id` when you call this endpoint. <br><br>Example: `5e66b6381e05b4008c8331b8`'
         schema:
           type: array
           items:
@@ -820,45 +685,35 @@ paths:
       - name: latest_funding_amount_range[min]
         in: query
         required: false
-        description: 'The minimum amount the company received with its most recent funding round. Use this parameter in combination
-          with `latest_funding_amount_range[max]` to set a monetary range for the company''s most recent funding round. <br><br>Do
-          not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `5000000`; `15000000`'
+        description: 'The minimum amount the company received with its most recent funding round. Use this parameter in combination with `latest_funding_amount_range[max]` to set a monetary range for the company''s most recent funding round. <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `5000000`; `15000000`'
         schema:
           type: integer
           default: ''
       - name: latest_funding_amount_range[max]
         in: query
         required: false
-        description: 'The maximium amount the company received with its most recent funding round. Use this parameter in combination
-          with `latest_funding_amount_range[min]` to set a monetary range for the company''s most recent funding round. <br><br>Do
-          not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `5000000`; `15000000`'
+        description: 'The maximium amount the company received with its most recent funding round. Use this parameter in combination with `latest_funding_amount_range[min]` to set a monetary range for the company''s most recent funding round. <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `5000000`; `15000000`'
         schema:
           type: integer
           default: ''
       - name: total_funding_range[min]
         in: query
         required: false
-        description: 'The minimum amount the company received during all of its funding rounds combined. Use this parameter
-          in combination with `total_funding_range[max]` to set a monetary range for all of the company''s funding rounds.
-          <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `50000000`; `350000000`'
+        description: 'The minimum amount the company received during all of its funding rounds combined. Use this parameter in combination with `total_funding_range[max]` to set a monetary range for all of the company''s funding rounds. <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `50000000`; `350000000`'
         schema:
           type: integer
           default: ''
       - name: total_funding_range[max]
         in: query
         required: false
-        description: 'The maximum amount the company received during all of its funding rounds combined. Use this parameter
-          in combination with `total_funding_range[min]` to set a monetary range for all of the company''s funding rounds.
-          <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `50000000`; `350000000`'
+        description: 'The maximum amount the company received during all of its funding rounds combined. Use this parameter in combination with `total_funding_range[min]` to set a monetary range for all of the company''s funding rounds. <br><br>Do not enter currency symbols, commas, or decimal points in the figure. <br><br>Examples: `50000000`; `350000000`'
         schema:
           type: integer
           default: ''
       - name: latest_funding_date_range[min]
         in: query
         required: false
-        description: 'The earliest date when the company received its most recent funding round. Use this parameter in combination
-          with `latest_funding_date_range[max]` to set a date range for when the company received its most recent funding
-          round. <br><br>Example: `2025-07-25`'
+        description: 'The earliest date when the company received its most recent funding round. Use this parameter in combination with `latest_funding_date_range[max]` to set a date range for when the company received its most recent funding round. <br><br>Example: `2025-07-25`'
         schema:
           type: string
           format: date
@@ -866,9 +721,7 @@ paths:
       - name: latest_funding_date_range[max]
         in: query
         required: false
-        description: 'The latest date when the company received its most recent funding round. Use this parameter in combination
-          with `latest_funding_date_range[min]` to set a date range for when the company received its most recent funding
-          round. <br><br>Example: `2025-09-25`'
+        description: 'The latest date when the company received its most recent funding round. Use this parameter in combination with `latest_funding_date_range[min]` to set a date range for when the company received its most recent funding round. <br><br>Example: `2025-09-25`'
         schema:
           type: string
           format: date
@@ -876,8 +729,7 @@ paths:
       - name: q_organization_job_titles[]
         in: query
         required: false
-        description: 'The job titles that are listed in active job postings at the company. <br><br>Examples: `sales manager`;
-          `research analyst`'
+        description: 'The job titles that are listed in active job postings at the company. <br><br>Examples: `sales manager`; `research analyst`'
         schema:
           type: array
           default: ''
@@ -895,24 +747,21 @@ paths:
       - name: organization_num_jobs_range[min]
         in: query
         required: false
-        description: 'The minimum number of job postings active at the company. Use this parameter in combination with `organization_num_jobs_range[max]`
-          to set a job postings range. <br><br>Examples: `50`; `500`'
+        description: 'The minimum number of job postings active at the company. Use this parameter in combination with `organization_num_jobs_range[max]` to set a job postings range. <br><br>Examples: `50`; `500`'
         schema:
           type: integer
           default: ''
       - name: organization_num_jobs_range[max]
         in: query
         required: false
-        description: 'The maximum number of job postings active at the company. Use this parameter in combination with `organization_num_jobs_range[min]`
-          to set a job postings range. <br><br>Examples: `50`; `500`'
+        description: 'The maximum number of job postings active at the company. Use this parameter in combination with `organization_num_jobs_range[min]` to set a job postings range. <br><br>Examples: `50`; `500`'
         schema:
           type: integer
           default: ''
       - name: organization_job_posted_at_range[min]
         in: query
         required: false
-        description: 'The earliest date when jobs were posted by the company. Use this parameter in combination with `organization_job_posted_at_range[max]`
-          to set a date range for when jobs posted. <br><br>Example: `2025-07-25`'
+        description: 'The earliest date when jobs were posted by the company. Use this parameter in combination with `organization_job_posted_at_range[max]` to set a date range for when jobs posted. <br><br>Example: `2025-07-25`'
         schema:
           type: string
           format: date
@@ -920,25 +769,20 @@ paths:
       - name: organization_job_posted_at_range[max]
         in: query
         required: false
-        description: 'The latest date when jobs were posted by the company. Use this parameter in combination with `organization_job_posted_at_range[min]`
-          to set a date range for when jobs posted. <br><br>Example: `2025-09-25`'
+        description: 'The latest date when jobs were posted by the company. Use this parameter in combination with `organization_job_posted_at_range[min]` to set a date range for when jobs posted. <br><br>Example: `2025-09-25`'
         schema:
           type: string
           format: date
           default: ''
       - name: page
         in: query
-        description: 'The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination
-          with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint.
-          <br><br>Example: `4`'
+        description: 'The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint. <br><br>Example: `4`'
         schema:
           type: integer
           format: int32
       - name: per_page
         in: query
-        description: 'The number of search results that should be returned for each page. Limiting the number of results per
-          page improves the endpoint''s performance. <br><br>Use the `page` parameter to search the different pages of data.
-          <br><br>Example: `10`'
+        description: 'The number of search results that should be returned for each page. Limiting the number of results per page improves the endpoint''s performance. <br><br>Use the `page` parameter to search the different pages of data. <br><br>Example: `10`'
         schema:
           type: integer
           format: int32
@@ -1207,16 +1051,13 @@ paths:
             application/json:
               examples:
                 Too many requests:
-                  value: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/mixed_companies/search\
-                    \ is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\
-                    \n}"
+                  value: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/mixed_companies/search is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n}"
               schema:
                 type: object
                 properties:
                   message:
                     type: string
-                    example: The maximum number of api calls allowed for api/v1/mixed_companies/search is 600 times per hour.
-                      Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+                    example: The maximum number of api calls allowed for api/v1/mixed_companies/search is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
       deprecated: false
   /organizations/{organization_id}/job_postings:
     get:
@@ -1233,41 +1074,35 @@ paths:
         **Credit usage:** `1 credit per page`
 
 
-        This endpoint consumes 1 Apollo credit per page, with up to 10,000 results per page. Learn more about [API pricing
-        and credits](https://docs.apollo.io/docs/api-pricing).
+        This endpoint consumes 1 Apollo credit per page, with up to 10,000 results per page. Learn more about API pricing and credits.
 
 
-        <a href="https://knowledge.apollo.io/hc/en-us/articles/4412658766477-Search-for-Companies" target="_blank">Organizations</a>
-        are companies you haven''t yet saved as accounts on Apollo.<br><br>Use the Organization Job Postings endpoint to retrieve
-        the current job postings for companies. This can help you identify companies that are growing headcount in areas that
-        are strategically important for you.<br><br>To protect Apollo''s performance for all users, this endpoint has a display
-        limit of 10,000 records.'
+        Organizations are companies you haven''t yet saved as accounts on Apollo.
+
+
+        Use the Organization Job Postings endpoint to retrieve the current job postings for companies. This can help you identify companies that are growing headcount in areas that are strategically important for you.
+
+
+        To protect Apollo''s performance for all users, this endpoint has a display limit of 10,000 records.'
       tags:
       - Search
       operationId: organization-jobs-postings
       parameters:
       - name: organization_id
         in: path
-        description: 'The organization ID of the company for which you want to find job postings.<br><br>Each company in the
-          Apollo database is assigned a unique ID. To find IDs, call the <a href="https://docs.apollo.io/reference/organization-search"
-          target="_blank">Organization Search endpoint</a> and identify the values for `organization_id`. <br><br>Example:
-          `5e66b6381e05b4008c8331b8`'
+        description: 'The organization ID of the company for which you want to find job postings.<br><br>Each company in the Apollo database is assigned a unique ID. To find IDs, call the <a href="https://docs.apollo.io/reference/organization-search" target="_blank">Organization Search endpoint</a> and identify the values for `organization_id`. <br><br>Example: `5e66b6381e05b4008c8331b8`'
         schema:
           type: string
         required: true
       - name: page
         in: query
-        description: 'The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination
-          with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint.
-          <br><br>Example: `4`'
+        description: 'The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint. <br><br>Example: `4`'
         schema:
           type: integer
           format: int32
       - name: per_page
         in: query
-        description: 'The number of search results that should be returned for each page. Limiting the number of results per
-          page improves the endpoint''s performance. <br><br>Use the `page` parameter to search the different pages of data.
-          <br><br>Example: `10`'
+        description: 'The number of search results that should be returned for each page. Limiting the number of results per page improves the endpoint''s performance. <br><br>Use the `page` parameter to search the different pages of data. <br><br>Example: `10`'
         schema:
           type: integer
           format: int32
@@ -1406,16 +1241,13 @@ paths:
             application/json:
               examples:
                 Too many requests:
-                  value: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/organizations/{organization_id}/job_postings\
-                    \ is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\
-                    \n}"
+                  value: "{\n    \"message\": \"The maximum number of api calls allowed for api/v1/organizations/{organization_id}/job_postings is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.\"\n}"
               schema:
                 type: object
                 properties:
                   message:
                     type: string
-                    example: The maximum number of api calls allowed for api/v1/organizations/{organization_id}/job_postings
-                      is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+                    example: The maximum number of api calls allowed for api/v1/organizations/{organization_id}/job_postings is 600 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
       deprecated: false
   /organizations/{id}:
     get:
@@ -1432,12 +1264,13 @@ paths:
         **Free account access:** Requires an Apollo account registered with a work email address. Paid accounts aren''t affected.
 
 
-        **Credit usage:** `1 credit per company` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+        **Credit usage:** `1 credit per company` — Learn more about API pricing and credits.
 
 
-        <a href="https://knowledge.apollo.io/hc/en-us/articles/4412658766477-Search-for-Companies" target="_blank">Organizations</a>
-        are companies you haven''t yet saved as accounts on Apollo.<br><br>Use the Get Complete Organization Info endpoint
-        to retrieve complete details about an organization in Apollo.'
+        Organizations are companies you haven''t yet saved as accounts on Apollo.
+
+
+        Use the Get Complete Organization Info endpoint to retrieve complete details about an organization in Apollo.'
       tags:
       - Search
       operationId: get_organizations{id}
@@ -1574,19 +1407,10 @@ paths:
                       postal_code: '94105'
                       country: United States
                       owned_by_organization_id: null
-                      short_description: 'Apollo.io is an AI sales platform that provides businesses with tools to enhance
-                        their go-to-market strategies. Founded in 2015 by Tim and Ray, the company was created to address
-                        the limitations of existing sales tools they encountered in their previous startup. Apollo.io offers
-                        an all-in-one platform that integrates lead intelligence and sales engagement capabilities, helping
-                        businesses find leads, engage prospects, and close deals more effectively.
+                      short_description: 'Apollo.io is an AI sales platform that provides businesses with tools to enhance their go-to-market strategies. Founded in 2015 by Tim and Ray, the company was created to address the limitations of existing sales tools they encountered in their previous startup. Apollo.io offers an all-in-one platform that integrates lead intelligence and sales engagement capabilities, helping businesses find leads, engage prospects, and close deals more effectively.
 
 
-                        The platform features detailed insights into potential customers, tools for managing leads from initial
-                        contact to deal closure, and a community-based approach to data accuracy. Apollo.io serves nearly
-                        9,000 paying customers, including startups and large enterprises, and supports over 500,000 sales
-                        professionals globally. The company has experienced rapid growth, surpassing $100 million in annual
-                        recurring revenue and achieving a valuation of $1.6 billion. Apollo.io has also received funding from
-                        notable investors like Y Combinator and Nexus Venture Partners.'
+                        The platform features detailed insights into potential customers, tools for managing leads from initial contact to deal closure, and a community-based approach to data accuracy. Apollo.io serves nearly 9,000 paying customers, including startups and large enterprises, and supports over 500,000 sales professionals globally. The company has experienced rapid growth, surpassing $100 million in annual recurring revenue and achieving a valuation of $1.6 billion. Apollo.io has also received funding from notable investors like Y Combinator and Nexus Venture Partners.'
                       suborganizations: []
                       num_suborganizations: 0
                       annual_revenue_printed: 100M
@@ -3714,9 +3538,7 @@ paths:
             application/json:
               examples:
                 Need Master API Key:
-                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/accounts/show. Request an API\
-                    \ key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\"\
-                    : \"API_INACCESSIBLE\"\n}"
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/accounts/show. Request an API key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\": \"API_INACCESSIBLE\"\n}"
                   summary: Need Master API Key
         '422':
           description: Unprocessable Entity
@@ -3730,9 +3552,7 @@ paths:
       - name: id
         in: path
         required: true
-        description: 'The Apollo ID for the organization that you want to research. <br><br>To find organization IDs, call
-          the <a href="https://docs.apollo.io/reference/organization-search#/" target="_blank">Organization Search endpoint</a>
-          and identify the `organizaton_id` value for the organization. <br><br>Example: `5e66b6381e05b4008c8331b8`'
+        description: 'The Apollo ID for the organization that you want to research. <br><br>To find organization IDs, call the <a href="https://docs.apollo.io/reference/organization-search#/" target="_blank">Organization Search endpoint</a> and identify the `organizaton_id` value for the organization. <br><br>Example: `5e66b6381e05b4008c8331b8`'
         schema:
           type: string
           default: ''
@@ -3751,40 +3571,31 @@ paths:
         **Free account access:** Requires an Apollo account registered with a work email address. Paid accounts aren''t affected.
 
 
-        **Credit usage:** `1 credit per person` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+        **Credit usage:** `1 credit per person` — Learn more about API pricing and credits.
 
 
-        Use the Get Complete Person Info endpoint to retrieve complete details about a person in the Apollo database, including
-        employment history, location, and the full details of the person''s current organization.
+        Use the Get Complete Person Info endpoint to retrieve complete details about a person in the Apollo database, including employment history, location, and the full details of the person''s current organization.
 
 
         ### Reading the `email` field
 
 
-        This endpoint doesn''t reveal verified emails for people you haven''t saved as contacts. Instead of the address —
-        and instead of `null` — `email` contains the fixed placeholder `email_not_unlocked@domain.com`, and every unrevealed
-        person returns that same value.
+        This endpoint doesn''t reveal verified emails for people you haven''t saved as contacts. Instead of the address — and instead of `null` — `email` contains the fixed placeholder `email_not_unlocked@domain.com`, and every unrevealed person returns that same value.
 
 
         Because the placeholder is a non-empty string, it passes checks that assume an email is either usable or absent:
 
 
-        * **Truthiness and null checks don''t catch it.** `if (person.email)` succeeds, so code may treat an unrevealed person
-        as though you have their address.
+        * **Truthiness and null checks don''t catch it.** `if (person.email)` succeeds, so code may treat an unrevealed person as though you have their address.
 
 
         * **`email` breaks as a dedupe or upsert key.** Identical placeholders collapse unrelated people into one record.
 
 
-        `email_status` does **not** distinguish it either: it describes the address Apollo holds internally, so it reads `verified`
-        even when `email` is the placeholder. Use it to judge deliverability once you have a real address, not to decide whether
-        you have one. The field only ever returns one of three values — `verified`, `extrapolated`, or `unavailable`.
+        `email_status` does **not** distinguish it either: it describes the address Apollo holds internally, so it reads `verified` even when `email` is the placeholder. Use it to judge deliverability once you have a real address, not to decide whether you have one. The field only ever returns one of three values — `verified`, `extrapolated`, or `unavailable`.
 
 
-        **Recommended handling:** compare `email` against the literal placeholder string and treat a match as "no email available
-        yet". The response also omits `contact_id` and `revealed_for_current_team` for people who aren''t your contacts, which
-        is a useful second signal. To get the real address, call [People Enrichment](https://docs.apollo.io/reference/people-enrichment)
-        or [Bulk People Enrichment](https://docs.apollo.io/reference/bulk-people-enrichment), which never substitute the placeholder.
+        **Recommended handling:** compare `email` against the literal placeholder string and treat a match as "no email available yet". The response also omits `contact_id` and `revealed_for_current_team` for people who aren''t your contacts, which is a useful second signal. To get the real address, call People Enrichment or Bulk People Enrichment, which never substitute the placeholder.
 
 
         | Person''s situation | `email` | `email_status` |
@@ -3866,9 +3677,7 @@ paths:
             application/json:
               examples:
                 Need Master API Key:
-                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/people/show. Request an API key\
-                    \ from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\": \"\
-                    API_INACCESSIBLE\"\n}"
+                  value: "{\n  \"error\": \"This API key is not authorized to access api/v1/people/show. Request an API key from your administrator that includes this endpoint in its configured scope.\",\n  \"error_code\": \"API_INACCESSIBLE\"\n}"
                   summary: Need Master API Key
         '422':
           description: Unprocessable Entity
@@ -3885,8 +3694,7 @@ paths:
       - name: id
         in: path
         required: true
-        description: 'The Apollo ID for the person that you want to research. <br><br>To find person IDs, call the <a href="https://docs.apollo.io/reference/people-api-search"
-          target="_blank">People Search endpoint</a> and identify the `id` value for the person. <br><br>Example: `65f0a1b2c3d4e5f600012345`'
+        description: 'The Apollo ID for the person that you want to research. <br><br>To find person IDs, call the <a href="https://docs.apollo.io/reference/people-api-search" target="_blank">People Search endpoint</a> and identify the `id` value for the person. <br><br>Example: `65f0a1b2c3d4e5f600012345`'
         schema:
           type: string
           default: ''
@@ -3905,13 +3713,13 @@ paths:
         **Credit usage:** `1 credit per page`
 
 
-        This endpoint consumes 1 Apollo credit per page, with up to 25 results per page. Learn more about [API pricing and
-        credits](https://docs.apollo.io/docs/api-pricing).
+        This endpoint consumes 1 Apollo credit per page, with up to 25 results per page. Learn more about API pricing and credits.
 
 
-        <a href="https://knowledge.apollo.io/hc/en-us/articles/4412665755661-Search-Filters-Overview#news" target="_blank">News</a>
-        includes articles related to companies in Apollo.<br><br>Use the News Articles Search endpoint to find news articles
-        related to specific companies. Several filters are available to help narrow your search.'
+        News includes articles related to companies in Apollo.
+
+
+        Use the News Articles Search endpoint to find news articles related to specific companies. Several filters are available to help narrow your search.'
       tags:
       - Search
       operationId: news_articles_search
@@ -3933,10 +3741,8 @@ paths:
                     - id: 6815925ac310740011aba570
                       url: https://techintelpro.com/news/apolloio-appoints-marcio-arnecke-as-cmo-and-adam-carr-as-cro-to-accelerate-ai-powered-go-to-market-innovation
                       domain: techintelpro.com
-                      title: Apollo.io Appoints Marcio Arnecke as CMO and Adam Carr as CRO to Accelerate AI-Powered Go-to-Market
-                        Innovation
-                      snippet: Apollo.io, a leading AI-powered go-to-market sales platform, today announced the appointments
-                        of Marcio Arnecke as Chief Marketing Officer (CMO) and Adam Carr as Chief Revenue Officer (CRO).
+                      title: Apollo.io Appoints Marcio Arnecke as CMO and Adam Carr as CRO to Accelerate AI-Powered Go-to-Market Innovation
+                      snippet: Apollo.io, a leading AI-powered go-to-market sales platform, today announced the appointments of Marcio Arnecke as Chief Marketing Officer (CMO) and Adam Carr as Chief Revenue Officer (CRO).
                       organization_ids:
                       - 5e66b6381e05b4008c8331b8
                       published_at: '2025-05-02T00:00:00.000+00:00'
@@ -3945,10 +3751,8 @@ paths:
                     - id: 681592d92d7b13001977c6df
                       url: https://techintelpro.com/news/apolloio-appoints-marcio-arnecke-as-cmo-and-adam-carr-as-cro-to-accelerate-ai-powered-go-to-market-innovation
                       domain: techintelpro.com
-                      title: Apollo.io Appoints Marcio Arnecke as CMO and Adam Carr as CRO to Accelerate AI-Powered Go-to-Market
-                        Innovation
-                      snippet: Apollo.io, a leading AI-powered go-to-market sales platform, today announced the appointments
-                        of Marcio Arnecke as Chief Marketing Officer (CMO) and Adam Carr as Chief Revenue Officer (CRO).
+                      title: Apollo.io Appoints Marcio Arnecke as CMO and Adam Carr as CRO to Accelerate AI-Powered Go-to-Market Innovation
+                      snippet: Apollo.io, a leading AI-powered go-to-market sales platform, today announced the appointments of Marcio Arnecke as Chief Marketing Officer (CMO) and Adam Carr as Chief Revenue Officer (CRO).
                       organization_ids:
                       - 5e66b6381e05b4008c8331b8
                       published_at: '2025-05-02T00:00:00.000+00:00'
@@ -3957,11 +3761,8 @@ paths:
                     - id: 668961e815876f040da3b685
                       url: https://www.prnewswire.com/news-releases/meet-the-new-faces-driving-apollos-gtm-evolution-matt-curl-as-coo-and-rich-bessel-as-svp-of-design-302187696.html
                       domain: prnewswire.com
-                      title: 'Meet the New Faces Driving Apollo''s GTM Evolution: Matt Curl as COO and Rich Bessel as SVP
-                        of Design'
-                      snippet: 'SAN FRANCISCO, July 2, 2024 /PRNewswire/ - Apollo.io, a leading go-to-market (GTM) solution
-                        for sales and marketing teams, has appointed two new executives to its leadership team: Matt Curl
-                        as Chief Operating Officer (COO) and Rich Bessel as SVP of Design.'
+                      title: 'Meet the New Faces Driving Apollo''s GTM Evolution: Matt Curl as COO and Rich Bessel as SVP of Design'
+                      snippet: 'SAN FRANCISCO, July 2, 2024 /PRNewswire/ - Apollo.io, a leading go-to-market (GTM) solution for sales and marketing teams, has appointed two new executives to its leadership team: Matt Curl as Chief Operating Officer (COO) and Rich Bessel as SVP of Design.'
                       organization_ids:
                       - 5e66b6381e05b4008c8331b8
                       published_at: '2024-07-02T12:00:00.000+00:00'
@@ -3970,11 +3771,8 @@ paths:
                     - id: 668962016fbe79040e1c0490
                       url: https://www.prnewswire.com/news-releases/meet-the-new-faces-driving-apollos-gtm-evolution-matt-curl-as-coo-and-rich-bessel-as-svp-of-design-302187696.html
                       domain: prnewswire.com
-                      title: 'Meet the New Faces Driving Apollo''s GTM Evolution: Matt Curl as COO and Rich Bessel as SVP
-                        of Design'
-                      snippet: 'SAN FRANCISCO, July 2, 2024 /PRNewswire/ - Apollo.io, a leading go-to-market (GTM) solution
-                        for sales and marketing teams, has appointed two new executives to its leadership team: Matt Curl
-                        as Chief Operating Officer (COO) and Rich Bessel as SVP of Design.'
+                      title: 'Meet the New Faces Driving Apollo''s GTM Evolution: Matt Curl as COO and Rich Bessel as SVP of Design'
+                      snippet: 'SAN FRANCISCO, July 2, 2024 /PRNewswire/ - Apollo.io, a leading go-to-market (GTM) solution for sales and marketing teams, has appointed two new executives to its leadership team: Matt Curl as Chief Operating Officer (COO) and Rich Bessel as SVP of Design.'
                       organization_ids:
                       - 5e66b6381e05b4008c8331b8
                       published_at: '2024-07-02T12:00:00.000+00:00'
@@ -3983,10 +3781,8 @@ paths:
                     - id: 64c0037589653e00a34746c7
                       url: https://www.prnewswire.com/news-releases/leandra-fishman-joins-apolloio-as-chief-revenue-officer-fueling-revenue-growth-and-product-innovation-301884666.html
                       domain: prnewswire.com
-                      title: Leandra Fishman joins Apollo.io as Chief Revenue officer, fueling Revenue growth and Product
-                        innovation
-                      snippet: Apollo.io, the leading go-to-market sales platform, today announced the appointment of Leandra
-                        Fishman to its executive team as the company's first Chief Revenue Officer (CRO).
+                      title: Leandra Fishman joins Apollo.io as Chief Revenue officer, fueling Revenue growth and Product innovation
+                      snippet: Apollo.io, the leading go-to-market sales platform, today announced the appointment of Leandra Fishman to its executive team as the company's first Chief Revenue Officer (CRO).
                       organization_ids:
                       - 5e66b6381e05b4008c8331b8
                       published_at: '2023-07-25T11:00:00.000+00:00'
@@ -3995,10 +3791,8 @@ paths:
                     - id: 63e68163e3288200a36b69c8
                       url: https://finance.yahoo.com/news/apollo-io-announces-shek-viswanathan-152200939.html
                       domain: yahoo.com
-                      title: Apollo.io Announces Shek Viswanathan as Chief Product Officer Amidst Record January Revenue Numbers
-                        and Expanded Product Vision
-                      snippet: Today, Apollo.io, the world's leading B2B sales intelligence and engagement platform, announces
-                        the appointment of Shek Viswanathan as their Chief Product Officer.
+                      title: Apollo.io Announces Shek Viswanathan as Chief Product Officer Amidst Record January Revenue Numbers and Expanded Product Vision
+                      snippet: Today, Apollo.io, the world's leading B2B sales intelligence and engagement platform, announces the appointment of Shek Viswanathan as their Chief Product Officer.
                       organization_ids:
                       - 5e66b6381e05b4008c8331b8
                       published_at: '2023-02-08T15:22:00.000+00:00'
@@ -4008,8 +3802,7 @@ paths:
                       url: https://www.finsmes.com/2021/11/apollo-io-raises-32m-in-series-b-funding.html
                       domain: finsmes.com
                       title: Apollo.io Raises $32M in Series B Funding
-                      snippet: In conjunction with the funding, Sri Pangulur, partner at Tribe Capital, joined Apollo.io’s
-                        board.
+                      snippet: In conjunction with the funding, Sri Pangulur, partner at Tribe Capital, joined Apollo.io’s board.
                       organization_ids:
                       - 5e66b6381e05b4008c8331b8
                       published_at: '2021-11-01T21:44:42.000+00:00'
@@ -4019,8 +3812,7 @@ paths:
                       url: https://techrseries.com/hrtechnology/apollo-io-appoints-lisa-feher-as-chief-people-officer/
                       domain: techrseries.com
                       title: Apollo.IO Appoints Lisa Feher as Chief People Officer
-                      snippet: Apollo.io, a lead intelligence and sales engagement platform, has announced that Lisa Feher
-                        has joined the company as its Chief People Officer.
+                      snippet: Apollo.io, a lead intelligence and sales engagement platform, has announced that Lisa Feher has joined the company as its Chief People Officer.
                       organization_ids:
                       - 5e66b6381e05b4008c8331b8
                       published_at: '2021-09-17T00:00:00.000+00:00'
@@ -4030,9 +3822,7 @@ paths:
                       url: https://blog.apollo.io/blog/apollo-announces-appointment-of-santosh-sharan-as-president-and-coo
                       domain: apollo.io
                       title: Apollo Announces Appointment of Santosh Sharan as President and COO — Apollo Blog
-                      snippet: SAN FRANCISCO, April 15, 2021 /PRNewswire/ -- Apollo, a leading data intelligence and sales
-                        engagement platform, announces that Santosh Sharan has joined the company as President and Chief Operating
-                        Officer (COO).
+                      snippet: SAN FRANCISCO, April 15, 2021 /PRNewswire/ -- Apollo, a leading data intelligence and sales engagement platform, announces that Santosh Sharan has joined the company as President and Chief Operating Officer (COO).
                       organization_ids:
                       - 5e66b6381e05b4008c8331b8
                       published_at: '2021-04-15T00:00:00.000+00:00'
@@ -4042,8 +3832,7 @@ paths:
                       url: https://nexusvp.com/press-releases/apollo-io-brings-on-clearslide-co-founder-jim-benton-as-ceo/
                       domain: nexusvp.com
                       title: Apollo.io Brings on ClearSlide Co-Founder Jim Benton as CEO – Nexus Venture Partners
-                      snippet: (BUSINESS WIRE)–Apollo.io, the most intelligent data-first engagement platform for sales and
-                        marketing teams, today announced that it has hired Jim Benton as CEO.
+                      snippet: (BUSINESS WIRE)–Apollo.io, the most intelligent data-first engagement platform for sales and marketing teams, today announced that it has hired Jim Benton as CEO.
                       organization_ids:
                       - 5e66b6381e05b4008c8331b8
                       published_at: '2019-06-06T16:00:44.000+00:00'
@@ -4070,10 +3859,7 @@ paths:
       - name: organization_ids[]
         in: query
         required: true
-        description: 'The Apollo IDs for the companies you want to include in your search results. Each company in the Apollo
-          database is assigned a unique ID. <br><br>To find IDs, call the <a href="https://docs.apollo.io/reference/organization-search"
-          target="_blank">Organization Search endpoint</a> and identify the values for `organization_id`.  <br><br>Example:
-          `5e66b6381e05b4008c8331b8`'
+        description: 'The Apollo IDs for the companies you want to include in your search results. Each company in the Apollo database is assigned a unique ID. <br><br>To find IDs, call the <a href="https://docs.apollo.io/reference/organization-search" target="_blank">Organization Search endpoint</a> and identify the values for `organization_id`.  <br><br>Example: `5e66b6381e05b4008c8331b8`'
         schema:
           type: array
           default: ''
@@ -4082,9 +3868,7 @@ paths:
       - name: categories[]
         in: query
         required: false
-        description: 'Filter your search to include only certain categories or sub-categories of news. Use the <b>News</b>
-          search filter for companies within Apollo to uncover all possible categories and sub-categories. <br><br>Examples:
-          `hires`; `investment`; `contract`'
+        description: 'Filter your search to include only certain categories or sub-categories of news. Use the <b>News</b> search filter for companies within Apollo to uncover all possible categories and sub-categories. <br><br>Examples: `hires`; `investment`; `contract`'
         schema:
           type: array
           default: ''
@@ -4093,9 +3877,7 @@ paths:
       - name: published_at[min]
         in: query
         required: false
-        description: 'Set the lower bound of the date range you want to search. <br><br>Use this parameter in combination
-          with the `published_at[max]` parameter. This date should fall before the `published_at[max]` date. <br><br>The date
-          should be formatted as `YYYY-MM-DD`. <br><br>Example: `2025-02-15`'
+        description: 'Set the lower bound of the date range you want to search. <br><br>Use this parameter in combination with the `published_at[max]` parameter. This date should fall before the `published_at[max]` date. <br><br>The date should be formatted as `YYYY-MM-DD`. <br><br>Example: `2025-02-15`'
         schema:
           type: string
           format: date
@@ -4103,9 +3885,7 @@ paths:
       - name: published_at[max]
         in: query
         required: false
-        description: 'Set the upper bound of the date range you want to search. <br><br>Use this parameter in combination
-          with the `published_at[min]` parameter. This date should fall after the `published_at[min]` date. <br><br>The date
-          should be formatted as `YYYY-MM-DD`. <br><br>Example: `2025-05-15`'
+        description: 'Set the upper bound of the date range you want to search. <br><br>Use this parameter in combination with the `published_at[min]` parameter. This date should fall after the `published_at[min]` date. <br><br>The date should be formatted as `YYYY-MM-DD`. <br><br>Example: `2025-05-15`'
         schema:
           type: string
           format: date
@@ -4113,18 +3893,39 @@ paths:
       - name: page
         in: query
         required: false
-        description: 'The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination
-          with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint.
-          <br><br>Example: `4`'
+        description: 'The page number of the Apollo data that you want to retrieve. <br><br>Use this parameter in combination with the `per_page` parameter to make search results for navigable and improve the performance of the endpoint. <br><br>Example: `4`'
         schema:
           type: integer
           default: ''
       - name: per_page
         in: query
         required: false
-        description: 'The number of search results that should be returned for each page. Limiting the number of results per
-          page improves the endpoint''s performance. <br><br>Use the `page` parameter to search the different pages of data.
-          <br><br>Example: `10`'
+        description: 'The number of search results that should be returned for each page. Limiting the number of results per page improves the endpoint''s performance. <br><br>Use the `page` parameter to search the different pages of data. <br><br>Example: `10`'
         schema:
           type: integer
           default: ''
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: '[Recommended] API key, passed in the `x-api-key` request header.
+
+        See [Create API Keys](https://docs.apollo.io/docs/create-api-key).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'OAuth 2.0 access token, used by Apollo partners building integrations.
+
+        See the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).'
+x-readme:
+  headers:
+  - key: Cache-Control
+    value: no-cache
+  - key: Content-Type
+    value: application/json
+  explorer-enabled: true
+  proxy-enabled: true
+x-readme-fauxas: true

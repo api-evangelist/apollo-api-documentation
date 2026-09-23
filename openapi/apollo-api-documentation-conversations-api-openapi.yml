@@ -1,37 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Apollo API — Conversations
-  summary: Programmatic access to Apollo's sales intelligence and engagement platform — data enrichment, prospect and company
-    search, and go-to-market workflow management.
-  description: 'The Apollo API provides programmatic access to [Apollo](https://www.apollo.io/), the all-in-one sales intelligence
-    and engagement platform. Use it to enrich people and company data (individually or in bulk), search Apollo''s database
-    of over 240 million contacts and 30 million companies, and manage accounts, contacts, deals, sequences, tasks, calls,
-    and conversations in your go-to-market workflows.
-
-
-    ## Base URL
-
-
-    All API requests are made to `https://api.apollo.io/api/v1`.
-
-
-    ## Authentication
-
-
-    - **Apollo users** authenticate with an API key passed in the `x-api-key` request header. See [Create API Keys](https://docs.apollo.io/docs/create-api-key).
-
-    - **Apollo partners** building integrations on behalf of mutual users authenticate with the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).
-
-
-    ## Rate limits & credits
-
-
-    Rate limits and credit consumption depend on your [Apollo pricing plan](https://docs.apollo.io/docs/api-pricing). Check
-    your current limits and usage with the [View API Usage Stats and Rate Limits](https://docs.apollo.io/reference/view-api-usage-stats)
-    endpoint. For more details, see [Rate Limits](https://docs.apollo.io/reference/rate-limits) and the [API FAQs](https://docs.apollo.io/docs/apollo-api-faqs).
-
-
-    New to the API? Start with the [Apollo API overview](https://docs.apollo.io/reference/apollo-api).'
+  title: apollo-rest-api Conversations API
+  summary: Programmatic access to Apollo's sales intelligence and engagement platform — data enrichment, prospect and company search, and go-to-market workflow management.
+  description: The Apollo API provides programmatic access to Apollo, the all-in-one sales intelligence and engagement platform.
   termsOfService: https://www.apollo.io/terms/api
   contact:
     name: Apollo API Support
@@ -39,28 +10,12 @@ info:
   version: '1.0'
 servers:
 - url: https://api.apollo.io/api/v1
-tags:
-- name: Conversations
-  description: Search, export, and retrieve recorded conversations.
 security:
 - apiKey: []
 - bearerAuth: []
-components:
-  securitySchemes:
-    apiKey:
-      type: apiKey
-      in: header
-      name: x-api-key
-      description: '[Recommended] API key, passed in the `x-api-key` request header.
-
-        See [Create API Keys](https://docs.apollo.io/docs/create-api-key).'
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-      description: 'OAuth 2.0 access token, used by Apollo partners building integrations.
-
-        See the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).'
+tags:
+- name: Conversations
+  description: Search, export, and retrieve recorded conversations.
 paths:
   /conversations/search:
     post:
@@ -74,15 +29,16 @@ paths:
         **OAuth scopes:** `conversations_search`
 
 
-        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+        **Credit usage:** `0 credits` — Learn more about API pricing and credits.
 
 
-        <a href="https://knowledge.apollo.io/hc/en-us/articles/45998035787533-Use-Conversations">Conversations</a> are prospect
-        video meetings stored in Apollo.<br><br>Use the Search Conversations endpoint to find a list of conversations. Several
-        filters are available to help narrow your search, including by type, account, contact, date range, and more. Each
-        result includes a summary of the conversation.<br><br>This endpoint doesn''t include transcripts or recording URLs.
-        Use the conversation ID retrieved from your search to request full details using <a href="https://docs.apollo.io/docs/get-conversations-info">Get
-        Conversations Info</a>.'
+        Conversations are prospect video meetings stored in Apollo.
+
+
+        Use the Search Conversations endpoint to find a list of conversations. Several filters are available to help narrow your search, including by type, account, contact, date range, and more. Each result includes a summary of the conversation.
+
+
+        This endpoint doesn''t include transcripts or recording URLs. Use the conversation ID retrieved from your search to request full details using Get Conversations Info.'
       tags:
       - Conversations
       operationId: search-conversations
@@ -134,12 +90,10 @@ paths:
                   properties:
                     start:
                       type: string
-                      description: 'Start date (ISO 8601). Apollo uses Greenwich Mean Time (GMT) for all date and time values.
-                        <br><br> Example: <code>2024-01-01T00:00:00Z</code>'
+                      description: 'Start date (ISO 8601). Apollo uses Greenwich Mean Time (GMT) for all date and time values. <br><br> Example: <code>2024-01-01T00:00:00Z</code>'
                     end:
                       type: string
-                      description: 'End date (ISO 8601). Apollo uses Greenwich Mean Time (GMT) for all date and time values.
-                        <br><br> Example: <code>2024-03-31T23:59:59Z</code>'
+                      description: 'End date (ISO 8601). Apollo uses Greenwich Mean Time (GMT) for all date and time values. <br><br> Example: <code>2024-03-31T23:59:59Z</code>'
                 scorecard_template_id:
                   type: string
                   description: Filter by scorecard template ID.
@@ -218,8 +172,7 @@ paths:
                           description: Conversation topic or title.
                         start_time:
                           type: string
-                          description: Conversation start time (ISO 8601). Apollo uses Greenwich Mean Time (GMT) for all date
-                            and time values.
+                          description: Conversation start time (ISO 8601). Apollo uses Greenwich Mean Time (GMT) for all date and time values.
                         duration:
                           type: integer
                           description: Duration of the conversation in seconds.
@@ -399,14 +352,16 @@ paths:
         **Credit usage:** `0–1 credit per conversation`
 
 
-        This endpoint consumes 1 Apollo credit per conversation if the conversation has AI insights. Conversations without
-        AI insights consume 0 credits. Learn more about [API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+        This endpoint consumes 1 Apollo credit per conversation if the conversation has AI insights. Conversations without AI insights consume 0 credits. Learn more about API pricing and credits.
 
 
-        <a href="https://knowledge.apollo.io/hc/en-us/articles/45998035787533-Use-Conversations">Conversations</a> are prospect
-        video meetings stored in Apollo.<br><br>Use the Get Conversation Info endpoint to retrieve the full details of a single
-        conversation by its ID.<br><br>To get a conversation''s ID, refer to <a href="https://docs.apollo.io/docs/search-conversations">Search
-        Conversations</a>.'
+        Conversations are prospect video meetings stored in Apollo.
+
+
+        Use the Get Conversation Info endpoint to retrieve the full details of a single conversation by its ID.
+
+
+        To get a conversation''s ID, refer to Search Conversations.'
       tags:
       - Conversations
       operationId: get-conversations-info
@@ -433,8 +388,7 @@ paths:
                     description: Conversation topic or title.
                   start_time:
                     type: string
-                    description: Conversation start time (ISO 8601). Apollo uses Greenwich Mean Time (GMT) for all date and
-                      time values.
+                    description: Conversation start time (ISO 8601). Apollo uses Greenwich Mean Time (GMT) for all date and time values.
                   duration:
                     type: integer
                     description: Duration of the conversation in seconds.
@@ -477,8 +431,7 @@ paths:
                   failure_code:
                     type: string
                     nullable: true
-                    description: Error code if the conversation processing failed. Returns <code>null</code> if no failure
-                      occurred.
+                    description: Error code if the conversation processing failed. Returns <code>null</code> if no failure occurred.
                   bot_call_ended_reason:
                     type: string
                     nullable: true
@@ -811,15 +764,16 @@ paths:
         **Credit usage:** `0–1 credit per conversation`
 
 
-        This endpoint consumes 1 Apollo credit per conversation if the conversation has AI insights. Conversations without
-        AI insights consume 0 credits. Learn more about [API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+        This endpoint consumes 1 Apollo credit per conversation if the conversation has AI insights. Conversations without AI insights consume 0 credits. Learn more about API pricing and credits.
 
 
-        <a href="https://knowledge.apollo.io/hc/en-us/articles/45998035787533-Use-Conversations">Conversations</a> are prospect
-        video meetings stored in Apollo.<br><br>Use the Export Conversations endpoint to export conversations within a time
-        range. Exports are processed asynchronously and delivered as a gzipped JSON file. A notification email is sent to
-        the specified team member when the export is ready.<br><br>To get the download URL once the export is ready, refer
-        to <a href="https://docs.apollo.io/docs/get-conversations-export">Get Export</a>.'
+        Conversations are prospect video meetings stored in Apollo.
+
+
+        Use the Export Conversations endpoint to export conversations within a time range. Exports are processed asynchronously and delivered as a gzipped JSON file. A notification email is sent to the specified team member when the export is ready.
+
+
+        To get the download URL once the export is ready, refer to Get Export.'
       tags:
       - Conversations
       operationId: export-conversations
@@ -836,12 +790,10 @@ paths:
               properties:
                 start_time:
                   type: string
-                  description: 'Start of the export time range (ISO 8601). Apollo uses Greenwich Mean Time (GMT) for all date
-                    and time values. Must be earlier than <code>end_time</code>.<br><br>Example: <code>2024-01-01T00:00:00Z</code>'
+                  description: 'Start of the export time range (ISO 8601). Apollo uses Greenwich Mean Time (GMT) for all date and time values. Must be earlier than <code>end_time</code>.<br><br>Example: <code>2024-01-01T00:00:00Z</code>'
                 end_time:
                   type: string
-                  description: 'End of the export time range (ISO 8601). Apollo uses Greenwich Mean Time (GMT) for all date
-                    and time values. Must be later than <code>start_time</code>.<br><br>Example: <code>2024-03-31T23:59:59Z</code>'
+                  description: 'End of the export time range (ISO 8601). Apollo uses Greenwich Mean Time (GMT) for all date and time values. Must be later than <code>start_time</code>.<br><br>Example: <code>2024-03-31T23:59:59Z</code>'
                 email:
                   type: string
                   description: Email address of a valid team member to notify when the export is ready.
@@ -880,8 +832,7 @@ paths:
                     error: Unable to find conversations within the given time range.
                 notification_user_not_found:
                   value:
-                    error: Unable to find user to send notification email to. Please provide an address for a valid user using
-                      the email parameter.
+                    error: Unable to find user to send notification email to. Please provide an address for a valid user using the email parameter.
               schema:
                 type: object
                 properties:
@@ -922,13 +873,16 @@ paths:
         **OAuth scopes:** `conversations_find_export`
 
 
-        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+        **Credit usage:** `0 credits` — Learn more about API pricing and credits.
 
 
-        <a href="https://knowledge.apollo.io/hc/en-us/articles/45998035787533-Use-Conversations">Conversations</a> are prospect
-        video meetings stored in Apollo.<br><br>Use the Get Conversations Export endpoint to retrieve a download URL for your
-        exported conversations.<br><br>This endpoint is used as a follow-up to the <a href="https://docs.apollo.io/docs/export-conversations">Export
-        Conversations</a> endpoint.'
+        Conversations are prospect video meetings stored in Apollo.
+
+
+        Use the Get Conversations Export endpoint to retrieve a download URL for your exported conversations.
+
+
+        This endpoint is used as a follow-up to the Export Conversations endpoint.'
       tags:
       - Conversations
       operationId: get-conversations-export
@@ -968,3 +922,28 @@ paths:
                   error:
                     type: string
       deprecated: false
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: '[Recommended] API key, passed in the `x-api-key` request header.
+
+        See [Create API Keys](https://docs.apollo.io/docs/create-api-key).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'OAuth 2.0 access token, used by Apollo partners building integrations.
+
+        See the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).'
+x-readme:
+  headers:
+  - key: Cache-Control
+    value: no-cache
+  - key: Content-Type
+    value: application/json
+  explorer-enabled: true
+  proxy-enabled: true
+x-readme-fauxas: true

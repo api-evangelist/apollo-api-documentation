@@ -1,37 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Apollo API — Analytics
-  summary: Programmatic access to Apollo's sales intelligence and engagement platform — data enrichment, prospect and company
-    search, and go-to-market workflow management.
-  description: 'The Apollo API provides programmatic access to [Apollo](https://www.apollo.io/), the all-in-one sales intelligence
-    and engagement platform. Use it to enrich people and company data (individually or in bulk), search Apollo''s database
-    of over 240 million contacts and 30 million companies, and manage accounts, contacts, deals, sequences, tasks, calls,
-    and conversations in your go-to-market workflows.
-
-
-    ## Base URL
-
-
-    All API requests are made to `https://api.apollo.io/api/v1`.
-
-
-    ## Authentication
-
-
-    - **Apollo users** authenticate with an API key passed in the `x-api-key` request header. See [Create API Keys](https://docs.apollo.io/docs/create-api-key).
-
-    - **Apollo partners** building integrations on behalf of mutual users authenticate with the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).
-
-
-    ## Rate limits & credits
-
-
-    Rate limits and credit consumption depend on your [Apollo pricing plan](https://docs.apollo.io/docs/api-pricing). Check
-    your current limits and usage with the [View API Usage Stats and Rate Limits](https://docs.apollo.io/reference/view-api-usage-stats)
-    endpoint. For more details, see [Rate Limits](https://docs.apollo.io/reference/rate-limits) and the [API FAQs](https://docs.apollo.io/docs/apollo-api-faqs).
-
-
-    New to the API? Start with the [Apollo API overview](https://docs.apollo.io/reference/apollo-api).'
+  title: apollo-rest-api Analytics API
+  summary: Programmatic access to Apollo's sales intelligence and engagement platform — data enrichment, prospect and company search, and go-to-market workflow management.
+  description: The Apollo API provides programmatic access to Apollo, the all-in-one sales intelligence and engagement platform.
   termsOfService: https://www.apollo.io/terms/api
   contact:
     name: Apollo API Support
@@ -39,28 +10,12 @@ info:
   version: '1.0'
 servers:
 - url: https://api.apollo.io/api/v1
-tags:
-- name: Analytics
-  description: Query saved analytics reports.
 security:
 - apiKey: []
 - bearerAuth: []
-components:
-  securitySchemes:
-    apiKey:
-      type: apiKey
-      in: header
-      name: x-api-key
-      description: '[Recommended] API key, passed in the `x-api-key` request header.
-
-        See [Create API Keys](https://docs.apollo.io/docs/create-api-key).'
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-      description: 'OAuth 2.0 access token, used by Apollo partners building integrations.
-
-        See the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).'
+tags:
+- name: Analytics
+  description: Query saved analytics reports.
 paths:
   /reports/sync_report:
     post:
@@ -74,22 +29,22 @@ paths:
         **OAuth scopes:** `report_sync`
 
 
-        **Credit usage:** `0 credits` — [Learn more about API pricing and credits](https://docs.apollo.io/docs/api-pricing).
+        **Credit usage:** `0 credits` — Learn more about API pricing and credits.
 
 
-        Use the Query Analytics Report endpoint to programmatically query <a href="https://knowledge.apollo.io/hc/en-us/articles/33574373762317-Analytics-Overview"
-        target="_blank">Apollo analytics</a> and retrieve aggregated sales activity data for your team.<br><br>This endpoint
-        accepts a flexible payload specifying which metrics to measure, how to group and filter results, and which date range
-        to apply — returning the same data that powers Apollo''s built-in Analytics dashboards. <br><br>Three query modes
-        are supported: flat totals (no <code>group_by</code>), grouped by one dimension such as user or sequence, and pivot
-        cross-tab (one <code>group_by</code> dimension as rows + one <code>pivot_group_by</code> dimension as columns). Each
-        array supports a maximum of one entry.<br><br>
+        Use the Query Analytics Report endpoint to programmatically query Apollo analytics and retrieve aggregated sales activity data for your team.
 
-        <strong>Authentication:</strong> Requires an Apollo API key with access to the <code>api/v1/reports/sync_report</code>
-        API. When creating or editing an API key in Apollo Settings, open the <strong>APIs</strong> tab and select <code>api/v1/reports/sync_report</code>
-        from the list. Check out <a href="https://docs.apollo.io/docs/create-api-key">Create an API Key</a> for detailed instructions.<br><br><strong>Tip:</strong>
-        The easiest way to discover valid metric and group_by combinations is to build a report interactively at <a href="https://app.apollo.io/#/analytics/reports/new"
-        target="_blank">Apollo Analytics → Start from scratch</a>, then replicate that configuration in your API request.'
+
+        This endpoint accepts a flexible payload specifying which metrics to measure, how to group and filter results, and which date range to apply — returning the same data that powers Apollo''s built-in Analytics dashboards.
+
+
+        Three query modes are supported: flat totals (no group_by), grouped by one dimension such as user or sequence, and pivot cross-tab (one group_by dimension as rows + one pivot_group_by dimension as columns). Each array supports a maximum of one entry.
+
+
+        Authentication: Requires an Apollo API key with access to the api/v1/reports/sync_report API. When creating or editing an API key in Apollo Settings, open the APIs tab and select api/v1/reports/sync_report from the list. Check out Create an API Key for detailed instructions.
+
+
+        Tip: The easiest way to discover valid metric and group_by combinations is to build a report interactively at Apollo Analytics → Start from scratch, then replicate that configuration in your API request.'
       tags:
       - Analytics
       operationId: sync-report
@@ -110,11 +65,7 @@ paths:
               properties:
                 metrics:
                   type: array
-                  description: The metrics to query. Each object specifies which metric to measure and which date and user
-                    columns the engine should use for that metric. The <code>smart_datetime_reference</code> and <code>smart_user_id_reference</code>
-                    values are metric-specific — using the wrong values will return no data. Refer to the <a href="https://docs.apollo.io/reference/sync-report-metrics"
-                    target="_blank">Metrics and Dimensions Reference</a> for valid metric names and the correct reference
-                    fields for each. <br><br>Pass an empty array <code>[]</code> to return a response with no metric columns.
+                  description: The metrics to query. Each object specifies which metric to measure and which date and user columns the engine should use for that metric. The <code>smart_datetime_reference</code> and <code>smart_user_id_reference</code> values are metric-specific — using the wrong values will return no data. Refer to the <a href="https://docs.apollo.io/reference/sync-report-metrics" target="_blank">Metrics and Dimensions Reference</a> for valid metric names and the correct reference fields for each. <br><br>Pass an empty array <code>[]</code> to return a response with no metric columns.
                   items:
                     type: object
                     required:
@@ -124,29 +75,20 @@ paths:
                     properties:
                       value:
                         type: string
-                        description: The metric identifier. For built-in metrics, use the metric name (e.g. <code>num_emails_sent</code>).
-                          For team-defined custom metrics, use the format <code>custom_metric_{id}</code> where <code>{id}</code>
-                          is the custom metric's id.
+                        description: The metric identifier. For built-in metrics, use the metric name (e.g. <code>num_emails_sent</code>). For team-defined custom metrics, use the format <code>custom_metric_{id}</code> where <code>{id}</code> is the custom metric's id.
                       smart_datetime_reference:
                         type: string
-                        description: 'The date column name to use for this metric time range. Valid values depend on the metric.
-                          See the smart reference field values table for supported values by metric type. Unsupported values
-                          may cause the related date or user filter not to apply. <br><br>Example: <code>activity_datetime</code>'
+                        description: 'The date column name to use for this metric time range. Valid values depend on the metric. See the smart reference field values table for supported values by metric type. Unsupported values may cause the related date or user filter not to apply. <br><br>Example: <code>activity_datetime</code>'
                       smart_user_id_reference:
                         type: string
-                        description: 'The user column name that filters per user. Many metrics use <code>user_id</code>. See
-                          the smart reference field values table for supported values by metric family. Unsupported values
-                          may cause the related date or user filter not to apply. <br><br>Example: <code>user_id</code>'
+                        description: 'The user column name that filters per user. Many metrics use <code>user_id</code>. See the smart reference field values table for supported values by metric family. Unsupported values may cause the related date or user filter not to apply. <br><br>Example: <code>user_id</code>'
                       display_name:
                         type: string
                         description: Optional label override for this metric's column in the response.
                 group_by:
                   type: array
                   maxItems: 1
-                  description: The dimension to group results by (row dimension). Pass one object to break results down by
-                    that dimension. Pass an empty array <code>[]</code> for flat totals with no grouping. <br><br>Only one
-                    entry is supported. Refer to the <a href="https://docs.apollo.io/reference/sync-report-metrics" target="_blank">Metrics
-                    and Dimensions Reference</a> for valid dimension names.
+                  description: The dimension to group results by (row dimension). Pass one object to break results down by that dimension. Pass an empty array <code>[]</code> for flat totals with no grouping. <br><br>Only one entry is supported. Refer to the <a href="https://docs.apollo.io/reference/sync-report-metrics" target="_blank">Metrics and Dimensions Reference</a> for valid dimension names.
                   items:
                     type: object
                     required:
@@ -161,10 +103,7 @@ paths:
                 pivot_group_by:
                   type: array
                   maxItems: 1
-                  description: 'The dimension to pivot on (column dimension). Used together with <code>group_by</code> to
-                    produce a two-dimensional cross-tab table: <code>group_by</code> defines the row dimension and <code>pivot_group_by</code>
-                    defines the column dimension. Pass an empty array <code>[]</code> for non-pivot queries. <br><br>Only
-                    one entry is supported.'
+                  description: 'The dimension to pivot on (column dimension). Used together with <code>group_by</code> to produce a two-dimensional cross-tab table: <code>group_by</code> defines the row dimension and <code>pivot_group_by</code> defines the column dimension. Pass an empty array <code>[]</code> for non-pivot queries. <br><br>Only one entry is supported.'
                   items:
                     type: object
                     required:
@@ -178,11 +117,7 @@ paths:
                         description: Maximum number of pivot column values to return.
                 sorts:
                   type: array
-                  description: Sort order for the result rows. Only the first entry is applied. Pass an empty array <code>[]</code>
-                    to use the default order. <br><br>Sorting is supported by metric value — provide the <code>metric</code>
-                    field with the same structure as an entry in the <code>metrics</code> array. The <code>asc</code> field
-                    controls direction (<code>true</code> = ascending, <code>false</code> = descending). <br><br>Sorting by
-                    dimension value (e.g. alphabetically by user name) is not supported via the API.
+                  description: Sort order for the result rows. Only the first entry is applied. Pass an empty array <code>[]</code> to use the default order. <br><br>Sorting is supported by metric value — provide the <code>metric</code> field with the same structure as an entry in the <code>metrics</code> array. The <code>asc</code> field controls direction (<code>true</code> = ascending, <code>false</code> = descending). <br><br>Sorting by dimension value (e.g. alphabetically by user name) is not supported via the API.
                   items:
                     type: object
                     required:
@@ -193,8 +128,7 @@ paths:
                         description: Sort ascending (<code>true</code>) or descending (<code>false</code>).
                       metric:
                         type: object
-                        description: Sort by a metric column. Provide the same structure as a metric entry in the <code>metrics</code>
-                          array.
+                        description: Sort by a metric column. Provide the same structure as a metric entry in the <code>metrics</code> array.
                         properties:
                           value:
                             type: string
@@ -204,16 +138,11 @@ paths:
                             type: string
                 filters:
                   type: object
-                  description: Key/value filter map to narrow the result set. Pass an empty object <code>{}</code> for no
-                    filters. Common filter keys are documented in the <code>properties</code> below; additional dimension-based
-                    filters may also be passed using the same key names as <code>group_by[].name</code> values. Refer to the
-                    <a href="https://docs.apollo.io/reference/sync-report-metrics" target="_blank">Metrics and Dimensions
-                    Reference</a> for a complete list.
+                  description: Key/value filter map to narrow the result set. Pass an empty object <code>{}</code> for no filters. Common filter keys are documented in the <code>properties</code> below; additional dimension-based filters may also be passed using the same key names as <code>group_by[].name</code> values. Refer to the <a href="https://docs.apollo.io/reference/sync-report-metrics" target="_blank">Metrics and Dimensions Reference</a> for a complete list.
                   properties:
                     smart_user_id:
                       type: array
-                      description: 'Filter to specific team member IDs. Use <code>"current"</code> for the authenticated user.
-                        <br><br>Example: <code>["current"]</code>'
+                      description: 'Filter to specific team member IDs. Use <code>"current"</code> for the authenticated user. <br><br>Example: <code>["current"]</code>'
                       items:
                         type: string
                     smart_subteam_id:
@@ -248,8 +177,7 @@ paths:
                         type: string
                     smart_datetime_range:
                       type: object
-                      description: Required when <code>date_ranges[].modality</code> is <code>custom_range</code>. Specifies
-                        the exact date window as ISO 8601 date strings.
+                      description: Required when <code>date_ranges[].modality</code> is <code>custom_range</code>. Specifies the exact date window as ISO 8601 date strings.
                       required:
                       - min
                       - max
@@ -263,17 +191,13 @@ paths:
                   additionalProperties: true
                 group_by_totals_selected:
                   type: boolean
-                  description: When <code>true</code>, the response includes an aggregated totals row in addition to the per-dimension-value
-                    rows.
+                  description: When <code>true</code>, the response includes an aggregated totals row in addition to the per-dimension-value rows.
                 pivot_group_by_totals_selected:
                   type: boolean
-                  description: When <code>true</code>, the pivot response includes an aggregated totals column in addition
-                    to the per-pivot-value columns.
+                  description: When <code>true</code>, the pivot response includes an aggregated totals column in addition to the per-pivot-value columns.
                 date_ranges:
                   type: array
-                  description: 'The time window for the query. Provide one object with a <code>modality</code> preset. For
-                    a custom date range, set <code>modality</code> to <code>custom_range</code> and add a <code>smart_datetime_range</code>
-                    key in <code>filters</code> with <code>{"min": "YYYY-MM-DD", "max": "YYYY-MM-DD"}</code>.'
+                  description: 'The time window for the query. Provide one object with a <code>modality</code> preset. For a custom date range, set <code>modality</code> to <code>custom_range</code> and add a <code>smart_datetime_range</code> key in <code>filters</code> with <code>{"min": "YYYY-MM-DD", "max": "YYYY-MM-DD"}</code>.'
                   items:
                     type: object
                     required:
@@ -281,26 +205,18 @@ paths:
                     properties:
                       modality:
                         type: string
-                        description: 'Date range preset. Valid values: <code>today</code>, <code>yesterday</code>, <code>current_week</code>,
-                          <code>current_month</code>, <code>current_quarter</code>, <code>current_year</code>, <code>last_7_days</code>,
-                          <code>last_2_weeks</code>, <code>last_30_days</code>, <code>last_3_months</code>, <code>last_6_months</code>,
-                          <code>last_12_months</code>, <code>last_4_quarters</code>, <code>last_2_years</code>, <code>previous_week</code>,
-                          <code>previous_month</code>, <code>previous_quarter</code>, <code>previous_year</code>, <code>all_time</code>,
-                          <code>custom_range</code> (requires <code>smart_datetime_range</code> in <code>filters</code>).'
+                        description: 'Date range preset. Valid values: <code>today</code>, <code>yesterday</code>, <code>current_week</code>, <code>current_month</code>, <code>current_quarter</code>, <code>current_year</code>, <code>last_7_days</code>, <code>last_2_weeks</code>, <code>last_30_days</code>, <code>last_3_months</code>, <code>last_6_months</code>, <code>last_12_months</code>, <code>last_4_quarters</code>, <code>last_2_years</code>, <code>previous_week</code>, <code>previous_month</code>, <code>previous_quarter</code>, <code>previous_year</code>, <code>all_time</code>, <code>custom_range</code> (requires <code>smart_datetime_range</code> in <code>filters</code>).'
                   maxItems: 1
                 skip_group_by_values:
                   type: array
                   maxItems: 500
-                  description: Exclude specific dimension values from the result rows. Values must match the raw <code>key</code>
-                    field returned in bucket responses for the active <code>group_by</code> dimension (e.g. a contact stage
-                    ID string, a user ID string, or a date string for datetime dimensions). Maximum 500 entries.
+                  description: Exclude specific dimension values from the result rows. Values must match the raw <code>key</code> field returned in bucket responses for the active <code>group_by</code> dimension (e.g. a contact stage ID string, a user ID string, or a date string for datetime dimensions). Maximum 500 entries.
                   items:
                     type: string
                 min_ratio_denominator:
                   type: integer
                   default: 0
-                  description: Minimum denominator threshold for ratio metrics. Rows where the denominator falls below this
-                    value are excluded from ratio calculations.
+                  description: Minimum denominator threshold for ratio metrics. Rows where the denominator falls below this value are excluded from ratio calculations.
             examples:
               Flat totals — email performance:
                 value:
@@ -440,32 +356,23 @@ paths:
                 properties:
                   response:
                     type: object
-                    description: The query result. Contains four sub-keys depending on query mode and flags. See response
-                      examples for each shape.
+                    description: The query result. Contains four sub-keys depending on query mode and flags. See response examples for each shape.
                     properties:
                       table_response:
                         type: object
-                        description: 'Main aggregated data. Shape varies by query mode: a flat key/value object when <code>group_by</code>
-                          is empty (metric name → value); a bucketed object <code>{ "dimension": { "buckets": [...] } }</code>
-                          for grouped queries; a nested bucketed object for pivot queries where the outer key is the <code>pivot_group_by</code>
-                          dimension and each outer bucket contains a nested <code>group_by</code> dimension with its own <code>buckets</code>.'
+                        description: 'Main aggregated data. Shape varies by query mode: a flat key/value object when <code>group_by</code> is empty (metric name → value); a bucketed object <code>{ "dimension": { "buckets": [...] } }</code> for grouped queries; a nested bucketed object for pivot queries where the outer key is the <code>pivot_group_by</code> dimension and each outer bucket contains a nested <code>group_by</code> dimension with its own <code>buckets</code>.'
                         additionalProperties: true
                       group_by_total_response:
                         type: object
-                        description: Aggregated totals per <code>group_by</code> dimension value, without pivot breakdown.
-                          Same bucketed structure as <code>table_response</code>. Populated when <code>group_by_totals_selected</code>
-                          is <code>true</code>; otherwise <code>{}</code>.
+                        description: Aggregated totals per <code>group_by</code> dimension value, without pivot breakdown. Same bucketed structure as <code>table_response</code>. Populated when <code>group_by_totals_selected</code> is <code>true</code>; otherwise <code>{}</code>.
                         additionalProperties: true
                       pivot_group_by_total_response:
                         type: object
-                        description: Aggregated totals per <code>pivot_group_by</code> dimension value, without group_by breakdown.
-                          Populated when <code>pivot_group_by_totals_selected</code> is <code>true</code>; otherwise <code>{}</code>.
+                        description: Aggregated totals per <code>pivot_group_by</code> dimension value, without group_by breakdown. Populated when <code>pivot_group_by_totals_selected</code> is <code>true</code>; otherwise <code>{}</code>.
                         additionalProperties: true
                   incompatible_filters:
                     type: object
-                    description: A map of filter keys that were incompatible with one or more requested metrics and were silently
-                      ignored. Keys are filter names; values are arrays of affected metric names. Inspect this field when
-                      results appear incomplete.
+                    description: A map of filter keys that were incompatible with one or more requested metrics and were silently ignored. Keys are filter names; values are arrays of affected metric names. Inspect this field when results appear incomplete.
                     additionalProperties:
                       type: array
                       items:
@@ -658,8 +565,7 @@ paths:
               examples:
                 API not accessible:
                   value:
-                    error: This API key is not authorized to access api/v1/reports/sync_report. Request an API key from your
-                      administrator that includes this endpoint in its configured scope.
+                    error: This API key is not authorized to access api/v1/reports/sync_report. Request an API key from your administrator that includes this endpoint in its configured scope.
                     error_code: API_INACCESSIBLE
               schema:
                 type: object
@@ -675,11 +581,35 @@ paths:
               examples:
                 Too many requests:
                   value:
-                    message: The maximum number of api calls allowed for api/v1/reports/sync_report is 200 times per hour.
-                      Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
+                    message: The maximum number of api calls allowed for api/v1/reports/sync_report is 200 times per hour. Please upgrade your plan from https://app.apollo.io/#/settings/plans/upgrade.
               schema:
                 type: object
                 properties:
                   message:
                     type: string
       deprecated: false
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: '[Recommended] API key, passed in the `x-api-key` request header.
+
+        See [Create API Keys](https://docs.apollo.io/docs/create-api-key).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'OAuth 2.0 access token, used by Apollo partners building integrations.
+
+        See the [OAuth 2.0 authorization flow](https://docs.apollo.io/docs/use-oauth-20-authorization-flow-to-access-apollo-user-information-partners).'
+x-readme:
+  headers:
+  - key: Cache-Control
+    value: no-cache
+  - key: Content-Type
+    value: application/json
+  explorer-enabled: true
+  proxy-enabled: true
+x-readme-fauxas: true
