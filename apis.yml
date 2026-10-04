@@ -485,6 +485,9 @@ apis:
   - type: OpenAPI
     url: openapi/apollo-api-documentation-users-api-openapi.yml
 common:
+- type: CapabilityMap
+  url: capabilities/apollo-api-documentation-capability-edges.yml
+  name: Apollo API Documentation Business Capability Map
 - type: Website
   url: https://www.apollo.io/
 - type: Authentication

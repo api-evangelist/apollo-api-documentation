@@ -1,0 +1,52 @@
+slug: apollo-api-documentation
+provider: Apollo API Documentation
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: Deals
+  spec_file: apollo-api-documentation-deals-api-openapi.yml
+  capability_id: BC-410.30
+  capability_id_l1: BC-410
+  capability_name: Opportunity & Pipeline Management
+  confidence: 0.95
+  evidence: POST /opportunities  Create Deal; GET /opportunity_stages  List Deal Stages
+  reason: Opportunity/deal records with stages are exactly deal and pipeline lifecycle management.
+- tag: Accounts
+  spec_file: apollo-api-documentation-accounts-api-openapi.yml
+  capability_id: BC-410.20
+  capability_id_l1: BC-410
+  capability_name: Account Management
+  confidence: 0.82
+  evidence: '''Create an Account'', ''Search for Accounts'', ''Update Account Owner for Multiple Accounts'',
+    ''List Account Stages'' on a ''sales intelligence and engagement platform'''
+  reason: Operations manage target-company account records, their stages and sales ownership within a
+    GTM workflow — this is sales account management. Some ambiguity with customer data management, but
+    account ownership and stages point to BC-410.20.
+- tag: Contacts
+  spec_file: apollo-api-documentation-contacts-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.7
+  evidence: POST /contacts  Create a Contact; POST /contacts/bulk_update  Bulk Update Contacts
+  reason: CRUD, bulk maintenance, ownership and stage assignment over contact records is management of
+    the customer/prospect record base.
+- tag: Enrichment
+  spec_file: apollo-api-documentation-enrichment-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.7
+  evidence: POST /people/match  People Enrichment; GET /organizations/enrich  Organization Enrichment
+  reason: Matching and enriching person and company records is identity resolution / golden-record enhancement
+    of customer data.
