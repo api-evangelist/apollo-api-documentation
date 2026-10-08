@@ -129,3 +129,40 @@ mcp_pricing:
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - negotiated
+  - subscription
+  units: []
+  plans:
+  - name: Free
+    access: freemium
+    model: free
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Basic
+    access: paid
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Professional
+    access: paid
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Enterprise
+    access: enterprise
+    model: negotiated
+    model_how: derived
+    units: []
+    periods:
+    - term
