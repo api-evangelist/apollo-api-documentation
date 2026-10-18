@@ -272,6 +272,8 @@ apis:
   humanURL: https://docs.apollo.io/reference/apollo-api
   baseURL: https://api.apollo.io/api/v1
   tags:
+  - Data Enrichment
+  tags_raw:
   - Enrichment
   properties:
   - type: OpenAPI
